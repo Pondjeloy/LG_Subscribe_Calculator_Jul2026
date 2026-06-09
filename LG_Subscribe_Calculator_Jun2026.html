@@ -4,7 +4,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-<title>LG Subscribe Calculator – มิ.ย. 2569</title>
+<title>LG Subscribe Calculator | เครื่องคำนวณราคาสินค้า</title>
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet" />
@@ -218,34 +218,7 @@
     .bill-range-box .br-calc{text-align:left}
     .bill-range-box .br-total{text-align:left}
   }
-  .prompt-builder{background:linear-gradient(180deg,#fff,rgba(248,247,244,.92));border:1px solid var(--lg-line);border-radius:8px;padding:14px}
-  .prompt-preview{width:100%;min-height:118px;resize:vertical;background:#151417;color:#f8f7f4;border:1px solid rgba(255,255,255,.08);border-radius:8px;padding:12px;font-family:'JetBrains Mono',monospace;font-size:11px;line-height:1.55}
-  .prompt-control-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-  .prompt-mode-tabs{display:flex;gap:3px;background:#f1f5f9;border-radius:8px;padding:3px;margin-bottom:12px}
-  .prompt-mode-tab{flex:1;padding:7px 6px;border:none;border-radius:6px;font-size:11px;font-weight:600;cursor:pointer;font-family:inherit;transition:all .15s;color:#6b7280;background:transparent;line-height:1.3}
-  .prompt-mode-tab.active{background:#fff;color:var(--lg-red);box-shadow:0 2px 8px rgba(0,0,0,.09)}
-  .prompt-mode-tab:hover:not(.active){color:var(--lg-ink)}
-  .prompt-char-count{font-size:10px;color:#9ca3af;text-align:right;margin-top:3px;font-family:'JetBrains Mono',monospace}
-  .prompt-char-count.warn{color:var(--amber-700)}
-  .prompt-mode-badge{display:inline-block;padding:2px 7px;border-radius:999px;font-size:10px;font-weight:700;margin-left:6px}
-  .badge-dalle{background:#ede9fe;color:#6d28d9}
-  .badge-chatgpt{background:#d1fae5;color:#065f46}
-  /* Scene preview */
-  .scene-preview{background:#fbfaf7;border:1px solid var(--lg-line);border-radius:8px;padding:10px 12px;margin-bottom:10px;font-size:11px;line-height:1.7}
-  .scene-preview .scene-tag{display:inline-block;margin:2px 4px 2px 0;padding:2px 8px;background:#fff;border:1px solid var(--lg-line);border-radius:999px;font-size:10.5px;color:#514b55}
-  .scene-preview .scene-tag.accent{background:rgba(200,16,46,.08);border-color:rgba(200,16,46,.25);color:var(--lg-red)}
-  .scene-preview .scene-tag.gold{background:rgba(201,154,82,.1);border-color:rgba(201,154,82,.3);color:#a6803a}
-  .scene-preview .scene-label{font-weight:700;font-size:10px;color:#918a83;text-transform:uppercase;letter-spacing:.04em;margin-right:5px}
-  /* Feature chips */
-  .feat-row{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:10px}
-  .feat-chip-cal{background:#fff;border:1px solid var(--lg-line);border-radius:6px;padding:5px 9px;font-size:11px;cursor:pointer;user-select:none;transition:all .15s;font-family:inherit;color:#514b55}
-  .feat-chip-cal:hover{border-color:var(--lg-accent)}
-  .feat-chip-cal.active{background:rgba(201,154,82,.14);border-color:var(--lg-accent);color:#7a5a1a;font-weight:600}
   .border-b-line{border-bottom:1px solid var(--lg-line)}
-  .headline-preview{background:linear-gradient(135deg,rgba(200,16,46,.06),rgba(201,154,82,.06));border:1px solid rgba(200,16,46,.18);border-radius:8px;padding:10px 12px;margin-bottom:10px;font-size:13px;font-weight:600;color:var(--lg-red);line-height:1.5;display:flex;align-items:center;justify-content:space-between;gap:8px}
-  .headline-preview .hl-text{flex:1;min-width:0}
-  .btn-shuffle{background:rgba(200,16,46,.08);border:1px solid rgba(200,16,46,.22);color:var(--lg-red);padding:5px 11px;border-radius:999px;font-size:12px;cursor:pointer;font-family:inherit;font-weight:600;transition:all .15s;white-space:nowrap;flex-shrink:0}
-  .btn-shuffle:hover{background:var(--lg-red);color:#fff}
 
   @keyframes slideIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
   .animate-in{animation:slideIn .35s ease-out}
@@ -289,7 +262,7 @@
           <div class="text-xs font-mono uppercase tracking-wider" style="color:#94a3b8" x-text="'เครื่องคำนวณราคา · ' + promoMonthLabel()"></div>
         </div>
       </div>
-      </div>
+    </div>
   </header>
 
   <div class="max-w-7xl px-6 py-8 grid grid-cols-1 lg-grid-main gap-8">
@@ -728,97 +701,6 @@
               <span x-html="plainSummary()"></span>
             </div>
 
-            <div class="mt-4 prompt-builder">
-              <div class="flex items-center justify-between gap-2 mb-3">
-                <div>
-                  <div class="font-semibold text-sm">สร้าง Prompt รูปภาพ AI</div>
-                  <div class="text-xs text-gray-500">ระบบเลือกฉาก/แสง/โทนสีตามหมวดสินค้าให้อัตโนมัติ</div>
-                </div>
-                <span class="tag" style="background:#ede9fe;color:#6d28d9">AI Image</span>
-              </div>
-
-              <!-- Mode tabs -->
-              <div class="prompt-mode-tabs">
-                <button class="prompt-mode-tab" :class="imagePromptMode==='chatgpt' ? 'active' : ''" @click="imagePromptMode='chatgpt'">
-                  💬 ChatGPT<br><span style="font-weight:400;font-size:10px">ข้อมูลครบ ยาว</span>
-                </button>
-                <button class="prompt-mode-tab" :class="imagePromptMode==='dalle' ? 'active' : ''" @click="imagePromptMode='dalle'">
-                  🎨 DALL-E<br><span style="font-weight:400;font-size:10px">อังกฤษ สั้น ภาพแม่น</span>
-                </button>
-              </div>
-
-              <!-- Style + Ratio controls -->
-              <div class="prompt-control-grid mb-3">
-                <div>
-                  <label class="text-xs text-gray-500 mb-1 block font-medium">สไตล์ภาพ</label>
-                  <select x-model="imagePromptStyle">
-                    <option value="premium">พรีเมี่ยมหรูหรา</option>
-                    <option value="minimal">มินิมอลสะอาดตา</option>
-                    <option value="formal">ทางการ / Corporate</option>
-                    <option value="advanced">กราฟิกขั้นสูง</option>
-                    <option value="social">โซเชียลโปรโมชัน</option>
-                  </select>
-                </div>
-                <div>
-                  <label class="text-xs text-gray-500 mb-1 block font-medium">สัดส่วนภาพ</label>
-                  <select x-model="imagePromptRatio">
-                    <option value="4:5">4:5 โพสต์แนวตั้ง</option>
-                    <option value="1:1">1:1 โพสต์สี่เหลี่ยม</option>
-                    <option value="16:9">16:9 แบนเนอร์</option>
-                    <option value="9:16">9:16 Story/Reels</option>
-                  </select>
-                </div>
-              </div>
-
-              <!-- Scene preview (auto from cart category) -->
-              <div class="scene-preview" x-show="cart.length > 0 && getCartScene()">
-                <template x-if="getCartScene()">
-                  <div>
-                    <div style="margin-bottom:4px">
-                      <span class="scene-label">หมวด</span>
-                      <span class="scene-tag accent" x-text="getCartScene().label"></span>
-                    </div>
-                    <div style="margin-bottom:4px">
-                      <span class="scene-label">SCENE</span>
-                      <span class="scene-tag" x-text="getCartScene().scene"></span>
-                    </div>
-                    <div style="margin-bottom:4px">
-                      <span class="scene-label">LIGHTING</span>
-                      <span class="scene-tag" x-text="getCartScene().lighting"></span>
-                    </div>
-                    <div>
-                      <span class="scene-label">PALETTE</span>
-                      <span class="scene-tag gold" x-text="getCartScene().palette"></span>
-                    </div>
-                  </div>
-                </template>
-              </div>
-
-              <!-- Feature selector — แสดงเฉพาะสินค้าชิ้นเดียว (ซ่อนเมื่อเป็นคอมโบ) -->
-              <div x-show="cart.length === 1 && getCartScene()" style="margin-bottom:10px">
-                <label class="text-xs text-gray-500 mb-1 block font-medium">ฟีเจอร์ที่แสดงในภาพ (เลือกได้สูงสุด 4)</label>
-                <div class="feat-row">
-                  <template x-for="f in availableFeatures()" :key="f">
-                    <button class="feat-chip-cal" :class="selectedFeatures.includes(f) ? 'active' : ''" @click="toggleFeature(f)" x-text="f"></button>
-                  </template>
-                </div>
-              </div>
-
-              <!-- Combo headline preview + shuffle -->
-              <div x-show="cart.length > 1 && activeComboHeadline()" class="headline-preview">
-                <span class="hl-text">💬 "<span x-text="activeComboHeadline()"></span>"</span>
-                <button class="btn-shuffle" @click="imageHeadlineSeed = Math.floor(Math.random()*9999)">🎲 สุ่มใหม่</button>
-              </div>
-
-              <textarea class="prompt-preview" readonly :value="buildActivePrompt()"></textarea>
-              <div class="prompt-char-count" :class="activePromptLength() > 3800 ? 'warn' : ''"
-                x-text="activePromptLength().toLocaleString() + ' chars' + (imagePromptMode==='dalle' ? (activePromptLength() > 3800 ? ' ⚠️ เกิน DALL-E limit' : ' ✓') : '')">
-              </div>
-              <div class="grid grid-cols-2 gap-2 mt-3">
-                <button class="btn-ghost" @click="downloadImagePrompt()">⬇ บันทึก .txt</button>
-                <button class="btn-primary" @click="copyImagePrompt()">⧉ คัดลอก Prompt</button>
-              </div>
-            </div>
 
             <div class="grid grid-cols-2 gap-2 mt-4">
               <button class="btn-ghost" @click="copySummary()">📋 คัดลอกข้อความ</button>
@@ -851,11 +733,6 @@ function lgCalculator() {
     customerType: 'new',
     specialCombo: false,
     showComboSettings: false,
-    imagePromptStyle: 'premium',
-    imagePromptRatio: '4:5',
-    imagePromptMode: 'chatgpt',
-    imageHeadlineSeed: 0,
-    selectedFeatures: [],
     // โปรปกติ + โปรพิเศษ — ตั้งค่าได้เอง
     promoConfig: {
       normal: {
@@ -913,12 +790,12 @@ function lgCalculator() {
           { term:'6Y', serviceType:'Visit', serviceCycle:'ทุก 6 เดือน', regular:1249, effectiveMonthly:1249, promoMonths:0, postPromoPrice:1249, promo:'', totalContractMonths:72, totalSaving:0 }
         ]},
         { code:'GC-X257CMEW.ATEPLMT', name:'Side by Side · InstaView · 22.4 คิว', plans:[
-          { term:'5Y', serviceType:'Visit', serviceCycle:'ทุก 24 เดือน', regular:1249, effectiveMonthly:624, promoMonths:3, postPromoPrice:1249, promo:'ลด 50% 3 บิลแรก (624) จากนั้น 1,249/เดือน', totalContractMonths:60, totalSaving:1875 },
-          { term:'6Y', serviceType:'Visit', serviceCycle:'ทุก 24 เดือน', regular:1049, effectiveMonthly:524, promoMonths:3, postPromoPrice:1049, promo:'ลด 50% 3 บิลแรก (524) จากนั้น 1,049/เดือน', totalContractMonths:72, totalSaving:1575 }
+          { term:'5Y', serviceType:'Visit', serviceCycle:'ทุก 24 เดือน', regular:1249, effectiveMonthly:149, promoMonths:1, postPromoPrice:1249, billSchedule:[{range:'บิล 1',price:149,note:'ราคาพิเศษ'},{range:'บิล 2-3',price:624,note:'ลด 50%'},{range:'บิล 4-60',price:1249,note:'ราคาปกติ'}], promo:'บิลแรก 149 ต่อด้วยลด 50% 2 รอบบิล (624) จากนั้น 1,249/เดือน', totalContractMonths:60, totalSaving:2350 },
+          { term:'6Y', serviceType:'Visit', serviceCycle:'ทุก 24 เดือน', regular:1049, effectiveMonthly:149, promoMonths:1, postPromoPrice:1049, billSchedule:[{range:'บิล 1',price:149,note:'ราคาพิเศษ'},{range:'บิล 2-3',price:524,note:'ลด 50%'},{range:'บิล 4-72',price:1049,note:'ราคาปกติ'}], promo:'บิลแรก 149 ต่อด้วยลด 50% 2 รอบบิล (524) จากนั้น 1,049/เดือน', totalContractMonths:72, totalSaving:1950 }
         ]},
         { code:'GC-J257SQZW.AEPPLMT', name:'Side by Side · 22.4 คิว', plans:[
-          { term:'5Y', serviceType:'Visit', serviceCycle:'ทุก 24 เดือน', regular:1049, effectiveMonthly:524, promoMonths:3, postPromoPrice:1049, promo:'ลด 50% 3 บิลแรก (524) จากนั้น 1,049/เดือน', totalContractMonths:60, totalSaving:1575 },
-          { term:'6Y', serviceType:'Visit', serviceCycle:'ทุก 24 เดือน', regular:899, effectiveMonthly:449, promoMonths:3, postPromoPrice:899, promo:'ลด 50% 3 บิลแรก (449) จากนั้น 899/เดือน', totalContractMonths:72, totalSaving:1350 }
+          { term:'5Y', serviceType:'Visit', serviceCycle:'ทุก 24 เดือน', regular:1049, effectiveMonthly:149, promoMonths:1, postPromoPrice:1049, billSchedule:[{range:'บิล 1',price:149,note:'ราคาพิเศษ'},{range:'บิล 2-3',price:524,note:'ลด 50%'},{range:'บิล 4-60',price:1049,note:'ราคาปกติ'}], promo:'บิลแรก 149 ต่อด้วยลด 50% 2 รอบบิล (524) จากนั้น 1,049/เดือน', totalContractMonths:60, totalSaving:1950 },
+          { term:'6Y', serviceType:'Visit', serviceCycle:'ทุก 24 เดือน', regular:899, effectiveMonthly:149, promoMonths:1, postPromoPrice:899, billSchedule:[{range:'บิล 1',price:149,note:'ราคาพิเศษ'},{range:'บิล 2-3',price:449,note:'ลด 50%'},{range:'บิล 4-72',price:899,note:'ราคาปกติ'}], promo:'บิลแรก 149 ต่อด้วยลด 50% 2 รอบบิล (449) จากนั้น 899/เดือน', totalContractMonths:72, totalSaving:1650 }
         ]},
         { code:'GC-L257SFZW.APYPLMT', name:'Side by Side · 22.4 คิว (NEW)', plans:[
           { term:'5Y', serviceType:'Visit', serviceCycle:'ทุก 24 เดือน', regular:849, effectiveMonthly:424, promoMonths:3, postPromoPrice:849, promo:'ลด 50% 3 บิลแรก (424) จากนั้น 849/เดือน', totalContractMonths:60, totalSaving:1275 },
@@ -945,12 +822,12 @@ function lgCalculator() {
       ]},
       'ตู้เย็น Multi-Door': { models: [
         { code:'GC-G24FFQKB.AEEPLM1', name:'Multi Door · I&W Dispenser · 22.5 คิว', plans:[
-          { term:'5Y', serviceType:'Visit', serviceCycle:'ทุก 24 เดือน', regular:1349, effectiveMonthly:674, promoMonths:3, postPromoPrice:1349, promo:'ลด 50% 3 บิลแรก (674) จากนั้น 1,349/เดือน', totalContractMonths:60, totalSaving:2025 },
-          { term:'6Y', serviceType:'Visit', serviceCycle:'ทุก 24 เดือน', regular:1149, effectiveMonthly:574, promoMonths:3, postPromoPrice:1149, promo:'ลด 50% 3 บิลแรก (574) จากนั้น 1,149/เดือน', totalContractMonths:72, totalSaving:1725 }
+          { term:'5Y', serviceType:'Visit', serviceCycle:'ทุก 24 เดือน', regular:1349, effectiveMonthly:149, promoMonths:1, postPromoPrice:1349, billSchedule:[{range:'บิล 1',price:149,note:'ราคาพิเศษ'},{range:'บิล 2-3',price:674,note:'ลด 50%'},{range:'บิล 4-60',price:1349,note:'ราคาปกติ'}], promo:'บิลแรก 149 ต่อด้วยลด 50% 2 รอบบิล (674) จากนั้น 1,349/เดือน', totalContractMonths:60, totalSaving:2550 },
+          { term:'6Y', serviceType:'Visit', serviceCycle:'ทุก 24 เดือน', regular:1149, effectiveMonthly:149, promoMonths:1, postPromoPrice:1149, billSchedule:[{range:'บิล 1',price:149,note:'ราคาพิเศษ'},{range:'บิล 2-3',price:574,note:'ลด 50%'},{range:'บิล 4-72',price:1149,note:'ราคาปกติ'}], promo:'บิลแรก 149 ต่อด้วยลด 50% 2 รอบบิล (574) จากนั้น 1,149/เดือน', totalContractMonths:72, totalSaving:2150 }
         ]},
         { code:'GC-V22FFQMB.AEPPLMT', name:'Multi Door · 18.7 คิว', plans:[
-          { term:'5Y', serviceType:'Visit', serviceCycle:'ทุก 24 เดือน', regular:949, effectiveMonthly:474, promoMonths:3, postPromoPrice:949, promo:'ลด 50% 3 บิลแรก (474) จากนั้น 949/เดือน', totalContractMonths:60, totalSaving:1425 },
-          { term:'6Y', serviceType:'Visit', serviceCycle:'ทุก 24 เดือน', regular:799, effectiveMonthly:399, promoMonths:3, postPromoPrice:799, promo:'ลด 50% 3 บิลแรก (399) จากนั้น 799/เดือน', totalContractMonths:72, totalSaving:1200 }
+          { term:'5Y', serviceType:'Visit', serviceCycle:'ทุก 24 เดือน', regular:949, effectiveMonthly:149, promoMonths:1, postPromoPrice:949, billSchedule:[{range:'บิล 1',price:149,note:'ราคาพิเศษ'},{range:'บิล 2-3',price:474,note:'ลด 50%'},{range:'บิล 4-60',price:949,note:'ราคาปกติ'}], promo:'บิลแรก 149 ต่อด้วยลด 50% 2 รอบบิล (474) จากนั้น 949/เดือน', totalContractMonths:60, totalSaving:1750 },
+          { term:'6Y', serviceType:'Visit', serviceCycle:'ทุก 24 เดือน', regular:799, effectiveMonthly:149, promoMonths:1, postPromoPrice:799, billSchedule:[{range:'บิล 1',price:149,note:'ราคาพิเศษ'},{range:'บิล 2-3',price:399,note:'ลด 50%'},{range:'บิล 4-72',price:799,note:'ราคาปกติ'}], promo:'บิลแรก 149 ต่อด้วยลด 50% 2 รอบบิล (399) จากนั้น 799/เดือน', totalContractMonths:72, totalSaving:1450 }
         ]},
         { code:'GV-V25FFGRB.ABMPLMT', name:'Multi Door · 21.7 คิว (NEW)', plans:[
           { term:'5Y', serviceType:'Visit', serviceCycle:'ทุก 24 เดือน', regular:999, effectiveMonthly:499, promoMonths:3, postPromoPrice:999, promo:'ลด 50% 3 บิลแรก (499) จากนั้น 999/เดือน', totalContractMonths:60, totalSaving:1500 },
@@ -977,34 +854,34 @@ function lgCalculator() {
       ]},
       'Wash Tower': { models: [
         { code:'WT2520NHEG.ABGPETH', name:'Wash Tower · ซัก 25/อบ 20 กก. (Beige)', plans:[
-          { term:'5Y', serviceType:'Visit', serviceCycle:'ทุก 12 เดือน', regular:2399, effectiveMonthly:1199, promoMonths:6, postPromoPrice:2399, promo:'ลด 50% 6 บิลแรก (1,199) จากนั้น 2,399/เดือน', totalContractMonths:60, totalSaving:7200 },
-          { term:'5Y', serviceType:'Self', serviceCycle:'ทุก 12 เดือน', regular:2199, effectiveMonthly:1099, promoMonths:6, postPromoPrice:2199, promo:'ลด 50% 6 บิลแรก (1,099) จากนั้น 2,199/เดือน', totalContractMonths:60, totalSaving:6600 },
-          { term:'6Y', serviceType:'Visit', serviceCycle:'ทุก 12 เดือน', regular:2199, effectiveMonthly:1099, promoMonths:6, postPromoPrice:2199, promo:'ลด 50% 6 บิลแรก (1,099) จากนั้น 2,199/เดือน', totalContractMonths:72, totalSaving:6600 },
-          { term:'6Y', serviceType:'Self', serviceCycle:'ทุก 12 เดือน', regular:1999, effectiveMonthly:999, promoMonths:6, postPromoPrice:1999, promo:'ลด 50% 6 บิลแรก (999) จากนั้น 1,999/เดือน', totalContractMonths:72, totalSaving:6000 }
+          { term:'5Y', serviceType:'Visit', serviceCycle:'ทุก 12 เดือน', regular:2399, effectiveMonthly:149, promoMonths:1, postPromoPrice:2399, billSchedule:[{range:'บิล 1',price:149,note:'ราคาพิเศษ'},{range:'บิล 2-6',price:1199,note:'ลด 50%'},{range:'บิล 7-60',price:2399,note:'ราคาปกติ'}], promo:'บิลแรก 149 ต่อด้วยลด 50% 5 รอบบิล (1199) จากนั้น 2,399/เดือน', totalContractMonths:60, totalSaving:8250 },
+          { term:'5Y', serviceType:'Self', serviceCycle:'ทุก 12 เดือน', regular:2199, effectiveMonthly:149, promoMonths:1, postPromoPrice:2199, billSchedule:[{range:'บิล 1',price:149,note:'ราคาพิเศษ'},{range:'บิล 2-6',price:1099,note:'ลด 50%'},{range:'บิล 7-60',price:2199,note:'ราคาปกติ'}], promo:'บิลแรก 149 ต่อด้วยลด 50% 5 รอบบิล (1099) จากนั้น 2,199/เดือน', totalContractMonths:60, totalSaving:7550 },
+          { term:'6Y', serviceType:'Visit', serviceCycle:'ทุก 12 เดือน', regular:2199, effectiveMonthly:149, promoMonths:1, postPromoPrice:2199, billSchedule:[{range:'บิล 1',price:149,note:'ราคาพิเศษ'},{range:'บิล 2-6',price:1099,note:'ลด 50%'},{range:'บิล 7-72',price:2199,note:'ราคาปกติ'}], promo:'บิลแรก 149 ต่อด้วยลด 50% 5 รอบบิล (1099) จากนั้น 2,199/เดือน', totalContractMonths:72, totalSaving:7550 },
+          { term:'6Y', serviceType:'Self', serviceCycle:'ทุก 12 เดือน', regular:1999, effectiveMonthly:149, promoMonths:1, postPromoPrice:1999, billSchedule:[{range:'บิล 1',price:149,note:'ราคาพิเศษ'},{range:'บิล 2-6',price:999,note:'ลด 50%'},{range:'บิล 7-72',price:1999,note:'ราคาปกติ'}], promo:'บิลแรก 149 ต่อด้วยลด 50% 5 รอบบิล (999) จากนั้น 1,999/เดือน', totalContractMonths:72, totalSaving:6850 }
         ]},
         { code:'WT2520NHEN.ABNPETH', name:'Wash Tower · ซัก 25/อบ 20 กก. (Navy)', plans:[
-          { term:'5Y', serviceType:'Visit', serviceCycle:'ทุก 12 เดือน', regular:2399, effectiveMonthly:1199, promoMonths:6, postPromoPrice:2399, promo:'ลด 50% 6 บิลแรก (1,199) จากนั้น 2,399/เดือน', totalContractMonths:60, totalSaving:7200 },
-          { term:'5Y', serviceType:'Self', serviceCycle:'ทุก 12 เดือน', regular:2199, effectiveMonthly:1099, promoMonths:6, postPromoPrice:2199, promo:'ลด 50% 6 บิลแรก (1,099) จากนั้น 2,199/เดือน', totalContractMonths:60, totalSaving:6600 },
-          { term:'6Y', serviceType:'Visit', serviceCycle:'ทุก 12 เดือน', regular:2199, effectiveMonthly:1099, promoMonths:6, postPromoPrice:2199, promo:'ลด 50% 6 บิลแรก (1,099) จากนั้น 2,199/เดือน', totalContractMonths:72, totalSaving:6600 },
-          { term:'6Y', serviceType:'Self', serviceCycle:'ทุก 12 เดือน', regular:1999, effectiveMonthly:999, promoMonths:6, postPromoPrice:1999, promo:'ลด 50% 6 บิลแรก (999) จากนั้น 1,999/เดือน', totalContractMonths:72, totalSaving:6000 }
+          { term:'5Y', serviceType:'Visit', serviceCycle:'ทุก 12 เดือน', regular:2399, effectiveMonthly:149, promoMonths:1, postPromoPrice:2399, billSchedule:[{range:'บิล 1',price:149,note:'ราคาพิเศษ'},{range:'บิล 2-6',price:1199,note:'ลด 50%'},{range:'บิล 7-60',price:2399,note:'ราคาปกติ'}], promo:'บิลแรก 149 ต่อด้วยลด 50% 5 รอบบิล (1199) จากนั้น 2,399/เดือน', totalContractMonths:60, totalSaving:8250 },
+          { term:'5Y', serviceType:'Self', serviceCycle:'ทุก 12 เดือน', regular:2199, effectiveMonthly:149, promoMonths:1, postPromoPrice:2199, billSchedule:[{range:'บิล 1',price:149,note:'ราคาพิเศษ'},{range:'บิล 2-6',price:1099,note:'ลด 50%'},{range:'บิล 7-60',price:2199,note:'ราคาปกติ'}], promo:'บิลแรก 149 ต่อด้วยลด 50% 5 รอบบิล (1099) จากนั้น 2,199/เดือน', totalContractMonths:60, totalSaving:7550 },
+          { term:'6Y', serviceType:'Visit', serviceCycle:'ทุก 12 เดือน', regular:2199, effectiveMonthly:149, promoMonths:1, postPromoPrice:2199, billSchedule:[{range:'บิล 1',price:149,note:'ราคาพิเศษ'},{range:'บิล 2-6',price:1099,note:'ลด 50%'},{range:'บิล 7-72',price:2199,note:'ราคาปกติ'}], promo:'บิลแรก 149 ต่อด้วยลด 50% 5 รอบบิล (1099) จากนั้น 2,199/เดือน', totalContractMonths:72, totalSaving:7550 },
+          { term:'6Y', serviceType:'Self', serviceCycle:'ทุก 12 เดือน', regular:1999, effectiveMonthly:149, promoMonths:1, postPromoPrice:1999, billSchedule:[{range:'บิล 1',price:149,note:'ราคาพิเศษ'},{range:'บิล 2-6',price:999,note:'ลด 50%'},{range:'บิล 7-72',price:1999,note:'ราคาปกติ'}], promo:'บิลแรก 149 ต่อด้วยลด 50% 5 รอบบิล (999) จากนั้น 1,999/เดือน', totalContractMonths:72, totalSaving:6850 }
         ]},
         { code:'WT2116SHEG.ABGPETH', name:'Wash Tower · ซัก 21/อบ 16 กก.', plans:[
-          { term:'5Y', serviceType:'Visit', serviceCycle:'ทุก 12 เดือน', regular:1999, effectiveMonthly:999, promoMonths:6, postPromoPrice:1999, promo:'ลด 50% 6 บิลแรก (999) จากนั้น 1,999/เดือน', totalContractMonths:60, totalSaving:6000 },
-          { term:'5Y', serviceType:'Self', serviceCycle:'ทุก 12 เดือน', regular:1899, effectiveMonthly:949, promoMonths:6, postPromoPrice:1899, promo:'ลด 50% 6 บิลแรก (949) จากนั้น 1,899/เดือน', totalContractMonths:60, totalSaving:5700 },
-          { term:'6Y', serviceType:'Visit', serviceCycle:'ทุก 12 เดือน', regular:1749, effectiveMonthly:874, promoMonths:6, postPromoPrice:1749, promo:'ลด 50% 6 บิลแรก (874) จากนั้น 1,749/เดือน', totalContractMonths:72, totalSaving:5250 },
-          { term:'6Y', serviceType:'Self', serviceCycle:'ทุก 12 เดือน', regular:1649, effectiveMonthly:824, promoMonths:6, postPromoPrice:1649, promo:'ลด 50% 6 บิลแรก (824) จากนั้น 1,649/เดือน', totalContractMonths:72, totalSaving:4950 }
+          { term:'5Y', serviceType:'Visit', serviceCycle:'ทุก 12 เดือน', regular:1999, effectiveMonthly:149, promoMonths:1, postPromoPrice:1999, billSchedule:[{range:'บิล 1',price:149,note:'ราคาพิเศษ'},{range:'บิล 2-6',price:999,note:'ลด 50%'},{range:'บิล 7-60',price:1999,note:'ราคาปกติ'}], promo:'บิลแรก 149 ต่อด้วยลด 50% 5 รอบบิล (999) จากนั้น 1,999/เดือน', totalContractMonths:60, totalSaving:6850 },
+          { term:'5Y', serviceType:'Self', serviceCycle:'ทุก 12 เดือน', regular:1899, effectiveMonthly:149, promoMonths:1, postPromoPrice:1899, billSchedule:[{range:'บิล 1',price:149,note:'ราคาพิเศษ'},{range:'บิล 2-6',price:949,note:'ลด 50%'},{range:'บิล 7-60',price:1899,note:'ราคาปกติ'}], promo:'บิลแรก 149 ต่อด้วยลด 50% 5 รอบบิล (949) จากนั้น 1,899/เดือน', totalContractMonths:60, totalSaving:6500 },
+          { term:'6Y', serviceType:'Visit', serviceCycle:'ทุก 12 เดือน', regular:1749, effectiveMonthly:149, promoMonths:1, postPromoPrice:1749, billSchedule:[{range:'บิล 1',price:149,note:'ราคาพิเศษ'},{range:'บิล 2-6',price:874,note:'ลด 50%'},{range:'บิล 7-72',price:1749,note:'ราคาปกติ'}], promo:'บิลแรก 149 ต่อด้วยลด 50% 5 รอบบิล (874) จากนั้น 1,749/เดือน', totalContractMonths:72, totalSaving:5975 },
+          { term:'6Y', serviceType:'Self', serviceCycle:'ทุก 12 เดือน', regular:1649, effectiveMonthly:149, promoMonths:1, postPromoPrice:1649, billSchedule:[{range:'บิล 1',price:149,note:'ราคาพิเศษ'},{range:'บิล 2-6',price:824,note:'ลด 50%'},{range:'บิล 7-72',price:1649,note:'ราคาปกติ'}], promo:'บิลแรก 149 ต่อด้วยลด 50% 5 รอบบิล (824) จากนั้น 1,649/เดือน', totalContractMonths:72, totalSaving:5625 }
         ]},
         { code:'WT1410NHEG.ABGPQTH', name:'Wash Tower · ซัก 14/อบ 10 กก. (Green)', plans:[
-          { term:'5Y', serviceType:'Visit', serviceCycle:'ทุก 12 เดือน', regular:1599, effectiveMonthly:799, promoMonths:6, postPromoPrice:1599, promo:'ลด 50% 6 บิลแรก (799) จากนั้น 1,599/เดือน', totalContractMonths:60, totalSaving:4800 },
-          { term:'5Y', serviceType:'Self', serviceCycle:'ทุก 12 เดือน', regular:1499, effectiveMonthly:749, promoMonths:6, postPromoPrice:1499, promo:'ลด 50% 6 บิลแรก (749) จากนั้น 1,499/เดือน', totalContractMonths:60, totalSaving:4500 },
-          { term:'6Y', serviceType:'Visit', serviceCycle:'ทุก 12 เดือน', regular:1399, effectiveMonthly:699, promoMonths:6, postPromoPrice:1399, promo:'ลด 50% 6 บิลแรก (699) จากนั้น 1,399/เดือน', totalContractMonths:72, totalSaving:4200 },
-          { term:'6Y', serviceType:'Self', serviceCycle:'ทุก 12 เดือน', regular:1299, effectiveMonthly:649, promoMonths:6, postPromoPrice:1299, promo:'ลด 50% 6 บิลแรก (649) จากนั้น 1,299/เดือน', totalContractMonths:72, totalSaving:3900 }
+          { term:'5Y', serviceType:'Visit', serviceCycle:'ทุก 12 เดือน', regular:1599, effectiveMonthly:149, promoMonths:1, postPromoPrice:1599, billSchedule:[{range:'บิล 1',price:149,note:'ราคาพิเศษ'},{range:'บิล 2-6',price:799,note:'ลด 50%'},{range:'บิล 7-60',price:1599,note:'ราคาปกติ'}], promo:'บิลแรก 149 ต่อด้วยลด 50% 5 รอบบิล (799) จากนั้น 1,599/เดือน', totalContractMonths:60, totalSaving:5450 },
+          { term:'5Y', serviceType:'Self', serviceCycle:'ทุก 12 เดือน', regular:1499, effectiveMonthly:149, promoMonths:1, postPromoPrice:1499, billSchedule:[{range:'บิล 1',price:149,note:'ราคาพิเศษ'},{range:'บิล 2-6',price:749,note:'ลด 50%'},{range:'บิล 7-60',price:1499,note:'ราคาปกติ'}], promo:'บิลแรก 149 ต่อด้วยลด 50% 5 รอบบิล (749) จากนั้น 1,499/เดือน', totalContractMonths:60, totalSaving:5100 },
+          { term:'6Y', serviceType:'Visit', serviceCycle:'ทุก 12 เดือน', regular:1399, effectiveMonthly:149, promoMonths:1, postPromoPrice:1399, billSchedule:[{range:'บิล 1',price:149,note:'ราคาพิเศษ'},{range:'บิล 2-6',price:699,note:'ลด 50%'},{range:'บิล 7-72',price:1399,note:'ราคาปกติ'}], promo:'บิลแรก 149 ต่อด้วยลด 50% 5 รอบบิล (699) จากนั้น 1,399/เดือน', totalContractMonths:72, totalSaving:4750 },
+          { term:'6Y', serviceType:'Self', serviceCycle:'ทุก 12 เดือน', regular:1299, effectiveMonthly:149, promoMonths:1, postPromoPrice:1299, billSchedule:[{range:'บิล 1',price:149,note:'ราคาพิเศษ'},{range:'บิล 2-6',price:649,note:'ลด 50%'},{range:'บิล 7-72',price:1299,note:'ราคาปกติ'}], promo:'บิลแรก 149 ต่อด้วยลด 50% 5 รอบบิล (649) จากนั้น 1,299/เดือน', totalContractMonths:72, totalSaving:4400 }
         ]},
         { code:'WT1410NHEN.ABNPQTH', name:'Wash Tower · ซัก 14/อบ 10 กก. (Navy)', plans:[
-          { term:'5Y', serviceType:'Visit', serviceCycle:'ทุก 12 เดือน', regular:1599, effectiveMonthly:799, promoMonths:6, postPromoPrice:1599, promo:'ลด 50% 6 บิลแรก (799) จากนั้น 1,599/เดือน', totalContractMonths:60, totalSaving:4800 },
-          { term:'5Y', serviceType:'Self', serviceCycle:'ทุก 12 เดือน', regular:1499, effectiveMonthly:749, promoMonths:6, postPromoPrice:1499, promo:'ลด 50% 6 บิลแรก (749) จากนั้น 1,499/เดือน', totalContractMonths:60, totalSaving:4500 },
-          { term:'6Y', serviceType:'Visit', serviceCycle:'ทุก 12 เดือน', regular:1399, effectiveMonthly:699, promoMonths:6, postPromoPrice:1399, promo:'ลด 50% 6 บิลแรก (699) จากนั้น 1,399/เดือน', totalContractMonths:72, totalSaving:4200 },
-          { term:'6Y', serviceType:'Self', serviceCycle:'ทุก 12 เดือน', regular:1299, effectiveMonthly:649, promoMonths:6, postPromoPrice:1299, promo:'ลด 50% 6 บิลแรก (649) จากนั้น 1,299/เดือน', totalContractMonths:72, totalSaving:3900 }
+          { term:'5Y', serviceType:'Visit', serviceCycle:'ทุก 12 เดือน', regular:1599, effectiveMonthly:149, promoMonths:1, postPromoPrice:1599, billSchedule:[{range:'บิล 1',price:149,note:'ราคาพิเศษ'},{range:'บิล 2-6',price:799,note:'ลด 50%'},{range:'บิล 7-60',price:1599,note:'ราคาปกติ'}], promo:'บิลแรก 149 ต่อด้วยลด 50% 5 รอบบิล (799) จากนั้น 1,599/เดือน', totalContractMonths:60, totalSaving:5450 },
+          { term:'5Y', serviceType:'Self', serviceCycle:'ทุก 12 เดือน', regular:1499, effectiveMonthly:149, promoMonths:1, postPromoPrice:1499, billSchedule:[{range:'บิล 1',price:149,note:'ราคาพิเศษ'},{range:'บิล 2-6',price:749,note:'ลด 50%'},{range:'บิล 7-60',price:1499,note:'ราคาปกติ'}], promo:'บิลแรก 149 ต่อด้วยลด 50% 5 รอบบิล (749) จากนั้น 1,499/เดือน', totalContractMonths:60, totalSaving:5100 },
+          { term:'6Y', serviceType:'Visit', serviceCycle:'ทุก 12 เดือน', regular:1399, effectiveMonthly:149, promoMonths:1, postPromoPrice:1399, billSchedule:[{range:'บิล 1',price:149,note:'ราคาพิเศษ'},{range:'บิล 2-6',price:699,note:'ลด 50%'},{range:'บิล 7-72',price:1399,note:'ราคาปกติ'}], promo:'บิลแรก 149 ต่อด้วยลด 50% 5 รอบบิล (699) จากนั้น 1,399/เดือน', totalContractMonths:72, totalSaving:4750 },
+          { term:'6Y', serviceType:'Self', serviceCycle:'ทุก 12 เดือน', regular:1299, effectiveMonthly:149, promoMonths:1, postPromoPrice:1299, billSchedule:[{range:'บิล 1',price:149,note:'ราคาพิเศษ'},{range:'บิล 2-6',price:649,note:'ลด 50%'},{range:'บิล 7-72',price:1299,note:'ราคาปกติ'}], promo:'บิลแรก 149 ต่อด้วยลด 50% 5 รอบบิล (649) จากนั้น 1,299/เดือน', totalContractMonths:72, totalSaving:4400 }
         ]}
       ]},
       'เครื่องซักผ้า Front Load': { models: [
@@ -1061,20 +938,20 @@ function lgCalculator() {
           { term:'6Y', serviceType:'Self', serviceCycle:'ทุก 12 เดือน', regular:649, effectiveMonthly:324, promoMonths:6, postPromoPrice:649, promo:'ลด 50% 6 บิลแรก (324) จากนั้น 649/เดือน', totalContractMonths:72, totalSaving:1950 }
         ]},
         { code:'S3MFC.ALBPETH', name:'ตู้ถนอมผ้า Styler (3 ไม้แขวน)', plans:[
-          { term:'5Y', serviceType:'Self', serviceCycle:'ทุก 12 เดือน', regular:899, effectiveMonthly:449, promoMonths:12, postPromoPrice:899, promo:'ลด 50% 12 บิลแรก (449) จากนั้น 899/เดือน', totalContractMonths:60, totalSaving:5400 },
-          { term:'6Y', serviceType:'Self', serviceCycle:'ทุก 12 เดือน', regular:799, effectiveMonthly:399, promoMonths:12, postPromoPrice:799, promo:'ลด 50% 12 บิลแรก (399) จากนั้น 799/เดือน', totalContractMonths:72, totalSaving:4800 }
+          { term:'5Y', serviceType:'Self', serviceCycle:'ทุก 12 เดือน', regular:899, effectiveMonthly:149, promoMonths:1, postPromoPrice:899, promo:'ราคา 149.- (1 รอบบิลแรก) จากนั้น 899/เดือน', totalContractMonths:60, totalSaving:5700 },
+          { term:'6Y', serviceType:'Self', serviceCycle:'ทุก 12 เดือน', regular:799, effectiveMonthly:149, promoMonths:1, postPromoPrice:799, promo:'ราคา 149.- (1 รอบบิลแรก) จากนั้น 799/เดือน', totalContractMonths:72, totalSaving:5050 }
         ]},
         { code:'DFC335HM.ABMPETH', name:'เครื่องล้างจาน · สีดำ · WiFi · Auto Open Dry', plans:[
-          { term:'5Y', serviceType:'Visit', serviceCycle:'ทุก 12 เดือน', regular:899, effectiveMonthly:449, promoMonths:12, postPromoPrice:899, promo:'ลด 50% 12 บิลแรก (449) จากนั้น 899/เดือน', totalContractMonths:60, totalSaving:5400 },
-          { term:'5Y', serviceType:'Self', serviceCycle:'ทุก 12 เดือน', regular:849, effectiveMonthly:424, promoMonths:12, postPromoPrice:849, promo:'ลด 50% 12 บิลแรก (424) จากนั้น 849/เดือน', totalContractMonths:60, totalSaving:5100 },
-          { term:'6Y', serviceType:'Visit', serviceCycle:'ทุก 12 เดือน', regular:799, effectiveMonthly:399, promoMonths:12, postPromoPrice:799, promo:'ลด 50% 12 บิลแรก (399) จากนั้น 799/เดือน', totalContractMonths:72, totalSaving:4800 },
-          { term:'6Y', serviceType:'Self', serviceCycle:'ทุก 12 เดือน', regular:749, effectiveMonthly:374, promoMonths:12, postPromoPrice:749, promo:'ลด 50% 12 บิลแรก (374) จากนั้น 749/เดือน', totalContractMonths:72, totalSaving:4500 }
+          { term:'5Y', serviceType:'Visit', serviceCycle:'ทุก 12 เดือน', regular:899, effectiveMonthly:149, promoMonths:1, postPromoPrice:899, promo:'ราคา 149.- (1 รอบบิลแรก) จากนั้น 899/เดือน', totalContractMonths:60, totalSaving:5700 },
+          { term:'5Y', serviceType:'Self', serviceCycle:'ทุก 12 เดือน', regular:849, effectiveMonthly:149, promoMonths:1, postPromoPrice:849, promo:'ราคา 149.- (1 รอบบิลแรก) จากนั้น 849/เดือน', totalContractMonths:60, totalSaving:5375 },
+          { term:'6Y', serviceType:'Visit', serviceCycle:'ทุก 12 เดือน', regular:799, effectiveMonthly:149, promoMonths:1, postPromoPrice:799, promo:'ราคา 149.- (1 รอบบิลแรก) จากนั้น 799/เดือน', totalContractMonths:72, totalSaving:5050 },
+          { term:'6Y', serviceType:'Self', serviceCycle:'ทุก 12 เดือน', regular:749, effectiveMonthly:149, promoMonths:1, postPromoPrice:749, promo:'ราคา 149.- (1 รอบบิลแรก) จากนั้น 749/เดือน', totalContractMonths:72, totalSaving:4725 }
         ]},
         { code:'DFC533FV.APYPETH', name:'เครื่องล้างจาน · สีเงิน · WiFi', plans:[
-          { term:'5Y', serviceType:'Visit', serviceCycle:'ทุก 12 เดือน', regular:749, effectiveMonthly:749, promoMonths:0, postPromoPrice:749, promo:'', totalContractMonths:60, totalSaving:0 },
-          { term:'5Y', serviceType:'Self', serviceCycle:'ทุก 12 เดือน', regular:699, effectiveMonthly:699, promoMonths:0, postPromoPrice:699, promo:'', totalContractMonths:60, totalSaving:0 },
-          { term:'6Y', serviceType:'Visit', serviceCycle:'ทุก 12 เดือน', regular:649, effectiveMonthly:649, promoMonths:0, postPromoPrice:649, promo:'', totalContractMonths:72, totalSaving:0 },
-          { term:'6Y', serviceType:'Self', serviceCycle:'ทุก 12 เดือน', regular:599, effectiveMonthly:599, promoMonths:0, postPromoPrice:599, promo:'', totalContractMonths:72, totalSaving:0 }
+          { term:'5Y', serviceType:'Visit', serviceCycle:'ทุก 12 เดือน', regular:749, effectiveMonthly:149, promoMonths:1, postPromoPrice:749, promo:'ราคา 149.- (1 รอบบิลแรก) จากนั้น 749/เดือน', totalContractMonths:60, totalSaving:4725 },
+          { term:'5Y', serviceType:'Self', serviceCycle:'ทุก 12 เดือน', regular:699, effectiveMonthly:149, promoMonths:1, postPromoPrice:699, promo:'ราคา 149.- (1 รอบบิลแรก) จากนั้น 699/เดือน', totalContractMonths:60, totalSaving:4400 },
+          { term:'6Y', serviceType:'Visit', serviceCycle:'ทุก 12 เดือน', regular:649, effectiveMonthly:149, promoMonths:1, postPromoPrice:649, promo:'ราคา 149.- (1 รอบบิลแรก) จากนั้น 649/เดือน', totalContractMonths:72, totalSaving:4075 },
+          { term:'6Y', serviceType:'Self', serviceCycle:'ทุก 12 เดือน', regular:599, effectiveMonthly:149, promoMonths:1, postPromoPrice:599, promo:'ราคา 149.- (1 รอบบิลแรก) จากนั้น 599/เดือน', totalContractMonths:72, totalSaving:3750 }
         ]}
       ]},
 
@@ -1173,6 +1050,16 @@ function lgCalculator() {
           { term:'5Y', serviceType:'Visit', serviceCycle:'ทุก 12 เดือน', regular:749, effectiveMonthly:749, promoMonths:0, postPromoPrice:749, promo:'', totalContractMonths:60, totalSaving:0 }
         ]}
       ]},
+      'เครื่องปรับอากาศ ARTCOOL': { models: [
+        { code:'ART13A.SR1', name:'ARTCOOL Mirror · 12,200 BTU · เบอร์ 5', plans:[
+          { term:'5Y', serviceType:'Visit', serviceCycle:'ทุก 6 เดือน',  regular:1049, effectiveMonthly:149, promoMonths:6, postPromoPrice:1049, promo:'ราคา 149.- เดือนแรก ต่อด้วยลด 50% 5 เดือน (524) จากนั้น 1,049/เดือน', totalContractMonths:60, totalSaving:3525, billSchedule:[{range:'บิล 1',price:149,note:'โปรพิเศษเดือนแรก'},{range:'บิล 2-6',price:524,note:'ลด 50%'},{range:'บิล 7-60',price:1049,note:''}] },
+          { term:'5Y', serviceType:'Visit', serviceCycle:'ทุก 12 เดือน', regular:949,  effectiveMonthly:149, promoMonths:6, postPromoPrice:949,  promo:'ราคา 149.- เดือนแรก ต่อด้วยลด 50% 5 เดือน (474) จากนั้น 949/เดือน',  totalContractMonths:60, totalSaving:3175, billSchedule:[{range:'บิล 1',price:149,note:'โปรพิเศษเดือนแรก'},{range:'บิล 2-6',price:474,note:'ลด 50%'},{range:'บิล 7-60',price:949,note:''}] }
+        ]},
+        { code:'ART18A.SR1', name:'ARTCOOL Mirror · 18,000 BTU · เบอร์ 5', plans:[
+          { term:'5Y', serviceType:'Visit', serviceCycle:'ทุก 6 เดือน',  regular:1249, effectiveMonthly:149, promoMonths:6, postPromoPrice:1249, promo:'ราคา 149.- เดือนแรก ต่อด้วยลด 50% 5 เดือน (624) จากนั้น 1,249/เดือน', totalContractMonths:60, totalSaving:4225, billSchedule:[{range:'บิล 1',price:149,note:'โปรพิเศษเดือนแรก'},{range:'บิล 2-6',price:624,note:'ลด 50%'},{range:'บิล 7-60',price:1249,note:''}] },
+          { term:'5Y', serviceType:'Visit', serviceCycle:'ทุก 12 เดือน', regular:1149, effectiveMonthly:149, promoMonths:6, postPromoPrice:1149, promo:'ราคา 149.- เดือนแรก ต่อด้วยลด 50% 5 เดือน (574) จากนั้น 1,149/เดือน', totalContractMonths:60, totalSaving:3875, billSchedule:[{range:'บิล 1',price:149,note:'โปรพิเศษเดือนแรก'},{range:'บิล 2-6',price:574,note:'ลด 50%'},{range:'บิล 7-60',price:1149,note:''}] }
+        ]}
+      ]},
       'แอร์เชิงพาณิชย์ SAC': { models: [
         { code:'ZV-Q18GM1E0.EWGHATH', name:'Ceiling Suspended · 18,000 BTU', plans:[
           { term:'5Y', serviceType:'Visit', serviceCycle:'ทุก 4 เดือน', regular:1599, effectiveMonthly:1599, promoMonths:0, postPromoPrice:1599, promo:'', totalContractMonths:60, totalSaving:0 }
@@ -1192,74 +1079,74 @@ function lgCalculator() {
           { term:'5Y', serviceType:'No Service', serviceCycle:'ไม่มีบริการ', regular:749, effectiveMonthly:374.50, promoMonths:12, postPromoPrice:749, advancePayment:4494, billSchedule:[{range:'บิล 1-12',price:374.5,note:'ครึ่งราคา (จ่ายล่วงหน้าแล้ว)'},{range:'บิล 13-24',price:374,note:'โปรลด 50% รายเดือน'},{range:'บิล 25-60',price:749,note:'ราคาปกติ'}], promo:'Adv. 50% 12 บิลแรก (374.50) → บิล 13-24 (374) → บิล 25-60 (749)', totalContractMonths:60, totalSaving:4500 }
         ]},
         { code:'OLED48C6PSA.ATM', name:'LG OLED evo C6 · 48"', plans:[
-          { term:'5Y', serviceType:'No Service', serviceCycle:'ไม่มีบริการ', regular:699, effectiveMonthly:349.50, promoMonths:12, postPromoPrice:699, advancePayment:4194, billSchedule:[{range:'บิล 1-12',price:349.5,note:'ครึ่งราคา (จ่ายล่วงหน้าแล้ว)'},{range:'บิล 13-60',price:699,note:'ราคาปกติ'}], promo:'Adv. 50% 12 บิลแรก (349.50) → บิล 13-60 (699)', totalContractMonths:60, totalSaving:0 }
+          { term:'5Y', serviceType:'No Service', serviceCycle:'ไม่มีบริการ', regular:699, effectiveMonthly:349.50, promoMonths:0, postPromoPrice:699, advancePayment:4194, billSchedule:[{range:'บิล 1-12',price:349.5,note:'ครึ่งราคา (จ่ายล่วงหน้าแล้ว)'},{range:'บิล 13-60',price:699,note:'ราคาปกติ'}], promo:'Adv. 50% 12 บิลแรก (349.50) → บิล 13-60 (699)', totalContractMonths:60, totalSaving:0 }
         ]},
         { code:'OLED55C6PSA.ATM', name:'LG OLED evo C6 · 55" (NEW)', plans:[
-          { term:'5Y', serviceType:'No Service', serviceCycle:'ไม่มีบริการ', regular:1099, effectiveMonthly:549.50, promoMonths:12, postPromoPrice:1099, advancePayment:6594, billSchedule:[{range:'บิล 1-12',price:549.5,note:'ครึ่งราคา (จ่ายล่วงหน้าแล้ว)'},{range:'บิล 13-18',price:549,note:'โปรลด 50% รายเดือน'},{range:'บิล 19-60',price:1099,note:'ราคาปกติ'}], promo:'Adv. 50% 12 บิลแรก (549.50) → บิล 13-18 (549) → บิล 19-60 (1,099)', totalContractMonths:60, totalSaving:3300 }
+          { term:'5Y', serviceType:'No Service', serviceCycle:'ไม่มีบริการ', regular:1099, effectiveMonthly:549.50, promoMonths:6, postPromoPrice:1099, advancePayment:6594, billSchedule:[{range:'บิล 1-12',price:549.5,note:'ครึ่งราคา (จ่ายล่วงหน้าแล้ว)'},{range:'บิล 13-18',price:549,note:'โปรลด 50% รายเดือน'},{range:'บิล 19-60',price:1099,note:'ราคาปกติ'}], promo:'Adv. 50% 12 บิลแรก (549.50) → บิล 13-18 (549) → บิล 19-60 (1,099)', totalContractMonths:60, totalSaving:3300 }
         ]},
         { code:'OLED65C6PSA.ATM', name:'LG OLED evo C6 · 65" (NEW)', plans:[
-          { term:'5Y', serviceType:'No Service', serviceCycle:'ไม่มีบริการ', regular:1299, effectiveMonthly:649.50, promoMonths:12, postPromoPrice:1299, advancePayment:7794, billSchedule:[{range:'บิล 1-12',price:649.5,note:'ครึ่งราคา (จ่ายล่วงหน้าแล้ว)'},{range:'บิล 13-18',price:649,note:'โปรลด 50% รายเดือน'},{range:'บิล 19-60',price:1299,note:'ราคาปกติ'}], promo:'Adv. 50% 12 บิลแรก (649.50) → บิล 13-18 (649) → บิล 19-60 (1,299)', totalContractMonths:60, totalSaving:3900 }
+          { term:'5Y', serviceType:'No Service', serviceCycle:'ไม่มีบริการ', regular:1299, effectiveMonthly:649.50, promoMonths:6, postPromoPrice:1299, advancePayment:7794, billSchedule:[{range:'บิล 1-12',price:649.5,note:'ครึ่งราคา (จ่ายล่วงหน้าแล้ว)'},{range:'บิล 13-18',price:649,note:'โปรลด 50% รายเดือน'},{range:'บิล 19-60',price:1299,note:'ราคาปกติ'}], promo:'Adv. 50% 12 บิลแรก (649.50) → บิล 13-18 (649) → บิล 19-60 (1,299)', totalContractMonths:60, totalSaving:3900 }
         ]},
         { code:'OLED77C6PSA.ATM', name:'LG OLED evo C6 · 77"', plans:[
-          { term:'5Y', serviceType:'No Service', serviceCycle:'ไม่มีบริการ', regular:1999, effectiveMonthly:999.50, promoMonths:12, postPromoPrice:1999, advancePayment:11994, billSchedule:[{range:'บิล 1-12',price:999.5,note:'ครึ่งราคา (จ่ายล่วงหน้าแล้ว)'},{range:'บิล 13-18',price:999,note:'โปรลด 50% รายเดือน'},{range:'บิล 19-60',price:1999,note:'ราคาปกติ'}], promo:'Adv. 50% 12 บิลแรก (999.50) → บิล 13-18 (999) → บิล 19-60 (1,999)', totalContractMonths:60, totalSaving:6000 }
+          { term:'5Y', serviceType:'No Service', serviceCycle:'ไม่มีบริการ', regular:1999, effectiveMonthly:999.50, promoMonths:6, postPromoPrice:1999, advancePayment:11994, billSchedule:[{range:'บิล 1-12',price:999.5,note:'ครึ่งราคา (จ่ายล่วงหน้าแล้ว)'},{range:'บิล 13-18',price:999,note:'โปรลด 50% รายเดือน'},{range:'บิล 19-60',price:1999,note:'ราคาปกติ'}], promo:'Adv. 50% 12 บิลแรก (999.50) → บิล 13-18 (999) → บิล 19-60 (1,999)', totalContractMonths:60, totalSaving:6000 }
         ]},
         { code:'55QNED80BSA.ATM', name:'LG QNED 80 · 55"', plans:[
-          { term:'5Y', serviceType:'No Service', serviceCycle:'ไม่มีบริการ', regular:549, effectiveMonthly:274.50, promoMonths:12, postPromoPrice:549, advancePayment:3294, billSchedule:[{range:'บิล 1-12',price:274.5,note:'ครึ่งราคา (จ่ายล่วงหน้าแล้ว)'},{range:'บิล 13-60',price:549,note:'ราคาปกติ'}], promo:'Adv. 50% 12 บิลแรก (274.50) → บิล 13-60 (549)', totalContractMonths:60, totalSaving:0 }
+          { term:'5Y', serviceType:'No Service', serviceCycle:'ไม่มีบริการ', regular:549, effectiveMonthly:274.50, promoMonths:0, postPromoPrice:549, advancePayment:3294, billSchedule:[{range:'บิล 1-12',price:274.5,note:'ครึ่งราคา (จ่ายล่วงหน้าแล้ว)'},{range:'บิล 13-60',price:549,note:'ราคาปกติ'}], promo:'Adv. 50% 12 บิลแรก (274.50) → บิล 13-60 (549)', totalContractMonths:60, totalSaving:0 }
         ]},
         { code:'65QNED80BSA.ATM', name:'LG QNED 80 · 65"', plans:[
-          { term:'5Y', serviceType:'No Service', serviceCycle:'ไม่มีบริการ', regular:649, effectiveMonthly:324.50, promoMonths:12, postPromoPrice:649, advancePayment:3894, billSchedule:[{range:'บิล 1-12',price:324.5,note:'ครึ่งราคา (จ่ายล่วงหน้าแล้ว)'},{range:'บิล 13-60',price:649,note:'ราคาปกติ'}], promo:'Adv. 50% 12 บิลแรก (324.50) → บิล 13-60 (649)', totalContractMonths:60, totalSaving:0 }
+          { term:'5Y', serviceType:'No Service', serviceCycle:'ไม่มีบริการ', regular:649, effectiveMonthly:324.50, promoMonths:0, postPromoPrice:649, advancePayment:3894, billSchedule:[{range:'บิล 1-12',price:324.5,note:'ครึ่งราคา (จ่ายล่วงหน้าแล้ว)'},{range:'บิล 13-60',price:649,note:'ราคาปกติ'}], promo:'Adv. 50% 12 บิลแรก (324.50) → บิล 13-60 (649)', totalContractMonths:60, totalSaving:0 }
         ]},
         { code:'75QNED86BSA.ATM', name:'LG QNED 86 · 75"', plans:[
-          { term:'5Y', serviceType:'No Service', serviceCycle:'ไม่มีบริการ', regular:849, effectiveMonthly:424.50, promoMonths:12, postPromoPrice:849, advancePayment:5094, billSchedule:[{range:'บิล 1-12',price:424.5,note:'ครึ่งราคา (จ่ายล่วงหน้าแล้ว)'},{range:'บิล 13-60',price:849,note:'ราคาปกติ'}], promo:'Adv. 50% 12 บิลแรก (424.50) → บิล 13-60 (849)', totalContractMonths:60, totalSaving:0 }
+          { term:'5Y', serviceType:'No Service', serviceCycle:'ไม่มีบริการ', regular:849, effectiveMonthly:424.50, promoMonths:0, postPromoPrice:849, advancePayment:5094, billSchedule:[{range:'บิล 1-12',price:424.5,note:'ครึ่งราคา (จ่ายล่วงหน้าแล้ว)'},{range:'บิล 13-60',price:849,note:'ราคาปกติ'}], promo:'Adv. 50% 12 บิลแรก (424.50) → บิล 13-60 (849)', totalContractMonths:60, totalSaving:0 }
         ]},
         { code:'85QNED80BSA.ATM', name:'LG QNED 80 · 85" (NEW)', plans:[
-          { term:'5Y', serviceType:'No Service', serviceCycle:'ไม่มีบริการ', regular:1349, effectiveMonthly:674.50, promoMonths:12, postPromoPrice:1349, advancePayment:8094, billSchedule:[{range:'บิล 1-12',price:674.5,note:'ครึ่งราคา (จ่ายล่วงหน้าแล้ว)'},{range:'บิล 13-60',price:1349,note:'ราคาปกติ'}], promo:'Adv. 50% 12 บิลแรก (674.50) → บิล 13-60 (1,349)', totalContractMonths:60, totalSaving:0 }
+          { term:'5Y', serviceType:'No Service', serviceCycle:'ไม่มีบริการ', regular:1349, effectiveMonthly:674.50, promoMonths:0, postPromoPrice:1349, advancePayment:8094, billSchedule:[{range:'บิล 1-12',price:674.5,note:'ครึ่งราคา (จ่ายล่วงหน้าแล้ว)'},{range:'บิล 13-60',price:1349,note:'ราคาปกติ'}], promo:'Adv. 50% 12 บิลแรก (674.50) → บิล 13-60 (1,349)', totalContractMonths:60, totalSaving:0 }
         ]},
         { code:'100QNED86BS.ATM', name:'LG QNED 86 · 100" (NEW)', plans:[
-          { term:'5Y', serviceType:'No Service', serviceCycle:'ไม่มีบริการ', regular:2599, effectiveMonthly:1299.50, promoMonths:12, postPromoPrice:2599, advancePayment:15594, billSchedule:[{range:'บิล 1-12',price:1299.5,note:'ครึ่งราคา (จ่ายล่วงหน้าแล้ว)'},{range:'บิล 13-18',price:1299,note:'โปรลด 50% รายเดือน'},{range:'บิล 19-60',price:2599,note:'ราคาปกติ'}], promo:'Adv. 50% 12 บิลแรก (1,299.50) → บิล 13-18 (1,299) → บิล 19-60 (2,599)', totalContractMonths:60, totalSaving:7800 }
+          { term:'5Y', serviceType:'No Service', serviceCycle:'ไม่มีบริการ', regular:2599, effectiveMonthly:1299.50, promoMonths:6, postPromoPrice:2599, advancePayment:15594, billSchedule:[{range:'บิล 1-12',price:1299.5,note:'ครึ่งราคา (จ่ายล่วงหน้าแล้ว)'},{range:'บิล 13-18',price:1299,note:'โปรลด 50% รายเดือน'},{range:'บิล 19-60',price:2599,note:'ราคาปกติ'}], promo:'Adv. 50% 12 บิลแรก (1,299.50) → บิล 13-18 (1,299) → บิล 19-60 (2,599)', totalContractMonths:60, totalSaving:7800 }
         ]},
         { code:'65NU855BPSA.ATM', name:'LG NANO 4K UHD · 65"', plans:[
-          { term:'5Y', serviceType:'No Service', serviceCycle:'ไม่มีบริการ', regular:549, effectiveMonthly:274.50, promoMonths:12, postPromoPrice:549, advancePayment:3294, billSchedule:[{range:'บิล 1-12',price:274.5,note:'ครึ่งราคา (จ่ายล่วงหน้าแล้ว)'},{range:'บิล 13-60',price:549,note:'ราคาปกติ'}], promo:'Adv. 50% 12 บิลแรก (274.50) → บิล 13-60 (549)', totalContractMonths:60, totalSaving:0 }
+          { term:'5Y', serviceType:'No Service', serviceCycle:'ไม่มีบริการ', regular:549, effectiveMonthly:274.50, promoMonths:0, postPromoPrice:549, advancePayment:3294, billSchedule:[{range:'บิล 1-12',price:274.5,note:'ครึ่งราคา (จ่ายล่วงหน้าแล้ว)'},{range:'บิล 13-60',price:549,note:'ราคาปกติ'}], promo:'Adv. 50% 12 บิลแรก (274.50) → บิล 13-60 (549)', totalContractMonths:60, totalSaving:0 }
         ]},
         { code:'75NU855BPSA.ATM', name:'LG NANO 4K UHD · 75" (NEW)', plans:[
-          { term:'5Y', serviceType:'No Service', serviceCycle:'ไม่มีบริการ', regular:699, effectiveMonthly:349.50, promoMonths:12, postPromoPrice:699, advancePayment:4194, billSchedule:[{range:'บิล 1-12',price:349.5,note:'ครึ่งราคา (จ่ายล่วงหน้าแล้ว)'},{range:'บิล 13-60',price:699,note:'ราคาปกติ'}], promo:'Adv. 50% 12 บิลแรก (349.50) → บิล 13-60 (699)', totalContractMonths:60, totalSaving:0 }
+          { term:'5Y', serviceType:'No Service', serviceCycle:'ไม่มีบริการ', regular:699, effectiveMonthly:349.50, promoMonths:0, postPromoPrice:699, advancePayment:4194, billSchedule:[{range:'บิล 1-12',price:349.5,note:'ครึ่งราคา (จ่ายล่วงหน้าแล้ว)'},{range:'บิล 13-60',price:699,note:'ราคาปกติ'}], promo:'Adv. 50% 12 บิลแรก (349.50) → บิล 13-60 (699)', totalContractMonths:60, totalSaving:0 }
         ]}
       ]},
       'มอนิเตอร์': { models: [
         { code:'34U650A-B.ATM', name:'34" WQHD IPS Curved 100Hz', plans:[
-          { term:'5Y', serviceType:'No Service', serviceCycle:'ไม่มีบริการ', regular:399, effectiveMonthly:199.50, promoMonths:12, postPromoPrice:399, advancePayment:2394, billSchedule:[{range:'บิล 1-12',price:199.5,note:'ครึ่งราคา (จ่ายล่วงหน้าแล้ว)'},{range:'บิล 13-60',price:399,note:'ราคาปกติ'}], promo:'Adv. 50% 12 บิลแรก (199.50) → บิล 13-60 (399)', totalContractMonths:60, totalSaving:0 }
+          { term:'5Y', serviceType:'No Service', serviceCycle:'ไม่มีบริการ', regular:399, effectiveMonthly:199.50, promoMonths:0, postPromoPrice:399, advancePayment:2394, billSchedule:[{range:'บิล 1-12',price:199.5,note:'ครึ่งราคา (จ่ายล่วงหน้าแล้ว)'},{range:'บิล 13-60',price:399,note:'ราคาปกติ'}], promo:'Adv. 50% 12 บิลแรก (199.50) → บิล 13-60 (399)', totalContractMonths:60, totalSaving:0 }
         ]},
         { code:'45GX950A-B.ATM', name:'UltraGear OLED 45" 5K2K', plans:[
-          { term:'5Y', serviceType:'No Service', serviceCycle:'ไม่มีบริการ', regular:1499, effectiveMonthly:749.50, promoMonths:12, postPromoPrice:1499, advancePayment:8994, billSchedule:[{range:'บิล 1-12',price:749.5,note:'ครึ่งราคา (จ่ายล่วงหน้าแล้ว)'},{range:'บิล 13-18',price:749,note:'โปรลด 50% รายเดือน'},{range:'บิล 19-60',price:1499,note:'ราคาปกติ'}], promo:'Adv. 50% 12 บิลแรก (749.50) → บิล 13-18 (749) → บิล 19-60 (1,499)', totalContractMonths:60, totalSaving:4500 }
+          { term:'5Y', serviceType:'No Service', serviceCycle:'ไม่มีบริการ', regular:1499, effectiveMonthly:749.50, promoMonths:6, postPromoPrice:1499, advancePayment:8994, billSchedule:[{range:'บิล 1-12',price:749.5,note:'ครึ่งราคา (จ่ายล่วงหน้าแล้ว)'},{range:'บิล 13-18',price:749,note:'โปรลด 50% รายเดือน'},{range:'บิล 19-60',price:1499,note:'ราคาปกติ'}], promo:'Adv. 50% 12 บิลแรก (749.50) → บิล 13-18 (749) → บิล 19-60 (1,499)', totalContractMonths:60, totalSaving:4500 }
         ]},
         { code:'32U889SA-W.ATM', name:'31.5" 4K IPS Smart Monitor Swing', plans:[
           { term:'5Y', serviceType:'No Service', serviceCycle:'ไม่มีบริการ', regular:699, effectiveMonthly:349.50, promoMonths:12, postPromoPrice:699, advancePayment:4194, billSchedule:[{range:'บิล 1-12',price:349.5,note:'ครึ่งราคา (จ่ายล่วงหน้าแล้ว)'},{range:'บิล 13-24',price:349,note:'โปรลด 50% รายเดือน'},{range:'บิล 25-60',price:699,note:'ราคาปกติ'}], promo:'Adv. 50% 12 บิลแรก (349.50) → บิล 13-24 (349) → บิล 25-60 (699)', totalContractMonths:60, totalSaving:4200 }
         ]},
         { code:'27GX704A-B.ATM', name:'UltraGear GX7 27" 240Hz OLED QHD', plans:[
-          { term:'5Y', serviceType:'No Service', serviceCycle:'ไม่มีบริการ', regular:349, effectiveMonthly:174.50, promoMonths:12, postPromoPrice:349, advancePayment:2094, billSchedule:[{range:'บิล 1-12',price:174.5,note:'ครึ่งราคา (จ่ายล่วงหน้าแล้ว)'},{range:'บิล 13-15',price:174,note:'โปรลด 50% รายเดือน'},{range:'บิล 16-60',price:349,note:'ราคาปกติ'}], promo:'Adv. 50% 12 บิลแรก (174.50) → บิล 13-15 (174) → บิล 16-60 (349)', totalContractMonths:60, totalSaving:525 }
+          { term:'5Y', serviceType:'No Service', serviceCycle:'ไม่มีบริการ', regular:349, effectiveMonthly:174.50, promoMonths:3, postPromoPrice:349, advancePayment:2094, billSchedule:[{range:'บิล 1-12',price:174.5,note:'ครึ่งราคา (จ่ายล่วงหน้าแล้ว)'},{range:'บิล 13-15',price:174,note:'โปรลด 50% รายเดือน'},{range:'บิล 16-60',price:349,note:'ราคาปกติ'}], promo:'Adv. 50% 12 บิลแรก (174.50) → บิล 13-15 (174) → บิล 16-60 (349)', totalContractMonths:60, totalSaving:525 }
         ]},
         { code:'40U990A-W.ATM', name:'LG UltraFine 40" Nano IPS 5K2K (NEW)', plans:[
-          { term:'5Y', serviceType:'No Service', serviceCycle:'ไม่มีบริการ', regular:999, effectiveMonthly:499.50, promoMonths:12, postPromoPrice:999, advancePayment:5994, billSchedule:[{range:'บิล 1-12',price:499.5,note:'ครึ่งราคา (จ่ายล่วงหน้าแล้ว)'},{range:'บิล 13-18',price:499,note:'โปรลด 50% รายเดือน'},{range:'บิล 19-60',price:999,note:'ราคาปกติ'}], promo:'Adv. 50% 12 บิลแรก (499.50) → บิล 13-18 (499) → บิล 19-60 (999)', totalContractMonths:60, totalSaving:3000 }
+          { term:'5Y', serviceType:'No Service', serviceCycle:'ไม่มีบริการ', regular:999, effectiveMonthly:499.50, promoMonths:6, postPromoPrice:999, advancePayment:5994, billSchedule:[{range:'บิล 1-12',price:499.5,note:'ครึ่งราคา (จ่ายล่วงหน้าแล้ว)'},{range:'บิล 13-18',price:499,note:'โปรลด 50% รายเดือน'},{range:'บิล 19-60',price:999,note:'ราคาปกติ'}], promo:'Adv. 50% 12 บิลแรก (499.50) → บิล 13-18 (499) → บิล 19-60 (999)', totalContractMonths:60, totalSaving:3000 }
         ]},
         { code:'52G930B-B.ATM', name:'UltraGear 52" OLED QHD 240Hz (NEW)', plans:[
-          { term:'5Y', serviceType:'No Service', serviceCycle:'ไม่มีบริการ', regular:1199, effectiveMonthly:599.50, promoMonths:12, postPromoPrice:1199, advancePayment:7194, billSchedule:[{range:'บิล 1-12',price:599.5,note:'ครึ่งราคา (จ่ายล่วงหน้าแล้ว)'},{range:'บิล 13-18',price:599,note:'โปรลด 50% รายเดือน'},{range:'บิล 19-60',price:1199,note:'ราคาปกติ'}], promo:'Adv. 50% 12 บิลแรก (599.50) → บิล 13-18 (599) → บิล 19-60 (1,199)', totalContractMonths:60, totalSaving:3600 }
+          { term:'5Y', serviceType:'No Service', serviceCycle:'ไม่มีบริการ', regular:1199, effectiveMonthly:599.50, promoMonths:6, postPromoPrice:1199, advancePayment:7194, billSchedule:[{range:'บิล 1-12',price:599.5,note:'ครึ่งราคา (จ่ายล่วงหน้าแล้ว)'},{range:'บิล 13-18',price:599,note:'โปรลด 50% รายเดือน'},{range:'บิล 19-60',price:1199,note:'ราคาปกติ'}], promo:'Adv. 50% 12 บิลแรก (599.50) → บิล 13-18 (599) → บิล 19-60 (1,199)', totalContractMonths:60, totalSaving:3600 }
         ]}
       ]},
       'ลำโพง / ซาวด์บาร์': { models: [
         { code:'xboom Grab', name:'Bluetooth Speaker · 20W+10W', plans:[
-          { term:'5Y', serviceType:'No Service', serviceCycle:'ไม่มีบริการ', regular:109, effectiveMonthly:54.50, promoMonths:12, postPromoPrice:109, advancePayment:654, billSchedule:[{range:'บิล 1-12',price:54.5,note:'ครึ่งราคา (จ่ายล่วงหน้าแล้ว)'},{range:'บิล 13-60',price:109,note:'ราคาปกติ'}], promo:'Adv. 50% 12 บิลแรก (54.50) → บิล 13-60 (109)', totalContractMonths:60, totalSaving:0 }
+          { term:'5Y', serviceType:'No Service', serviceCycle:'ไม่มีบริการ', regular:109, effectiveMonthly:54.50, promoMonths:0, postPromoPrice:109, advancePayment:654, billSchedule:[{range:'บิล 1-12',price:54.5,note:'ครึ่งราคา (จ่ายล่วงหน้าแล้ว)'},{range:'บิล 13-60',price:109,note:'ราคาปกติ'}], promo:'Adv. 50% 12 บิลแรก (54.50) → บิล 13-60 (109)', totalContractMonths:60, totalSaving:0 }
         ]},
         { code:'xboom Bounce', name:'Bluetooth Speaker · 30W+10W', plans:[
-          { term:'5Y', serviceType:'No Service', serviceCycle:'ไม่มีบริการ', regular:139, effectiveMonthly:69.50, promoMonths:12, postPromoPrice:139, advancePayment:834, billSchedule:[{range:'บิล 1-12',price:69.5,note:'ครึ่งราคา (จ่ายล่วงหน้าแล้ว)'},{range:'บิล 13-60',price:139,note:'ราคาปกติ'}], promo:'Adv. 50% 12 บิลแรก (69.50) → บิล 13-60 (139)', totalContractMonths:60, totalSaving:0 }
+          { term:'5Y', serviceType:'No Service', serviceCycle:'ไม่มีบริการ', regular:139, effectiveMonthly:69.50, promoMonths:0, postPromoPrice:139, advancePayment:834, billSchedule:[{range:'บิล 1-12',price:69.5,note:'ครึ่งราคา (จ่ายล่วงหน้าแล้ว)'},{range:'บิล 13-60',price:139,note:'ราคาปกติ'}], promo:'Adv. 50% 12 บิลแรก (69.50) → บิล 13-60 (139)', totalContractMonths:60, totalSaving:0 }
         ]},
         { code:'xboom STAGE301', name:'Bluetooth Speaker', plans:[
-          { term:'5Y', serviceType:'No Service', serviceCycle:'ไม่มีบริการ', regular:299, effectiveMonthly:149.50, promoMonths:12, postPromoPrice:299, advancePayment:1794, billSchedule:[{range:'บิล 1-12',price:149.5,note:'ครึ่งราคา (จ่ายล่วงหน้าแล้ว)'},{range:'บิล 13-60',price:299,note:'ราคาปกติ'}], promo:'Adv. 50% 12 บิลแรก (149.50) → บิล 13-60 (299)', totalContractMonths:60, totalSaving:0 }
+          { term:'5Y', serviceType:'No Service', serviceCycle:'ไม่มีบริการ', regular:299, effectiveMonthly:149.50, promoMonths:0, postPromoPrice:299, advancePayment:1794, billSchedule:[{range:'บิล 1-12',price:149.5,note:'ครึ่งราคา (จ่ายล่วงหน้าแล้ว)'},{range:'บิล 13-60',price:299,note:'ราคาปกติ'}], promo:'Adv. 50% 12 บิลแรก (149.50) → บิล 13-60 (299)', totalContractMonths:60, totalSaving:0 }
         ]},
         { code:'S95TR.DTHALLK', name:'Sound Bar Dolby Atmos 9.1.5 · 820W', plans:[
-          { term:'5Y', serviceType:'No Service', serviceCycle:'ไม่มีบริการ', regular:449, effectiveMonthly:224.50, promoMonths:12, postPromoPrice:449, advancePayment:2694, billSchedule:[{range:'บิล 1-12',price:224.5,note:'ครึ่งราคา (จ่ายล่วงหน้าแล้ว)'},{range:'บิล 13-60',price:449,note:'ราคาปกติ'}], promo:'Adv. 50% 12 บิลแรก (224.50) → บิล 13-60 (449)', totalContractMonths:60, totalSaving:0 }
+          { term:'5Y', serviceType:'No Service', serviceCycle:'ไม่มีบริการ', regular:449, effectiveMonthly:224.50, promoMonths:0, postPromoPrice:449, advancePayment:2694, billSchedule:[{range:'บิล 1-12',price:224.5,note:'ครึ่งราคา (จ่ายล่วงหน้าแล้ว)'},{range:'บิล 13-60',price:449,note:'ราคาปกติ'}], promo:'Adv. 50% 12 บิลแรก (224.50) → บิล 13-60 (449)', totalContractMonths:60, totalSaving:0 }
         ]},
         { code:'S70TY.ATHALLD', name:'Sound Bar Dolby Atmos 3.1.1 · 400W', plans:[
-          { term:'5Y', serviceType:'No Service', serviceCycle:'ไม่มีบริการ', regular:189, effectiveMonthly:94.50, promoMonths:12, postPromoPrice:189, advancePayment:1134, billSchedule:[{range:'บิล 1-12',price:94.5,note:'ครึ่งราคา (จ่ายล่วงหน้าแล้ว)'},{range:'บิล 13-60',price:189,note:'ราคาปกติ'}], promo:'Adv. 50% 12 บิลแรก (94.50) → บิล 13-60 (189)', totalContractMonths:60, totalSaving:0 }
+          { term:'5Y', serviceType:'No Service', serviceCycle:'ไม่มีบริการ', regular:189, effectiveMonthly:94.50, promoMonths:0, postPromoPrice:189, advancePayment:1134, billSchedule:[{range:'บิล 1-12',price:94.5,note:'ครึ่งราคา (จ่ายล่วงหน้าแล้ว)'},{range:'บิล 13-60',price:189,note:'ราคาปกติ'}], promo:'Adv. 50% 12 บิลแรก (94.50) → บิล 13-60 (189)', totalContractMonths:60, totalSaving:0 }
         ]}
       ]}
     },
@@ -1497,7 +1384,6 @@ function lgCalculator() {
       const m = this.currentModel();
       if (!m || this.picker.plan === '') return;
       const plan = m.plans[this.picker.plan];
-      const wasEmpty = this.cart.length === 0;
       this.cart.push({
         category: this.picker.category, code: m.code, name: m.name,
         term: plan.term, serviceType: plan.serviceType, serviceCycle: plan.serviceCycle,
@@ -1507,16 +1393,11 @@ function lgCalculator() {
         billSchedule: plan.billSchedule || null,
         totalContractMonths: plan.totalContractMonths, totalSaving: plan.totalSaving
       });
-      // Reset selectedFeatures เมื่อชิ้นแรกถูกเพิ่ม (cart[0] เปลี่ยน → features เปลี่ยน)
-      if (wasEmpty) this.selectedFeatures = [];
       this.showToast('เพิ่ม ' + m.code + ' เรียบร้อย');
       this.picker.model = ''; this.picker.plan = '';
     },
     removeFromCart(i) {
-      const wasFirst = (i === 0);
       this.cart.splice(i, 1);
-      // Reset เมื่อลบชิ้นแรก (cart[0] เปลี่ยน) หรือ cart ว่าง
-      if (wasFirst || this.cart.length === 0) this.selectedFeatures = [];
     },
     showToast(msg) {
       this.toast.msg = msg; this.toast.show = true;
@@ -1899,7 +1780,7 @@ function lgCalculator() {
         info = this.serviceInfo['เครื่องฟอกอากาศ'][apCycle + apMode];
       } else if (cat === 'เครื่องลดความชื้น') {
         info = this.serviceInfo['เครื่องลดความชื้น'][item.serviceType === 'Self' ? 'self' : 'visit'];
-      } else if (cat.includes('DUALCOOL') || cat.includes('DUAL INVERTER')) {
+      } else if (cat.includes('DUALCOOL') || cat.includes('DUAL INVERTER') || cat.includes('ARTCOOL')) {
         info = this.serviceInfo['เครื่องปรับอากาศ'][item.serviceCycle.includes('6') ? 'cycle6m' : 'cycle12m'];
       } else if (cat === 'แอร์เชิงพาณิชย์ SAC') {
         info = this.serviceInfo['แอร์เชิงพาณิชย์ SAC'].all;
@@ -2065,1414 +1946,112 @@ function lgCalculator() {
       txt += '</div>';
       return txt;
     },
-    // ═══════════════════════════════════════════════════════════
-    // CATEGORY SCENE MAPPING — ฉาก/แสง/โทนแยกตามหมวด
-    // ═══════════════════════════════════════════════════════════
-    categoryScenes() {
-      return [
-        { match:['Plumbing','ตู้เย็น'].join('|'), keyTest:c=>/Plumbing/i.test(c),
-          label:'ตู้เย็น Plumbing',
-          scene:'open premium kitchen interior with built-in water dispenser station',
-          surface:'charcoal stone wall, white marble countertop, brushed gold fixtures',
-          lighting:'warm side lighting from large window, soft ambient glow from under-cabinet LED',
-          mood:'sophisticated family-luxury, refined modern hospitality',
-          palette:'charcoal gray, warm beige, soft gold accents, deep walnut wood',
-          productHero:'standing centered against charcoal stone wall, hero pose with door slightly ajar showing interior',
-          features:['Plumbed-in Water','InstaView Door-in-Door','Smart Inverter Compressor','UVnano Water Tank','Hygiene Fresh+','Wi-Fi ThinQ'],
-          headline:'มากกว่าความเย็น คือคุณภาพชีวิตทุกแก้วน้ำ'
-        },
-        { keyTest:c=>/Side-by-Side|SBS/i.test(c),
-          label:'ตู้เย็น Side-by-Side',
-          scene:'luxury chef kitchen with island, hanging pendant lights',
-          surface:'matte black marble countertop, dark oak cabinetry, charcoal wall',
-          lighting:'warm directional spotlight on product, soft ambient kitchen glow',
-          mood:'modern luxury, family premium',
-          palette:'deep charcoal, warm gold, walnut, soft cream',
-          productHero:'standing tall on the right, doors slightly open showing organized interior',
-          features:['InstaView','Linear Inverter Compressor','Door Cooling+','Hygiene Fresh+','Smart Diagnosis','Wi-Fi ThinQ'],
-          headline:'มากกว่าพื้นที่ คือความสมบูรณ์แบบ'
-        },
-        { keyTest:c=>/Multi-Door/i.test(c),
-          label:'ตู้เย็น Multi-Door',
-          scene:'modern chefs kitchen with marble island and seasonal flowers',
-          surface:'white veined marble counter, dark oak floor, charcoal wall',
-          lighting:'natural daylight from window, warm fill light, soft shadow',
-          mood:'culinary luxury, refined elegance',
-          palette:'cream, warm gray, soft gold, sage green accent',
-          productHero:'standing right, all 4 doors visible with subtle InstaView glow',
-          features:['Multi-Door Design','Linear Inverter','InstaView','Door Cooling+','Convertible Drawer','ThinQ AI'],
-          headline:'มากกว่าความจุ คือความหรูทุกมื้อ'
-        },
-        { keyTest:c=>/Top.*Freezer|Bottom.*Freezer|ตู้เย็น/i.test(c),
-          label:'ตู้เย็น Top/Bottom Freezer',
-          scene:'modern compact apartment kitchen with breakfast nook',
-          surface:'light oak wood, subtle off-white wall, ceramic tile floor',
-          lighting:'soft natural morning light, warm gentle fill',
-          mood:'comfortable urban family, premium yet welcoming',
-          palette:'soft warm white, light oak, sage, soft gold',
-          productHero:'standing right, sleek silhouette, doors closed showcasing minimal design',
-          features:['Smart Inverter Compressor','LINEARCooling','DoorCooling+','Multi Air Flow','10 Year Warranty','ThinQ App'],
-          headline:'มากกว่าความเย็น คือความสะอาดในทุกวัน'
-        },
-        { keyTest:c=>/Wash\s*Tower/i.test(c),
-          label:'Wash Tower',
-          scene:'boutique modern laundry room with built-in cabinetry',
-          surface:'matte gray porcelain floor, soft white wall, brass accent shelf',
-          lighting:'soft cool daylight from skylight, gentle warm fill',
-          mood:'serene, clean, refined utility',
-          palette:'cool gray, off-white, brushed metal, soft sage',
-          productHero:'standing right, full height visible, center control panel illuminated',
-          features:['AI DD','Steam+','TurboWash','Allergy Care','Smart Pairing','Heat Pump Dryer'],
-          headline:'มากกว่าความสะอาด คือความใส่ใจในทุกวัน'
-        },
-        { keyTest:c=>/เครื่องซักผ้า/i.test(c),
-          label:'เครื่องซักผ้า',
-          scene:'minimalist laundry room with floating shelves',
-          surface:'matte concrete floor, white linen-textured wall, light wood shelf',
-          lighting:'soft natural side daylight, gentle reflection on glass door',
-          mood:'serene, clean, premium minimalism',
-          palette:'cool white, soft gray, light wood, subtle blue',
-          productHero:'standing right with door slightly ajar, soft interior glow',
-          features:['AI DD','Steam+','TurboWash 360','Allergy Care','Stainless Lifter','ThinQ'],
-          headline:'มากกว่าความสะอาด คือความใส่ใจในทุกวัน'
-        },
-        { keyTest:c=>/อบผ้า|Styler/i.test(c),
-          label:'เครื่องอบผ้า / Styler',
-          scene:'walk-in dressing room with marble vanity and curated wardrobe',
-          surface:'dark walnut floor, beige fabric wall panel, marble shelf',
-          lighting:'warm ambient downlight, soft reflective glow from product',
-          mood:'luxury hotel-like, personal sanctuary',
-          palette:'warm walnut, cream, soft gold, dusty rose',
-          productHero:'standing right against fabric wall, door showing illuminated interior',
-          features:['TrueSteam','Moving Hangers','Heat Pump','Sanitary Cycle','Pet Hair Care','Mirror Door'],
-          headline:'มากกว่าผ้าแห้ง คือดูแลทุกชิ้นอย่างมืออาชีพ'
-        },
-        { keyTest:c=>/ล้างจาน|DFC/i.test(c),
-          label:'เครื่องล้างจาน (DFC)',
-          scene:'modern open kitchen with island and pendant lights',
-          surface:'white quartz counter, matte black cabinets, warm wood island',
-          lighting:'warm pendant down light, soft natural side glow',
-          mood:'refined modern dining lifestyle',
-          palette:'white, charcoal, warm wood, brushed steel',
-          productHero:'built-in or freestanding right, door slightly open showing racks with stemware',
-          features:['QuadWash','TrueSteam','Auto Open Dry','Inverter Direct Drive','Smart Wash','Wi-Fi Diagnosis'],
-          headline:'มากกว่าจานสะอาด คือเวลาคืนสู่คุณ'
-        },
-        { keyTest:c=>/ฟอกอากาศ/i.test(c),
-          label:'เครื่องฟอกอากาศ',
-          scene:'serene living room corner with sheer curtain and indoor plant',
-          surface:'pale oak floor, soft off-white wall, linen sofa nearby',
-          lighting:'soft natural diffused daylight, gentle ambient glow',
-          mood:'calm, wellness, breathable luxury',
-          palette:'soft white, sage green, warm taupe, pale oak',
-          productHero:'standing right beside indoor plant, subtle airflow visualization',
-          features:['PuriCare 360°','HEPA 13','UVnano','PM 1.0 Sensor','ThinQ App','Quiet Mode'],
-          headline:'มากกว่าอากาศบริสุทธิ์ คือการดูแลคนที่รัก'
-        },
-        { keyTest:c=>/ลดความชื้น/i.test(c),
-          label:'เครื่องลดความชื้น',
-          scene:'cozy modern bedroom with reading chair and floor lamp',
-          surface:'warm oak floor, soft beige wall, linen bedding',
-          lighting:'soft warm ambient lamp light, twilight glow from window',
-          mood:'comforting, restful, premium home wellness',
-          palette:'warm beige, soft brown, cream, soft amber accent',
-          productHero:'standing right beside reading chair',
-          features:['Smart Inverter','UVnano','Auto Defrost','Ionizer','Compact Design','Easy Mobility'],
-          headline:'มากกว่าความสบาย คือความใส่ใจในทุกลมหายใจ'
-        },
-        { keyTest:c=>/ดูดฝุ่น|Vacuum/i.test(c),
-          label:'เครื่องดูดฝุ่น',
-          scene:'open hardwood living area with low-profile sofa and minimal decor',
-          surface:'wide herringbone oak floor, warm white wall, area rug at side',
-          lighting:'bright soft natural daylight, gentle directional fill',
-          mood:'fresh, energetic, premium daily',
-          palette:'warm oak, soft white, charcoal, brushed silver',
-          productHero:'standing or floating right with subtle motion blur',
-          features:['Cordless Power Drive','Kompressor','5-Step HEPA','Dual Battery','LED Display','Multi-Surface'],
-          headline:'มากกว่าฝุ่นที่ดูดได้ คือบ้านสะอาดในทุกย่างก้าว'
-        },
-        { keyTest:c=>/กรองน้ำ|Water/i.test(c),
-          label:'เครื่องกรองน้ำ',
-          scene:'elegant kitchen water station with stoneware glassware',
-          surface:'white marble counter with veining, soft beige tile splash, oak shelf above',
-          lighting:'warm side daylight, soft reflection on glass and chrome',
-          mood:'pure, refined, daily-wellness premium',
-          palette:'soft white, charcoal, warm metallic, sage',
-          productHero:'on counter right with water glass beside it, subtle water droplet reflection',
-          features:['Stainless Tank','UVnano Care','Hot/Cold/Ambient','Slim Design','Self-Cleaning','Filter Indicator'],
-          headline:'มากกว่าน้ำสะอาด คือคุณภาพชีวิตทุกแก้ว'
-        },
-        { keyTest:c=>/โทรทัศน์|OLED|QNED|TV/i.test(c),
-          label:'โทรทัศน์ OLED/QNED',
-          scene:'cinematic minimalist living room with sectional sofa and floor-to-ceiling window at night',
-          surface:'dark walnut media wall, low-profile media console, charcoal rug',
-          lighting:'dim cinematic ambient, soft bias light behind TV, warm side lamp',
-          mood:'immersive cinematic, premium night entertainment',
-          palette:'deep charcoal, warm walnut, amber bias light, deep black',
-          productHero:'wall-mounted or on slim stand center-right, screen showing cinematic nature scene',
-          features:['α11 AI Processor','Self-Lit OLED','Dolby Vision IQ','Dolby Atmos','120Hz Gaming','webOS'],
-          headline:'มากกว่าภาพคมชัด คือประสบการณ์ทุกค่ำคืน'
-        },
-        { keyTest:c=>/มอนิเตอร์|Monitor/i.test(c),
-          label:'มอนิเตอร์',
-          scene:'elegant home office with walnut desk and architectural lamp',
-          surface:'walnut wood desk, charcoal wall, soft leather chair edge',
-          lighting:'warm desk lamp, soft cool screen glow, dim ambient',
-          mood:'focused, productive, creator-luxury',
-          palette:'warm walnut, charcoal, soft amber, brushed metal',
-          productHero:'on slim stand right of desk, screen showing minimal creative workflow',
-          features:['UltraGear Curved','Nano IPS','144Hz+','HDR 600','USB-C 90W','Ergonomic Stand'],
-          headline:'มากกว่าจอภาพ คือพื้นที่สร้างสรรค์'
-        },
-        { keyTest:c=>/ลำโพง|Soundbar|xboom/i.test(c),
-          label:'ลำโพง / ซาวด์บาร์',
-          scene:'modern living room with media wall and ambient indirect lighting',
-          surface:'matte black media console, dark walnut wall, soft area rug',
-          lighting:'cinematic ambient indirect light, soft glow from speaker LED',
-          mood:'immersive audiophile premium',
-          palette:'deep charcoal, warm walnut, soft amber LED, brushed metal',
-          productHero:'on console below TV, subtle LED indicator glow',
-          features:['Dolby Atmos','Meridian Audio','Wireless Subwoofer','AI Sound Pro','HDMI eARC','Wi-Fi Streaming'],
-          headline:'มากกว่าเสียง คือการดื่มด่ำในทุกค่ำคืน'
-        },
-        { keyTest:c=>/ไมโครเวฟ|Microwave/i.test(c),
-          label:'ไมโครเวฟ',
-          scene:'modern compact kitchen with floating shelf and bright morning light',
-          surface:'matte white counter, soft beige tile wall, warm oak shelf',
-          lighting:'bright soft morning daylight, gentle warm fill',
-          mood:'efficient premium daily',
-          palette:'soft white, warm oak, brushed steel, soft gold',
-          productHero:'on counter right, door slightly open showing illuminated interior',
-          features:['NeoChef Smart Inverter','EasyClean','Auto Cook Menu','Anti-Bacterial Coating','LED Interior','Glass Touch Panel'],
-          headline:'มากกว่าความเร็ว คือความอร่อยทุกมื้อ'
-        },
-        { keyTest:c=>/DUALCOOL/i.test(c),
-          label:'แอร์ DUALCOOL AI',
-          scene:'serene master bedroom with low-profile bed and architectural ceiling',
-          surface:'soft beige fabric wall, warm oak floor, linen bedding',
-          lighting:'soft late-afternoon warm light through sheer curtain',
-          mood:'restful luxury, wellness sanctuary',
-          palette:'soft beige, warm white, dusty taupe, sage accent',
-          productHero:'wall-mounted upper right against fabric wall, subtle airflow visualization',
-          features:['DUALCOOL AI','Dual Inverter','PuriCare Filter','UVnano','Wi-Fi ThinQ','Quiet 19dB'],
-          headline:'มากกว่าความเย็น คือการดูแลในทุกลมหายใจ'
-        },
-        { keyTest:c=>/DUAL\s*INVERTER|เครื่องปรับอากาศ/i.test(c),
-          label:'แอร์ DUAL INVERTER',
-          scene:'modern living room with sectional sofa and indoor plant',
-          surface:'warm white wall, light oak floor, pale gray sofa',
-          lighting:'natural bright daylight, soft ambient warm fill',
-          mood:'fresh family premium daily',
-          palette:'warm white, soft gray, sage green accent, light oak',
-          productHero:'wall-mounted upper right with subtle airflow lines',
-          features:['Dual Inverter Compressor','10-Year Warranty','Energy Saving','Anti-Bacterial Filter','Quiet Operation','Smart Diagnosis'],
-          headline:'มากกว่าความเย็น คือความสบายในทุกวัน'
-        },
-        { keyTest:c=>/SAC|เชิงพาณิชย์/i.test(c),
-          label:'แอร์เชิงพาณิชย์ SAC',
-          scene:'modern executive office with city skyline window and conference table',
-          surface:'polished concrete floor, charcoal acoustic wall panel, walnut conference table',
-          lighting:'cool daylight from window, warm interior fill, soft architectural lighting',
-          mood:'professional premium, corporate sophistication',
-          palette:'charcoal, brushed steel, walnut, soft white',
-          productHero:'ceiling-mounted cassette or floor-standing unit visible at top-right',
-          features:['Inverter Scroll','Heavy Duty Performance','Centralized Control','Long Pipe Run','Energy Saving','BMS Integration'],
-          headline:'มากกว่าระบบปรับอากาศ คือมาตรฐานธุรกิจ'
-        }
-      ];
-    },
-    getCartScene() {
-      if (this.cart.length === 0) return null;
-      // Multi-product: ใช้ Unified Scene
-      if (this.cart.length > 1) {
-        const unified = this.unifiedScene();
-        if (unified) return unified;
-      }
-      // Single product fallback
-      const cat = this.cart[0].category;
-      const scenes = this.categoryScenes();
-      return scenes.find(s => s.keyTest(cat)) || scenes[scenes.length-1];
-    },
-    // ═══════════════════════════════════════════════════════════
-    // COMBO COMPOSITION — เลือก scene/hero/supporting สำหรับหลายชิ้น
-    // ═══════════════════════════════════════════════════════════
-    unifiedScene() {
-      const cats = this.cart.map(it => it.category);
-      const has = (re) => cats.some(c => re.test(c));
-      // KITCHEN combo — ตู้เย็น + ล้างจาน/ไมโครเวฟ/กรองน้ำ
-      if (has(/ตู้เย็น/) && has(/ล้างจาน|ไมโครเวฟ|กรองน้ำ/)) {
-        return {
-          label:'Kitchen Combo (ครัวพรีเมียม)',
-          scene:'luxury chef kitchen with marble island, integrated appliances, and pendant lights',
-          surface:'white veined marble countertop, dark walnut cabinetry, warm wood floor',
-          lighting:'warm natural daylight from window + soft pendant lights + under-cabinet LED',
-          mood:'culinary luxury, refined family kitchen',
-          palette:'cream marble, warm walnut, soft gold, sage green accent',
-          productHero:'ตู้เย็นเป็น HERO ทางขวาเด่นสูงสุด · เครื่องเล็กวางบน counter / built-in รอบๆ',
-          features:['Kitchen Combo Set','LG ThinQ Connected','Premium Kitchen Suite'],
-          headline:'ครัวพรีเมียม ครบทุกฟังก์ชัน',
-          composition:'wide-angle kitchen view, ตู้เย็นเป็น hero ขวา/กลาง · เครื่องล้างจาน built-in ด้านล่าง · ไมโครเวฟบน counter · เครื่องกรองน้ำริมๆ · ทุกชิ้นในเฟรมเดียว ดูสมจริง'
-        };
-      }
-      // LIVING ROOM combo — TV + ซาวด์บาร์ / แอร์ / ฟอกอากาศ
-      if (has(/โทรทัศน์|TV|OLED|QNED/) && has(/ลำโพง|Soundbar|xboom|แอร์|ฟอกอากาศ/)) {
-        return {
-          label:'Living Room Combo (ห้องนั่งเล่น Cinematic)',
-          scene:'cinematic minimalist living room with sectional sofa, media wall, and ambient lighting',
-          surface:'dark walnut media wall, low-profile media console, charcoal area rug',
-          lighting:'dim cinematic ambient + soft bias light behind TV + warm side lamp',
-          mood:'immersive premium entertainment lounge',
-          palette:'deep charcoal, warm walnut, amber bias light, deep black',
-          productHero:'TV เป็น HERO ตรงกลาง wall · Soundbar ใต้ TV · แอร์ติดผนัง · ฟอกอากาศมุมห้อง',
-          features:['Cinematic Combo Set','Dolby Atmos','LG ThinQ Connected'],
-          headline:'โฮมเธียเตอร์ครบเซ็ต ดูแลครบในที่เดียว',
-          composition:'wide-angle living room shot · TV กลาง · Soundbar ใต้ · แอร์ผนัง upper-left · ฟอกอากาศมุมขวา · ทุกชิ้นในเฟรม'
-        };
-      }
-      // LAUNDRY combo — ซัก + อบ + Styler + Wash Tower
-      if (has(/ซักผ้า|Wash Tower|อบผ้า|Styler/) && this.cart.length >= 2 && cats.filter(c => /ซักผ้า|Wash Tower|อบผ้า|Styler/.test(c)).length >= 2) {
-        return {
-          label:'Laundry Combo (Boutique Laundry Room)',
-          scene:'boutique modern laundry room with built-in cabinetry, brass fixtures, and skylight',
-          surface:'matte gray porcelain floor, soft white wall, brass accent shelf',
-          lighting:'cool natural daylight from skylight + warm fill lighting',
-          mood:'serene · clean · refined utility space',
-          palette:'cool gray, off-white, brushed brass, soft sage',
-          productHero:'Wash Tower / เครื่องซักผ้า เป็น HERO · Styler ด้านข้าง · เครื่องอบ stacked หรือ side-by-side',
-          features:['Complete Laundry Set','AI DD','TurboWash 360','LG ThinQ'],
-          headline:'ครบเซ็ตห้องซักผ้า ดูแลผ้าทุกประเภท',
-          composition:'wide laundry room shot · เครื่องซักผ้า/Wash Tower กลาง-ขวา · Styler ซ้าย · เครื่องอบติดข้าง · ทุกชิ้นในเฟรมเดียว'
-        };
-      }
-      // BEDROOM/WELLNESS combo — แอร์ + ฟอกอากาศ + ลดความชื้น
-      if (has(/แอร์|DUALCOOL|DUAL INVERTER/) && (has(/ฟอกอากาศ/) || has(/ลดความชื้น/))) {
-        return {
-          label:'Bedroom Wellness Combo',
-          scene:'serene master bedroom with low-profile bed, fabric headboard, and indoor plant',
-          surface:'soft beige fabric wall, warm oak floor, linen bedding',
-          lighting:'soft late-afternoon warm light through sheer curtain',
-          mood:'restful luxury wellness sanctuary',
-          palette:'soft beige, warm white, dusty taupe, sage accent',
-          productHero:'แอร์ติดผนังเป็น HERO บนสุด · ฟอกอากาศ/ลดความชื้น ตั้งพื้นด้านข้าง',
-          features:['Wellness Combo','Clean Air Set','LG ThinQ Connected'],
-          headline:'อากาศบริสุทธิ์ทุกลมหายใจ',
-          composition:'bedroom wide-shot · แอร์ผนัง upper-right · ฟอกอากาศมุมซ้าย · ลดความชื้นมุมขวา · เตียงเป็น background · ทุกชิ้นในเฟรม'
-        };
-      }
-      // MIXED HOME combo — สินค้าหลายหมวด
-      if (this.cart.length >= 2) {
-        return {
-          label:'LG Smart Home Combo (บ้านพรีเมียมครบเซ็ต)',
-          scene:'modern open-plan premium home with kitchen + living room visible, large windows',
-          surface:'mixed materials: marble counter, oak floor, charcoal accent wall',
-          lighting:'natural daylight + warm ambient + soft directional spotlights',
-          mood:'sophisticated modern family home, refined lifestyle',
-          palette:'warm neutral, charcoal accent, soft gold, premium materials',
-          productHero:'สินค้าที่ใหญ่/แพงสุดเป็น HERO · ชิ้นอื่นวาง layered ตามห้องที่เหมาะ',
-          features:['LG Subscribe Home Set','LG ThinQ Connected','Premium Lifestyle'],
-          headline:'บ้านพรีเมียมครบเซ็ต Subscribe เดียวจบ',
-          composition:'open-plan wide shot · จัด layered composition ตามขนาด/ห้องที่เหมาะ · ทุกชิ้นในเฟรมเดียว · ใช้ depth-of-field สร้างมิติ'
-        };
-      }
-      return null;
-    },
-    heroProduct() {
-      // Hero = item with highest postPromoPrice (most premium product)
-      if (this.cart.length === 0) return null;
-      return this.cart.slice().sort((a,b) => (b.postPromoPrice||0) - (a.postPromoPrice||0))[0];
-    },
-    supportingProducts() {
-      const hero = this.heroProduct();
-      return this.cart.filter(it => it !== hero);
-    },
-    // ═══════════════════════════════════════════════════════════
-    // MODEL-SPECIFIC FEATURES — ฟีเจอร์เฉพาะรุ่น (จากสเปก LG TH)
-    // ═══════════════════════════════════════════════════════════
-    modelFeaturesDB() {
-      return {
-        // ── เครื่องกรองน้ำ ──
-        // verified from lg.com/th
-        'WD516/WD518':       ['Objet Collection Design','4-Stage Filtration','UV Sterilization 99.99%','Stainless Steel Pipes','LG ThinQ Remote Control','Auto Weekly Pipe Sterilization','Customizable Volume 120-1000ml'],
-        'WD110MN.ABGPLMT':   ['Slim 13cm Width','Mood Lighting 3 Colors','2-Stage Filtration 99.99%','Auto UV Sterilization Weekly','LG ThinQ App','Twist-and-Pull Filter Replacement','Calming Beige'],
-        'WS510SN.AWHPLMT':   ['Smart Inverter Compressor','7.5L Cold Water Tank','4-Stage Filtration','270mm Wide Outlet','Stainless Steel Tank','10-Year Compressor Warranty','Auto Weekly Sterilization'],
-        // ── เครื่องดูดฝุ่น ── (verified from lg.com/th)
-        'A9T-ULTRA.DCBPETH': ['Auto Empty','Dual PowerPack Battery','Kompressor','5-Stage Filtration','ThinQ Smart Control','Power Drive Mop','All-in-One Tower'],
-        'A9T-LITE.DCGPETH':  ['Auto Empty','Kompressor 2.4x Storage','5-Stage Filtration','Smart Inverter Motor','All-in-One Tower','ThinQ Wi-Fi','60-min Runtime'],
-        // ── ตู้เย็น Side-by-Side ──
-        'GC-X257CMHW.AEEPLMT':['Plumbed-in Water Filter','InstaView Door-in-Door','UVnano Water Tank','LINEARCooling 7 วัน','Door Cooling+','Smart Inverter 10Y Warranty','LG ThinQ Wi-Fi','22.4 คิว'],
-        'GC-X257CMEW.ATEPLMT':['InstaView Door-in-Door','Door Cooling+','LINEARCooling','Hygiene Fresh','UVNano','Smart Inverter Compressor','LG ThinQ','Total No Frost'],
-        'GC-J257SQZW.AEPPLMT':['Door-in-Door','Door Cooling+','LINEARCooling','Hygiene Fresh','Automatic Water & Ice Dispenser'],
-        'GC-L257SFZW.APYPLMT':['LINEARCooling 7 วัน','Door Cooling+','Hygiene Fresh 99.99%','Smart Inverter 10Y Warranty','Top-mount Water/Ice Dispenser','LG ThinQ Wi-Fi','No-Frost','22.4 คิว'],
-        'GC-L257KQKW.AEPPLMT':['LINEARCooling 7 วัน','Door Cooling+','Hygiene Fresh 99.99%','Smart Inverter 10Y Warranty','LG ThinQ Wi-Fi','No-Frost','22.6 คิว'],
-        // ── ตู้เย็น Multi-Door ── (X24, G24 verified from lg.com/th)
-        'GC-X24FFCRB.AEVPLM1':['Instaview Door-in-Door','UVnano','Linear Cooling','Door Cooling+','Smart Inverter','Multi Air Flow','LG ThinQ','Auto Ice Maker','Smart Dispenser'],
-        'GC-L24FFCBB.AEVPLM1':['UVnano','Linear Cooling','Door Cooling+','Smart Inverter','Multi Air Flow','LG ThinQ','Auto Ice Maker','Smart Fill Water Dispenser'],
-        'GC-G24FFQKB.AEEPLM1':['Instaview','UVnano','Linear Cooling','Door Cooling+','Smart Inverter'],
-        'GC-V22FFQMB.AEPPLMT':['InstaView Door-in-Door','LINEARCooling ±0.5°C','Door Cooling+','Smart Inverter Compressor','LG ThinQ Wi-Fi','Hygiene Fresh+','Matte Black Flat Door','530L'],
-        'GV-B25FFGDB.ABMPLMT':['LINEARCooling 7 วัน','DoorCooling+','FRESHConverter+ (เนื้อ/ปลา/ผัก)','Smart Inverter 10Y Warranty','Hygiene Fresh+','Auto Ice Maker','LG ThinQ','21.6 คิว · Black Glass'],
-        // ── ตู้เย็น Top/Bottom Freezer ── (F392, V389 verified from lg.com/th)
-        'GN-F392PQAK.AEPPLM1':['Door Cooling+','LINEARCooling','Hygiene Fresh','Auto Ice Maker','Fresh 0 Zone'],
-        'GN-F452PQAK.AEPPLMT':['LINEARCooling 7 วัน','Door Cooling+','Hygiene Fresh 99.99%','Fresh 0 Zone','Smart Inverter 10Y Warranty','Auto Ice Maker Spaceplus','LG ThinQ','16.2 คิว'],
-        'GN-V389FQEF.AEPPLMT':['Instaview','Linear Cooling','Door Cooling+','Multi Air Flow','Smart Inverter','FRESHConverter','Auto Ice Maker','LG ThinQ'],
-        // ── Wash Tower ── (verified from lg.com/th)
-        'WT2520NHEG.ABGPETH':['AIDD','Smart Pairing','TurboWash 360','Allergy Care','DUAL Inverter Heat Pump','Inverter Direct Drive Motor','ThinQ'],
-        'WT2520NHEN.ABNPETH':['AIDD','Smart Pairing','TurboWash 360','Allergy Care','DUAL Inverter Heat Pump','Inverter Direct Drive Motor','ThinQ'],
-        'WT2116SHEG.ABGPETH':['AIDD','Smart Pairing','TurboWash 360','Allergy Care','DUAL Inverter Heat Pump','ThinQ'],
-        'WT1410NHEG.ABGPQTH':['AIDD','Smart Pairing','TurboWash 360','Allergy Care','Dry Ready','Center Control Panel','ThinQ'],
-        'WT1410NHEN.ABNPQTH':['AIDD','Smart Pairing','TurboWash 360','Allergy Care','Dry Ready','Center Control Panel','ThinQ'],
-        // ── เครื่องซักผ้า Front Load ── (verified from lg.com/th)
-        'F2520RNTB.AEBPETH': ['AIDD','TurboWash 360','จอ LCD','Steam','Inverter Direct Drive Motor','ThinQ'],
-        'FV1413H4M.AMBPETH': ['AIDD','TurboWash','Steam','Inverter Direct Drive Motor','ThinQ','Stainless Steel Lifter'],
-        'FV1413S4M.AMBPETH': ['AIDD','TurboWash 39 นาที','Steam','Inverter Direct Drive Motor','ThinQ','ถังซักสแตนเลส'],
-        'FV1409H4W.ABWPETH': ['AIDD','TurboWash','Steam','Big Capacity 9/5 กก.','Inverter Direct Drive Motor','ThinQ'],
-        // ── เครื่องซักผ้า Top Load ── (verified from lg.com/th)
-        'TX2725AT9G.AEGPETH':['AIDD','TurboWash3D','EasyUnload','6 Motion','Inverter Direct Drive Motor','ezDispense','Steam','ThinQ'],
-        'TX2723ST5J.APBPETH':['AIDD','TurboWash3D','EasyUnload','6 Motion','Inverter Direct Drive Motor','ThinQ'],
-        'TX2315DT5G.DEGPETH':['AIDD','TurboWash','EasyUnload','6 Motion','Inverter Direct Drive Motor','ThinQ'],
-        // ── เครื่องอบผ้า / Styler ── (verified from lg.com/th)
-        'RV10VHP4B.BMBPETH': ['DUAL Inverter Heat Pump','Auto Cleaning Condenser','Allergy Care','Eco Hybrid','Smart Pairing','ThinQ Wi-Fi','ความจุ 10 กก.'],
-        // ── เครื่องลดความชื้น ──
-        'DD23GMWE1.ATH':     ['Dual Inverter Compressor','UVnano','LG ThinQ','Smart Mode','Laundry Mode','Silent Mode 32dB','HEPA H13 Filter','10-Year Compressor Warranty'],
-        'MD19GQGA1.ATH':     ['Dual Inverter Compressor','โหมดเป่าผ้าแห้ง','Y-Hose & T-Hose','Ion Sterilization','Auto Cleaning','LG ThinQ'],
-        // ── เครื่องฟอกอากาศ ──
-        'AS25GCBY0.ABAE':    ['Heated Dome Seat for Cats','Multi-Stage HEPA 99.999%','Pet-Smart Mode','LG ThinQ Pet Tracking','Quiet 21dB','Filter Status Notifications'],
-        'AS35GGW10.ATH':     ['Slim & Fit Design −42%','360° HEPA H13','PM 1.0 Sensor','Multi-Stage Filtration','LG ThinQ Wi-Fi','Sleep Mode 25dB','32 sqm Coverage'],
-        'AS60GHWG0.ABAE':    ['360° Air Purification 61 sqm','470 CMM Airflow','HEPA+ 99.9%','Ultra-Quiet 25dB','Ionizer','LG ThinQ','LED Air Quality Display'],
-        'AS65GDBY0.ABAE':    ['360° Pet Air Purification','Pet Filter 94% Odor Removal','Multi-Filtration 99.9%','Clean Booster','UVnano 99.99%','LG ThinQ','BAF Allergy Certified','Pet Mode'],
-        'AS10GDBY0.ABAE':    ['360° Purification 104 sqm','Multi-Filtration 99.9%','Pet Care 94% Odor','Clean Booster','UVnano 99.99%','BAF Certified','LG ThinQ','Quiet 26dB'],
-        // ── เครื่องล้างจาน ──
-        // DFC335HM verified from lg.com/th
-        'DFC335HM.ABMPETH':  ['TrueSteam','QuadWash','Smart Rack+','Anti-Bacterial 99.99%','Wi-Fi ThinQ','Auto Open Dry','14 Place Settings','41 dB Quiet'],
-        'DFC533FV.APYPETH':  ['TrueSteam','QuadWash','Smart Rack+','Anti-Bacterial 99.99%','Wi-Fi ThinQ','Auto Open Dry','15 Place Settings'],
-        // ── ไมโครเวฟ ──
-        'MS4295DIS.BBKPETH': ['Smart Inverter','EasyClean Anti-Bacterial 99.99%','LED Lighting 3x Brighter','42L Capacity','Stable Hexagonal Ring','1200W Output','Child Lock'],
-        // ── แอร์ DUALCOOL AI (SAQ — Standard) ── (SAQ11A, SAQ18B verified from lg.com/th)
-        'SAQ11A':            ['AI Air','DUAL Vane','Soft Air','Comfort Humidity Control','Total Air Care','ประหยัดไฟเบอร์ 5 ดาว'],
-        'SAQ13A':            ['AI Air','DUAL Vane','Soft Air','Comfort Humidity Control','Total Air Care','ประหยัดไฟเบอร์ 5 ดาว'],
-        'SAQ18B':            ['AI Air','DUAL Vane','Soft Air','Comfort Humidity','Total Air Care','ประหยัดไฟเบอร์ 5'],
-        'SAQ24B':            ['AI Air','DUAL Vane (ลมไกลขึ้น 22%)','Soft Air','Comfort Humidity','All Cleaning System','Auto Clean+ · Freeze Cleaning','ประหยัดไฟเบอร์ 5 ★★★'],
-        // ── แอร์ DUALCOOL AI Air (SIQ) ── (SIQ11B verified — family features)
-        'SIQ11B':            ['AI Air','DUAL Air Flow','Soft Air Mode','Comfort Humidity Control','Auto Clean+ · Freeze Cleaning','Plasmaster Ionizer++','LG ThinQ','iF Design Award 2025'],
-        'SIQ13B':            ['AI Air','DUAL Air Flow','Soft Air Mode','Comfort Humidity Control','Auto Clean+ · Freeze Cleaning','Plasmaster Ionizer++','LG ThinQ','iF Design Award 2025'],
-        'SIQ18B':            ['AI Air','DUAL Air Flow','Soft Air Mode','Comfort Humidity Control','Auto Clean+ · Freeze Cleaning','Plasmaster Ionizer++','LG ThinQ','iF Design Award 2025'],
-        'SIQ24B':            ['AI Air','DUAL Air Flow','Soft Air Mode','Comfort Humidity Control','Auto Clean+ · Freeze Cleaning','Plasmaster Ionizer++','LG ThinQ','iF Design Award 2025'],
-        // ── แอร์ DUAL INVERTER (IXY) ──
-        // IXY series verified (IXY18A from lg.com/th — others same family)
-        'IXY11A':            ['kW Manager','Auto Cleaning','แผ่นกรองฝุ่น PM 2.5','Plasmaster Ionizer++','LG ThinQ Control','10-Year Compressor Warranty','Volt Care Protection'],
-        'IXY13A':            ['kW Manager','Auto Cleaning','แผ่นกรองฝุ่น PM 2.5','Plasmaster Ionizer++','LG ThinQ Control','10-Year Compressor Warranty','Volt Care Protection'],
-        'IXY18A':            ['kW Manager','Auto Cleaning','แผ่นกรองฝุ่น PM 2.5','Plasmaster Ionizer++','LG ThinQ Control','10-Year Compressor Warranty','Volt Care Protection'],
-        'IXY24A':            ['kW Manager','Auto Cleaning','แผ่นกรองฝุ่น PM 2.5','Plasmaster Ionizer++','LG ThinQ Control','10-Year Compressor Warranty','Volt Care Protection'],
-        // ── แอร์ ARTCOOL Slim (ART) ──
-        'ART13A.SR1':        ['ARTCOOL Mirror Panel','AI Comfort','Dual Inverter Compressor','UVnano','Wi-Fi ThinQ','Auto Clean','เบอร์ 5'],
-        'ART18A.SR1':        ['ARTCOOL Mirror Panel','AI Comfort','Dual Inverter Compressor','UVnano','Wi-Fi ThinQ','Auto Clean','เบอร์ 5'],
-        // ── แอร์เชิงพาณิชย์ SAC (ZV — Ceiling Suspended) ──
-        'ZV-Q18GM1E0.EWGHATH': ['Ceiling Suspended 18,000 BTU','Dual Inverter Compressor','Long Air Throw','Anti-Bacterial Filter','Auto Restart','Comfort Cooling','R-32 Refrigerant'],
-        'ZV-Q24GM1E0':       ['Ceiling Suspended 24,000 BTU','Dual Inverter Compressor','Long Air Throw','Anti-Bacterial Filter','Auto Restart','Comfort Cooling','R-32 Refrigerant'],
-        'ZV-Q36GM2E0':       ['Ceiling Suspended 36,000 BTU','Dual Inverter Compressor','Long Air Throw','Heavy Duty Cooling','Anti-Bacterial Filter','Auto Restart','R-32 Refrigerant'],
-        // ── แอร์เชิงพาณิชย์ SAC (ZT — Round/4-way Cassette) ──
-        'ZT-Q18GPLE0.EWGHATH': ['Cassette 18,000 BTU','Dual Inverter Compressor','4-Way Air Distribution','Long Air Throw 12m','Auto Lift Panel','Anti-Bacterial Filter','R-32 Refrigerant'],
-        'ZT-Q24GPLA0':       ['Round Cassette 24,000 BTU','Dual Inverter Compressor','360° Air Distribution','Long Air Throw 12m','Comfort Cooling','Anti-Bacterial Filter','R-32 Refrigerant'],
-        'ZT-Q36GNLA0':       ['4-Way Cassette 36,000 BTU','Dual Inverter Compressor','4-Way Distribution','Heavy Duty Cooling','Auto Lift Panel','Anti-Bacterial Filter','R-32 Refrigerant'],
-        'ZT-Q48GMLA0':       ['4-Way Cassette 48,000 BTU','Dual Inverter Compressor','4-Way Distribution','Heavy Duty Cooling','Auto Lift Panel','Anti-Bacterial Filter','R-32 Refrigerant'],
-        // ── TV / Lifestyle ──
-        '100QNED86BS.ATM':   ['100" QNED Mini LED','α8 AI Processor Gen7','4K Ultra HD','Dolby Vision & Atmos','HDMI 2.1','120Hz'],
-        '75NU855BPSA.ATM':   ['75" NanoCell Pure Colors','α5 AI Processor 4K Gen7','AI Picture Pro','HDR10 Pro','FILMMAKER MODE'],
-        '40U990A-W.ATM':     ['40" 4K UHD IPS Monitor','USB-C 90W','Ergo Stand','Eye Comfort','Picture in Picture'],
-        '52G930B-B.ATM':     ['52" OLED QHD Gaming Monitor','240Hz','0.03ms GTG','NVIDIA G-Sync','Dolby Vision Gaming'],
-        '27LX6TDGA.ATM':     ['StanbyME 2 Portable Screen','27" QHD Touchscreen','α8 AI Processor','Battery 4 ชั่วโมง','Dolby Vision & Atmos','Motion Art Screen','Lets Draw Touch','webOS 24'],
-        // ── TV OLED C-Series ── (OLED48/65/77 verified — OLED55 ใช้ features ร่วมกัน)
-        'OLED48C6PSA.ATM':   ['OLED evo Display','Brightness Booster 3.2x','α11 AI Processor Gen 3','Perfect Black','Dolby Vision & Atmos','4K 165Hz Gaming','webOS 26 Multi-AI','Eyesafe Certified'],
-        'OLED55C6PSA.ATM':   ['OLED evo Display','Brightness Booster 3.2x','α11 AI Processor Gen 3','Perfect Black','Dolby Vision & Atmos','4K 165Hz Gaming','webOS 26 Multi-AI','Eyesafe Certified'],
-        'OLED65C6PSA.ATM':   ['OLED evo Display','Brightness Booster 3.2x','α11 AI Processor Gen 3','Perfect Black','Dolby Vision & Atmos','4K 165Hz Gaming','webOS 26 Multi-AI','Ultra-slim 47.1mm'],
-        'OLED77C6PSA.ATM':   ['OLED evo Display','Hyper Radiant Color Tech','α11 AI Processor Gen 3','Perfect Black','Dolby Vision & Atmos','AI TV with webOS 26','4K 165Hz Gaming','AI Hub Multi-Search','Eyesafe Certified'],
-        // ── TV QNED ── (QNED80 65" verified — same family applied to 55/85)
-        '75QNED86BSA.ATM':   ['75" QNED Mini LED','α8 AI Processor','Quantum Dot + NanoCell','Dolby Vision & Atmos','120Hz Gaming','webOS Multi-AI'],
-        '85QNED80BSA.ATM':   ['85" QNED 4K','α5 AI Processor 4K Gen7','QNED Color Wide Gamut','Local Dimming','HDR10/HLG','webOS 24','Game Optimizer + ALLM','Magic Remote'],
-        '65QNED80BSA.ATM':   ['65" QNED 4K','α5 AI Processor 4K Gen7','QNED Color Wide Gamut','Local Dimming','HDR10/HLG','webOS 24','Game Optimizer + ALLM','Magic Remote'],
-        '55QNED80BSA.ATM':   ['55" QNED 4K','α5 AI Processor 4K Gen7','QNED Color Wide Gamut','Local Dimming','HDR10/HLG','webOS 24','Game Optimizer + ALLM','Magic Remote'],
-        // ── TV NanoCell ── (NANO80ASA 2025 features — closest to NU 2026)
-        '43NU855BPSA.ATM':   ['43" NanoCell Pure Colors','α7 AI Processor 4K Gen 8','4K Super Upscaling','HDR10 Pro','AI Magic Remote','AI Voice ID','webOS 25','5-Year webOS Re:New'],
-        '65NU855BPSA.ATM':   ['65" NanoCell Pure Colors','α7 AI Processor 4K Gen 8','4K Super Upscaling','HDR10 Pro','AI Magic Remote','AI Voice ID','webOS 25','5-Year webOS Re:New'],
-        '75NU805BPSB.ATMQ':  ['75" NanoCell 4K','α5 AI Processor','HDR10 Pro','Dolby Atmos','ALLM','webOS','AI Sound'],
-        // ── Monitor ──
-        '27GX704A-B.ATM':    ['27" QHD OLED','240Hz Refresh Rate','0.03ms GtG','DisplayHDR True Black 400','Glare Panel','MLA+ Technology','DCI-P3 98.5%','G-SYNC + FreeSync Premium Pro','3-Year Burn-in Warranty'],
-        '34GX90SA-W.ATM':    ['34" OLED 800R Curved','240Hz · 0.03ms','webOS Smart Platform','AI Picture Wizard','G-SYNC + FreeSync Premium','USB-C 65W','Hexagon RGB Lighting'],
-        '34U650A-B.ATM':     ['34" UltraWide IPS','WQHD 3440x1440','USB-C 65W','Picture-in-Picture','HDR10','Ergonomic Stand'],
-        '45GX950A-B.ATM':    ['45" 5K2K OLED 800R Curved','Dual-Mode WUHD 165Hz / WFHD 330Hz','0.03ms GtG','DisplayHDR True Black 400','MLA+ · DCI-P3 98.5%','DisplayPort 2.1 · USB-C 90W','DTS Headphone:X'],
-        '32U889SA-W.ATM':    ['32" 4K IPS Touchscreen','Spring-Hinged Rolling Base','USB-C 90W x3 ports','webOS · AirPlay 2','ThinQ Home Dashboard','LG Switch App','Magic Remote'],
-        // ── Soundbar ──
-        'S3MFC.ALBPETH':     ['2.1 Channel 300W','Wireless Subwoofer','Bluetooth Streaming','AI Sound Pro','HDMI ARC','Optical Input','TV Sound Sync'],
-        'S70TY.ATHALLD':     ['3.1.1 Channel 400W','Dolby Atmos','Center Up-Firing','Hi-Res Audio','DTS:X','WOW Interface','AI Sound Pro','VRR/ALLM Gaming'],
-        'S95TR.DTHALLK':     ['9.1.5 Channel 810W','Dolby Atmos','AI Room Calibration Pro','Triple Up-Firing','WOW Interface','Wireless Rear Speakers','HDMI 2.1 VRR/ALLM','Spotify/TIDAL Connect'],
-        // ── xboom Portable Speakers ──
-        'xboom Bounce':      ['Dual Dome Tweeters','Dual Passive Radiators','AI Sound','Space Calibration','AI Lighting','MIL-STD-810H Durability','IP67','30-Hour Battery','will.i.am Co-design','Auracast Multi-Speaker'],
-        'xboom Grab':        ['16mm Peerless Tweeter','AI Sound','Space Calibration','AI Lighting','MIL-STD-810H + IP67','20-Hour Battery','iF Design Award 2025','will.i.am Tuning'],
-        'xboom STAGE301':    ['Peerless 6.5" Woofer + 2.5" Midrange','AI Sound + AI Lighting','Wedge Design','Swappable Battery 12+12h','IPX4','Auracast Party Link','Karaoke/DJ via ThinQ','will.i.am Tuning'],
-      };
-    },
-    modelFeaturesFor(code) {
-      const db = this.modelFeaturesDB();
-      return db[code] || null;
-    },
-    availableFeatures() {
-      if (this.cart.length > 0) {
-        const modelFeats = this.modelFeaturesFor(this.cart[0].code);
-        if (modelFeats) return modelFeats;
-      }
-      const s = this.getCartScene();
-      return s ? s.features : [];
-    },
-    toggleFeature(f) {
-      const idx = this.selectedFeatures.indexOf(f);
-      if (idx >= 0) {
-        this.selectedFeatures.splice(idx, 1);
-      } else if (this.selectedFeatures.length < 4) {
-        this.selectedFeatures.push(f);
-      }
-    },
-    activeFeatures() {
-      // ชิ้นเดียว: ใช้ที่ user เลือก (ถ้ามี) ไม่งั้นใช้ scene default
-      // คอมโบ: ไม่ใช้ selectedFeatures (UI ซ่อนแล้ว) → ใช้ scene features อัตโนมัติ
-      if (this.cart.length === 1 && this.selectedFeatures.length > 0) return this.selectedFeatures;
-      const s = this.getCartScene();
-      return s ? s.features.slice(0,4) : [];
-    },
-    // ═══════════════════════════════════════════════════════════
-    // WARRANTY INFO — รับประกันตามประเภทบริการ + ชิ้นส่วนหลัก
-    // ═══════════════════════════════════════════════════════════
-    warrantyInfoFor(item) {
-      const years = Math.round((item.totalContractMonths || 60) / 12);
-      const cat = item.category;
-      // Service mode (how warranty is delivered)
-      let svcMode = '';
-      if (item.serviceType === 'Visit') {
-        svcMode = 'ช่างเข้าซ่อม/บำรุงรักษาถึงบ้านตามรอบบริการ (On-site)';
-      } else if (item.serviceType === 'Self') {
-        svcMode = 'รับอะไหล่/Filter ส่งถึงบ้าน + ช่างเข้าซ่อมเมื่อเสีย';
-      } else {
-        // No Service — split by category
-        if (/โทรทัศน์|มอนิเตอร์|TV|OLED|QNED|NANO|Monitor/i.test(cat)) {
-          svcMode = 'On-site Repair — ช่างเข้าซ่อมถึงบ้านเมื่อมีปัญหา';
-        } else {
-          svcMode = 'Drop-off Service — นำสินค้าส่งศูนย์บริการ LG';
-        }
-      }
-      return {
-        years,
-        coreText: 'รับประกันสินค้าตลอดอายุสัญญา ' + years + ' ปี',
-        serviceMode: svcMode,
-      };
-    },
-    cartWarrantyYears() {
-      // Years to display (use longest contract)
-      if (this.cart.length === 0) return 0;
-      return Math.round(Math.max(...this.cart.map(it => it.totalContractMonths || 60)) / 12);
-    },
-
-    downloadImagePrompt() {
-      if (this.cart.length === 0) { this.showToast('เลือกสินค้าก่อนสร้าง Prompt'); return; }
-      const text = this.buildActivePrompt();
-      const modelTag = (this.cart[0].code || 'lg-ad').replace(/[^a-zA-Z0-9-]/g,'_');
-      const modeTag = this.imagePromptMode === 'dalle' ? 'dalle' : 'chatgpt';
-      const blob = new Blob([text], { type:'text/plain;charset=utf-8' });
-      const a = document.createElement('a');
-      a.href = URL.createObjectURL(blob);
-      a.download = `lg-ad-prompt_${modeTag}_${modelTag}.txt`;
-      a.click();
-      URL.revokeObjectURL(a.href);
-      this.showToast('บันทึก .txt แล้ว ✓');
-    },
-
-    imagePromptStyleText() {
-      const styles = {
-        premium: 'พรีเมี่ยมหรูหรา: world-class premium appliance campaign, luxury retail art direction, deep LG red accents, champagne highlight, elegant cinematic lighting, polished reflections, clean hero product staging, refined Thai typography, spacious editorial composition, high-end showroom atmosphere',
-        minimal: 'มินิมอลสะอาดตา: award-winning minimalist product advertising, bright warm-neutral background, precise alignment grid, generous whitespace, soft studio shadow, subtle material texture, calm premium trust, clean modern Thai typography, highly readable hierarchy',
-        formal: 'ทางการ / Corporate: executive-grade sales presentation visual, premium corporate design system, disciplined grid, trustworthy financial hierarchy, LG brand red accent, restrained color palette, proposal-ready layout, polished business editorial style',
-        advanced: 'กราฟิกขั้นสูง: world-class editorial infographic, layered glassmorphism panels, premium data visualization, dynamic product cutout, subtle 3D depth, cinematic rim light, elegant motion-like composition, sophisticated spatial hierarchy, agency-level graphic design',
-        social: 'โซเชียลโปรโมชัน: high-impact premium social commerce creative, bold offer headline, magnetic price badge, mobile-first readability, energetic but upscale composition, sharp callout zones, scroll-stopping design without clutter'
-      };
-      return styles[this.imagePromptStyle] || styles.premium;
-    },
-    imagePromptStyleName() {
-      const names = {
-        premium: 'พรีเมี่ยมหรูหรา',
-        minimal: 'มินิมอลสะอาดตา',
-        formal: 'ทางการ / Corporate',
-        advanced: 'กราฟิกขั้นสูง',
-        social: 'โซเชียลโปรโมชัน'
-      };
-      return names[this.imagePromptStyle] || names.premium;
-    },
-    // ─── Combo Headline Pool — แยกตาม combo type ───
-    comboHeadlinePool() {
-      if (this.cart.length <= 1) return null;
-      const cats = this.cart.map(it => it.category);
-      const has = re => cats.some(c => re.test(c));
-      const n = this.cart.length;
-      const x = Math.round(this.comboRate() * 100);
-      const xStr = x > 0 ? ' ลด ' + x + '%' : '';
-
-      // Kitchen Suite
-      if (has(/ตู้เย็น/) && has(/กรองน้ำ|ล้างจาน|ไมโครเวฟ/)) return [
-        'ครัวของคุณ ควรได้มากกว่านี้',
-        'ทุกมื้ออาหาร เริ่มจากครัวที่สมบูรณ์',
-        'ชีวิตดีขึ้น เริ่มที่ครัวก่อน',
-        'อาหารดี ต้องเริ่มจากครัวที่ใช่',
-        'ครัวพรีเมียม ทุกวัน ไม่ต้องเป็นเจ้าของ',
-        'ทุกอย่างในครัว LG ดูแลให้หมด',
-        'บ้านสมบูรณ์แบบ เริ่มที่ครัว',
-        'เมื่อครัวดี ทุกวันก็ดีขึ้น',
-        'ครัวระดับ Chef เริ่มต้นง่ายกว่าที่คิด',
-        'Subscribe ครัวครบ ดูแลทุกชิ้นตลอดสัญญา',
-      ];
-
-      // Entertainment Suite
-      if (has(/โทรทัศน์|TV|OLED|QNED/) && has(/ลำโพง|Soundbar|xboom|แอร์|ฟอกอากาศ/)) return [
-        'ทุกค่ำคืน คือโรงภาพยนตร์ส่วนตัว',
-        'เสียง แสง อากาศ ครบในห้องเดียว',
-        'ความบันเทิงระดับโรงหนัง เริ่มที่บ้าน',
-        'ไม่ต้องออกไปไหน ทุกอย่างอยู่ที่นี่',
-        'ประสบการณ์ที่ดีที่สุด เริ่มต้นที่บ้าน',
-        'คืนนี้ บ้านดีกว่าโรงหนัง',
-        'ทุกความบันเทิง ในอากาศที่บริสุทธิ์',
-        'ห้องนั่งเล่นที่ดีกว่าโรงหนัง',
-        'ภาพคม เสียงใส อากาศดี ครบในเฟรมเดียว',
-        'LG Subscribe ยกโรงหนังมาไว้ที่บ้าน',
-        'บ้านดีกว่าที่คิด เพราะ LG ดูแลทุกอย่าง',
-      ];
-
-      // Laundry Suite
-      if (has(/Wash\s*Tower|เครื่องซักผ้า/) && has(/อบผ้า|Styler/)) return [
-        'ผ้าทุกชิ้น คือสิ่งที่คุณรัก',
-        'ซักสะอาด อบนุ่ม ดูแลดั่งมืออาชีพ',
-        'ทุกเส้นใย ดูแลดีกว่าร้านซัก',
-        'เสื้อผ้าดี ทุกเช้า ทุกวัน',
-        'ชุดโปรดของคุณ อยู่ในมือที่ดีที่สุด',
-        'LG ดูแลเสื้อผ้า ดั่งดูแลตัวคุณ',
-        'ซัก อบ ดูแลครบ สัญญาเดียว',
-        'ทุกคืน ผ้าพร้อมสวม ทุกเช้า',
-        'ผ้าหรู ไม่ต้องพึ่งร้าน',
-        'ดูแลผ้าเหมือนมืออาชีพ เริ่มต้นที่บ้าน',
-        'เสื้อผ้าทุกชิ้น LG รับรองว่าดูแลให้',
-      ];
-
-      // Wellness Suite (AC + Air Purifier + Dehumidifier)
-      if (has(/DUALCOOL|DUAL\s*INVERTER|เครื่องปรับอากาศ/) && has(/ฟอกอากาศ|ลดความชื้น/)) return [
-        'อากาศบริสุทธิ์ ในทุกลมหายใจ',
-        'บ้านที่ดูแลสุขภาพคุณ ตลอด 24 ชั่วโมง',
-        'เย็นสบาย อากาศดี นอนหลับสนิทยิ่งขึ้น',
-        'ดูแลอากาศ ดูแลสุขภาพ ดูแลทุกคนในบ้าน',
-        'หายใจลึกๆ บ้านคุณสะอาดกว่าที่คิด',
-        'ความสบายที่ดีกว่า เริ่มจากอากาศที่ดี',
-        'อากาศดี = ชีวิตดี ทุกวัน',
-        'เย็น สะอาด สดชื่น ครบในห้องเดียว',
-        'บ้านที่หายใจได้ดีกว่า',
-        'LG ดูแลอากาศ คุณดูแลตัวเองได้เต็มๆ',
-        'สุขภาพดีเริ่มจากอากาศที่บ้าน',
-      ];
-
-      // Home Office Suite
-      if (has(/มอนิเตอร์|Monitor/) && has(/ลำโพง|Soundbar|xboom/)) return [
-        'พื้นที่สร้างสรรค์ ที่ดีที่สุดของคุณ',
-        'ทำงาน สร้างสรรค์ ในพื้นที่ที่ใช่',
-        'ผลงานดี เริ่มจากจอที่ดี เสียงที่ใช่',
-        'Home Studio ระดับมืออาชีพ',
-        'ทุกงาน ทุกโปรเจกต์ ครบในโต๊ะเดียว',
-        'สร้างสรรค์ไม่มีขีดจำกัด',
-        'โต๊ะทำงานที่ดี เริ่มต้นชีวิตที่ดีกว่า',
-        'LG Subscribe ยกสตูดิโอมาไว้ที่บ้าน',
-      ];
-
-      // General Savings Combo (mixed)
-      return [
-        'ยิ่งเยอะ ยิ่งคุ้ม ยิ่งดูแลครบ',
-        'หลายชิ้น หนึ่งสัญญา ประหยัดกว่า',
-        'Subscribe ' + n + ' ชิ้น ดูแลครบทุกมุมบ้าน' + xStr,
-        'ทุกชิ้นในบ้าน LG ดูแลให้หมด',
-        'เลือกดี ดูแลครบ คุ้มทุกบาท',
-        'ชีวิตพรีเมียม เริ่มจากการ Subscribe วันนี้',
-        'มากกว่าเครื่องใช้ไฟฟ้า คือชีวิตที่ดีกว่า',
-        'บ้านครบ ใจสงบ LG Subscribe ดูแลให้',
-        'Subscribe ครบ ชีวิตสบาย ไม่ต้องเป็นเจ้าของ',
-        'รวม ' + n + ' ชิ้น รับส่วนลด' + xStr + ' ดูแลครบทุกชิ้น',
-        'LG Subscribe — บ้านในฝัน ไม่ต้องซื้อขาด',
-        'เลือก LG เลือกความคุ้มค่าที่ยาวนาน',
-      ];
-    },
-    activeComboHeadline() {
-      const pool = this.comboHeadlinePool();
-      if (!pool) return null;
-      return pool[this.imageHeadlineSeed % pool.length];
-    },
-
-    // ─── Router: ส่งไปยัง builder ที่ตรงกับ mode ที่เลือก ───
-    buildActivePrompt() {
-      return this.imagePromptMode === 'dalle' ? this.buildDallePrompt() : this.buildImagePrompt();
-    },
-    activePromptLength() {
-      return this.buildActivePrompt().length;
-    },
-
-    // ─── DALL-E Mode: English-first concise visual prompt (< 4000 chars) ───
-    buildDallePrompt() {
-      if (this.cart.length === 0) {
-        return 'Please select a product first to generate the DALL-E prompt.';
-      }
-      const sc = this.getCartScene();
-      const lowest = this.lowestInstallmentInfo();
-      const heroMonths = Math.max(...this.cart.map(it => it.totalContractMonths || 60));
-      const hasCombo = this.comboRate() > 0;
-      const warrantyYears = this.cartWarrantyYears();
-      const feats = this.activeFeatures().slice(0, 3);
-      const mainItem = this.cart[0];
-      const hero = this.cart.length > 1 ? this.heroProduct() : mainItem;
-      const supporting = this.cart.length > 1 ? this.supportingProducts() : [];
-
-      const styleMap = {
-        premium: 'luxury premium appliance campaign, cinematic studio lighting, polished reflections, editorial composition',
-        minimal: 'minimalist clean design, generous whitespace, Scandinavian elegance, soft natural light',
-        formal:  'professional corporate brand advertising, structured grid layout, authoritative visual style',
-        advanced:'high-impact commercial graphic design, bold typographic hierarchy, dynamic modern composition',
-        social:  'social media commercial creative, mobile-first layout, bold price callout, high-contrast visual'
-      };
-      const ratioMap = {
-        '4:5':'portrait 4:5 aspect ratio', '1:1':'square 1:1 aspect ratio',
-        '16:9':'landscape 16:9 banner', '9:16':'vertical 9:16 story/reels format'
-      };
-
-      const L = [];
-
-      // Opening
-      L.push(`LG Subscribe appliance advertisement, ${ratioMap[this.imagePromptRatio] || 'portrait 4:5 aspect ratio'}, ${styleMap[this.imagePromptStyle] || styleMap.premium}.`);
-      L.push('');
-
-      // Scene
-      if (sc) {
-        L.push(`SCENE: ${sc.scene}. Surfaces: ${sc.surface}. ${sc.lighting}. Mood: ${sc.mood}.`);
-        L.push(`PALETTE: ${sc.palette}, LG red (#a50034) brand accent, clean white typography.`);
-      } else {
-        L.push('SCENE: Modern premium interior, studio product photography, clean minimal background.');
-        L.push('PALETTE: LG red (#a50034), charcoal, warm cream, white.');
-      }
-      L.push('');
-
-      // Product
-      if (this.cart.length === 1) {
-        L.push(`HERO PRODUCT: ${hero.name} (model: ${hero.code}), photorealistic commercial product photography, ${sc ? sc.productHero : 'center-right hero pose'}. Preserve exact product: correct color, shape, proportions, surface finish, all buttons and logo details.`);
-      } else {
-        L.push(`HERO PRODUCT (largest, foreground, sharpest focus): ${hero.name} (${hero.code}), ${sc ? sc.productHero : 'center hero pose'}.`);
-        if (supporting.length > 0) {
-          L.push(`SUPPORTING PRODUCTS (smaller, all visible in same frame): ${supporting.map(it => it.name + ' (' + it.code + ')').join('; ')}.`);
-        }
-        L.push(`All products in ONE unified real interior scene — no split-screen, no collage. Depth of field: hero in sharp focus, supporting slightly softer but clearly visible.`);
-      }
-      L.push('');
-
-      // Text overlay
-      L.push('TEXT TO RENDER (legible, accurate — every line below must appear in the image):');
-
-      // Product name / model (near product, medium size)
-      if (this.cart.length === 1) {
-        const svcCycle = mainItem.serviceCycle ? ' · บริการ' + mainItem.serviceCycle : '';
-        L.push(`• Product label (near product, medium): "${mainItem.name} รุ่น ${mainItem.code}"`);
-        L.push(`• Contract tag (small, below product label): "สัญญา ${mainItem.term} · ${mainItem.serviceType}${svcCycle} · ${heroMonths} งวด"`);
-      } else {
-        const heroItem = hero;
-        L.push(`• Hero product label: "${heroItem.name} รุ่น ${heroItem.code}"`);
-        supporting.forEach(it => {
-          L.push(`• Supporting product label (smaller): "${it.name} รุ่น ${it.code}"`);
-        });
-        const terms = [...new Set(this.cart.map(it => it.term))].join('/');
-        L.push(`• Contract tag (small): "สัญญา ${terms} · ${heroMonths} งวด"`);
-      }
-      L.push('');
-
-      const headlineText = this.cart.length > 1 ? (this.activeComboHeadline() || sc?.headline) : sc?.headline;
-      if (headlineText) L.push(`• Headline (Thai, largest, bold): "${headlineText}"`);
-      L.push(`• Price hero (very large, LG red, focal point #1): "฿${this.fmtMoney(lowest.price)}/เดือน"`);
-
-      // Bill schedule — show promo installment range explicitly
-      if (this.cart.length > 1) {
-        // Combo — show combined total (all items, after combo discount)
-        const maxPromoM = this.hasPromoFirstMonths() ? Math.max(...this.cart.map(it => it.promoMonths || 0)) : 0;
-        if (maxPromoM > 0) {
-          L.push(`• Price note (below price hero, bold): "งวดที่ 1–${maxPromoM} จาก ${heroMonths} งวด"`);
-          L.push(`• Installment summary — ยอดรวมทุกชิ้น หลังหักส่วนลดคอมโบ (2 lines):`);
-          L.push(`  - ช่วงโปร (งวดที่ 1–${maxPromoM}): ฿${this.promoMonthly().toLocaleString()}/เดือน`);
-          L.push(`  - หลังโปร (งวดที่ ${maxPromoM+1}–${heroMonths}): ฿${this.netMonthly().toLocaleString()}/เดือน`);
-        } else {
-          L.push(`• Price note: "฿${this.netMonthly().toLocaleString()}/เดือน · ${heroMonths} งวด (ยอดรวมทุกชิ้น รวมส่วนลด combo)"`);
-        }
-      } else if (mainItem.billSchedule && mainItem.billSchedule.length > 0) {
-        const promoSeg = mainItem.billSchedule[0];
-        const promoM = mainItem.promoMonths || 0;
-        const afterPromoM = heroMonths - promoM;
-        L.push(`• Price note (below price hero, bold): "งวดที่ ${promoSeg.range} จาก ${heroMonths} งวด"`);
-        if (promoM > 0 && afterPromoM > 0) {
-          L.push(`• Installment summary (2 lines, clearly separated):`);
-          L.push(`  - โปรโมชัน ${promoM} งวด (งวดที่ ${promoSeg.range}): ฿${this.bht(promoSeg.price).toLocaleString()}/เดือน`);
-          const afterSeg = mainItem.billSchedule[mainItem.billSchedule.length - 1];
-          L.push(`  - หลังโปร ${afterPromoM} งวด (งวดที่ ${afterSeg.range}): ฿${this.bht(afterSeg.price).toLocaleString()}/เดือน`);
-        } else {
-          L.push(`• Installment breakdown card:`);
-          mainItem.billSchedule.forEach(seg => {
-            L.push(`  - งวดที่ ${seg.range}: ฿${this.bht(seg.price).toLocaleString()}/เดือน`);
-          });
-        }
-      } else {
-        const promoM = mainItem.promoMonths || 0;
-        if (promoM > 0 && promoM < heroMonths) {
-          const afterPromoM = heroMonths - promoM;
-          L.push(`• Price note (below price hero, bold): "งวดที่ 1–${promoM} จาก ${heroMonths} งวด"`);
-          L.push(`• Installment summary (2 lines, clearly separated):`);
-          L.push(`  - โปรโมชัน ${promoM} งวด (งวดที่ 1–${promoM}): ฿${mainItem.effectiveMonthly.toLocaleString()}/เดือน`);
-          L.push(`  - หลังโปร ${afterPromoM} งวด (งวดที่ ${promoM + 1}–${heroMonths}): ฿${mainItem.postPromoPrice.toLocaleString()}/เดือน`);
-        } else {
-          L.push(`• Price note (below price): "งวดที่ 1–${heroMonths} · สัญญา ${mainItem.term}"`);
-        }
-      }
-      L.push('');
-
-      if (hasCombo) {
-        L.push(`• Combo badge: "Subscribe ${this.cart.length} ชิ้น ลด ${Math.round(this.comboRate()*100)}%"`);
-        if (this.totalSaving() > 0) L.push(`• Savings: "ประหยัดรวม ฿${this.totalSaving().toLocaleString()}"`);
-      }
-      L.push(`• Warranty shield badge: "รับประกันตลอดสัญญา ${warrantyYears} ปี"`);
-      L.push(`• Promo period (small, bottom): "${this.promoDateText()}"`);
-      L.push('');
-
-      if (feats.length > 0) {
-        L.push(`FEATURE ICONS (LG official badge style — small rounded-rectangle badge, 1px thin border, thin line icon centered top, feature name in small caps below, LG red #a50034 or white on dark surface): ${feats.join(', ')}.`);
-        L.push('Icon style reference: AI DD™=brain+motor circuit icon · TurboWash™=omnidirectional water-jets · InstaView™=illuminated knock-glass panel · DoorCooling+™=vent-arrows at door · ThinQ™=smartphone+WiFi waves · Dual Inverter=dual-motor diagram · UVnano™=UV-C light-rays (purple/white) · OLED evo=pixel-wordmark badge · Craft Ice™=spherical ice ball icon · LINEAR Cooling=temperature-stability line.');
-        L.push('');
-      }
-
-      // Brand & quality
-      L.push('BRAND: LG logo (unaltered, exact). LG red (#a50034) as primary accent.');
-      L.push(`LAYOUT: Visual hierarchy — hero price is focal point #1, product is visual anchor. Safe 8% margins, clean spacing, sans-serif Thai/Latin fonts, readable on mobile.`);
-      L.push('QUALITY: Ultra-sharp 4K commercial render, professional color grading, realistic material surfaces, print-ready resolution.');
-      L.push('');
-      L.push('AVOID: text overlapping product, distorted product shape or color, cheap flyer aesthetics, cluttered layout, neon colors, plastic 3D render, generic stock people.');
-
-      return L.join('\n');
-    },
-
-    buildImagePrompt() {
-      if (this.cart.length === 0) {
-        return 'กรุณาเลือกสินค้าในรายการก่อน แล้วระบบจะสร้าง Prompt จากข้อมูลการคำนวณให้โดยอัตโนมัติ';
-      }
-      const customer = this.customerType === 'new' ? 'ลูกค้าใหม่' : 'ลูกค้าเก่า';
-      const promoName = this.comboLabel();
-      const hasCombo = this.comboRate() > 0;
-      const allMonths = this.cart.map(it => it.totalContractMonths || 60);
-      const uniqueMonths = [...new Set(allMonths)];
-      const contractMonths = uniqueMonths.length === 1
-        ? uniqueMonths[0] + ' เดือน'
-        : this.cart.map(it => it.code + ' (' + (it.totalContractMonths || 60) + ' เดือน)').join(', ');
-      const lowest = this.lowestInstallmentInfo();
-
-      // คำนวณ range ของงวดที่ราคาต่ำสุด (เช่น "1-6" แทน "1")
-      let lowestBillRange;
-      {
-        const cheapItem = this.cart.find(it => {
-          const pm = it.promoMonths || 0;
-          return pm > 0 && lowest.bill <= pm;
-        }) || this.cart[0];
-        if (cheapItem.billSchedule && cheapItem.billSchedule.length > 0) {
-          const seg = cheapItem.billSchedule.find(s => {
-            const parts = s.range.split('-').map(Number);
-            return lowest.bill >= parts[0] && lowest.bill <= (parts[1] || parts[0]);
-          });
-          lowestBillRange = seg ? seg.range : String(lowest.bill);
-        } else if (cheapItem.promoMonths > 0 && lowest.bill <= cheapItem.promoMonths) {
-          lowestBillRange = '1-' + cheapItem.promoMonths;
-        } else {
-          lowestBillRange = String(lowest.bill);
-        }
-      }
-
-      const productLines = this.cart.map((it, i) => {
-        const months = it.totalContractMonths || 60;
-        const advance = it.advancePayment
-          ? '\n     · จ่ายล่วงหน้า: ฿' + it.advancePayment.toLocaleString() + ' (ครอบคลุม 12 งวดแรก)'
-          : '';
-        const w = this.warrantyInfoFor(it);
-        // Detailed bill schedule with ranges (ห้ามแสดงราคาโดยไม่ระบุช่วงงวด)
-        let billDetail = '';
-        if (it.billSchedule && it.billSchedule.length > 0) {
-          billDetail = '\n     · ตารางงวดละเอียด (ทุกบรรทัดต้องแสดงในภาพแบบ "งวดที่ X-Y: ฿Z"):';
-          it.billSchedule.forEach(seg => {
-            billDetail += '\n        → ' + seg.range + ': ฿' + this.bht(seg.price).toLocaleString() + '/เดือน' + (seg.note ? '  ('+seg.note+')' : '');
-          });
-        } else if (it.promo) {
-          billDetail = '\n     · โปร: ' + it.promo;
-        }
-        return (i + 1) + '. [แสดงในภาพแบบสั้น: ' + it.name + '] ' +
-               '\n     · หมวด: ' + it.category +
-               '\n     · รุ่น: ' + it.code +
-               '\n     · สัญญา: ' + months + ' งวด (' + it.term + ' · ' + it.serviceType + ')' +
-               '\n     · ราคาหลังโปร: ฿' + it.postPromoPrice.toLocaleString() + '/เดือน' +
-               billDetail + advance +
-               '\n     · ' + w.coreText;
-      }).join('\n');
-      const careLines = this.cart.map(it => '- ' + this.careServiceSummary(it)).join('\n');
-      const warrantyLines = this.cart.map(it => {
-        const w = this.warrantyInfoFor(it);
-        return '- ' + it.code + ' (' + it.term + ' ' + it.serviceType + '): ' + w.coreText + ' · ' + w.serviceMode;
-      }).join('\n');
-      const warrantyYears = this.cartWarrantyYears();
-
-      // === ตัวเลขสำคัญ — ใส่เฉพาะที่เกี่ยวข้อง ไม่มี combo ก็ไม่ต้องพูดถึง ===
-      const promoLinesArr = [];
-      const heroMonths = Math.max(...this.cart.map(it => it.totalContractMonths || 60));
-      promoLinesArr.push('★ ตัวเลข HERO หลักที่สุด (ต้องใหญ่ที่สุดในภาพ):');
-      promoLinesArr.push('   "โปรเริ่มต้น ฿' + this.fmtMoney(lowest.price) + '/เดือน"');
-      promoLinesArr.push('   "งวดที่ ' + lowestBillRange + ' จาก ' + heroMonths + ' งวด"  ← ⚠️ ห้ามลืมระบุงวดที่ของโปร');
-      if (this.cart.length === 1) {
-        const it0 = this.cart[0];
-        const pm0 = it0.promoMonths || 0;
-        const tot0 = it0.totalContractMonths || 60;
-        if (pm0 > 0 && pm0 < tot0) {
-          promoLinesArr.push('ช่วงโปร (งวดที่ 1-' + pm0 + '): ฿' + it0.effectiveMonthly.toLocaleString() + '/เดือน');
-          promoLinesArr.push('หลังโปร (งวดที่ ' + (pm0+1) + '-' + tot0 + '): ฿' + it0.postPromoPrice.toLocaleString() + '/เดือน');
-        } else {
-          promoLinesArr.push('ราคาต่อเดือน: ฿' + it0.postPromoPrice.toLocaleString() + '/เดือน ตลอด ' + tot0 + ' งวด');
-        }
-      } else {
-        // Combo — แสดงยอดรวมทุกชิ้น หลังหักส่วนลดคอมโบแล้ว (เรียงโปรก่อน หลังโปรทีหลัง)
-        if (this.hasPromoFirstMonths()) {
-          const maxPromoM = Math.max(...this.cart.map(it => it.promoMonths || 0));
-          promoLinesArr.push('ช่วงโปร ' + maxPromoM + ' งวดแรก (งวดที่ 1-' + maxPromoM + '): ฿' + this.promoMonthly().toLocaleString() + '/เดือน  ← ยอดรวมทุกชิ้น รวมส่วนลดคอมโบแล้ว');
-          promoLinesArr.push('หลังหมดโปร (งวดที่ ' + (maxPromoM + 1) + '-' + heroMonths + '): ฿' + this.netMonthly().toLocaleString() + '/เดือน  ← ยอดรวมทุกชิ้น รวมส่วนลดคอมโบแล้ว');
-        } else {
-          promoLinesArr.push('ค่าเช่าสุทธิ (หลังหักคอมโบ): ฿' + this.netMonthly().toLocaleString() + '/เดือน ตลอดสัญญา');
-        }
-        if (hasCombo) {
-          promoLinesArr.push('   └ รายละเอียดคำนวณ: ก่อนหัก ฿' + this.totalMonthly().toLocaleString() + '/เดือน · ลด ' + Math.round(this.comboRate()*100) + '% (-฿' + this.comboDiscount().toLocaleString() + ') → สุทธิ ฿' + this.netMonthly().toLocaleString() + '/เดือน');
-        }
-      }
-      if (this.hasAdvance()) {
-        promoLinesArr.push('⚠️ เงินจ่ายล่วงหน้า (Advance Payment): ฿' + this.totalAdvance().toLocaleString() + ' ตอนเริ่มสัญญา · ครอบคลุม 12 งวดแรก (50% ของแต่ละงวด)');
-        this.advanceItems().forEach(it => {
-          promoLinesArr.push('   • ' + it.code + ': ฿' + it.advancePayment.toLocaleString() + ' (จ่ายครั้งเดียวตอนเริ่มสัญญา)');
-        });
-      }
-      if (this.totalSaving() > 0) {
-        promoLinesArr.push('รวมประหยัดตลอดสัญญา: ฿' + this.totalSaving().toLocaleString());
-      }
-      promoLinesArr.push('ยอดรวมที่ต้องจ่ายตลอดสัญญา: ฿' + this.fmtMoney(this.grandTotal()) + ' ตลอดสัญญา ' + contractMonths);
-      promoLinesArr.push('วันโปรโมชัน: ' + this.promoDateText());
-      if (hasCombo) {
-        promoLinesArr.push('เงื่อนไขเริ่มรับส่วนลด: ' + this.customerPromoRuleText());
-      } else if (this.cart.length > 0) {
-        const upNeed = Math.max(0, this.minTierItems() - this.cart.length);
-        const upRate = this.minTierRate();
-        if (upNeed > 0 && upRate > 0) {
-          promoLinesArr.push('Upsell CTA: "Subscribe เพิ่มอีก ' + upNeed + ' ชิ้น รับส่วนลด ' + upRate + '% ทันที"');
-        }
-      }
-      const promoLines = promoLinesArr.join('\n');
-
-      const lines = [];
-      // === กฎเหล็กบังคับ (Hard Constraints) ===
-      lines.push('=== HARD CONSTRAINTS (ห้ามฝ่าฝืนเด็ดขาด) ===');
-      lines.push('1. ⚠️⚠️⚠️ ห้ามเปลี่ยนแปลงรูปสินค้าต้นฉบับเด็ดขาด — ใช้รูปที่อัปโหลด/รูปอ้างอิง 1:1 เป๊ะๆ');
-      lines.push('   - ห้ามเปลี่ยนหน้าตา สี รูปทรง สัดส่วน วัสดุ พื้นผิว ของสินค้า');
-      lines.push('   - ห้ามเปลี่ยนรุ่น/โมเดล/ดีไซน์ — ต้องเป็นรุ่นเดียวกับต้นฉบับ');
-      lines.push('   - ห้ามแต่งเติมโลโก้ ปุ่ม จอ ตัวอักษรบนตัวเครื่อง ให้ตรงต้นฉบับทุกจุด');
-      lines.push('   - ห้าม AI วาดสินค้าใหม่จากจินตนาการ ห้ามตีความใหม่ ห้ามเพิ่ม/ลบรายละเอียดใดๆ');
-      lines.push('   - ปรับได้แค่: มุมกล้อง เงา แสงสะท้อนแวดล้อม — ตัวสินค้าต้องตรงต้นฉบับ');
-      lines.push('2. ตัวเลขราคา/ส่วนลด/จำนวนงวด/ระยะสัญญาทั้งหมดในภาพ ต้องตรงกับข้อมูลด้านล่าง 100% — ห้ามเดา ห้ามปัดเศษ ห้ามใส่ตัวเลขที่ไม่มีในข้อมูล');
-      lines.push('3. ห้ามสร้างโลโก้ LG ใหม่ ห้ามวาดโลโก้คู่แข่ง ห้ามใส่ข้อความภาษาอังกฤษเกินจำเป็น');
-      lines.push('4. ห้ามใส่ badge ส่วนลด/คอมโบ ถ้าไม่ได้ระบุไว้ในข้อมูลด้านล่าง');
-      lines.push('5. ห้ามใส่คำว่า "' + promoName + '", "ส่วนลดพิเศษ", "โปรพิเศษ" ถ้าไม่มี combo จริงในข้อมูลนี้');
-      lines.push('6. ห้ามทำให้ราคาโปรเริ่มต้นเล็กกว่าข้อความอื่น: ราคาโปรเริ่มต้นต้องเป็น focal point อันดับ 1 ของภาพเสมอ');
-      lines.push('7. ต้องแสดงวันเริ่มและวันหมดโปรให้ชัด ถ้าพื้นที่จำกัดให้ใช้บรรทัดสั้น "โปร ' + this.comboPeriod() + '"');
-      lines.push('8. ⚠️ ชื่อสินค้าในภาพ: ต้องมี "ประเภท + รุ่น/โมเดล + สเปคหลัก + เทคโนโลยีที่เกี่ยวข้อง" ครบ — ใส่คำเทคโนโลยีจริงที่เกี่ยวกับรุ่นได้ (เช่น Mini LED, Evo AI, InstaView, AI DD, DUAL Vane) แต่ห้ามใส่คำโฆษณาที่ไม่เกี่ยวข้องกับสเปคจริง');
-      if (this.cart.length > 1) {
-        lines.push('9a. ⚠️⚠️ ทุกสินค้าใน Combo ต้องอยู่ใน "เฟรมเดียว ห้องเดียว สไตล์เดียวกัน" — ห้าม split-screen / collage / panel แยก');
-        lines.push('9b. HERO product ต้องเด่นที่สุด · Supporting products ต้องเล็กกว่า แต่ยังเห็นชัดทุกชิ้น');
-        lines.push('9c. ห้ามทำให้สินค้าใดสินค้าหนึ่งหายไป — ต้องเห็นครบ ' + this.cart.length + ' ชิ้นในเฟรม');
-      }
-      lines.push('9. ⚠️⚠️ ทุกราคาในภาพต้องระบุ "ช่วงงวดที่ X-Y" กำกับเสมอ — ห้ามแสดงราคาโดยไม่มีช่วงงวดเด็ดขาด');
-      {
-        const ex = this.cart[0];
-        const exP = ex.promoMonths || 0;
-        const exTotal = ex.totalContractMonths || 60;
-        if (exP > 0 && exP < exTotal) {
-          lines.push('   ✅ ที่ถูก (ข้อมูลจริงของสินค้านี้): "งวดที่ 1-' + exP + ': ฿' + ex.effectiveMonthly.toLocaleString() + '/เดือน" · "งวดที่ ' + (exP+1) + '-' + exTotal + ': ฿' + ex.postPromoPrice.toLocaleString() + '/เดือน"');
-          lines.push('   ❌ ที่ห้าม: "฿' + ex.effectiveMonthly.toLocaleString() + '/เดือน" (ไม่บอกช่วงงวด) · "' + ex.effectiveMonthly.toLocaleString() + ' บาท" (ไม่บอกอะไรเลย)');
-        } else {
-          lines.push('   ✅ ที่ถูก: "งวดที่ 1-' + exTotal + ': ฿' + ex.postPromoPrice.toLocaleString() + '/เดือน"');
-          lines.push('   ❌ ที่ห้าม: "฿' + ex.postPromoPrice.toLocaleString() + '/เดือน" (ไม่บอกช่วงงวด)');
-        }
-      }
-      lines.push('   - ราคา HERO: "งวดที่ ' + lowestBillRange + ' จาก ' + (this.cart[0]?.totalContractMonths || 60) + '" หรือ "งวดที่ ' + lowestBillRange + ': ฿' + this.fmtMoney(lowest.price) + '/เดือน"');
-      lines.push('   - ถ้ามีหลายช่วงราคา (โปร + ราคาปกติ) → ต้องแสดงทุกช่วงพร้อมระบุงวดต้น-จบของแต่ละช่วง');
-      lines.push('   - ดูตารางงวดละเอียดต่อรุ่นในหัวข้อ "รายการสินค้า" ด้านล่าง — ต้องตรงเป๊ะ ห้ามรวม ห้ามตัด ห้ามเดา');
-      lines.push('');
-      lines.push('=== CREATIVE DIRECTION ระดับมืออาชีพ ===');
-      lines.push('ออกแบบให้เหมือนงานโฆษณาจาก global creative agency สำหรับแบรนด์เครื่องใช้ไฟฟ้าพรีเมียม: ภาพสะอาด แพง น่าเชื่อถือ มีลำดับสายตาชัด และพร้อมใช้ขายจริง');
-      lines.push('ให้สินค้าเป็นพระเอกของภาพ ใช้แสงแบบ studio/cinematic ที่ควบคุมดี เงานุ่ม ผิววัสดุดูจริง รายละเอียดคม ไม่ทำให้สินค้าดูเป็นภาพการ์ตูนหรือ 3D เกินจริง');
-      lines.push('ใช้ compositional hierarchy แบบมืออาชีพ: hero product, key price, benefit badge, supporting details ต้องแยกชั้นชัด อ่านได้ใน 2 วินาทีแรก');
-      lines.push('กราฟิกประกอบต้องเป็น premium UI/data card ไม่ใช่ template สำเร็จรูป: ใช้เส้นบาง ไอคอนน้อย ชิ้นงานโปร่ง หายใจได้ มีระยะขอบสม่ำเสมอ');
-      lines.push('เป้าหมายการขาย: ให้คนเห็นภาพแล้วเข้าใจทันทีว่า "โปรเริ่มต้นคุ้มมาก" และรู้ว่า LG Subscribe มี Care Service ดูแลต่อเนื่อง ไม่ใช่แค่ขายเครื่อง');
-      lines.push('');
-      lines.push('=== สไตล์ภาพ ===');
-      lines.push('สไตล์: ' + this.imagePromptStyleName() + ' — ' + this.imagePromptStyleText());
-      lines.push('สัดส่วน: ' + this.imagePromptRatio);
-      lines.push('คุณภาพภาพ: ultra sharp commercial render, high-resolution print-ready, professional color grading, premium product photography, realistic material detail, clean anti-aliased edges');
-      lines.push('');
-      // === Category-specific SCENE ===
-      const sc = this.getCartScene();
-      if (sc) {
-        lines.push('=== SCENE (ฉาก/แสง/โทน — เลือกอัตโนมัติตามหมวด: ' + sc.label + ') ===');
-        lines.push('SCENE: ' + sc.scene);
-        lines.push('SURFACE: ' + sc.surface);
-        lines.push('LIGHTING: ' + sc.lighting);
-        lines.push('MOOD: ' + sc.mood);
-        lines.push('PALETTE: ' + sc.palette);
-        lines.push('PRODUCT HERO: ' + sc.productHero);
-        const feats = this.activeFeatures();
-        if (feats.length) {
-          lines.push('FEATURE ICONS (3-4 LG official badge style): ' + feats.join(' · '));
-          lines.push('   รูปแบบ LG badge: กรอบ rounded rectangle เส้นบาง 1px · icon เส้นบางตรงกลางด้านบน · ชื่อฟีเจอร์ด้านล่าง small caps · พื้นโปร่งใส/ดำ · accent LG red (#a50034) หรือขาว · ห้ามใช้ flat color ตัน');
-          lines.push('   อ้างอิงไอคอน LG จริง: AI DD™=brain+motor circuit · TurboWash™=water jets omnidirectional · InstaView™=lit-glass-panel · DoorCooling+™=vent-arrows-at-door · ThinQ™=smartphone+WiFi · Dual Inverter=dual-motor diagram · UVnano™=UV-C light-rays (purple) · OLED evo=pixel wordmark · Craft Ice™=sphere ice · LINEAR Cooling=±0.5°C stability line');
-        }
-        const hl = this.cart.length > 1 ? (this.activeComboHeadline() || sc.headline) : sc.headline;
-        lines.push('HEADLINE ภาษาไทย (สำคัญ): "' + hl + '"');
-      }
-      lines.push('');
-      // === COMBO COMPOSITION (สำคัญสำหรับหลายชิ้น) ===
-      if (this.cart.length > 1) {
-        const sc = this.getCartScene();
-        const hero = this.heroProduct();
-        const sup = this.supportingProducts();
-        lines.push('=== COMBO COMPOSITION (สำคัญมาก — สินค้า ' + this.cart.length + ' ชิ้น ต้องอยู่ในภาพเดียวกันแบบสมจริง) ===');
-        lines.push('Combo Type: ' + (sc?.label || 'Multi-Product Combo'));
-        lines.push('');
-        lines.push('🎯 HERO PRODUCT (พระเอกของภาพ — ใหญ่ที่สุด เด่นที่สุด คม สด):');
-        lines.push('   • ' + hero.code + ' — ' + hero.name);
-        lines.push('   • วางในตำแหน่ง focal point หลัก (กลาง-ขวา) ขนาดใหญ่สุดในภาพ');
-        lines.push('   • ใช้ key light หลักโฟกัสที่ HERO');
-        lines.push('');
-        lines.push('🎬 SUPPORTING PRODUCTS (' + sup.length + ' ชิ้น — เป็นพระรอง ใส่ในเฟรมเดียวกัน ขนาดเล็กกว่า HERO):');
-        sup.forEach((it, i) => {
-          lines.push('   ' + (i+1) + '. ' + it.code + ' — ' + it.name + ' (' + it.category + ')');
-        });
-        lines.push('   • Supporting วางเป็น layered composition รอบ HERO ตามตำแหน่งที่ห้องเหมาะสม');
-        lines.push('   • ใช้ depth of field เบาๆ ให้ดูมีมิติ (HERO โฟกัส · supporting นุ่มเล็กน้อยแต่ยังเห็นชัด)');
-        lines.push('   • ขนาดในภาพต้องเล็กกว่า HERO อย่างชัดเจน แต่ยังเห็นได้ชัดทุกชิ้น');
-        lines.push('');
-        if (sc?.composition) {
-          lines.push('📐 LAYOUT GUIDE:');
-          lines.push('   ' + sc.composition);
-          lines.push('');
-        }
-        lines.push('🎨 UNIFIED SCENE RULES:');
-        lines.push('   • ใช้ฉาก/แสง/โทนสีเดียวกันทั่วทั้งภาพ — ห้ามแบ่งภาพเป็น panel หรือ split-screen');
-        lines.push('   • ทุกสินค้าต้องอยู่ในห้อง/พื้นที่เดียวกันจริง สมจริง ไม่ใช่ collage');
-        lines.push('   • วัตถุประสบการณ์ในภาพ (เก้าอี้ โต๊ะ ผ้าม่าน ต้นไม้) ต้องสอดคล้องสไตล์เดียวกัน');
-        lines.push('   • Perspective เดียวกันสำหรับทุกชิ้น (ห้ามผสม flat + 3D)');
-        lines.push('');
-        if (hasCombo) {
-          lines.push('💎 COMBO STORY (จุดขายหลัก — ต้องเป็นข้อความใหญ่ในภาพ):');
-          lines.push('   "Subscribe ' + this.cart.length + ' ชิ้น รับส่วนลด ' + Math.round(this.comboRate()*100) + '%"');
-          if (this.totalSaving() > 0) {
-            lines.push('   "ประหยัดรวม ฿' + this.totalSaving().toLocaleString() + ' ตลอดสัญญา"');
-          }
-          lines.push('   ใช้เป็น Combo Badge เด่นเป็นพิเศษ (อยู่ใกล้ๆ HERO product)');
-          lines.push('');
-        }
-        lines.push('=========');
-        lines.push('');
-      }
-      lines.push('=== ข้อมูลที่ต้องนำไปออกแบบ ===');
-      lines.push('ประเภทลูกค้า: ' + customer);
-      if (hasCombo) {
-        lines.push('โปรโมชันคอมโบที่เข้าเงื่อนไข: ' + (this.specialCombo ? 'Special — ' : '') + promoName + ' (' + this.comboPeriod() + ') ลด ' + Math.round(this.comboRate() * 100) + '%');
-      } else if (this.cart.length > 0) {
-        // ── Upsell hint: encourage adding more items for combo ──
-        const need = Math.max(0, this.minTierItems() - this.cart.length);
-        const rate = this.minTierRate();
-        if (need > 0 && rate > 0) {
-          lines.push('โอกาส Upsell (สำคัญ — ใช้เป็น Call-to-Action ในภาพ):');
-          lines.push('  - ลูกค้านี้ยังไม่ได้รับส่วนลด Combo เพราะมีสินค้าเพียง ' + this.cart.length + ' ชิ้น');
-          lines.push('  - หากเพิ่มอีก ' + need + ' ชิ้น จะได้รับส่วนลด ' + promoName + ' ' + rate + '% ทันที');
-          lines.push('  - เงื่อนไขเริ่มรับส่วนลด: ' + this.customerPromoRuleText());
-        }
-      }
-      lines.push('');
-      lines.push('รายการสินค้า:');
-      lines.push(productLines);
-      lines.push('');
-      lines.push('รายละเอียด Care Service ที่ต้องสื่อสาร:');
-      lines.push(careLines);
-      lines.push('');
-      // ── Service Type emphasis (Visit vs Self) ──
-      const svcTypes = [...new Set(this.cart.map(it => it.serviceType))];
-      lines.push('=== รูปแบบบริการของลูกค้า (สำคัญมาก — ต้องสื่อสารชัดในภาพ) ===');
-      svcTypes.forEach(st => {
-        const itemsOfType = this.cart.filter(it => it.serviceType === st).map(it => it.code).join(', ');
-        if (st === 'Visit') {
-          lines.push('🏠 VISIT — ' + itemsOfType + ' : ช่างของ LG เข้าบริการถึงบ้าน ทำความสะอาด/เปลี่ยนอะไหล่/ตรวจเช็ค ลูกค้าไม่ต้องดำเนินการเอง → แสดง icon ช่าง/บ้าน/รถบริการ');
-        } else if (st === 'Self') {
-          lines.push('📦 SELF — ' + itemsOfType + ' : LG ส่ง Filter/อะไหล่ถึงบ้าน ลูกค้าเปลี่ยนเอง (ไม่มีช่างเข้าบ้าน) → แสดง icon กล่องพัสดุ/อะไหล่/มือ DIY · ห้ามแสดงรูปช่าง');
-        } else if (st === 'No Service') {
-          lines.push('🛡️ NO SERVICE — ' + itemsOfType + ' : รับประกันตลอดสัญญา ไม่มีบริการเข้าบ้านประจำ มีเฉพาะการซ่อมตามจริง → แสดง icon โล่/รับประกัน');
-        }
-      });
-      lines.push('');
-      lines.push('=== การรับประกันสินค้า (สำคัญ — ต้องปรากฏในภาพเป็น Service Badge) ===');
-      lines.push('Headline รับประกัน: "รับประกันสินค้าตลอดอายุสัญญา ' + warrantyYears + ' ปี"');
-      lines.push('รายละเอียดต่อรุ่น:');
-      lines.push(warrantyLines);
-      lines.push('จุดสื่อสารหลัก: LG Subscribe — รับประกันสินค้าตลอดอายุสัญญา (ไม่ต้องลงรายละเอียดชิ้นส่วนหลัก/Compressor/Motor)');
-      lines.push('');
-      lines.push('ตัวเลขสำคัญที่ต้องแสดงในภาพ (ห้ามผิด):');
-      lines.push(promoLines);
-      lines.push('');
-      lines.push('=== PRIORITY ของข้อความในภาพ ===');
-      let prio = 1;
-      lines.push(prio++ + '. ใหญ่ที่สุด: "โปรเริ่มต้น ฿' + this.fmtMoney(lowest.price) + '/เดือน" หรือ "เริ่มต้นเพียง ฿' + this.fmtMoney(lowest.price) + '/เดือน" + ⚠️ label "งวดที่ ' + lowestBillRange + ' จาก ' + heroMonths + ' งวด" บังคับ (ห้ามลืม)');
-      lines.push(prio++ + '. รองลงมา: ชื่อสินค้า/รุ่น + LG Subscribe');
-      if (hasCombo) {
-        lines.push(prio++ + '. รองลงมา: ส่วนลดคอมโบ ' + Math.round(this.comboRate() * 100) + '% และเงื่อนไขตามโปร: ' + this.customerPromoRuleText());
-      } else if (this.cart.length > 0) {
-        const upNeed3 = Math.max(0, this.minTierItems() - this.cart.length);
-        const upRate3 = this.minTierRate();
-        if (upNeed3 > 0 && upRate3 > 0) {
-          lines.push(prio++ + '. รองลงมา: Upsell CTA "Subscribe เพิ่มอีก ' + upNeed3 + ' ชิ้น รับส่วนลด ' + upRate3 + '%" — กระตุ้นการซื้อเพิ่ม');
-        }
-      }
-      lines.push(prio++ + '. ข้อความสนับสนุน: Care Service ดูแลตลอดสัญญา, ตรวจเช็ก/ทำความสะอาด/เปลี่ยนอะไหล่ตามรอบบริการ');
-      lines.push(prio++ + '. Service Badge: "รับประกันตลอดสัญญา ' + warrantyYears + ' ปี" — เด่นเป็นสัญลักษณ์ความน่าเชื่อถือ ไม่ใหญ่กว่าราคา HERO');
-      lines.push(prio++ + '. ตัวเล็กสุด: วันเริ่ม-หมดโปร และหมายเหตุจำเป็น');
-      lines.push('');
-      lines.push('=== องค์ประกอบที่ต้องมี ===');
-      if (this.cart.length > 1) {
-        const sc = this.getCartScene();
-        const hero = this.heroProduct();
-        const sup = this.supportingProducts();
-        lines.push('🎯 COMBO LAYOUT (สำคัญที่สุด):');
-        lines.push('   - HERO: ' + hero.code + ' วางตำแหน่งกลาง-ขวา ใหญ่ที่สุดในภาพ โฟกัสคมชัด');
-        lines.push('   - SUPPORTING ' + sup.length + ' ชิ้น: ' + sup.map(it=>it.code).join(', ') + ' วาง layered รอบ HERO ขนาดเล็กกว่า');
-        lines.push('   - ทุกชิ้นในเฟรมเดียว ห้องเดียว — ห้าม collage / split');
-        if (sc?.composition) lines.push('   - Layout guide: ' + sc.composition);
-        lines.push('');
-        if (hasCombo) {
-          lines.push('   - 💎 COMBO BADGE เด่น: "Subscribe ' + this.cart.length + ' ชิ้น ลด ' + Math.round(this.comboRate()*100) + '%" ใกล้ HERO');
-          if (this.totalSaving() > 0) {
-            lines.push('   - 💰 SAVINGS: "ประหยัดรวม ฿' + this.totalSaving().toLocaleString() + '" — รองจาก Combo Badge');
-          }
-        }
-        lines.push('');
-      }
-      lines.push('- Headline ภาษาไทย อ่านชัด กระชับ ไม่เกิน 8 คำ เช่น "โปรคุ้ม ดูแลครบ" หรือ "LG Subscribe โปรพิเศษ ดูแลครบ"');
-      lines.push('- ราคาเด่นที่สุด 1 จุดเท่านั้น: ฿' + this.fmtMoney(lowest.price) + '/เดือน ต้องใหญ่ที่สุดในภาพ ใช้เป็น visual anchor หลัก');
-      lines.push('- ⚠️⚠️ ต้องมี label "งวดที่ ' + lowestBillRange + ' จาก ' + heroMonths + ' งวด" ใต้ราคา HERO เสมอ (ห้ามลืมเด็ดขาด)');
-      lines.push('- ⚠️⚠️ ทุกราคาในภาพ ต้องมี "ช่วงงวด X-Y" กำกับเสมอ — ห้ามแสดงเฉพาะตัวเลขราคาโดยไม่มีช่วงงวด');
-      {
-        if (this.cart.length === 1) {
-          const sc0 = this.cart[0];
-          const pm = sc0.promoMonths || 0;
-          const tot = sc0.totalContractMonths || 60;
-          lines.push('    ตาราง bill schedule (ต้องแสดงในภาพ ห้ามใช้ตัวเลขอื่น):');
-          if (sc0.billSchedule && sc0.billSchedule.length > 0) {
-            sc0.billSchedule.forEach(seg => {
-              lines.push('       งวดที่ ' + seg.range + ': ฿' + this.bht(seg.price).toLocaleString() + '/เดือน');
-            });
-          } else if (pm > 0 && pm < tot) {
-            lines.push('       งวดที่ 1-' + pm + ': ฿' + sc0.effectiveMonthly.toLocaleString() + '/เดือน  (ช่วงโปร)');
-            lines.push('       งวดที่ ' + (pm+1) + '-' + tot + ': ฿' + sc0.postPromoPrice.toLocaleString() + '/เดือน  (ราคาปกติ)');
-          } else {
-            lines.push('       งวดที่ 1-' + tot + ': ฿' + sc0.postPromoPrice.toLocaleString() + '/เดือน');
-          }
-        } else {
-          // Combo — แสดง bill schedule ของแต่ละชิ้น (หลังหักส่วนลดคอมโบแล้ว)
-          lines.push('    ตาราง bill schedule แต่ละชิ้น (หลังหักส่วนลดคอมโบ — ห้ามใช้ตัวเลขอื่น):');
-          this.cart.forEach(it => {
-            const segs = this.itemComboSegments(it).segments;
-            lines.push('    [' + it.code + '] ' + it.name + ':');
-            if (segs.length > 0) {
-              segs.forEach(seg => {
-                const lbl = seg.start === seg.end ? ('งวดที่ ' + seg.start) : ('งวดที่ ' + seg.start + '-' + seg.end);
-                const tag = seg.base < it.postPromoPrice ? '  (ช่วงโปร)' : '  (ราคาปกติ)';
-                lines.push('       ' + lbl + ': ฿' + Math.round(seg.price).toLocaleString() + '/เดือน' + tag);
-              });
-            }
-          });
-          lines.push('    ⚠️ ยอดรวมทุกชิ้น/เดือน: ฿' + this.netMonthly().toLocaleString() + ' (หลังหักส่วนลดคอมโบแล้ว) · ดูรายละเอียดในหัวข้อ "ตัวเลขสำคัญ" ด้านบน');
-        }
-      }
-      lines.push('- มี label ใกล้ราคา เช่น "โปรเริ่มต้น", "เริ่มต้นเพียง", "แพ็กเกจพิเศษ"');
-      lines.push('- ราคา/ข้อมูลรองต้องเล็กกว่าราคา HERO อย่างชัดเจน เพื่อไม่แย่งสายตา');
-      lines.push('- ⚠️ ชื่อสินค้าในภาพ — ต้องมี "ประเภท + รุ่น/โมเดล + สเปคหลัก + เทคโนโลยีจริงที่เกี่ยวข้อง" ครบ');
-      lines.push('    ✅ ชื่อสินค้าที่ต้องแสดงในภาพ (ใช้ข้อมูลด้านล่างนี้เท่านั้น ห้ามใส่รุ่นอื่น):');
-      this.cart.forEach(it => {
-        const feats = this.modelFeaturesFor(it.code);
-        const topTech = feats ? feats.slice(0, 2).join(', ') : '';
-        lines.push('       • "' + it.category + (topTech ? ' · ' + topTech : '') + ' รุ่น ' + it.code + '"');
-      });
-      lines.push('       → ใส่เฉพาะเทคโนโลยีที่ระบุในรายการฟีเจอร์ของรุ่นนั้น ห้ามใส่สเปคของรุ่นอื่น');
-      lines.push('    ❌ ห้ามใส่ชื่อรุ่น/สเปค/เทคโนโลยีที่ไม่อยู่ในข้อมูลสินค้าด้านบน');
-      lines.push('       • ห้าม: "สุดยอดที่สุด", "ลำ้ที่สุดในโลก", "เทคโนโลยีล้ำสมัย", "ดีที่สุดในไทย"');
-      if (this.hasAdvance()) {
-        lines.push('- ⚠️ ต้องแสดง "จ่ายล่วงหน้า ฿' + this.totalAdvance().toLocaleString() + ' (12 งวดแรก)" ใต้ราคา HERO หรือใน price card — ห้ามลืม');
-      }
-      lines.push('- ใส่กล่อง Care Service แบบ premium benefit card 1 กล่อง: สรุปว่ามีการดูแลตามแพ็กเกจ เช่น ตรวจเช็ก ทำความสะอาด เปลี่ยนไส้กรอง/อะไหล่ ตามรอบบริการ');
-      lines.push('- ใส่ Warranty Badge: รูปทรงโล่/ตรา/วงกลม minimal ระบุข้อความ "รับประกันสินค้าตลอดอายุสัญญา ' + warrantyYears + ' ปี" ใช้สี cream/white หรือ LG red minimal — ห้ามระบุชิ้นส่วนหลัก/Compressor/Motor');
-      lines.push('- ใส่ icon โล่ 🛡️ หรือ check ✓ คู่กับ badge รับประกัน เพื่อสื่อความมั่นคง น่าเชื่อถือ');
-      lines.push('- ใส่แถบโปรโมชันขนาดเล็ก: "' + this.promoDateText() + '"');
-      if (hasCombo) {
-        lines.push('- ใส่เงื่อนไขส่วนลดแบบสั้นจากข้อมูลนี้: "' + this.customerPromoRuleText() + '"');
-        lines.push('- ใส่ badge ส่วนลดคอมโบ ' + Math.round(this.comboRate() * 100) + '% มุมบน-ขวา หรือมุมล่าง-ซ้าย ให้เด่นแต่ไม่บังสินค้า');
-      } else if (this.cart.length > 0) {
-        const upNeed2 = Math.max(0, this.minTierItems() - this.cart.length);
-        const upRate2 = this.minTierRate();
-        if (upNeed2 > 0 && upRate2 > 0) {
-          lines.push('- ใส่ Upsell Hint Card ขนาดเล็ก (ไม่บังสินค้า ไม่ใหญ่กว่าราคา HERO): ข้อความ "Subscribe เพิ่มอีก ' + upNeed2 + ' ชิ้น รับส่วนลด ' + upRate2 + '%" — ใช้สี gold accent หรือ teal subtle พร้อม icon ➕ หรือ 🎁');
-          lines.push('- จุดประสงค์ของ Upsell Card: กระตุ้นให้ลูกค้าเลือกสินค้าเพิ่ม เพื่อรับส่วนลด Combo — ไม่ใช่บอกว่ามีส่วนลดอยู่แล้ว');
-        }
-      }
-      lines.push('- พาเลตสี: LG red (#a50034), charcoal (#242228), cream/white, accent gold (#c99a52) หรือ teal (#0f766e) — ใช้สีนอกพาเลตได้ไม่เกิน 1 สี');
-      lines.push('- Typography: ฟอนต์ Sans-serif ภาษาไทยอ่านง่าย (ห้ามใช้ฟอนต์แฟนซี/ลายมือ/ตัวเขียน)');
-      lines.push('- Layout: เน้น whitespace, hierarchy ชัด, อ่านบนมือถือได้สบาย');
-      lines.push('- Lighting: ใช้ softbox key light + subtle rim light + controlled reflection ให้สินค้าดูแพง สะอาด และมีมิติ');
-      lines.push('- Composition: ใช้ safe margin 8-10%, ห้ามวางข้อความชิดขอบ, ระยะห่างระหว่างกล่องข้อความต้องสม่ำเสมอ');
-      lines.push('- Graphic detail: ใช้เส้นบาง 1-2px, corner radius เรียบหรู, shadow เบามาก, ไม่ใช้กรอบหนา/ป้ายสีฉูดฉาด/element เยอะเกินจำเป็น');
-      lines.push('');
-      lines.push('=== สิ่งที่ต้องหลีกเลี่ยง ===');
-      lines.push('- ห้ามใส่ตัวอักษร/ข้อความเกิน 30 คำในภาพ');
-      lines.push('- ห้ามใส่ stock photo คน/หน้าจอ/ไอคอน generic');
-      lines.push('- ห้ามใส่ effect ฟุ้ง/แสงเลเซอร์/เปลวไฟ/ฉากซับซ้อน — เน้นสะอาด พรีเมียม');
-      lines.push('- ห้ามวาดสินค้าซ้ำหลายชิ้นในภาพเดียวถ้าไม่ได้ระบุ');
-      lines.push('- หลีกเลี่ยงงานที่ดูเหมือนใบปลิวราคาถูก, clip art, 3D plastic, สีจัดเกิน, gradient หนัก, ตัวหนังสือบิดเบี้ยว, โลโก้เพี้ยน, layout แน่น หรือภาพแตก');
-      lines.push('');
-      lines.push('=== Output ===');
-      lines.push('ภาพโฆษณาคุณภาพสูงระดับ professional campaign visual, resolution พิมพ์งานได้, เหมาะใช้ส่งลูกค้าผ่าน LINE/Email หรือใช้ในใบเสนอราคา/พิตช์งานขาย');
-      lines.push('Final look: elegant, premium, trustworthy, modern, visually balanced, agency-grade graphic design, ready for real sales presentation');
-      return lines.join('\n');
-    },
-    copyImagePrompt() {
-      if (this.cart.length === 0) {
-        this.showToast('เลือกสินค้าก่อนสร้าง Prompt');
-        return;
-      }
-      const label = this.imagePromptMode === 'dalle' ? 'คัดลอก DALL-E Prompt แล้ว ✓' : 'คัดลอก ChatGPT Prompt แล้ว ✓';
-      this.copyText(this.buildActivePrompt(), label);
-    },
-
     copySummary() {
       if (this.cart.length === 0) { this.showToast('เลือกสินค้าก่อนคัดลอก'); return; }
       const hasCombo = this.comboRate() > 0;
-      const lowest = this.lowestInstallmentInfo();
       const cr = Math.round(this.comboRate() * 100);
       const ct = this.customerType === 'new' ? 'ลูกค้าใหม่' : 'ลูกค้าเก่า';
       const allMonths = this.cart.map(it => it.totalContractMonths || 60);
-      const uniqueMonths = [...new Set(allMonths)];
       const maxMonths = Math.max(...allMonths);
       const years = Math.round(maxMonths / 12);
-      const contractSuffix = uniqueMonths.length === 1
-        ? uniqueMonths[0] + ' เดือน (' + years + ' ปี)'
-        : this.cart.map(it => it.code + ' (' + (it.totalContractMonths || 60) + ' เดือน)').join(', ');
       const ann = this.annualBreakdown();
       const lines = [];
 
-      // ═══════════════════ HEADER ═══════════════════
-      lines.push('🏷️  LG SUBSCRIBE — ข้อเสนอพิเศษสำหรับคุณ');
-      lines.push('════════════════════════════════════════');
-      lines.push('👤 ประเภทลูกค้า : ' + ct);
-      lines.push('📅 ช่วงโปรโมชัน : ' + this.promoDateText());
-      if (hasCombo) {
-        lines.push('✨ ' + (this.specialCombo ? '🔥 ' : '') + this.comboLabel() + ' ' + cr + '%');
-        lines.push('   เงื่อนไข: ' + this.customerPromoRuleText());
-      }
-      lines.push('');
+      // HEADER
+      const headerTitle = this.cart.length === 1
+        ? 'LG SUBSCRIBE — ' + this.cart[0].code
+        : 'LG SUBSCRIBE — ' + this.cart.length + ' รายการ';
+      lines.push(headerTitle);
+      let headerSub = ct + ' | ' + this.promoDateText();
+      if (hasCombo) headerSub += ' | ' + this.comboLabel() + ' ' + cr + '%';
+      lines.push(headerSub);
 
-      // ═══════════════════ HERO OFFER ═══════════════════
-      lines.push('🔥 ข้อเสนอเริ่มต้น');
-      lines.push('────────────────────────────────────────');
-      lines.push('   เพียง ฿' + this.fmtMoney(lowest.price) + '/เดือน');
-      lines.push('   (งวดที่ ' + lowest.bill + ' จาก ' + maxMonths + ' งวด)');
-      lines.push('');
-      if (this.cart.length > 1 && hasCombo) {
-        lines.push('💎 Subscribe ' + this.cart.length + ' ชิ้น รับส่วนลด ' + cr + '%');
-        if (this.totalSaving() > 0) {
-          lines.push('   ประหยัดรวม ฿' + this.totalSaving().toLocaleString() + ' ตลอดสัญญา');
-        }
-        lines.push('');
-      }
-
-      // ═══════════════════ ANNUAL VALUE ═══════════════════
-      if (ann) {
-        lines.push('📊 ค่าใช้จ่ายเฉลี่ย "ต่อปี"');
-        lines.push('────────────────────────────────────────');
-        lines.push('   เพียงปีละ ฿' + ann.perYear.toLocaleString() + '  (เฉลี่ย ฿' + ann.perMonth.toLocaleString() + '/เดือน)');
-        lines.push('   รวมตลอดสัญญา ' + ann.years + ' ปี = ฿' + this.fmtMoney(ann.totalContract));
-        lines.push('');
-        lines.push('🎁 จ่ายปีละ ฿' + ann.perYear.toLocaleString() + ' ลูกค้าได้อะไรบ้าง?');
-        lines.push('   ─────────');
-        ann.benefitsPerYear.forEach(b => {
-          lines.push('   ✅ ' + b.code);
-          if (b.serviceType === 'Visit') {
-            const visits = b.visitsPerYear >= 1 ? b.visitsPerYear + ' ครั้ง/ปี' : '1 ครั้งใน 2 ปี';
-            lines.push('      • ช่างเข้าบริการที่บ้าน ' + visits);
-            lines.push('      • ทำความสะอาด · ตรวจเช็ก · เปลี่ยนอะไหล่ให้');
-          } else if (b.serviceType === 'Self') {
-            lines.push('      • LG ส่งอะไหล่/Filter ถึงบ้าน ' + b.partsPerYear + ' รอบ/ปี');
-            lines.push('      • เปลี่ยนเองง่ายๆ ไม่ต้องรอช่าง');
-          } else {
-            lines.push('      • รับประกันสินค้าเต็มปี · ซ่อมฟรีตลอดสัญญา');
-          }
-        });
-        lines.push('   ✅ รับประกันสินค้าตลอด ' + ann.years + ' ปี');
-        lines.push('   ✅ ไม่ต้องจ่ายค่าซ่อม/บำรุงรักษาเพิ่ม');
-        lines.push('');
-        lines.push('💡 เทียบกับซื้อขาด:');
-        lines.push('   • ซื้อขาดต้องจ่ายค่าซ่อมเอง · เปลี่ยนอะไหล่เอง');
-        lines.push('   • หากเสีย หมดประกัน 1 ปี → เสียค่าซ่อมแพง');
-        lines.push('   • Subscribe = จ่ายราคาเดียว ได้สินค้า + บริการ + รับประกันครบ');
-        lines.push('');
-      }
-
-      // ═══════════════════ PRODUCT DETAILS ═══════════════════
-      lines.push('📦 รายการสินค้า (' + this.cart.length + ' ชิ้น)');
-      lines.push('════════════════════════════════════════');
-      lines.push('');
+      // PRODUCT DETAILS
       this.cart.forEach((it, i) => {
         const care = this.careService(it);
         const stLabel = it.serviceType === 'Visit'
-          ? '🏠 ช่างเข้าบ้าน (Visit)'
+          ? 'ช่างเข้าบ้าน (Visit)'
           : it.serviceType === 'Self'
-            ? '📦 รับอะไหล่เปลี่ยนเอง (Self)'
-            : '🛡️ รับประกันตลอดสัญญา (No Service)';
-        lines.push((i + 1) + '. ' + it.name);
-        lines.push('   หมวดสินค้า  : ' + it.category);
-        lines.push('   รหัสรุ่น    : ' + it.code);
-        lines.push('   ระยะสัญญา   : ' + it.term + ' (' + (it.totalContractMonths || 60) + ' เดือน)');
-        lines.push('   บริการดูแล  : ' + stLabel);
-        lines.push('   รอบบริการ   : ' + it.serviceCycle);
+            ? 'รับอะไหล่เปลี่ยนเอง (Self)'
+            : 'รับประกันตลอดสัญญา';
         lines.push('');
-        lines.push('   💰 ตารางค่าเช่ารายงวด:');
+        if (this.cart.length > 1) lines.push((i + 1) + '. ' + it.name);
+        else lines.push(it.name);
+        lines.push('สัญญา ' + it.term + ' (' + (it.totalContractMonths || 60) + ' เดือน) | บริการ: ' + stLabel + ' ' + it.serviceCycle);
+
+        // Bill schedule
+        lines.push('');
+        lines.push('ค่าเช่ารายงวด');
+        const totalM = it.totalContractMonths || 60;
         if (it.billSchedule) {
           it.billSchedule.forEach(seg => {
-            let sl = '      ' + seg.range + ': ฿' + this.bht(seg.price).toLocaleString() + '/เดือน';
+            const label = ('  ' + seg.range.replace('บิล ', 'งวดที่ ')).padEnd(16);
+            let sl = label + this.bht(seg.price).toLocaleString() + ' บาท/เดือน';
             if (seg.note) sl += '  (' + seg.note + ')';
             lines.push(sl);
           });
-        } else if (it.promo) {
-          lines.push('      ' + it.promo);
+        } else if (it.promoMonths > 0) {
+          const promoRange = it.promoMonths === 1 ? 'งวดที่ 1' : 'งวดที่ 1-' + it.promoMonths;
+          const regRange = 'งวดที่ ' + (it.promoMonths + 1) + '-' + totalM;
+          lines.push(('  ' + promoRange).padEnd(16) + this.bht(it.effectiveMonthly).toLocaleString() + ' บาท/เดือน');
+          lines.push(('  ' + regRange).padEnd(16) + it.postPromoPrice.toLocaleString() + ' บาท/เดือน');
         } else {
-          lines.push('      ฿' + it.postPromoPrice.toLocaleString() + '/เดือน ตลอดสัญญา');
+          lines.push(('  งวดที่ 1-' + totalM).padEnd(16) + it.postPromoPrice.toLocaleString() + ' บาท/เดือน');
         }
-        if (it.advancePayment) {
-          lines.push('');
-          lines.push('   💳 จ่ายล่วงหน้าตอนเริ่มสัญญา: ฿' + it.advancePayment.toLocaleString());
-          lines.push('      → ครอบคลุม 12 งวดแรก (50% ของแต่ละงวด)');
-        }
-        lines.push('');
-        lines.push('   🛠️  สิ่งที่จะได้รับจาก Care Service:');
-        care.items.forEach(svc => {
-          lines.push('      • ' + svc.label);
-          lines.push('        → ' + svc.freq);
-        });
-        if (care.note) lines.push('      📝 ' + care.note);
-        if (i < this.cart.length - 1) {
-          lines.push('');
-          lines.push('   ─────────────────────────');
-        }
-        lines.push('');
-      });
 
-      // ═══════════════════ BILL RANGE TOTALS ═══════════════════
-      lines.push('📅 ค่าเช่าตามช่วงงวด');
-      lines.push('─────────────────────────');
-      this.cart.forEach((it, i) => {
+        // Per-item total
+        lines.push('');
         const ranges = this.billRangeTotals(it);
         const advance = it.advancePayment || 0;
-        const totalItem = ranges.reduce((s, r) => s + r.total, 0);
-        lines.push('');
-        lines.push((i + 1) + '. ' + it.code);
-        if (advance > 0) {
-          lines.push('   💳 จ่ายล่วงหน้า: ฿' + advance.toLocaleString() + ' (ครอบคลุม 12 งวดแรก)');
+        const totalItem = ranges.reduce((s, r) => s + r.total, 0) + advance;
+        let totalLine = 'รวม ' + (it.totalContractMonths || 60) + ' งวด = ' + this.fmtMoney(totalItem) + ' บาท';
+        if (it.totalSaving > 0) totalLine += ' | ประหยัด ' + it.totalSaving.toLocaleString() + ' บาท';
+        lines.push(totalLine);
+        if (ann && this.cart.length === 1) {
+          lines.push('เฉลี่ย ' + ann.perMonth.toLocaleString() + ' บาท/เดือน (' + ann.perYear.toLocaleString() + ' บาท/ปี)');
         }
-        ranges.forEach(r => {
-          let tag = '';
-          if (r.isPromo) tag = ' (โปร)';
-          else if (r.year) tag = ' (ปีที่ ' + r.year + ')';
-          const label = r.rangeLabel + tag;
-          const calc = '฿' + r.pricePerMonth.toLocaleString() + '/เดือน × ' + r.months + ' งวด';
-          const total = '฿' + this.fmtMoney(r.total);
-          lines.push('   ▸ ' + label + ': ' + calc + ' = ' + total);
-        });
-        lines.push('   ─────────');
-        const sumLabel = 'รวม ' + (it.totalContractMonths || 60) + ' งวด' + (advance > 0 ? ' + จ่ายล่วงหน้า' : '');
-        lines.push('   ' + sumLabel + ': ฿' + this.fmtMoney(totalItem + advance));
-      });
-      lines.push('');
 
-      // ═══════════════════ COST SUMMARY ═══════════════════
-      lines.push('💵 สรุปค่าใช้จ่าย');
-      lines.push('════════════════════════════════════════');
-      lines.push('');
-      if (hasCombo) {
-        lines.push('   ยอดรวมก่อนส่วนลด    : ฿' + this.totalMonthly().toLocaleString() + '/เดือน');
-        lines.push('   ส่วนลด ' + this.comboLabel() + ' ' + cr + '%  : −฿' + this.comboDiscount().toLocaleString() + '/เดือน');
-        lines.push('   ─────────────────────────');
-      }
-      lines.push('💵 ค่าเช่าสุทธิ/เดือน    : ฿' + this.netMonthly().toLocaleString());
-      if (this.hasPromoFirstMonths()) {
-        const maxM = Math.max(...this.cart.map(it => it.promoMonths));
-        lines.push('🎁 ' + maxM + ' เดือนแรก          : ฿' + this.promoMonthly().toLocaleString() + '/เดือน');
-      }
-      if (this.hasAdvance()) {
+        // Care Service
         lines.push('');
-        lines.push('💳 เงินจ่ายก้อนแรก (ตอนเริ่มสัญญา):');
-        lines.push('   รวม ฿' + this.totalAdvance().toLocaleString());
-        this.cart.filter(it => it.advancePayment > 0).forEach(it => {
-          lines.push('   • ' + it.name + ' : ฿' + it.advancePayment.toLocaleString() + ' (ครอบคลุม 12 งวดแรก)');
+        lines.push('Care Service ที่จะได้รับ');
+        care.items.forEach(svc => {
+          lines.push('  - ' + svc.label + '  (' + svc.freq + ')');
         });
-      }
-      lines.push('');
-      if (this.totalSaving() > 0) {
-        lines.push('💰 ประหยัดรวมตลอดสัญญา : ฿' + this.totalSaving().toLocaleString());
-      }
-      lines.push('📊 ยอดรวมตลอดสัญญา    : ฿' + this.fmtMoney(this.grandTotal()));
-      let cl = '   (ระยะเวลาสัญญา: ' + contractSuffix;
-      if (this.hasAdvance()) cl += ' · รวมก้อนแรก ฿' + this.totalAdvance().toLocaleString();
-      cl += ')';
-      lines.push(cl);
-      lines.push('');
+        if (care.note) lines.push('  * ' + care.note);
 
-      // ═══════════════════ WHY LG SUBSCRIBE (CLOSING) ═══════════════════
-      lines.push('✨ ทำไมต้อง LG Subscribe?');
-      lines.push('════════════════════════════════════════');
-      lines.push('   ✅ ได้สินค้าพรีเมียม LG รุ่นใหม่ใช้ทันที');
-      lines.push('   ✅ ไม่ต้องจ่ายเงินก้อนใหญ่');
-      lines.push('   ✅ รวมบริการดูแล + เปลี่ยนอะไหล่ตามรอบ');
-      lines.push('   ✅ รับประกันสินค้าตลอดอายุสัญญา ' + years + ' ปี');
-      lines.push('   ✅ ไม่ต้องกังวลเรื่องค่าซ่อม — เสียก็ซ่อมฟรี');
-      lines.push('   ✅ Subscribe หลายชิ้นยิ่งคุ้ม — รับส่วนลด Combo');
-      lines.push('');
+        lines.push('');
+        lines.push('รับประกันตลอดสัญญา ' + years + ' ปี | ครอบคลุมค่าซ่อมและบำรุงรักษา');
 
-      // ═══════════════════ CALL TO ACTION ═══════════════════
-      lines.push('════════════════════════════════════════');
-      lines.push('🔥 เริ่มต้นเพียง ฿' + this.fmtMoney(lowest.price) + '/เดือน (งวดที่ ' + lowest.bill + ')');
-      if (ann) lines.push('📅 เฉลี่ยปีละ ฿' + ann.perYear.toLocaleString() + ' = ได้ของ + บริการ + รับประกันครบ');
-      lines.push('✅ พร้อม Care Service ดูแลตลอด ' + years + ' ปี');
-      lines.push('════════════════════════════════════════');
-      lines.push('');
-      lines.push('💬 สนใจสมัคร / สอบถามเพิ่มเติม');
-      lines.push('   ติดต่อเจ้าหน้าที่ LG Subscribe ได้ทันที');
-      lines.push('   ลงทะเบียนวันนี้ — โปร ' + this.comboPeriod());
+        if (i < this.cart.length - 1) {
+          lines.push('');
+          lines.push('─────────────────────────');
+        }
+      });
+
+      // GRAND TOTAL (multiple items)
+      if (this.cart.length > 1) {
+        lines.push('');
+        lines.push('─────────────────────────');
+        lines.push('สรุปรวมทุกรายการ');
+        if (hasCombo) {
+          lines.push('ส่วนลด ' + this.comboLabel() + ' ' + cr + '%: −' + this.comboDiscount().toLocaleString() + ' บาท/เดือน');
+          lines.push('ค่าเช่าสุทธิ/เดือน: ' + this.netMonthly().toLocaleString() + ' บาท');
+        }
+        if (this.hasAdvance()) {
+          lines.push('จ่ายล่วงหน้ารวม: ' + this.totalAdvance().toLocaleString() + ' บาท');
+        }
+        if (this.totalSaving() > 0) {
+          lines.push('ประหยัดรวมตลอดสัญญา: ' + this.totalSaving().toLocaleString() + ' บาท');
+        }
+        lines.push('รวมตลอดสัญญา: ' + this.fmtMoney(this.grandTotal()) + ' บาท');
+        if (ann) lines.push('เฉลี่ย ' + ann.perMonth.toLocaleString() + ' บาท/เดือน (' + ann.perYear.toLocaleString() + ' บาท/ปี)');
+      }
 
       this.copyText(lines.join('\n'), 'คัดลอกข้อความสรุปแล้ว ✓');
     }
   }
 }
 </script>
-
 
 <script>
 (()=>{var nt=!1,it=!1,W=[],ot=-1;function Ut(e){Rn(e)}function Rn(e){W.includes(e)||W.push(e),Mn()}function Wt(e){let t=W.indexOf(e);t!==-1&&t>ot&&W.splice(t,1)}function Mn(){!it&&!nt&&(nt=!0,queueMicrotask(Nn))}function Nn(){nt=!1,it=!0;for(let e=0;e<W.length;e++)W[e](),ot=e;W.length=0,ot=-1,it=!1}var T,N,$,at,st=!0;function Gt(e){st=!1,e(),st=!0}function Jt(e){T=e.reactive,$=e.release,N=t=>e.effect(t,{scheduler:r=>{st?Ut(r):r()}}),at=e.raw}function ct(e){N=e}function Yt(e){let t=()=>{};return[n=>{let i=N(n);return e._x_effects||(e._x_effects=new Set,e._x_runEffects=()=>{e._x_effects.forEach(o=>o())}),e._x_effects.add(i),t=()=>{i!==void 0&&(e._x_effects.delete(i),$(i))},i},()=>{t()}]}function ve(e,t){let r=!0,n,i=N(()=>{let o=e();JSON.stringify(o),r?n=o:queueMicrotask(()=>{t(o,n),n=o}),r=!1});return()=>$(i)}var Xt=[],Zt=[],Qt=[];function er(e){Qt.push(e)}function te(e,t){typeof t=="function"?(e._x_cleanups||(e._x_cleanups=[]),e._x_cleanups.push(t)):(t=e,Zt.push(t))}function Ae(e){Xt.push(e)}function Oe(e,t,r){e._x_attributeCleanups||(e._x_attributeCleanups={}),e._x_attributeCleanups[t]||(e._x_attributeCleanups[t]=[]),e._x_attributeCleanups[t].push(r)}function lt(e,t){e._x_attributeCleanups&&Object.entries(e._x_attributeCleanups).forEach(([r,n])=>{(t===void 0||t.includes(r))&&(n.forEach(i=>i()),delete e._x_attributeCleanups[r])})}function tr(e){for(e._x_effects?.forEach(Wt);e._x_cleanups?.length;)e._x_cleanups.pop()()}var ut=new MutationObserver(mt),ft=!1;function ue(){ut.observe(document,{subtree:!0,childList:!0,attributes:!0,attributeOldValue:!0}),ft=!0}function dt(){kn(),ut.disconnect(),ft=!1}var le=[];function kn(){let e=ut.takeRecords();le.push(()=>e.length>0&&mt(e));let t=le.length;queueMicrotask(()=>{if(le.length===t)for(;le.length>0;)le.shift()()})}function m(e){if(!ft)return e();dt();let t=e();return ue(),t}var pt=!1,Se=[];function rr(){pt=!0}function nr(){pt=!1,mt(Se),Se=[]}function mt(e){if(pt){Se=Se.concat(e);return}let t=[],r=new Set,n=new Map,i=new Map;for(let o=0;o<e.length;o++)if(!e[o].target._x_ignoreMutationObserver&&(e[o].type==="childList"&&(e[o].removedNodes.forEach(s=>{s.nodeType===1&&s._x_marker&&r.add(s)}),e[o].addedNodes.forEach(s=>{if(s.nodeType===1){if(r.has(s)){r.delete(s);return}s._x_marker||t.push(s)}})),e[o].type==="attributes")){let s=e[o].target,a=e[o].attributeName,c=e[o].oldValue,l=()=>{n.has(s)||n.set(s,[]),n.get(s).push({name:a,value:s.getAttribute(a)})},u=()=>{i.has(s)||i.set(s,[]),i.get(s).push(a)};s.hasAttribute(a)&&c===null?l():s.hasAttribute(a)?(u(),l()):u()}i.forEach((o,s)=>{lt(s,o)}),n.forEach((o,s)=>{Xt.forEach(a=>a(s,o))});for(let o of r)t.some(s=>s.contains(o))||Zt.forEach(s=>s(o));for(let o of t)o.isConnected&&Qt.forEach(s=>s(o));t=null,r=null,n=null,i=null}function Ce(e){return z(B(e))}function k(e,t,r){return e._x_dataStack=[t,...B(r||e)],()=>{e._x_dataStack=e._x_dataStack.filter(n=>n!==t)}}function B(e){return e._x_dataStack?e._x_dataStack:typeof ShadowRoot=="function"&&e instanceof ShadowRoot?B(e.host):e.parentNode?B(e.parentNode):[]}function z(e){return new Proxy({objects:e},Dn)}var Dn={ownKeys({objects:e}){return Array.from(new Set(e.flatMap(t=>Object.keys(t))))},has({objects:e},t){return t==Symbol.unscopables?!1:e.some(r=>Object.prototype.hasOwnProperty.call(r,t)||Reflect.has(r,t))},get({objects:e},t,r){return t=="toJSON"?Pn:Reflect.get(e.find(n=>Reflect.has(n,t))||{},t,r)},set({objects:e},t,r,n){let i=e.find(s=>Object.prototype.hasOwnProperty.call(s,t))||e[e.length-1],o=Object.getOwnPropertyDescriptor(i,t);return o?.set&&o?.get?o.set.call(n,r)||!0:Reflect.set(i,t,r)}};function Pn(){return Reflect.ownKeys(this).reduce((t,r)=>(t[r]=Reflect.get(this,r),t),{})}function Te(e){let t=n=>typeof n=="object"&&!Array.isArray(n)&&n!==null,r=(n,i="")=>{Object.entries(Object.getOwnPropertyDescriptors(n)).forEach(([o,{value:s,enumerable:a}])=>{if(a===!1||s===void 0||typeof s=="object"&&s!==null&&s.__v_skip)return;let c=i===""?o:`${i}.${o}`;typeof s=="object"&&s!==null&&s._x_interceptor?n[o]=s.initialize(e,c,o):t(s)&&s!==n&&!(s instanceof Element)&&r(s,c)})};return r(e)}function Re(e,t=()=>{}){let r={initialValue:void 0,_x_interceptor:!0,initialize(n,i,o){return e(this.initialValue,()=>In(n,i),s=>ht(n,i,s),i,o)}};return t(r),n=>{if(typeof n=="object"&&n!==null&&n._x_interceptor){let i=r.initialize.bind(r);r.initialize=(o,s,a)=>{let c=n.initialize(o,s,a);return r.initialValue=c,i(o,s,a)}}else r.initialValue=n;return r}}function In(e,t){return t.split(".").reduce((r,n)=>r[n],e)}function ht(e,t,r){if(typeof t=="string"&&(t=t.split(".")),t.length===1)e[t[0]]=r;else{if(t.length===0)throw error;return e[t[0]]||(e[t[0]]={}),ht(e[t[0]],t.slice(1),r)}}var ir={};function y(e,t){ir[e]=t}function fe(e,t){let r=Ln(t);return Object.entries(ir).forEach(([n,i])=>{Object.defineProperty(e,`$${n}`,{get(){return i(t,r)},enumerable:!1})}),e}function Ln(e){let[t,r]=_t(e),n={interceptor:Re,...t};return te(e,r),n}function or(e,t,r,...n){try{return r(...n)}catch(i){re(i,e,t)}}function re(e,t,r=void 0){e=Object.assign(e??{message:"No error message given."},{el:t,expression:r}),console.warn(`Alpine Expression Error: ${e.message}
