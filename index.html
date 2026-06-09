@@ -1590,47 +1590,24 @@ function lgCalculator() {
         // ใช้ base (ราคาก่อนหัก combo) เพื่อกำหนดว่าช่วงนี้เป็นโปรหรือไม่
         // ถ้าใช้ seg.price จะผิดเพราะ combo ทำให้ราคาต่ำกว่า postPromoPrice ทุกช่วง
         const isPromo = seg.base < item.postPromoPrice;
-        if (isPromo) {
-          // ── ช่วงโปร: เก็บเป็น block เดียว ไม่แยกตามปี ──
-          const months = seg.end - seg.start + 1;
-          result.push({
-            start: seg.start,
-            end: seg.end,
-            months,
-            pricePerMonth: seg.price,
-            total: Math.round(seg.price * months * 100) / 100,
-            rangeLabel: seg.start === seg.end ? ('งวดที่ ' + seg.start) : ('งวดที่ ' + seg.start + '-' + seg.end),
-            isPromo: true,
-            year: null,
-          });
-        } else {
-          // ── ราคาปกติ: แยกเป็นปี (ปีละ 12 งวด) ──
-          let cur = seg.start;
-          while (cur <= seg.end) {
-            const yearNum = Math.ceil(cur / 12);
-            const yearEnd = yearNum * 12;
-            const chunkEnd = Math.min(seg.end, yearEnd);
-            const months = chunkEnd - cur + 1;
-            result.push({
-              start: cur,
-              end: chunkEnd,
-              months,
-              pricePerMonth: seg.price,
-              total: Math.round(seg.price * months * 100) / 100,
-              rangeLabel: cur === chunkEnd ? ('งวดที่ ' + cur) : ('งวดที่ ' + cur + '-' + chunkEnd),
-              isPromo: false,
-              year: yearNum,
-            });
-            cur = chunkEnd + 1;
-          }
-        }
+        // ── เก็บแต่ละช่วงราคาเป็นบล็อกเดียว ไม่แยกตามปี ──
+        const months = seg.end - seg.start + 1;
+        result.push({
+          start: seg.start,
+          end: seg.end,
+          months,
+          pricePerMonth: seg.price,
+          total: Math.round(seg.price * months * 100) / 100,
+          rangeLabel: seg.start === seg.end ? ('งวดที่ ' + seg.start) : ('งวดที่ ' + seg.start + '-' + seg.end),
+          isPromo,
+        });
       });
       return result;
     },
     billRangeHtml() {
       if (this.cart.length === 0) return '';
       let h = '<div class="av-head" style="color:#7a0026">📅 ค่าเช่าตามช่วงงวด · รวมเป็นเงินจริง</div>';
-      h += '<div style="font-size:11px;color:#6b7280;margin-bottom:8px">ช่วงโปรเก็บเป็นบล็อกเดียว · ราคาปกติแยกตามปี</div>';
+      h += '<div style="font-size:11px;color:#6b7280;margin-bottom:8px">ราคาต่อเดือนคือราคาหลังหักส่วนลดคอมโบแล้ว</div>';
       this.cart.forEach((it, i) => {
         const ranges = this.billRangeTotals(it);
         const totalItem = ranges.reduce((s, r) => s + r.total, 0);
@@ -1646,8 +1623,6 @@ function lgCalculator() {
           let tag = '';
           if (r.isPromo) {
             tag = ' <span style="color:#0f766e;font-size:10px;font-weight:600">(โปร)</span>';
-          } else if (r.year) {
-            tag = ' <span style="color:#7a5a1a;font-size:10px">(ปีที่ ' + r.year + ')</span>';
           }
           h += '<div class="br-row">';
           h += '<span class="br-range">' + label + tag + '</span>';
