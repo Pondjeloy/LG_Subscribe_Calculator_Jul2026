@@ -1954,30 +1954,22 @@ function lgCalculator() {
         else lines.push(it.name);
         lines.push('สัญญา ' + it.term + ' (' + (it.totalContractMonths || 60) + ' เดือน) | บริการ: ' + stLabel + ' ' + it.serviceCycle);
 
-        // Bill schedule
+        // Bill schedule — รวมเป็นบล็อกเดียว แสดงราคาหลังหักส่วนลดคอมโบแล้ว
         lines.push('');
         lines.push('ค่าเช่ารายงวด');
-        const totalM = it.totalContractMonths || 60;
-        if (it.billSchedule) {
-          it.billSchedule.forEach(seg => {
-            const label = ('  ' + seg.range.replace('บิล ', 'งวดที่ ')).padEnd(16);
-            let sl = label + this.bht(seg.price).toLocaleString() + ' บาท/เดือน';
-            if (seg.note) sl += '  (' + seg.note + ')';
-            lines.push(sl);
-          });
-        } else if (it.promoMonths > 0) {
-          const promoRange = it.promoMonths === 1 ? 'งวดที่ 1' : 'งวดที่ 1-' + it.promoMonths;
-          const regRange = 'งวดที่ ' + (it.promoMonths + 1) + '-' + totalM;
-          lines.push(('  ' + promoRange).padEnd(16) + this.bht(it.effectiveMonthly).toLocaleString() + ' บาท/เดือน');
-          lines.push(('  ' + regRange).padEnd(16) + it.postPromoPrice.toLocaleString() + ' บาท/เดือน');
-        } else {
-          lines.push(('  งวดที่ 1-' + totalM).padEnd(16) + it.postPromoPrice.toLocaleString() + ' บาท/เดือน');
+        const ranges = this.billRangeTotals(it);
+        const advance = it.advancePayment || 0;
+        if (advance > 0) {
+          lines.push(('  จ่ายล่วงหน้า').padEnd(16) + this.fmtMoney(advance) + ' บาท');
         }
+        ranges.forEach(r => {
+          const tag = r.isPromo ? ' (โปร)' : '';
+          const label = ('  ' + r.rangeLabel + tag).padEnd(16);
+          lines.push(label + this.fmtMoney(r.pricePerMonth) + ' บาท/เดือน');
+        });
 
         // Per-item total
         lines.push('');
-        const ranges = this.billRangeTotals(it);
-        const advance = it.advancePayment || 0;
         const totalItem = ranges.reduce((s, r) => s + r.total, 0) + advance;
         let totalLine = 'รวม ' + (it.totalContractMonths || 60) + ' งวด = ' + this.fmtMoney(totalItem) + ' บาท';
         if (it.totalSaving > 0) totalLine += ' | ประหยัด ' + it.totalSaving.toLocaleString() + ' บาท';
