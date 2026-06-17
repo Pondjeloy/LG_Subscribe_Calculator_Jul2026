@@ -422,12 +422,16 @@
                         <span x-show="plan.promo" class="tag tag-promo">🎁 มีโปร</span>
                       </div>
                       <div class="text-xs text-gray-600" x-show="plan.promo" x-text="plan.promo"></div>
-                      <div class="text-xs" style="color:#7c3aed;margin-top:4px" x-show="plan.advancePayment" x-text="'💳 จ่ายก้อนแรก ฿' + (plan.advancePayment ? plan.advancePayment.toLocaleString() : 0) + ' (ล่วงหน้า 50% × 12 บิล)'"></div>
+                      <div class="text-xs" style="color:#7c3aed;margin-top:4px" x-show="plan.outright && plan.advancePayment" x-text="'💳 จ่ายครั้งเดียว ฿' + plan.advancePayment.toLocaleString() + ' (รวมเครื่อง + บริการ 2 ปี)'"></div>
+                      <div class="text-xs" style="color:#7c3aed;margin-top:4px" x-show="plan.advancePayment && !plan.outright" x-text="'💳 จ่ายก้อนแรก ฿' + plan.advancePayment.toLocaleString() + ' (ล่วงหน้า 50% × 12 บิล)'"></div>
                     </div>
                     <div class="text-right">
-                      <div class="text-xs text-gray-400 line-through" x-show="plan.regular !== plan.effectiveMonthly" x-text="'฿' + plan.regular.toLocaleString() + '/เดือน'"></div>
-                      <div class="font-display font-bold text-lg text-lg-red" x-text="'฿' + plan.effectiveMonthly.toLocaleString()"></div>
-                      <div class="text-xs text-gray-500" x-show="!plan.promoMonths || plan.promoMonths >= plan.totalContractMonths">ราคา/เดือน</div>
+                      <div class="text-xs text-gray-400 line-through" x-show="plan.outright && plan.regular > plan.advancePayment" x-text="'฿' + plan.regular.toLocaleString()"></div>
+                      <div class="text-xs text-gray-400 line-through" x-show="!plan.outright && plan.regular !== plan.effectiveMonthly" x-text="'฿' + plan.regular.toLocaleString() + '/เดือน'"></div>
+                      <div class="font-display font-bold text-lg text-lg-red" x-show="plan.outright" x-text="'฿' + plan.advancePayment.toLocaleString()"></div>
+                      <div class="font-display font-bold text-lg text-lg-red" x-show="!plan.outright" x-text="'฿' + plan.effectiveMonthly.toLocaleString()"></div>
+                      <div class="text-xs text-gray-500" x-show="plan.outright">จ่ายครั้งเดียว</div>
+                      <div class="text-xs text-gray-500" x-show="!plan.outright && (!plan.promoMonths || plan.promoMonths >= plan.totalContractMonths)">ราคา/เดือน</div>
                       <div class="text-xs text-gray-500" x-show="plan.promoMonths > 0 && plan.promoMonths < plan.totalContractMonths">ราคา <span x-text="plan.promoMonths"></span> บิลแรก</div>
                       <div class="text-xs mt-1" style="color:#0f766e;font-weight:500"
                         x-show="plan.promoMonths > 0 && plan.promoMonths < plan.totalContractMonths"
@@ -476,13 +480,16 @@
                   <div class="flex gap-2 mt-2 flex-wrap">
                     <span class="tag" :class="'tag-' + item.serviceType.toLowerCase().replace(' ','')" x-text="item.term + ' · ' + item.serviceType"></span>
                     <span class="tag tag-promo" x-show="item.promo">โปรโมชัน</span>
-                    <span class="tag" style="background:#ede9fe;color:#7c3aed" x-show="item.advancePayment" x-text="'ล่วงหน้า ฿' + (item.advancePayment ? item.advancePayment.toLocaleString() : 0)"></span>
+                    <span class="tag" style="background:#ede9fe;color:#7c3aed" x-show="item.outright" x-text="'ซื้อขาด ฿' + item.advancePayment.toLocaleString()"></span>
+                    <span class="tag" style="background:#ede9fe;color:#7c3aed" x-show="item.advancePayment && !item.outright" x-text="'ล่วงหน้า ฿' + item.advancePayment.toLocaleString()"></span>
                   </div>
                 </div>
                 <div class="text-right shrink-0">
-                  <div class="price-highlight text-xl" x-text="'฿' + item.effectiveMonthly.toLocaleString()"></div>
-                  <div class="text-xs text-gray-500" x-show="item.promoMonths > 0 && item.promoMonths < item.totalContractMonths">/ เดือน (โปร)</div>
-                  <div class="text-xs text-gray-500" x-show="!item.promoMonths || item.promoMonths >= item.totalContractMonths">/ เดือน</div>
+                  <div class="price-highlight text-xl" x-show="item.outright" x-text="'฿' + item.advancePayment.toLocaleString()"></div>
+                  <div class="price-highlight text-xl" x-show="!item.outright" x-text="'฿' + item.effectiveMonthly.toLocaleString()"></div>
+                  <div class="text-xs text-gray-500" x-show="item.outright">จ่ายครั้งเดียว</div>
+                  <div class="text-xs text-gray-500" x-show="!item.outright && item.promoMonths > 0 && item.promoMonths < item.totalContractMonths">/ เดือน (โปร)</div>
+                  <div class="text-xs text-gray-500" x-show="!item.outright && (!item.promoMonths || item.promoMonths >= item.totalContractMonths)">/ เดือน</div>
                   <div class="text-xs mt-1" style="color:#0f766e;font-weight:500"
                     x-show="item.promoMonths > 0 && item.promoMonths < item.totalContractMonths"
                     x-text="'หลังโปร ฿' + item.postPromoPrice.toLocaleString()"></div>
@@ -547,9 +554,11 @@
             <div class="flex justify-between items-center mb-2 flex-wrap gap-2">
               <div>
                 <span class="font-semibold text-sm" x-text="item.code"></span>
-                <span class="text-xs text-gray-500" x-text="' · ราคาปกติ ฿' + item.postPromoPrice.toLocaleString() + '/เดือน'"></span>
+                <span class="text-xs text-gray-500" x-show="!item.outright" x-text="' · ราคาปกติ ฿' + item.postPromoPrice.toLocaleString() + '/เดือน'"></span>
+                <span class="text-xs text-gray-500" x-show="item.outright" x-text="' · ซื้อขาด ฿' + item.advancePayment.toLocaleString()"></span>
               </div>
-              <span class="tag" style="background:#ede9fe;color:#7c3aed" x-show="item.advancePayment" x-text="'จ่ายก้อนแรก ฿' + item.advancePayment.toLocaleString()"></span>
+              <span class="tag" style="background:#ede9fe;color:#7c3aed" x-show="item.outright" x-text="'ซื้อขาด ฿' + item.advancePayment.toLocaleString()"></span>
+              <span class="tag" style="background:#ede9fe;color:#7c3aed" x-show="item.advancePayment && !item.outright" x-text="'จ่ายก้อนแรก ฿' + item.advancePayment.toLocaleString()"></span>
             </div>
             <div class="bill-timeline">
               <template x-for="(seg, si) in itemComboSegments(item).segments" :key="si">
@@ -637,13 +646,28 @@
               </div>
             </div>
 
+            <!-- Outright purchase (เครื่องกรองน้ำ ซื้อขาด) -->
+            <div class="summary-advance-box mb-3" x-show="hasOutright()">
+              <div class="text-xs text-gray-600 uppercase tracking-wider mb-1">🛒 ซื้อขาด (Outright)</div>
+              <div class="price-highlight text-2xl" style="color:#7c3aed" x-text="'฿' + totalOutright().toLocaleString()"></div>
+              <div class="text-xs text-gray-600 mt-1">จ่ายครั้งเดียว รวมเครื่อง + บริการ 2 ปี (หลังลด 10%)</div>
+              <div class="mt-2" style="border-top:1px dotted #ddd6fe;padding-top:6px">
+                <template x-for="(it, i) in outrightItems()" :key="i">
+                  <div class="flex justify-between text-xs" style="padding:2px 0">
+                    <span class="text-gray-600" x-text="it.code"></span>
+                    <span class="font-mono" x-text="'฿' + it.advancePayment.toLocaleString()"></span>
+                  </div>
+                </template>
+              </div>
+            </div>
+
             <!-- Advance payment (TV/Monitor/Speaker) -->
-            <div class="summary-advance-box mb-3" x-show="hasAdvance()">
+            <div class="summary-advance-box mb-3" x-show="hasTvAdvance()">
               <div class="text-xs text-gray-600 uppercase tracking-wider mb-1">💳 เงินจ่ายก้อนแรก (Advance Payment)</div>
-              <div class="price-highlight text-2xl" style="color:#7c3aed" x-text="'฿' + totalAdvance().toLocaleString()"></div>
+              <div class="price-highlight text-2xl" style="color:#7c3aed" x-text="'฿' + totalTvAdvance().toLocaleString()"></div>
               <div class="text-xs text-gray-600 mt-1">จ่ายล่วงหน้า 50% ของ 12 บิลแรก ตอนเริ่มสัญญา (TV/จอ/ลำโพง)</div>
               <div class="mt-2" style="border-top:1px dotted #ddd6fe;padding-top:6px">
-                <template x-for="(it, i) in advanceItems()" :key="i">
+                <template x-for="(it, i) in tvAdvanceItems()" :key="i">
                   <div class="flex justify-between text-xs" style="padding:2px 0">
                     <span class="text-gray-600" x-text="it.code"></span>
                     <span class="font-mono" x-text="'฿' + it.advancePayment.toLocaleString()"></span>
@@ -755,9 +779,9 @@ function lgCalculator() {
 
     catalog: {
       'เครื่องกรองน้ำ': { models: [
-        { code: 'WD518', name: 'Water Purifier Counter-Top · Outright (ซื้อขาด)', plans: [
-          { term:'2Y', serviceType:'Visit', serviceCycle:'ทุก 6 เดือน', regular:0, effectiveMonthly:0, promoMonths:0, postPromoPrice:0, promo:'ซื้อขาด · จ่ายครั้งเดียว ฿37,900', totalContractMonths:24, totalSaving:0, advancePayment:37900 },
-          { term:'2Y', serviceType:'Self', serviceCycle:'ทุก 6 เดือน', regular:0, effectiveMonthly:0, promoMonths:0, postPromoPrice:0, promo:'ซื้อขาด · จ่ายครั้งเดียว ฿34,900', totalContractMonths:24, totalSaving:0, advancePayment:34900 }
+        { code: 'WD516/WD518', name: 'Water Purifier Counter-Top · Outright (ซื้อขาด · ทุกสี)', plans: [
+          { term:'2Y', serviceType:'Visit', serviceCycle:'ทุก 6 เดือน', regular:37900, effectiveMonthly:0, promoMonths:0, postPromoPrice:0, outright:true, promo:'ซื้อขาด + บริการ 2 ปี · ลด 10% จาก 37,900 → 34,110', totalContractMonths:24, totalSaving:3790, advancePayment:34110 },
+          { term:'2Y', serviceType:'Self', serviceCycle:'ทุก 6 เดือน', regular:34900, effectiveMonthly:0, promoMonths:0, postPromoPrice:0, outright:true, promo:'ซื้อขาด + บริการ 2 ปี · ลด 10% จาก 34,900 → 31,410', totalContractMonths:24, totalSaving:3490, advancePayment:31410 }
         ]},
         { code: 'WD516/WD518', name: 'Water Purifier Counter-Top · Subscription', plans: [
           { term:'5Y', serviceType:'Visit', serviceCycle:'ทุก 6 เดือน', regular:799, effectiveMonthly:149, promoMonths:6, postPromoPrice:799, promo:'ราคา 149.- (1-6 รอบบิลแรก) จากนั้น 799/เดือน', totalContractMonths:60, totalSaving:3900 },
@@ -938,20 +962,20 @@ function lgCalculator() {
           { term:'6Y', serviceType:'Self', serviceCycle:'ทุก 12 เดือน', regular:649, effectiveMonthly:324, promoMonths:6, postPromoPrice:649, promo:'ลด 50% 6 บิลแรก (324) จากนั้น 649/เดือน', totalContractMonths:72, totalSaving:1950 }
         ]},
         { code:'S3MFC.ALBPETH', name:'ตู้ถนอมผ้า Styler (3 ไม้แขวน)', plans:[
-          { term:'5Y', serviceType:'Self', serviceCycle:'ทุก 12 เดือน', regular:899, effectiveMonthly:149, promoMonths:1, postPromoPrice:899, promo:'ราคา 149.- (1 รอบบิลแรก) จากนั้น 899/เดือน', totalContractMonths:60, totalSaving:5700 },
-          { term:'6Y', serviceType:'Self', serviceCycle:'ทุก 12 เดือน', regular:799, effectiveMonthly:149, promoMonths:1, postPromoPrice:799, promo:'ราคา 149.- (1 รอบบิลแรก) จากนั้น 799/เดือน', totalContractMonths:72, totalSaving:5050 }
+          { term:'5Y', serviceType:'Self', serviceCycle:'ทุก 12 เดือน', regular:899, effectiveMonthly:149, promoMonths:1, postPromoPrice:899, billSchedule:[{range:'บิล 1',price:149,note:'ราคาพิเศษ'},{range:'บิล 2-12',price:449,note:'ลด 50%'},{range:'บิล 13-60',price:899,note:'ราคาปกติ'}], promo:'ลด 50% 11 รอบบิล (449) บิลแรก 149 จากนั้น 899/เดือน', totalContractMonths:60, totalSaving:5700 },
+          { term:'6Y', serviceType:'Self', serviceCycle:'ทุก 12 เดือน', regular:799, effectiveMonthly:149, promoMonths:1, postPromoPrice:799, billSchedule:[{range:'บิล 1',price:149,note:'ราคาพิเศษ'},{range:'บิล 2-12',price:399,note:'ลด 50%'},{range:'บิล 13-72',price:799,note:'ราคาปกติ'}], promo:'ลด 50% 11 รอบบิล (399) บิลแรก 149 จากนั้น 799/เดือน', totalContractMonths:72, totalSaving:5050 }
         ]},
         { code:'DFC335HM.ABMPETH', name:'เครื่องล้างจาน · สีดำ · WiFi · Auto Open Dry', plans:[
-          { term:'5Y', serviceType:'Visit', serviceCycle:'ทุก 12 เดือน', regular:899, effectiveMonthly:149, promoMonths:1, postPromoPrice:899, billSchedule:[{range:'บิล 1',price:149,note:'ราคาพิเศษ'},{range:'บิล 2-12',price:449,note:'ลด 50%'},{range:'บิล 13-60',price:899,note:'ราคาปกติ'}], promo:'บิลแรก 149 ต่อด้วยลด 50% 11 รอบบิล (449) จากนั้น 899/เดือน', totalContractMonths:60, totalSaving:5700 },
-          { term:'5Y', serviceType:'Self', serviceCycle:'ทุก 12 เดือน', regular:849, effectiveMonthly:149, promoMonths:1, postPromoPrice:849, billSchedule:[{range:'บิล 1',price:149,note:'ราคาพิเศษ'},{range:'บิล 2-12',price:424,note:'ลด 50%'},{range:'บิล 13-60',price:849,note:'ราคาปกติ'}], promo:'บิลแรก 149 ต่อด้วยลด 50% 11 รอบบิล (424) จากนั้น 849/เดือน', totalContractMonths:60, totalSaving:5375 },
-          { term:'6Y', serviceType:'Visit', serviceCycle:'ทุก 12 เดือน', regular:799, effectiveMonthly:149, promoMonths:1, postPromoPrice:799, billSchedule:[{range:'บิล 1',price:149,note:'ราคาพิเศษ'},{range:'บิล 2-12',price:399,note:'ลด 50%'},{range:'บิล 13-72',price:799,note:'ราคาปกติ'}], promo:'บิลแรก 149 ต่อด้วยลด 50% 11 รอบบิล (399) จากนั้น 799/เดือน', totalContractMonths:72, totalSaving:5050 },
-          { term:'6Y', serviceType:'Self', serviceCycle:'ทุก 12 เดือน', regular:749, effectiveMonthly:149, promoMonths:1, postPromoPrice:749, billSchedule:[{range:'บิล 1',price:149,note:'ราคาพิเศษ'},{range:'บิล 2-12',price:374,note:'ลด 50%'},{range:'บิล 13-72',price:749,note:'ราคาปกติ'}], promo:'บิลแรก 149 ต่อด้วยลด 50% 11 รอบบิล (374) จากนั้น 749/เดือน', totalContractMonths:72, totalSaving:4725 }
+          { term:'5Y', serviceType:'Visit', serviceCycle:'ทุก 12 เดือน', regular:899, effectiveMonthly:149, promoMonths:1, postPromoPrice:899, billSchedule:[{range:'บิล 1',price:149,note:'ราคาพิเศษ'},{range:'บิล 2-12',price:449,note:'ลด 50%'},{range:'บิล 13-60',price:899,note:'ราคาปกติ'}], promo:'ลด 50% 11 รอบบิล (449) บิลแรก 149 จากนั้น 899/เดือน', totalContractMonths:60, totalSaving:5700 },
+          { term:'5Y', serviceType:'Self', serviceCycle:'ทุก 12 เดือน', regular:849, effectiveMonthly:149, promoMonths:1, postPromoPrice:849, billSchedule:[{range:'บิล 1',price:149,note:'ราคาพิเศษ'},{range:'บิล 2-12',price:424,note:'ลด 50%'},{range:'บิล 13-60',price:849,note:'ราคาปกติ'}], promo:'ลด 50% 11 รอบบิล (424) บิลแรก 149 จากนั้น 849/เดือน', totalContractMonths:60, totalSaving:5375 },
+          { term:'6Y', serviceType:'Visit', serviceCycle:'ทุก 12 เดือน', regular:799, effectiveMonthly:149, promoMonths:1, postPromoPrice:799, billSchedule:[{range:'บิล 1',price:149,note:'ราคาพิเศษ'},{range:'บิล 2-12',price:399,note:'ลด 50%'},{range:'บิล 13-72',price:799,note:'ราคาปกติ'}], promo:'ลด 50% 11 รอบบิล (399) บิลแรก 149 จากนั้น 799/เดือน', totalContractMonths:72, totalSaving:5050 },
+          { term:'6Y', serviceType:'Self', serviceCycle:'ทุก 12 เดือน', regular:749, effectiveMonthly:149, promoMonths:1, postPromoPrice:749, billSchedule:[{range:'บิล 1',price:149,note:'ราคาพิเศษ'},{range:'บิล 2-12',price:374,note:'ลด 50%'},{range:'บิล 13-72',price:749,note:'ราคาปกติ'}], promo:'ลด 50% 11 รอบบิล (374) บิลแรก 149 จากนั้น 749/เดือน', totalContractMonths:72, totalSaving:4725 }
         ]},
         { code:'DFC533FV.APYPETH', name:'เครื่องล้างจาน · สีเงิน · WiFi', plans:[
-          { term:'5Y', serviceType:'Visit', serviceCycle:'ทุก 12 เดือน', regular:749, effectiveMonthly:149, promoMonths:1, postPromoPrice:749, billSchedule:[{range:'บิล 1',price:149,note:'ราคาพิเศษ'},{range:'บิล 2-12',price:374,note:'ลด 50%'},{range:'บิล 13-60',price:749,note:'ราคาปกติ'}], promo:'บิลแรก 149 ต่อด้วยลด 50% 11 รอบบิล (374) จากนั้น 749/เดือน', totalContractMonths:60, totalSaving:4725 },
-          { term:'5Y', serviceType:'Self', serviceCycle:'ทุก 12 เดือน', regular:699, effectiveMonthly:149, promoMonths:1, postPromoPrice:699, billSchedule:[{range:'บิล 1',price:149,note:'ราคาพิเศษ'},{range:'บิล 2-12',price:349,note:'ลด 50%'},{range:'บิล 13-60',price:699,note:'ราคาปกติ'}], promo:'บิลแรก 149 ต่อด้วยลด 50% 11 รอบบิล (349) จากนั้น 699/เดือน', totalContractMonths:60, totalSaving:4400 },
-          { term:'6Y', serviceType:'Visit', serviceCycle:'ทุก 12 เดือน', regular:649, effectiveMonthly:149, promoMonths:1, postPromoPrice:649, billSchedule:[{range:'บิล 1',price:149,note:'ราคาพิเศษ'},{range:'บิล 2-12',price:324,note:'ลด 50%'},{range:'บิล 13-72',price:649,note:'ราคาปกติ'}], promo:'บิลแรก 149 ต่อด้วยลด 50% 11 รอบบิล (324) จากนั้น 649/เดือน', totalContractMonths:72, totalSaving:4075 },
-          { term:'6Y', serviceType:'Self', serviceCycle:'ทุก 12 เดือน', regular:599, effectiveMonthly:149, promoMonths:1, postPromoPrice:599, billSchedule:[{range:'บิล 1',price:149,note:'ราคาพิเศษ'},{range:'บิล 2-12',price:299,note:'ลด 50%'},{range:'บิล 13-72',price:599,note:'ราคาปกติ'}], promo:'บิลแรก 149 ต่อด้วยลด 50% 11 รอบบิล (299) จากนั้น 599/เดือน', totalContractMonths:72, totalSaving:3750 }
+          { term:'5Y', serviceType:'Visit', serviceCycle:'ทุก 12 เดือน', regular:749, effectiveMonthly:149, promoMonths:1, postPromoPrice:749, billSchedule:[{range:'บิล 1',price:149,note:'ราคาพิเศษ'},{range:'บิล 2-12',price:374,note:'ลด 50%'},{range:'บิล 13-60',price:749,note:'ราคาปกติ'}], promo:'ลด 50% 11 รอบบิล (374) บิลแรก 149 จากนั้น 749/เดือน', totalContractMonths:60, totalSaving:4725 },
+          { term:'5Y', serviceType:'Self', serviceCycle:'ทุก 12 เดือน', regular:699, effectiveMonthly:149, promoMonths:1, postPromoPrice:699, billSchedule:[{range:'บิล 1',price:149,note:'ราคาพิเศษ'},{range:'บิล 2-12',price:349,note:'ลด 50%'},{range:'บิล 13-60',price:699,note:'ราคาปกติ'}], promo:'ลด 50% 11 รอบบิล (349) บิลแรก 149 จากนั้น 699/เดือน', totalContractMonths:60, totalSaving:4400 },
+          { term:'6Y', serviceType:'Visit', serviceCycle:'ทุก 12 เดือน', regular:649, effectiveMonthly:149, promoMonths:1, postPromoPrice:649, billSchedule:[{range:'บิล 1',price:149,note:'ราคาพิเศษ'},{range:'บิล 2-12',price:324,note:'ลด 50%'},{range:'บิล 13-72',price:649,note:'ราคาปกติ'}], promo:'ลด 50% 11 รอบบิล (324) บิลแรก 149 จากนั้น 649/เดือน', totalContractMonths:72, totalSaving:4075 },
+          { term:'6Y', serviceType:'Self', serviceCycle:'ทุก 12 เดือน', regular:599, effectiveMonthly:149, promoMonths:1, postPromoPrice:599, billSchedule:[{range:'บิล 1',price:149,note:'ราคาพิเศษ'},{range:'บิล 2-12',price:299,note:'ลด 50%'},{range:'บิล 13-72',price:599,note:'ราคาปกติ'}], promo:'ลด 50% 11 รอบบิล (299) บิลแรก 149 จากนั้น 599/เดือน', totalContractMonths:72, totalSaving:3750 }
         ]}
       ]},
 
@@ -1394,6 +1418,7 @@ function lgCalculator() {
         postPromoPrice: plan.postPromoPrice, promo: plan.promo,
         advancePayment: plan.advancePayment || 0,
         billSchedule: plan.billSchedule || null,
+        outright: !!plan.outright,
         totalContractMonths: plan.totalContractMonths, totalSaving: plan.totalSaving
       });
       this.showToast('เพิ่ม ' + m.code + ' เรียบร้อย');
@@ -1478,7 +1503,7 @@ function lgCalculator() {
     removeTier(promoKey, custKey, idx) {
       this.promoConfig[promoKey][custKey].splice(idx, 1);
     },
-    totalMonthly() { return this.cart.reduce((s, it) => s + it.postPromoPrice, 0); },
+    totalMonthly() { return this.cart.reduce((s, it) => s + (it.outright ? 0 : it.postPromoPrice), 0); },
     comboDiscount() { const x = this.totalMonthly() * this.comboRate(); const f = Math.floor(x); return (x - f) > 0.5 ? f + 1 : f; },
     netMonthly() { return this.totalMonthly() - this.comboDiscount(); },
     // ═══════════════════════════════════════════════════════════
@@ -1531,6 +1556,12 @@ function lgCalculator() {
     },
     totalAdvance() { return this.cart.reduce((s, it) => s + (it.advancePayment || 0), 0); },
     hasAdvance() { return this.totalAdvance() > 0; },
+    hasOutright() { return this.cart.some(it => it.outright); },
+    hasTvAdvance() { return this.cart.some(it => it.advancePayment > 0 && !it.outright); },
+    outrightItems() { return this.cart.filter(it => it.outright); },
+    tvAdvanceItems() { return this.cart.filter(it => it.advancePayment > 0 && !it.outright); },
+    totalOutright() { return this.outrightItems().reduce((s, it) => s + it.advancePayment, 0); },
+    totalTvAdvance() { return this.tvAdvanceItems().reduce((s, it) => s + it.advancePayment, 0); },
     advanceItems() { return this.cart.filter(it => it.advancePayment > 0); },
 
     // คำนวณตารางบิลของสินค้าชิ้นหนึ่ง หลังหัก Combo แบบเฉลี่ย
@@ -1895,7 +1926,9 @@ function lgCalculator() {
           txt += '💰 ฿' + it.postPromoPrice.toLocaleString() + '/เดือน';
         }
         txt += '</div>';
-        if (it.advancePayment) {
+        if (it.outright) {
+          txt += '<div style="font-size:0.85em;color:#7c3aed;margin-bottom:3px">🛒 ซื้อขาด <strong>฿' + it.advancePayment.toLocaleString() + '</strong> (รวมเครื่อง + บริการ 2 ปี · ลด 10%)</div>';
+        } else if (it.advancePayment) {
           txt += '<div style="font-size:0.85em;color:#7c3aed;margin-bottom:3px">💳 จ่ายก้อนแรก <strong>฿' + it.advancePayment.toLocaleString() + '</strong> (Advance 50% × 12 บิล)</div>';
         }
         // Service
@@ -1916,8 +1949,11 @@ function lgCalculator() {
       } else {
         txt += '<div style="font-weight:600">💵 ค่าเช่ารายเดือน: ฿' + this.netMonthly().toLocaleString() + '</div>';
       }
-      if (this.hasAdvance()) {
-        txt += '<div style="color:#7c3aed;margin-top:3px">💳 จ่ายก้อนแรก (ตอนเริ่มสัญญา): <strong>฿' + this.totalAdvance().toLocaleString() + '</strong></div>';
+      if (this.hasOutright()) {
+        txt += '<div style="color:#7c3aed;margin-top:3px">🛒 ซื้อขาดรวม: <strong>฿' + this.totalOutright().toLocaleString() + '</strong></div>';
+      }
+      if (this.hasTvAdvance()) {
+        txt += '<div style="color:#7c3aed;margin-top:3px">💳 จ่ายก้อนแรก (ตอนเริ่มสัญญา): <strong>฿' + this.totalTvAdvance().toLocaleString() + '</strong></div>';
       }
       txt += '<div style="color:#15803d;margin-top:3px">💰 ประหยัดรวมตลอดสัญญา: <strong>฿' + this.totalSaving().toLocaleString() + '</strong></div>';
       txt += '<div style="font-weight:700;color:#a50034;margin-top:5px;font-size:1.05em">📊 ยอดรวมทั้งสัญญา: ฿' + this.fmtMoney(this.grandTotal()) + '</div>';
@@ -2007,8 +2043,11 @@ function lgCalculator() {
           lines.push('ส่วนลด ' + this.comboLabel() + ' ' + cr + '%: −' + this.comboDiscount().toLocaleString() + ' บาท/เดือน');
           lines.push('ค่าเช่าสุทธิ/เดือน: ' + this.netMonthly().toLocaleString() + ' บาท');
         }
-        if (this.hasAdvance()) {
-          lines.push('จ่ายล่วงหน้ารวม: ' + this.totalAdvance().toLocaleString() + ' บาท');
+        if (this.hasOutright()) {
+          lines.push('ซื้อขาดรวม: ' + this.totalOutright().toLocaleString() + ' บาท');
+        }
+        if (this.hasTvAdvance()) {
+          lines.push('จ่ายล่วงหน้ารวม: ' + this.totalTvAdvance().toLocaleString() + ' บาท');
         }
         if (this.totalSaving() > 0) {
           lines.push('ประหยัดรวมตลอดสัญญา: ' + this.totalSaving().toLocaleString() + ' บาท');
