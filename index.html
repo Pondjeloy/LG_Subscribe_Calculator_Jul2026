@@ -777,6 +777,16 @@ function lgCalculator() {
     cart: [],
     toast: { show: false, msg: '' },
 
+    visitServiceLabel(withEnglish = false) {
+      const label = 'ช่างผู้เชี่ยวชาญบริการถึงบ้าน';
+      return withEnglish ? label + ' (Visit)' : label;
+    },
+    serviceTypeLabel(serviceType, withEnglish = false) {
+      if (serviceType === 'Visit') return this.visitServiceLabel(withEnglish);
+      if (serviceType === 'Self') return withEnglish ? 'รับอะไหล่เปลี่ยนเอง (Self)' : 'รับอะไหล่เปลี่ยนเอง';
+      return withEnglish ? 'รับประกันตลอดสัญญา' : 'รับประกัน';
+    },
+
     catalog: {
       'เครื่องกรองน้ำ': { models: [
         { code: 'WD516/WD518', name: 'Water Purifier Counter-Top · Outright (ซื้อขาด · ทุกสี)', plans: [
@@ -1187,11 +1197,11 @@ function lgCalculator() {
           {label:'ตรวจสอบการรั่วไหล', freq:'ทุก 6 เดือน'},
           {label:'ทำความสะอาดในจุดที่เข้าถึงยาก', freq:'ทุก 6 เดือน'},
           {label:'ทำความสะอาดภายในและภายนอก', freq:'ทุก 6 เดือน'}
-        ]},
+        ], note:'ช่างผู้เชี่ยวชาญบริการถึงบ้าน ลูกค้าไม่ต้องดำเนินการเอง'},
         self: { title:'📦 บำรุงรักษาด้วยตัวเอง – Self', items:[
           {label:'จัดส่ง Pre-Carbon Block Filter', freq:'ทุก 6 เดือน'},
           {label:'จัดส่ง UF Membrane Filter', freq:'ทุก 12 เดือน'}
-        ]},
+        ], note:'LG จัดส่งอะไหล่ให้ ลูกค้าเปลี่ยนเองที่บ้าน'},
         ws510: { title:'🚿 บริการดูแลเครื่องกรองน้ำ Slim Stand – WS510', items:[
           {label:'ฆ่าเชื้อตามทางเดินน้ำด้วยไฟฟ้า', freq:'ทุก 3 เดือน'},
           {label:'ตรวจสอบการรั่วไหล', freq:'ทุก 3 เดือน'},
@@ -1201,7 +1211,7 @@ function lgCalculator() {
           {label:'เปลี่ยน Pre-Carbon Block Filter', freq:'ทุก 12 เดือน'},
           {label:'เปลี่ยน UF Membrane Filter', freq:'ทุก 12 เดือน'},
           {label:'เปลี่ยน Post Carbon Block Filter', freq:'ทุก 18 เดือน'}
-        ]}
+        ], note:'ช่างผู้เชี่ยวชาญบริการถึงบ้าน ลูกค้าไม่ต้องดำเนินการเอง'}
       },
       'ตู้เย็น': {
         visit: { title:'❄️ บริการดูแลตู้เย็น – Visit', items:[
@@ -1285,7 +1295,7 @@ function lgCalculator() {
           {label:'ช่างตรวจสอบเซนเซอร์จับฝุ่น', freq:'ทุก 6 เดือน'},
           {label:'ช่างเปลี่ยนตัวกรอง PRE-FILTER ให้', freq:'ทุก 6 เดือน'},
           {label:'ช่างเปลี่ยนไส้กรอง H13 HEPA/Carbon ให้', freq:'ทุก 12 เดือน'}
-        ], note:'ช่างเข้าบริการที่บ้าน ลูกค้าไม่ต้องดำเนินการเอง'},
+        ], note:'ช่างผู้เชี่ยวชาญบริการถึงบ้าน ลูกค้าไม่ต้องดำเนินการเอง'},
         cycle6mSelf: { title:'📦 ดูแลเครื่องฟอกอากาศ – Self (รับอะไหล่เปลี่ยนเอง) ทุก 6 เดือน', items:[
           {label:'LG ส่งตัวกรอง PRE-FILTER ถึงบ้าน — ลูกค้าเปลี่ยนเอง', freq:'ทุก 6 เดือน'},
           {label:'LG ส่งไส้กรอง H13 HEPA/Carbon ถึงบ้าน — ลูกค้าเปลี่ยนเอง', freq:'ทุก 12 เดือน'},
@@ -1297,7 +1307,7 @@ function lgCalculator() {
           {label:'ช่างตรวจสอบเซนเซอร์จับฝุ่น', freq:'ทุก 12 เดือน'},
           {label:'ช่างเปลี่ยนตัวกรอง PRE-FILTER ให้', freq:'ทุก 12 เดือน'},
           {label:'ช่างเปลี่ยนไส้กรอง H13 HEPA/Carbon ให้', freq:'ทุก 12 เดือน'}
-        ], note:'ช่างเข้าบริการที่บ้าน ลูกค้าไม่ต้องดำเนินการเอง'},
+        ], note:'ช่างผู้เชี่ยวชาญบริการถึงบ้าน ลูกค้าไม่ต้องดำเนินการเอง'},
         cycle12mSelf: { title:'📦 ดูแลเครื่องฟอกอากาศ – Self (รับอะไหล่เปลี่ยนเอง) ทุก 12 เดือน', items:[
           {label:'LG ส่งตัวกรอง PRE-FILTER ถึงบ้าน — ลูกค้าเปลี่ยนเอง', freq:'ทุก 12 เดือน'},
           {label:'LG ส่งไส้กรอง H13 HEPA/Carbon ถึงบ้าน — ลูกค้าเปลี่ยนเอง', freq:'ทุก 12 เดือน'},
@@ -1311,7 +1321,7 @@ function lgCalculator() {
           {label:'ช่างตรวจสอบผลิตภัณฑ์ที่บ้าน', freq:'ทุก 12 เดือน'},
           {label:'ช่างทำความสะอาดตัวเครื่องและถังน้ำ', freq:'ทุก 12 เดือน'},
           {label:'ช่างเปลี่ยนถังเก็บน้ำแบบใสให้', freq:'เมื่อครบ 36 เดือน'}
-        ], note:'ช่างเข้าบริการที่บ้าน ลูกค้าไม่ต้องดำเนินการเอง'},
+        ], note:'ช่างผู้เชี่ยวชาญบริการถึงบ้าน ลูกค้าไม่ต้องดำเนินการเอง'},
         self: { title:'📦 ดูแลเครื่องลดความชื้น – Self (รับอะไหล่เปลี่ยนเอง)', items:[
           {label:'LG ส่ง Air Purification Kit ถึงบ้าน — ลูกค้าเปลี่ยนเอง', freq:'ทุก 12 เดือน'},
           {label:'LG ส่งถังเก็บน้ำแบบใสถึงบ้าน — ลูกค้าเปลี่ยนเอง', freq:'เมื่อครบ 36 เดือน'},
@@ -1354,9 +1364,9 @@ function lgCalculator() {
       },
       'noService': {
         onsite: { title:'📺 ไม่มีบริการเข้าบ้าน (No Service)', items:[
-          {label:'รับประกันตลอดอายุสัญญา', freq:'ช่างเข้าบริการที่บ้าน'},
+          {label:'รับประกันตลอดอายุสัญญา', freq:'ช่างผู้เชี่ยวชาญบริการถึงบ้าน'},
           {label:'ติดต่อศูนย์บริการ LG เมื่อมีปัญหา', freq:'On-site Service'}
-        ], note:'TV, Monitor — ช่างเข้าบริการซ่อมถึงบ้านลูกค้า (On-site)' },
+        ], note:'TV, Monitor — ช่างผู้เชี่ยวชาญบริการถึงบ้าน (On-site)' },
         center: { title:'📺 ไม่มีบริการเข้าบ้าน (No Service)', items:[
           {label:'รับประกันตลอดอายุสัญญา', freq:'นำสินค้าส่งซ่อมที่ศูนย์บริการ LG'},
           {label:'ติดต่อศูนย์บริการ LG เมื่อมีปัญหา', freq:'Drop-off Service'}
@@ -1852,7 +1862,7 @@ function lgCalculator() {
         let benefit = '';
         if (b.serviceType === 'Visit') {
           const visits = b.visitsPerYear >= 1 ? b.visitsPerYear + ' ครั้ง/ปี' : '1 ครั้งใน 2 ปี';
-          benefit = '🏠 ช่างเข้าบริการที่บ้าน ' + visits + ' · เปลี่ยนอะไหล่/ไส้กรองให้';
+          benefit = '🏠 ช่างผู้เชี่ยวชาญบริการถึงบ้าน ' + visits + ' · เปลี่ยนอะไหล่/ไส้กรองให้';
         } else if (b.serviceType === 'Self') {
           benefit = '📦 LG ส่งอะไหล่ถึงบ้าน ' + b.partsPerYear + ' รอบ/ปี · เปลี่ยนเอง';
         } else {
@@ -1903,7 +1913,7 @@ function lgCalculator() {
       this.cart.forEach((it, i) => {
         const care = this.careService(it);
         const stIcon = it.serviceType === 'Visit' ? '🏠' : it.serviceType === 'Self' ? '📦' : '🛡️';
-        const stLabel = it.serviceType === 'Visit' ? 'ช่างผู้เชี่ยวชาญบริการถึงบ้าน' : it.serviceType === 'Self' ? 'รับอะไหล่เปลี่ยนเอง' : 'รับประกัน';
+        const stLabel = this.serviceTypeLabel(it.serviceType);
         txt += '<div style="border:1px solid #e5e7eb;border-radius:8px;padding:10px 12px;margin-bottom:7px;background:#fafafa">';
         // Title
         txt += '<div style="display:flex;justify-content:space-between;align-items:flex-start;gap:6px;margin-bottom:3px">';
@@ -1984,11 +1994,7 @@ function lgCalculator() {
       // PRODUCT DETAILS
       this.cart.forEach((it, i) => {
         const care = this.careService(it);
-        const stLabel = it.serviceType === 'Visit'
-          ? 'ช่างผู้เชี่ยวชาญบริการถึงบ้าน (Visit)'
-          : it.serviceType === 'Self'
-            ? 'รับอะไหล่เปลี่ยนเอง (Self)'
-            : 'รับประกันตลอดสัญญา';
+        const stLabel = this.serviceTypeLabel(it.serviceType, true);
         lines.push('');
         if (this.cart.length > 1) lines.push((i + 1) + '. ' + it.name);
         else lines.push(it.name);
