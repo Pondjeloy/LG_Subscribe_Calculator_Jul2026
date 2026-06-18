@@ -1903,7 +1903,7 @@ function lgCalculator() {
       this.cart.forEach((it, i) => {
         const care = this.careService(it);
         const stIcon = it.serviceType === 'Visit' ? '🏠' : it.serviceType === 'Self' ? '📦' : '🛡️';
-        const stLabel = it.serviceType === 'Visit' ? 'ช่างเข้าบ้าน' : it.serviceType === 'Self' ? 'รับอะไหล่เปลี่ยนเอง' : 'รับประกัน';
+        const stLabel = it.serviceType === 'Visit' ? 'ช่างผู้เชี่ยวชาญบริการถึงบ้าน' : it.serviceType === 'Self' ? 'รับอะไหล่เปลี่ยนเอง' : 'รับประกัน';
         txt += '<div style="border:1px solid #e5e7eb;border-radius:8px;padding:10px 12px;margin-bottom:7px;background:#fafafa">';
         // Title
         txt += '<div style="display:flex;justify-content:space-between;align-items:flex-start;gap:6px;margin-bottom:3px">';
@@ -1985,7 +1985,7 @@ function lgCalculator() {
       this.cart.forEach((it, i) => {
         const care = this.careService(it);
         const stLabel = it.serviceType === 'Visit'
-          ? 'ช่างเข้าบ้าน (Visit)'
+          ? 'ช่างผู้เชี่ยวชาญบริการถึงบ้าน (Visit)'
           : it.serviceType === 'Self'
             ? 'รับอะไหล่เปลี่ยนเอง (Self)'
             : 'รับประกันตลอดสัญญา';
