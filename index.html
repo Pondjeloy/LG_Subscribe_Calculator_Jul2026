@@ -779,7 +779,7 @@ function lgCalculator() {
     picker: { category: '', model: '', plan: '' },
     cart: [],
     toast: { show: false, msg: '' },
-    buildVersion: '2026.06.18-v3',
+    buildVersion: '2026.06.18-v4',
 
     visitServiceLabel(withEnglish = false) {
       const label = 'ช่างผู้เชี่ยวชาญบริการถึงบ้าน';
@@ -788,7 +788,17 @@ function lgCalculator() {
     serviceTypeLabel(serviceType, withEnglish = false) {
       if (serviceType === 'Visit') return this.visitServiceLabel(withEnglish);
       if (serviceType === 'Self') return withEnglish ? 'รับอะไหล่เปลี่ยนเอง (Self)' : 'รับอะไหล่เปลี่ยนเอง';
+      if (serviceType === 'No Service') {
+        return withEnglish
+          ? 'ไม่มีบริการบำรุงรักษา (No Service) · รับประกันตลอดสัญญา'
+          : 'ไม่มีบริการบำรุงรักษา · รับประกันตลอดสัญญา';
+      }
       return withEnglish ? 'รับประกันตลอดสัญญา' : 'รับประกัน';
+    },
+    formatServiceDetail(item, withEnglish = false) {
+      if (item.serviceType === 'No Service') return this.serviceTypeLabel('No Service', withEnglish);
+      const cycle = item.serviceCycle && item.serviceCycle !== 'ไม่มีบริการ' ? ' ' + item.serviceCycle : '';
+      return this.serviceTypeLabel(item.serviceType, withEnglish) + cycle;
     },
 
     catalog: {
@@ -1917,7 +1927,7 @@ function lgCalculator() {
       this.cart.forEach((it, i) => {
         const care = this.careService(it);
         const stIcon = it.serviceType === 'Visit' ? '🏠' : it.serviceType === 'Self' ? '📦' : '🛡️';
-        const stLabel = this.serviceTypeLabel(it.serviceType);
+        const serviceDetail = this.formatServiceDetail(it);
         txt += '<div style="border:1px solid #e5e7eb;border-radius:8px;padding:10px 12px;margin-bottom:7px;background:#fafafa">';
         // Title
         txt += '<div style="display:flex;justify-content:space-between;align-items:flex-start;gap:6px;margin-bottom:3px">';
@@ -1947,7 +1957,7 @@ function lgCalculator() {
           txt += '<div style="font-size:0.85em;color:#7c3aed;margin-bottom:3px">💳 จ่ายก้อนแรก <strong>฿' + it.advancePayment.toLocaleString() + '</strong> (Advance 50% × 12 บิล)</div>';
         }
         // Service
-        txt += '<div style="font-size:0.85em;margin-bottom:2px">' + stIcon + ' <strong>' + stLabel + '</strong> · ' + it.serviceCycle + '</div>';
+        txt += '<div style="font-size:0.85em;margin-bottom:2px">' + stIcon + ' <strong>' + serviceDetail + '</strong></div>';
         txt += '<div style="font-size:0.78em;color:#6b7280;margin-left:17px">';
         care.items.forEach(svc => { txt += svc.label + ' (' + svc.freq + ')　'; });
         txt += '</div>';
@@ -1998,11 +2008,10 @@ function lgCalculator() {
       // PRODUCT DETAILS
       this.cart.forEach((it, i) => {
         const care = this.careService(it);
-        const stLabel = this.serviceTypeLabel(it.serviceType, true);
         lines.push('');
         if (this.cart.length > 1) lines.push((i + 1) + '. ' + it.name);
         else lines.push(it.name);
-        lines.push('สัญญา ' + it.term + ' (' + (it.totalContractMonths || 60) + ' เดือน) | บริการ: ' + stLabel + ' ' + it.serviceCycle);
+        lines.push('สัญญา ' + it.term + ' (' + (it.totalContractMonths || 60) + ' เดือน) | บริการ: ' + this.formatServiceDetail(it, true));
 
         // Bill schedule — รวมเป็นบล็อกเดียว แสดงราคาหลังหักส่วนลดคอมโบแล้ว
         lines.push('');
