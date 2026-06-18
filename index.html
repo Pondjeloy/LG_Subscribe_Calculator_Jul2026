@@ -399,14 +399,14 @@
             <label class="text-xs text-gray-500 mb-1 block font-medium">รุ่นสินค้า / Model</label>
             <select x-model="picker.model" :disabled="!picker.category" @change="picker.plan=''">
               <option value="">— เลือกรุ่น —</option>
-              <template x-for="m in (catalog[picker.category]?.models || [])" :key="m.code">
-                <option :value="m.code" x-text="m.code + ' — ' + m.name"></option>
+              <template x-for="(m, idx) in (catalog[picker.category]?.models || [])" :key="picker.category + '-' + idx">
+                <option :value="idx" x-text="m.code + ' — ' + m.name"></option>
               </template>
             </select>
           </div>
         </div>
 
-        <div x-show="picker.model">
+        <div x-show="picker.model !== ''">
           <label class="text-xs text-gray-500 mb-2 block font-medium">เลือกแพ็คเกจ / Subscription Plan</label>
           <div class="space-y-2">
             <template x-for="(plan, idx) in (currentModel()?.plans || [])" :key="idx">
@@ -445,7 +445,7 @@
         </div>
 
         <div class="mt-4 flex justify-end">
-          <button class="btn-primary" @click="addToCart()" :disabled="!picker.model || picker.plan === ''">
+          <button class="btn-primary" @click="addToCart()" :disabled="picker.model === '' || picker.plan === ''">
             + เพิ่มสินค้าเข้ารายการ
           </button>
         </div>
@@ -1404,8 +1404,9 @@ function lgCalculator() {
       this.showToast('รีเซ็ตเป็นค่าเริ่มต้นแล้ว ✓');
     },
     currentModel() {
-      if (!this.picker.category || !this.picker.model) return null;
-      return this.catalog[this.picker.category].models.find(m => m.code === this.picker.model);
+      if (!this.picker.category || this.picker.model === '') return null;
+      const models = this.catalog[this.picker.category]?.models || [];
+      return models[Number(this.picker.model)] || null;
     },
     addToCart() {
       const m = this.currentModel();
