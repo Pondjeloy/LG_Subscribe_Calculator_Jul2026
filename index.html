@@ -4,6 +4,9 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+<meta http-equiv="Pragma" content="no-cache" />
+<meta http-equiv="Expires" content="0" />
 <title>LG Subscribe Calculator | เครื่องคำนวณราคาสินค้า</title>
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -259,7 +262,7 @@
         <div class="lg-badge font-display">LG</div>
         <div>
           <div class="font-display font-bold text-2xl tracking-tight">Subscribe Calculator</div>
-          <div class="text-xs font-mono uppercase tracking-wider" style="color:#94a3b8" x-text="'เครื่องคำนวณราคา · ' + promoMonthLabel()"></div>
+          <div class="text-xs font-mono uppercase tracking-wider" style="color:#94a3b8" x-text="'เครื่องคำนวณราคา · ' + promoMonthLabel() + ' · ' + buildVersion"></div>
         </div>
       </div>
     </div>
@@ -776,6 +779,7 @@ function lgCalculator() {
     picker: { category: '', model: '', plan: '' },
     cart: [],
     toast: { show: false, msg: '' },
+    buildVersion: '2026.06.18-v3',
 
     visitServiceLabel(withEnglish = false) {
       const label = 'ช่างผู้เชี่ยวชาญบริการถึงบ้าน';
