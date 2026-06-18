@@ -420,8 +420,8 @@
                     <div class="flex-1 min-w-0">
                       <div class="flex items-center gap-2 flex-wrap mb-1">
                         <span class="font-semibold text-sm" x-text="plan.term"></span>
-                        <span class="tag" :class="'tag-' + plan.serviceType.toLowerCase().replace(' ','')" x-text="plan.serviceType"></span>
-                        <span class="text-xs text-gray-500" x-text="'รอบบริการ: ' + plan.serviceCycle"></span>
+                        <span class="tag" :class="'tag-' + plan.serviceType.toLowerCase().replace(' ','')" x-text="serviceTypeTag(plan.serviceType)"></span>
+                        <span class="text-xs text-gray-500" x-text="planServiceNote(plan)"></span>
                         <span x-show="plan.promo" class="tag tag-promo">🎁 มีโปร</span>
                       </div>
                       <div class="text-xs text-gray-600" x-show="plan.promo" x-text="plan.promo"></div>
@@ -481,7 +481,7 @@
                   <div class="font-mono text-xs text-gray-700" x-text="item.code"></div>
                   <div class="text-sm" x-text="item.name"></div>
                   <div class="flex gap-2 mt-2 flex-wrap">
-                    <span class="tag" :class="'tag-' + item.serviceType.toLowerCase().replace(' ','')" x-text="item.term + ' · ' + item.serviceType"></span>
+                    <span class="tag" :class="'tag-' + item.serviceType.toLowerCase().replace(' ','')" x-text="item.term + ' · ' + serviceTypeTag(item.serviceType)"></span>
                     <span class="tag tag-promo" x-show="item.promo">โปรโมชัน</span>
                     <span class="tag" style="background:#ede9fe;color:#7c3aed" x-show="item.outright" x-text="'ซื้อขาด ฿' + item.advancePayment.toLocaleString()"></span>
                     <span class="tag" style="background:#ede9fe;color:#7c3aed" x-show="item.advancePayment && !item.outright" x-text="'ล่วงหน้า ฿' + item.advancePayment.toLocaleString()"></span>
@@ -621,7 +621,7 @@
                 <div class="flex justify-between items-start gap-2 text-sm">
                   <div class="flex-1 min-w-0">
                     <div class="truncate" x-text="item.code"></div>
-                    <div class="text-xs text-gray-500" x-text="item.term + ' · ' + item.serviceType"></div>
+                    <div class="text-xs text-gray-500" x-text="item.term + ' · ' + serviceTypeTag(item.serviceType)"></div>
                   </div>
                   <div class="text-right font-mono shrink-0" x-text="'฿' + item.effectiveMonthly.toLocaleString()"></div>
                 </div>
@@ -779,7 +779,7 @@ function lgCalculator() {
     picker: { category: '', model: '', plan: '' },
     cart: [],
     toast: { show: false, msg: '' },
-    buildVersion: '2026.06.18-v4',
+    buildVersion: '2026.06.18-v5',
 
     visitServiceLabel(withEnglish = false) {
       const label = 'ช่างผู้เชี่ยวชาญบริการถึงบ้าน';
@@ -799,6 +799,16 @@ function lgCalculator() {
       if (item.serviceType === 'No Service') return this.serviceTypeLabel('No Service', withEnglish);
       const cycle = item.serviceCycle && item.serviceCycle !== 'ไม่มีบริการ' ? ' ' + item.serviceCycle : '';
       return this.serviceTypeLabel(item.serviceType, withEnglish) + cycle;
+    },
+    serviceTypeTag(serviceType) {
+      if (serviceType === 'Visit') return 'ช่างผู้เชี่ยวชาญบริการถึงบ้าน';
+      if (serviceType === 'Self') return 'รับอะไหล่เปลี่ยนเอง';
+      if (serviceType === 'No Service') return 'ไม่มีบริการบำรุงรักษา';
+      return serviceType;
+    },
+    planServiceNote(plan) {
+      if (plan.serviceType === 'No Service') return 'บริการ: ไม่มีบริการบำรุงรักษา · รับประกันตลอดสัญญา';
+      return 'รอบบริการ: ' + plan.serviceCycle;
     },
 
     catalog: {
@@ -1880,7 +1890,7 @@ function lgCalculator() {
         } else if (b.serviceType === 'Self') {
           benefit = '📦 LG ส่งอะไหล่ถึงบ้าน ' + b.partsPerYear + ' รอบ/ปี · เปลี่ยนเอง';
         } else {
-          benefit = '🛡️ รับประกันเต็มปี · ซ่อมฟรีเมื่อมีปัญหา';
+          benefit = '🛡️ ไม่มีบริการบำรุงรักษา · รับประกันตลอดสัญญา · ซ่อมฟรีเมื่อมีปัญหา';
         }
         h += '<div class="av-item"><span class="av-check">✓</span><span><strong>' + b.code + '</strong> — ' + benefit + '</span></div>';
       });
