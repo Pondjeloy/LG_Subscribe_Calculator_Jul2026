@@ -779,7 +779,7 @@ function lgCalculator() {
     picker: { category: '', model: '', plan: '' },
     cart: [],
     toast: { show: false, msg: '' },
-    buildVersion: '2026.06.18-v5',
+    buildVersion: '2026.06.21-v6',
 
     visitServiceLabel(withEnglish = false) {
       const label = 'ช่างผู้เชี่ยวชาญบริการถึงบ้าน';
@@ -1387,7 +1387,7 @@ function lgCalculator() {
         ]}
       },
       'noService': {
-        onsite: { title:'📺 ไม่มีบริการเข้าบ้าน (No Service)', items:[
+        onsite: { title:'🛡️ รับประกันตลอดสัญญา · ไม่มีบริการบำรุงรักษา (On-site Repair)', items:[
           {label:'รับประกันตลอดอายุสัญญา', freq:'ช่างผู้เชี่ยวชาญบริการถึงบ้าน'},
           {label:'ติดต่อศูนย์บริการ LG เมื่อมีปัญหา', freq:'On-site Service'}
         ], note:'TV, Monitor — ช่างผู้เชี่ยวชาญบริการถึงบ้าน (On-site)' },
@@ -1624,14 +1624,16 @@ function lgCalculator() {
       // > 0.5 ปัดขึ้น, ≤ 0.5 ปัดลง (ปัดสตางค์เป็นบาทเต็ม)
       const snapBaht = (x) => { const f = Math.floor(x); return (x - f) > 0.5 ? f + 1 : f; };
 
+      const billPrice = (raw, catalogPrice) => cr > 0 ? snapBaht(raw) : catalogPrice;
+
       if (adv > 0) {
         // === สินค้า Advance (TV/จอ/ลำโพง) ===
         // เงินก้อนแรกเก็บราคาเต็ม (ไม่หัก combo) แล้วนำ combo ของยอด advance ไปเฉลี่ยลดทุกบิล
         // ทุกบิล (รวมบิล 1) หัก combo ตามปกติ — ไม่มีแนวคิด "บิลแรกเก็บเต็ม"
         const advPerBill = cr > 0 ? ceil2((adv * cr) / months) : 0;
         for (let k = 1; k <= months; k++) {
-          const price = bills[k] - bills[k] * cr - advPerBill;
-          out.push({ bill: k, base: bills[k], price: snapBaht(price) });
+          const raw = bills[k] - bills[k] * cr - advPerBill;
+          out.push({ bill: k, base: bills[k], price: billPrice(raw, bills[k]) });
         }
       } else {
         // === สินค้า Subscribe ทั่วไป ===
@@ -1639,10 +1641,10 @@ function lgCalculator() {
         // เฉลี่ย = ปัดขึ้น 2 ตำแหน่ง (ceil) ตามระบบจริง
         const bill1Per = (months > 1 && cr > 0) ? ceil2((bills[1] * cr) / (months - 1)) : 0;
         for (let k = 1; k <= months; k++) {
-          let price;
-          if (k === 1) price = bills[k];                   // บิลแรกเก็บเต็ม
-          else price = bills[k] - bills[k] * cr - bill1Per;
-          out.push({ bill: k, base: bills[k], price: snapBaht(price) });
+          let raw;
+          if (k === 1) raw = bills[k];                   // บิลแรกเก็บเต็ม
+          else raw = bills[k] - bills[k] * cr - bill1Per;
+          out.push({ bill: k, base: bills[k], price: billPrice(raw, bills[k]) });
         }
       }
       return { advance: adv, bills: out, comboRate: cr };
@@ -1695,7 +1697,7 @@ function lgCalculator() {
           }
           h += '<div class="br-row">';
           h += '<span class="br-range">' + label + tag + '</span>';
-          h += '<span class="br-calc">฿' + r.pricePerMonth.toLocaleString() + ' × ' + r.months + ' งวด</span>';
+          h += '<span class="br-calc">฿' + this.fmtBillPrice(r.pricePerMonth) + ' × ' + r.months + ' งวด</span>';
           h += '<span class="br-total">฿' + this.fmtMoney(r.total) + '</span>';
           h += '</div>';
         });
@@ -1747,6 +1749,14 @@ function lgCalculator() {
     // format เงิน: แสดงทศนิยม 2 ตำแหน่งเฉพาะเมื่อมีเศษ
     fmtMoney(n) {
       return n.toLocaleString(undefined, { maximumFractionDigits: 2 });
+    },
+    // ราคางวด TV/Monitor ที่ลงท้าย .50 — แสดง 2 ตำแหน่งเสมอ (เช่น 649.50)
+    fmtBillPrice(n) {
+      const num = Number(n);
+      if (!Number.isInteger(num) && Math.abs((num * 10) % 10 - 5) < 0.001) {
+        return num.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+      }
+      return this.fmtMoney(num);
     },
     // ปัดราคาเป็นบาทเต็ม: > .50 ขึ้น, ≤ .50 ลง — ใช้แสดงทุกจุด
     bht(n) { const f = Math.floor(n); return (n - f) > 0.5 ? f + 1 : f; },
@@ -2034,7 +2044,7 @@ function lgCalculator() {
         ranges.forEach(r => {
           const tag = r.isPromo ? ' (โปร)' : '';
           const label = ('  ' + r.rangeLabel + tag).padEnd(16);
-          lines.push(label + this.fmtMoney(r.pricePerMonth) + ' บาท/เดือน');
+          lines.push(label + this.fmtBillPrice(r.pricePerMonth) + ' บาท/เดือน');
         });
 
         // Per-item total
