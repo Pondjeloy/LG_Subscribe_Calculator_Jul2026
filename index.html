@@ -476,7 +476,7 @@
                 <div class="flex-1 min-w-0">
                   <div class="flex items-center gap-2 flex-wrap mb-1">
                     <span class="text-xs text-gray-400 font-mono" x-text="'#' + (i+1).toString().padStart(2,'0')"></span>
-                    <span class="font-semibold text-sm" x-text="item.category"></span>
+                    <span class="font-semibold text-sm" x-text="careCategoryLabel(item)"></span>
                   </div>
                   <div class="font-mono text-xs text-gray-700" x-text="item.code"></div>
                   <div class="text-sm" x-text="item.name"></div>
@@ -516,7 +516,7 @@
             <summary>
               <div class="flex items-center gap-2 flex-wrap">
                 <span class="arrow">▸</span>
-                <span class="font-semibold text-sm" x-text="item.category"></span>
+                <span class="font-semibold text-sm" x-text="careCategoryLabel(item)"></span>
                 <span class="font-mono text-xs text-gray-500" x-text="item.code"></span>
               </div>
               <span class="text-xs text-gray-400">ดูรายละเอียดบริการ</span>
@@ -1297,6 +1297,16 @@ function lgCalculator() {
         ]}
       },
       'เครื่องอบผ้า': {
+        visit: { title:'🌬️ บริการดูแลเครื่องอบผ้า – Visit', items:[
+          {label:'ติดตั้งตัวกรองใยผ้า 2 ชั้น + แผ่นถนอมผ้า 4 กล่อง', freq:'หลังวันติดตั้ง'},
+          {label:'ตรวจสอบฟังก์ชัน + ทำความสะอาดถาดรองรับ', freq:'ทุก 12 เดือน'},
+          {label:'ทำความสะอาดภายในและภายนอก', freq:'ทุก 12 เดือน'},
+          {label:'ถอด + ทำความสะอาดแยกชิ้นส่วน', freq:'ทุก 36 และ 72 เดือน'}
+        ]},
+        self: { title:'📦 บำรุงรักษาเครื่องอบผ้า – Self', items:[
+          {label:'จัดส่งตัวกรองใยผ้า 2 ชั้น', freq:'หลังวันติดตั้ง'},
+          {label:'จัดส่งแผ่นถนอมผ้า 4 กล่อง', freq:'ทุก 12 เดือน'}
+        ], note:'LG จัดส่งอะไหล่ให้ ลูกค้าเปลี่ยนเองที่บ้าน'},
         all: { title:'🌬️ บริการดูแลเครื่องอบผ้า', items:[
           {label:'ตัวกรองใยผ้า 2 ชั้น', freq:'หลังวันติดตั้ง'},
           {label:'แผ่นถนอมผ้า 4 กล่อง', freq:'ทุก 12 เดือน'},
@@ -1304,6 +1314,13 @@ function lgCalculator() {
           {label:'ทำความสะอาดภายในและภายนอก', freq:'ทุก 12 เดือน'},
           {label:'ถอด + ทำความสะอาดแยกชิ้นส่วน', freq:'ทุก 36 และ 72 เดือน'}
         ]}
+      },
+      'Styler': {
+        self: { title:'👔 บริการดูแล LG Styler – Self', items:[
+          {label:'จัดส่งแผ่นหอมผ้า 4 กล่อง', freq:'หลังวันติดตั้ง'},
+          {label:'จัดส่งแผ่นหอมผ้า 4 กล่อง', freq:'ทุก 12 เดือน'},
+          {label:'จัดส่งขวดน้ำเข้า/ขวดน้ำออก (Water Bottle)', freq:'เมื่อครบ 36 เดือน'}
+        ], note:'LG จัดส่งอะไหล่ให้ ลูกค้าเปลี่ยนเองที่บ้าน'}
       },
       'เครื่องดูดฝุ่น': {
         self: { title:'🧹 บำรุงรักษาเครื่องดูดฝุ่น – Self', items:[
@@ -1801,6 +1818,15 @@ function lgCalculator() {
       return promoSaving + this.grandTotalSaving();
     },
 
+    careCategoryLabel(item) {
+      const code = item.code || '';
+      const name = item.name || '';
+      if (code.includes('DFC') || name.includes('ล้างจาน')) return 'เครื่องล้างจาน';
+      if (code.includes('S3MFC') || name.includes('Styler')) return 'LG Styler';
+      if (code.includes('RV10') || name.includes('อบผ้า')) return 'เครื่องอบผ้า';
+      return item.category;
+    },
+
     careService(item) {
       if (item.serviceType === 'No Service') {
         const centerCats = ['ไมโครเวฟ', 'ลำโพง / ซาวด์บาร์'];
@@ -1823,9 +1849,10 @@ function lgCalculator() {
         info = this.serviceInfo['เครื่องซักผ้า Front Load'][st] || this.serviceInfo['เครื่องซักผ้า Front Load'].visit;
       } else if (cat === 'เครื่องซักผ้า Top Load') {
         info = this.serviceInfo['เครื่องซักผ้า Top Load'][st] || this.serviceInfo['เครื่องซักผ้า Top Load'].visit;
-      } else if (cat.includes('อบผ้า') || cat.includes('Styler') || cat.includes('ล้างจาน')) {
+      } else if (cat === 'เครื่องอบผ้า / Styler / ล้างจาน') {
         if (item.code.includes('DFC')) info = this.serviceInfo['เครื่องล้างจาน'].all;
-        else info = this.serviceInfo['เครื่องอบผ้า'].all;
+        else if (item.code.includes('S3MFC') || (item.name || '').includes('Styler')) info = this.serviceInfo['Styler'].self;
+        else info = this.serviceInfo['เครื่องอบผ้า'][st] || this.serviceInfo['เครื่องอบผ้า'].visit || this.serviceInfo['เครื่องอบผ้า'].all;
       } else if (cat === 'เครื่องดูดฝุ่น') {
         info = this.serviceInfo['เครื่องดูดฝุ่น'].self;
       } else if (cat === 'เครื่องฟอกอากาศ') {
