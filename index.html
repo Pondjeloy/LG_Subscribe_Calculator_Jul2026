@@ -207,7 +207,7 @@
   .compare-table .cp-badge-rec{display:block;margin-top:3px;font-size:8px}
   .compare-table tr.cp-best td.cp-label::after{display:inline-block;margin-top:3px;margin-left:0}
   .compare-table tr.cp-best{background:linear-gradient(90deg,rgba(15,118,110,.08),rgba(255,255,255,.5))}
-  .compare-table tr.cp-best td.cp-label::after{content:'คุ้มสุด';margin-left:6px;font-size:9px;background:#0f766e;color:#fff;padding:2px 6px;border-radius:99px;font-weight:700;vertical-align:middle}
+  .compare-table tr.cp-best td.cp-label::after{content:'แนะนำ';margin-left:6px;font-size:9px;background:#0f766e;color:#fff;padding:2px 6px;border-radius:99px;font-weight:700;vertical-align:middle}
 
   .compare-table .cp-btn{background:var(--lg-red);color:#fff;border:none;padding:4px 7px;border-radius:5px;font-size:10px;font-weight:600;cursor:pointer;font-family:inherit;white-space:nowrap}
   .compare-table .cp-btn:hover{background:#a50034}
@@ -534,7 +534,7 @@
                   <tr :class="(row.isBest ? 'cp-best ' : '') + (row.isRecommended ? 'cp-recommended' : '')">
                     <td class="cp-label">
                       <span x-text="row.label"></span>
-                      <span class="cp-badge-rec" x-show="row.isRecommended">แนะนำ</span>
+                      <span class="cp-badge-rec" x-show="row.isRecommended && !row.isBest">แนะนำ</span>
                       <div class="cp-sub" x-text="row.serviceCycle"></div>
                     </td>
                     <td class="cp-care" x-text="row.careSummary"></td>
