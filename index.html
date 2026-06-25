@@ -111,6 +111,9 @@
   .tag-self{background:#e8f4ff;color:#0058a3}
   .tag-noservice{background:#f0f0f0;color:#555}
   .tag-promo{background:#fef3c7;color:#92400e}
+  .tag-recommend{background:#ecfdf5;color:#047857}
+  .washer-rec-tip{font-size:12px;color:#047857;background:#ecfdf5;border:1px solid #a7f3d0;border-radius:8px;padding:10px 12px;margin-bottom:10px;line-height:1.45}
+  .compare-table .cp-badge-rec{display:inline-block;margin-left:6px;font-size:9px;background:#047857;color:#fff;padding:2px 6px;border-radius:99px;font-weight:700;vertical-align:middle;font-family:inherit}
 
   .section-num{font-family:'JetBrains Mono',monospace;color:var(--lg-red);font-size:12px;letter-spacing:.08em;background:rgba(200,16,46,.08);border:1px solid rgba(200,16,46,.12);border-radius:999px;padding:3px 9px}
 
@@ -146,6 +149,7 @@
   /* SUMMARY BOXES */
   .summary-promo-box{background:linear-gradient(135deg,rgba(200,16,46,.08),rgba(255,255,255,.74));border:1px solid rgba(200,16,46,.18);border-radius:8px;padding:16px}
   .summary-advance-box{background:rgba(15,118,110,.07);border:1px solid rgba(15,118,110,.18);border-radius:8px;padding:16px}
+  .summary-first-pay-box{background:linear-gradient(135deg,rgba(124,58,237,.1),rgba(15,118,110,.06));border:2px solid rgba(124,58,237,.32);border-radius:8px;padding:16px}
   /* Special Combo Banner */
   .special-combo-banner{position:relative;overflow:hidden;border-radius:8px;padding:20px 22px;background:linear-gradient(135deg,#7f0020 0%,#C8102E 55%,#e8354f 100%);border:1px solid rgba(255,255,255,.2);transition:all .3s;box-shadow:0 8px 24px rgba(200,16,46,.25)}
   .special-combo-banner::after{content:'';position:absolute;inset:1px;border-radius:7px;border:1px solid rgba(255,255,255,.16);pointer-events:none}
@@ -182,6 +186,46 @@
   .combo-btn-save:hover{background:#ffea70}
   .combo-btn-reset{background:transparent;border:1px solid rgba(255,255,255,.4);color:#fff;padding:9px 16px;border-radius:6px;cursor:pointer;font-family:inherit;font-size:13px}
   .combo-btn-reset:hover{background:rgba(255,255,255,.12)}
+  .compare-toggle-wrap{margin-top:16px}
+  .btn-compare-toggle{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;padding:11px 16px;border:2px solid rgba(15,118,110,.35);border-radius:10px;background:linear-gradient(135deg,rgba(15,118,110,.08),rgba(255,255,255,.9));color:#0f766e;font-weight:700;font-size:13px;cursor:pointer;font-family:inherit;transition:all .2s}
+  .btn-compare-toggle:hover{border-color:#0f766e;background:rgba(15,118,110,.12);box-shadow:0 4px 14px rgba(15,118,110,.15)}
+  .btn-compare-toggle.active{background:rgba(15,118,110,.14);border-color:#0f766e}
+  .compare-plan-box{margin-top:12px;padding-top:18px;border-top:1px solid var(--lg-line)}
+  .compare-plan-box .cp-head{font-size:12px;font-weight:700;color:#374151;margin-bottom:4px}
+  .compare-plan-box .cp-sub{font-size:11px;color:#6b7280;margin-bottom:10px}
+  .compare-table-wrap{border:1px solid var(--lg-line);border-radius:8px;background:#fff;overflow:hidden}
+  .compare-table{width:100%;table-layout:fixed;border-collapse:collapse;font-size:11px}
+  .compare-table td.cp-care{font-family:inherit;font-size:10px;font-weight:600;color:#0f766e}
+  .compare-table th,.compare-table td{padding:7px 5px;text-align:left;border-bottom:1px solid #f1f5f9;vertical-align:top;line-height:1.35}
+  .compare-table th{background:#f8fafc;font-size:9px;text-transform:uppercase;letter-spacing:.03em;color:#6b7280;font-weight:700;line-height:1.3}
+  .compare-table td{font-family:'JetBrains Mono',monospace;font-size:10px;color:#1f2937}
+  .compare-table td.cp-label{font-family:inherit;font-weight:600;color:#111827;white-space:normal;word-break:break-word}
+  .compare-table td.cp-sub{font-family:inherit;font-size:9px;color:#6b7280;font-weight:400;white-space:normal;word-break:break-word}
+  .compare-table td.cp-num,.compare-table th.cp-num{text-align:right;white-space:nowrap;font-size:10px}
+  .compare-table th.cp-act,.compare-table td.cp-act{width:46px;text-align:center;padding:6px 3px}
+  .compare-table .cp-badge-rec{display:block;margin-top:3px;font-size:8px}
+  .compare-table tr.cp-best td.cp-label::after{display:inline-block;margin-top:3px;margin-left:0}
+  .compare-table tr.cp-best{background:linear-gradient(90deg,rgba(15,118,110,.08),rgba(255,255,255,.5))}
+  .compare-table tr.cp-best td.cp-label::after{content:'คุ้มสุด';margin-left:6px;font-size:9px;background:#0f766e;color:#fff;padding:2px 6px;border-radius:99px;font-weight:700;vertical-align:middle}
+
+  .compare-table .cp-btn{background:var(--lg-red);color:#fff;border:none;padding:4px 7px;border-radius:5px;font-size:10px;font-weight:600;cursor:pointer;font-family:inherit;white-space:nowrap}
+  .compare-table .cp-btn:hover{background:#a50034}
+  .btn-compare-b-toggle{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;padding:11px 16px;border:2px solid rgba(124,58,237,.35);border-radius:10px;background:linear-gradient(135deg,rgba(124,58,237,.08),rgba(255,255,255,.9));color:#6d28d9;font-weight:700;font-size:13px;cursor:pointer;font-family:inherit;transition:all .2s}
+  .btn-compare-b-toggle:hover{border-color:#7c3aed;background:rgba(124,58,237,.12);box-shadow:0 4px 14px rgba(124,58,237,.15)}
+  .btn-compare-b-toggle.active{background:rgba(124,58,237,.14);border-color:#7c3aed}
+  .compare-b-panel{margin-top:12px;padding-top:16px;border-top:1px solid var(--lg-line)}
+  .compare-b-filters{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px}
+  .compare-b-filters label{font-size:10px;color:#6b7280;font-weight:600;display:block;margin-bottom:4px}
+  .compare-b-models{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px}
+  .compare-b-chip{padding:6px 10px;border:1px solid #e2e8f0;border-radius:999px;font-size:11px;font-weight:600;color:#374151;background:#fff;cursor:pointer;font-family:inherit;transition:all .15s}
+  .compare-b-chip:hover{border-color:rgba(124,58,237,.4);color:#6d28d9}
+  .compare-b-chip.active{background:rgba(124,58,237,.1);border-color:#7c3aed;color:#6d28d9}
+  .compare-b-hint{font-size:10px;color:#9ca3af;margin-bottom:10px}
+  .compare-table tr.cp-unavail td{opacity:.55}
+  .compare-table tr.cp-unavail td.cp-label::after{content:none}
+  .compare-table td.cp-diff{font-family:inherit;font-weight:600}
+  .compare-table td.cp-diff-best{color:#0f766e}
+  .compare-table td.cp-diff-more{color:#b45309}
   .bill-schedule-card{background:#f8fafc;border:1px solid var(--lg-line);border-radius:8px;padding:16px;margin-bottom:12px}
   .bill-timeline{display:flex;gap:8px;flex-wrap:wrap}
   .bill-step{flex:1;min-width:120px;background:#fff;border:1px solid var(--lg-line);border-radius:8px;padding:11px;position:relative;box-shadow:0 8px 18px rgba(20,20,24,.04)}
@@ -391,7 +435,7 @@
         <div class="grid grid-cols-1 md-grid-2 gap-3 mb-4">
           <div>
             <label class="text-xs text-gray-500 mb-1 block font-medium">หมวดสินค้า / Category</label>
-            <select x-model="picker.category" @change="picker.model=''; picker.plan=''">
+            <select x-model="picker.category" @change="picker.model=''; picker.plan=''; showComparePlans=false; showCompareModels=false; initCompareBForCategory()">
               <option value="">— เลือกหมวด —</option>
               <template x-for="cat in Object.keys(catalog)" :key="cat">
                 <option :value="cat" x-text="cat"></option>
@@ -400,7 +444,7 @@
           </div>
           <div>
             <label class="text-xs text-gray-500 mb-1 block font-medium">รุ่นสินค้า / Model</label>
-            <select x-model="picker.model" :disabled="!picker.category" @change="picker.plan=''">
+            <select x-model="picker.model" :disabled="!picker.category" @change="picker.plan=''; showComparePlans=false">
               <option value="">— เลือกรุ่น —</option>
               <template x-for="(m, idx) in (catalog[picker.category]?.models || [])" :key="picker.category + '-' + idx">
                 <option :value="idx" x-text="m.code + ' — ' + m.name"></option>
@@ -411,6 +455,11 @@
 
         <div x-show="picker.model !== ''">
           <label class="text-xs text-gray-500 mb-2 block font-medium">เลือกแพ็คเกจ / Subscription Plan</label>
+          <div class="washer-rec-tip" x-show="showSixYearVisitRecTip()">
+            <span x-show="isWasherCategory(picker.category)">💡 เครื่องซักผ้าทุกประเภท สัญญา <strong>6 ปี</strong> คุ้มที่สุด<span x-show="isWasherDeepCleanCategory(picker.category)"> · แนะนำ Visit — ล้างใหญ่ 2 ครั้ง (เดือน 36 และ 72)</span></span>
+            <span x-show="isDryerModel(currentModel())">💡 เครื่องอบผ้า สัญญา <strong>6 ปี Visit</strong> คุ้มที่สุด · ล้างใหญ่ 2 ครั้ง (เดือน 36 และ 72)</span>
+            <span x-show="isDishwasherModel(currentModel())">💡 เครื่องล้างจาน สัญญา <strong>6 ปี Visit</strong> คุ้มที่สุด</span>
+          </div>
           <div class="space-y-2">
             <template x-for="(plan, idx) in (currentModel()?.plans || [])" :key="idx">
               <label class="cursor-pointer block">
@@ -423,7 +472,9 @@
                         <span class="tag" :class="'tag-' + plan.serviceType.toLowerCase().replace(' ','')" x-text="serviceTypeTag(plan.serviceType)"></span>
                         <span class="text-xs text-gray-500" x-text="planServiceNote(plan)"></span>
                         <span x-show="plan.promo" class="tag tag-promo">🎁 มีโปร</span>
+                        <span x-show="isRecommendedPlan(picker.category, plan)" class="tag tag-recommend">⭐ แนะนำ</span>
                       </div>
+                      <div class="text-xs" style="color:#047857;margin-top:2px" x-show="isRecommendedPlan(picker.category, plan)" x-text="planRecommendNote(picker.category, plan)"></div>
                       <div class="text-xs text-gray-600" x-show="plan.promo" x-text="plan.promo"></div>
                       <div class="text-xs" style="color:#7c3aed;margin-top:4px" x-show="plan.outright && plan.advancePayment" x-text="'💳 จ่ายครั้งเดียว ฿' + plan.advancePayment.toLocaleString() + ' (รวมเครื่อง + บริการ 2 ปี)'"></div>
                       <div class="text-xs" style="color:#7c3aed;margin-top:4px" x-show="plan.advancePayment && !plan.outright" x-text="'💳 จ่ายก้อนแรก ฿' + plan.advancePayment.toLocaleString() + ' (ล่วงหน้า 50% × 12 บิล)'"></div>
@@ -445,6 +496,136 @@
               </label>
             </template>
           </div>
+        </div>
+
+        <!-- เปรียบเทียบแพ็คเกจทุกสัญญา (แนว A) -->
+        <div class="compare-toggle-wrap" x-show="picker.model !== '' && (currentModel()?.plans?.length || 0) > 1">
+          <button type="button" class="btn-compare-toggle" :class="showComparePlans ? 'active' : ''" @click="showComparePlans = !showComparePlans">
+            <span>📊 เปรียบเทียบแพ็คเกจทุกสัญญา</span>
+            <span x-text="showComparePlans ? '▲ ซ่อน' : '▼ แสดง'"></span>
+          </button>
+        </div>
+        <div class="compare-plan-box" x-show="picker.model !== '' && showComparePlans && (currentModel()?.plans?.length || 0) > 1">
+          <div class="cp-head">📊 เปรียบเทียบแพ็คเกจทุกสัญญา</div>
+          <div class="cp-sub">
+            <span x-text="currentModel()?.code + ' — ' + currentModel()?.name"></span>
+            <span x-show="comboRate() > 0" style="color:#7c3aed"> · ราคารวมสัญญาหลัง combo <span x-text="Math.round(comboRate()*100)+'%'"></span> แล้ว</span>
+          </div>
+          <div class="compare-table-wrap">
+            <table class="compare-table compare-table-a">
+              <colgroup>
+                <col style="width:17%"><col style="width:7%"><col style="width:13%"><col style="width:12%"><col style="width:11%"><col style="width:12%"><col style="width:9%"><col style="width:5%">
+              </colgroup>
+              <thead>
+                <tr>
+                  <th>แพ็คเกจ</th>
+                  <th>Care</th>
+                  <th class="cp-num">โปรแรก</th>
+                  <th class="cp-num">หลังโปร</th>
+                  <th class="cp-num">ครั้งแรก</th>
+                  <th class="cp-num">รวมสัญญา</th>
+                  <th class="cp-num">ประหยัด</th>
+                  <th class="cp-act"></th>
+                </tr>
+              </thead>
+              <tbody>
+                <template x-for="row in comparePlansForModel()" :key="row.idx">
+                  <tr :class="(row.isBest ? 'cp-best ' : '') + (row.isRecommended ? 'cp-recommended' : '')">
+                    <td class="cp-label">
+                      <span x-text="row.label"></span>
+                      <span class="cp-badge-rec" x-show="row.isRecommended">แนะนำ</span>
+                      <div class="cp-sub" x-text="row.serviceCycle"></div>
+                    </td>
+                    <td class="cp-care" x-text="row.careSummary"></td>
+                    <td class="cp-num" x-text="row.promoLabel"></td>
+                    <td class="cp-num" x-text="row.postPromoLabel"></td>
+                    <td class="cp-num" x-text="'฿' + fmtMoney(row.firstPayment)"></td>
+                    <td class="cp-num" style="font-weight:700;color:var(--lg-red)" x-text="'฿' + fmtMoney(row.grandTotal)"></td>
+                    <td class="cp-num" x-text="row.saving > 0 ? ('฿' + row.saving.toLocaleString()) : '—'"></td>
+                    <td class="cp-act"><button type="button" class="cp-btn" @click="pickPlanFromCompare(row.idx)">เลือก</button></td>
+                  </tr>
+                </template>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- เปรียบเทียบหลายรุ่น แพ็คเดียวกัน (แนว B) -->
+        <div class="compare-toggle-wrap" x-show="picker.category && categoryModels().length > 1">
+          <button type="button" class="btn-compare-b-toggle" :class="showCompareModels ? 'active' : ''" @click="showCompareModels = !showCompareModels">
+            <span>🔀 เปรียบเทียบหลายรุ่น (แพ็คเดียวกัน)</span>
+            <span x-text="showCompareModels ? '▲ ซ่อน' : '▼ แสดง'"></span>
+          </button>
+        </div>
+        <div class="compare-b-panel" x-show="picker.category && showCompareModels && categoryModels().length > 1">
+          <div class="cp-head">🔀 เปรียบเทียบหลายรุ่น — <span x-text="compareBFilterLabel()"></span></div>
+          <div class="cp-sub">
+            <span x-text="picker.category"></span>
+            <span x-show="comboRate() > 0" style="color:#7c3aed"> · ราคารวมสัญญาหลัง combo <span x-text="Math.round(comboRate()*100)+'%'"></span> แล้ว</span>
+          </div>
+          <div class="compare-b-filters">
+            <div>
+              <label>สัญญา</label>
+              <select x-model="compareB.term" @change="onCompareBFilterChange()">
+                <template x-for="t in compareBTerms()" :key="t">
+                  <option :value="t" x-text="t"></option>
+                </template>
+              </select>
+            </div>
+            <div>
+              <label>บริการ</label>
+              <select x-model="compareB.serviceType" @change="onCompareBFilterChange()">
+                <template x-for="st in compareBServices()" :key="st">
+                  <option :value="st" x-text="compareCareSummary({serviceType:st,outright:false})"></option>
+                </template>
+              </select>
+            </div>
+          </div>
+          <div class="compare-b-hint">เลือกรุ่นเปรียบเทียบ (สูงสุด 4 รุ่น) — คลิกชื่อรุ่นเพื่อเลือก/ยกเลิก</div>
+          <div class="compare-b-models">
+            <template x-for="(m, idx) in categoryModels()" :key="'cb-'+idx">
+              <button type="button" class="compare-b-chip" :class="isCompareBModelSelected(idx) ? 'active' : ''" @click="toggleCompareBModel(idx)" x-text="m.code"></button>
+            </template>
+          </div>
+          <div class="compare-table-wrap" x-show="compareB.modelIndices.length > 0">
+            <table class="compare-table compare-table-b">
+              <colgroup>
+                <col style="width:18%"><col style="width:13%"><col style="width:11%"><col style="width:10%"><col style="width:12%"><col style="width:11%"><col style="width:8%"><col style="width:5%">
+              </colgroup>
+              <thead>
+                <tr>
+                  <th>รุ่น</th>
+                  <th class="cp-num">โปรแรก</th>
+                  <th class="cp-num">หลังโปร</th>
+                  <th class="cp-num">ครั้งแรก</th>
+                  <th class="cp-num">รวมสัญญา</th>
+                  <th class="cp-num">ห่างถูกสุด</th>
+                  <th class="cp-num">ประหยัด</th>
+                  <th class="cp-act"></th>
+                </tr>
+              </thead>
+              <tbody>
+                <template x-for="row in compareModelsMatrix()" :key="row.modelIdx">
+                  <tr :class="(row.isBest ? 'cp-best ' : '') + (row.unavailable ? 'cp-unavail' : '')">
+                    <td class="cp-label">
+                      <span x-text="row.code"></span>
+                      <div class="cp-sub" x-text="row.name"></div>
+                    </td>
+                    <td class="cp-num" x-text="row.unavailable ? '—' : row.promoLabel"></td>
+                    <td class="cp-num" x-text="row.unavailable ? '—' : row.postPromoLabel"></td>
+                    <td class="cp-num" x-text="row.unavailable ? '—' : ('฿' + fmtMoney(row.firstPayment))"></td>
+                    <td class="cp-num" style="font-weight:700;color:var(--lg-red)" x-text="row.unavailable ? 'ไม่มีแพ็ค' : ('฿' + fmtMoney(row.grandTotal))"></td>
+                    <td class="cp-num cp-diff" :class="row.diffFromMin > 0 ? 'cp-diff-more' : (row.isBest && !row.unavailable ? 'cp-diff-best' : '')" x-text="row.unavailable ? '—' : row.diffLabel"></td>
+                    <td class="cp-num" x-text="row.unavailable ? '—' : (row.saving > 0 ? ('฿' + row.saving.toLocaleString()) : '—')"></td>
+                    <td class="cp-act">
+                      <button type="button" class="cp-btn" x-show="!row.unavailable" @click="pickModelFromCompareB(row.modelIdx)">เลือก</button>
+                    </td>
+                  </tr>
+                </template>
+              </tbody>
+            </table>
+          </div>
+          <div class="compare-b-hint" x-show="compareB.modelIndices.length === 0">เลือกอย่างน้อย 1 รุ่นเพื่อดูตารางเปรียบเทียบ</div>
         </div>
 
         <div class="mt-4 flex justify-end">
@@ -546,7 +727,7 @@
           <h2 class="font-display font-bold text-lg">ตารางชำระเงินรายเดือน <span class="text-gray-400 font-normal text-sm">/ Payment Schedule</span></h2>
         </div>
         <div class="text-xs text-gray-500 mb-3" x-show="comboRate() > 0">
-          💡 ราคาด้านล่างรวมส่วนลด Combo <strong x-text="Math.round(comboRate()*100)+'%'"></strong> แล้ว — บิลแรก/เงินจ่ายล่วงหน้าเก็บราคาเต็ม (ยังไม่หัก) แล้วนำส่วนลดไปเฉลี่ยกระจายให้บิลที่เหลือจนครบสัญญา
+          💡 ราคาด้านล่างรวมส่วนลด Combo <strong x-text="Math.round(comboRate()*100)+'%'"></strong> แล้ว — บิลแรก/เงินจ่ายล่วงหน้าเก็บราคาเต็ม (ยังไม่หัก) · สินค้าไม่มี Advance นำ combo บิลแรกไปลดทั้งหมดที่งวดที่ 2 · สินค้า Advance เฉลี่ยลดทุกงวด
         </div>
         <div class="text-xs text-gray-500 mb-3" x-show="comboRate() === 0">
           ราคาต่อเดือนในแต่ละช่วงบิล (ยังไม่มีส่วนลด Combo — ต้องซื้อเพิ่มเพื่อรับส่วนลด)
@@ -580,7 +761,7 @@
               * เงินจ่ายล่วงหน้า ฿<span x-text="item.advancePayment.toLocaleString()"></span> เก็บเต็ม แล้วนำ combo <span x-text="Math.round(comboRate()*100)+'%'"></span> เฉลี่ยลดทุกบิล
             </div>
             <div class="text-xs text-gray-400 mt-2" x-show="!item.advancePayment && comboRate() > 0" style="font-style:italic">
-              * บิลแรกตัดราคาเต็ม (ยังไม่หัก combo) แล้วนำ combo <span x-text="Math.round(comboRate()*100)+'%'"></span> ของบิลแรกไปเฉลี่ยลดบิลที่เหลือ
+              * บิลแรกเก็บเต็ม (ยังไม่หัก combo) แล้วนำ combo <span x-text="Math.round(comboRate()*100)+'%'"></span> ของบิลแรกไปลดทั้งหมดที่งวดที่ 2
             </div>
           </div>
         </template>
@@ -646,6 +827,21 @@
               </div>
               <div x-show="cart.length > 0 && comboRate() === 0" class="text-xs text-gray-500 italic">
                 <span x-text="'* เพิ่มสินค้าอีก ' + (minTierItems() - cart.length) + ' ชิ้นเพื่อรับส่วนลด ' + comboLabel() + ' ' + minTierRate() + '%'"></span>
+              </div>
+            </div>
+
+            <!-- ยอดชำระครั้งแรกรวม -->
+            <div class="summary-first-pay-box mb-3">
+              <div class="text-xs text-gray-600 uppercase tracking-wider mb-1">💰 ยอดชำระครั้งแรกรวม (First Payment)</div>
+              <div class="price-highlight text-3xl" style="color:#7c3aed" x-text="'฿' + fmtMoney(firstPaymentTotal())"></div>
+              <div class="text-xs text-gray-600 mt-1">TV/จอ/ลำโพง = จ่ายล่วงหน้าอย่างเดียว · สินค้าอื่น = งวดที่ 1 · ซื้อขาด = ราคาซื้อขาด</div>
+              <div class="mt-2" style="border-top:1px dotted #c4b5fd;padding-top:6px">
+                <template x-for="(row, i) in firstPaymentBreakdown()" :key="i">
+                  <div class="flex justify-between text-xs gap-2" style="padding:3px 0">
+                    <span class="text-gray-600 shrink-0" x-text="row.item.code"></span>
+                    <span class="font-mono text-right" style="line-height:1.4" x-html="firstPaymentItemLabel(row)"></span>
+                  </div>
+                </template>
               </div>
             </div>
 
@@ -777,9 +973,12 @@ function lgCalculator() {
       }
     },
     picker: { category: '', model: '', plan: '' },
+    showComparePlans: false,
+    showCompareModels: false,
+    compareB: { term: '5Y', serviceType: 'Visit', modelIndices: [] },
     cart: [],
     toast: { show: false, msg: '' },
-    buildVersion: '2026.06.21-v6',
+    buildVersion: '2026.06.26-v7',
 
     visitServiceLabel(withEnglish = false) {
       const label = 'ช่างผู้เชี่ยวชาญบริการถึงบ้าน';
@@ -805,6 +1004,53 @@ function lgCalculator() {
       if (serviceType === 'Self') return 'รับอะไหล่เปลี่ยนเอง';
       if (serviceType === 'No Service') return 'ไม่มีบริการบำรุงรักษา';
       return serviceType;
+    },
+    isWasherCategory(cat) {
+      return cat === 'เครื่องซักผ้า Front Load' || cat === 'เครื่องซักผ้า Top Load' || cat === 'Wash Tower';
+    },
+    isWasherDeepCleanCategory(cat) {
+      return cat === 'เครื่องซักผ้า Front Load' || cat === 'Wash Tower';
+    },
+    isDryerModel(model) {
+      if (!model) return false;
+      const code = model.code || '';
+      const name = model.name || '';
+      return code.includes('RV10') || name.includes('อบผ้า');
+    },
+    isDishwasherModel(model) {
+      if (!model) return false;
+      const code = model.code || '';
+      const name = model.name || '';
+      return code.includes('DFC') || name.includes('ล้างจาน');
+    },
+    isSixYearVisitRecommendTarget(cat, model) {
+      if (this.isWasherCategory(cat)) return true;
+      if (cat === 'เครื่องอบผ้า / Styler / ล้างจาน' && model) {
+        return this.isDryerModel(model) || this.isDishwasherModel(model);
+      }
+      return false;
+    },
+    isSixYearVisitDeepClean(cat, model) {
+      if (this.isWasherDeepCleanCategory(cat)) return true;
+      if (cat === 'เครื่องอบผ้า / Styler / ล้างจาน' && model && this.isDryerModel(model)) return true;
+      return false;
+    },
+    showSixYearVisitRecTip() {
+      return this.isSixYearVisitRecommendTarget(this.picker.category, this.currentModel());
+    },
+    isRecommendedPlan(cat, plan, model) {
+      if (!plan || plan.outright) return false;
+      const m = model ?? this.currentModel();
+      if (!this.isSixYearVisitRecommendTarget(cat, m)) return false;
+      return plan.term === '6Y' && plan.serviceType === 'Visit';
+    },
+    planRecommendNote(cat, plan, model) {
+      const m = model ?? this.currentModel();
+      if (!this.isRecommendedPlan(cat, plan, m)) return '';
+      if (this.isSixYearVisitDeepClean(cat, m)) {
+        return 'แนะนำ 6 ปี Visit — มีล้างใหญ่ 2 ครั้ง (เดือน 36 และ 72)';
+      }
+      return 'แนะนำ 6 ปี Visit — คุ้มที่สุด';
     },
     planServiceNote(plan) {
       if (plan.serviceType === 'No Service') return 'บริการ: ไม่มีบริการบำรุงรักษา · รับประกันตลอดสัญญา';
@@ -1411,7 +1657,7 @@ function lgCalculator() {
         center: { title:'📺 ไม่มีบริการเข้าบ้าน (No Service)', items:[
           {label:'รับประกันตลอดอายุสัญญา', freq:'นำสินค้าส่งซ่อมที่ศูนย์บริการ LG'},
           {label:'ติดต่อศูนย์บริการ LG เมื่อมีปัญหา', freq:'Drop-off Service'}
-        ], note:'ไมโครเวฟ, ซาวด์บาร์, xboom — นำสินค้าส่งซ่อมที่ศูนย์บริการแอลจีด้วยตนเอง' }
+        ], note:'ไมโครเวฟ, ซาวด์บาร์, xboom Bluetooth speaker, เครื่องดูดฝุ่น A9T-CORE/A9T-LITE — นำสินค้าส่งซ่อมที่ศูนย์บริการแอลจีด้วยตนเอง' }
       }
     },
 
@@ -1459,20 +1705,238 @@ function lgCalculator() {
       const models = this.catalog[this.picker.category]?.models || [];
       return models[Number(this.picker.model)] || null;
     },
-    addToCart() {
-      const m = this.currentModel();
-      if (!m || this.picker.plan === '') return;
-      const plan = m.plans[this.picker.plan];
-      this.cart.push({
-        category: this.picker.category, code: m.code, name: m.name,
+    planToItem(category, model, plan) {
+      return {
+        category, code: model.code, name: model.name,
         term: plan.term, serviceType: plan.serviceType, serviceCycle: plan.serviceCycle,
         regular: plan.regular, effectiveMonthly: plan.effectiveMonthly, promoMonths: plan.promoMonths,
         postPromoPrice: plan.postPromoPrice, promo: plan.promo,
         advancePayment: plan.advancePayment || 0,
-        billSchedule: plan.billSchedule || null,
-        outright: !!plan.outright,
+        billSchedule: plan.billSchedule || null, outright: !!plan.outright,
         totalContractMonths: plan.totalContractMonths, totalSaving: plan.totalSaving
+      };
+    },
+    comparePromoLabel(plan) {
+      if (plan.outright) return 'ซื้อขาด ฿' + (plan.advancePayment || 0).toLocaleString();
+      if (plan.promoMonths > 0 && plan.promoMonths < plan.totalContractMonths) {
+        return '฿' + plan.effectiveMonthly.toLocaleString() + '/ด. × ' + plan.promoMonths;
+      }
+      if (plan.effectiveMonthly > 0) return '฿' + plan.effectiveMonthly.toLocaleString() + '/เดือน';
+      return '—';
+    },
+    comparePostPromoLabel(plan) {
+      if (plan.outright) return '—';
+      if (plan.promoMonths > 0 && plan.promoMonths < plan.totalContractMonths) {
+        return '฿' + plan.postPromoPrice.toLocaleString() + '/เดือน';
+      }
+      if (plan.postPromoPrice > 0) return '฿' + plan.postPromoPrice.toLocaleString() + '/เดือน';
+      return '—';
+    },
+    careServiceScore(item) {
+      if (item.outright) return 0;
+      const care = this.careService(item);
+      const itemCount = care.items?.length || 0;
+      const cycle = item.serviceCycle || '';
+      let freq = 0;
+      if (cycle.includes('3')) freq = 4;
+      else if (cycle.includes('4')) freq = 3;
+      else if (cycle.includes('6')) freq = 2;
+      else if (cycle.includes('12')) freq = 1;
+      else if (cycle.includes('24')) freq = 0.5;
+      if (item.serviceType === 'Visit') return 300 + freq * 20 + itemCount * 5;
+      if (item.serviceType === 'Self') return 150 + freq * 10 + itemCount * 3;
+      if (item.serviceType === 'No Service') return 50;
+      return 0;
+    },
+    compareCareSummary(item) {
+      if (item.outright) return 'ซื้อขาด';
+      if (item.serviceType === 'Visit') return 'Visit';
+      if (item.serviceType === 'Self') return 'Self';
+      return 'No Service';
+    },
+    compareMonthlyAvg(plan, grandTotal) {
+      const months = plan.totalContractMonths || 60;
+      return months > 0 ? Math.round((grandTotal / months) * 100) / 100 : 0;
+    },
+    applyCompareWorthHighlight(rows) {
+      if (!rows.length) return rows;
+      rows.forEach(r => { r.isBest = false; });
+      if (this.isSixYearVisitRecommendTarget(this.picker.category, this.currentModel())) {
+        const sixYVisit = rows.filter(r => r.plan?.term === '6Y' && r.plan?.serviceType === 'Visit');
+        if (sixYVisit.length) {
+          sixYVisit.forEach(r => { r.isBest = true; });
+          return rows;
+        }
+      }
+      const priced = rows.filter(r => r.monthlyAvg > 0);
+      if (!priced.length) return rows;
+      const minMonthly = Math.min(...priced.map(r => r.monthlyAvg));
+      const maxCare = Math.max(...rows.map(r => r.careScore));
+      const careCandidates = rows.filter(r => r.careScore === maxCare && r.monthlyAvg > 0);
+      const bestCare = careCandidates.length
+        ? careCandidates.reduce((a, b) => (a.monthlyAvg <= b.monthlyAvg ? a : b))
+        : null;
+      const cheapRows = rows.filter(r => Math.abs(r.monthlyAvg - minMonthly) < 0.01);
+      if (!bestCare || maxCare === 0) {
+        cheapRows.forEach(r => { r.isBest = true; });
+        return rows;
+      }
+      const diff = Math.round((bestCare.monthlyAvg - minMonthly) * 100) / 100;
+      if (diff <= 50) {
+        rows.forEach(r => { r.isBest = r.idx === bestCare.idx; });
+      } else {
+        cheapRows.forEach(r => { r.isBest = true; });
+      }
+      return rows;
+    },
+    comparePlansForModel() {
+      const m = this.currentModel();
+      if (!m || this.picker.model === '' || !m.plans?.length) return [];
+      const rows = m.plans.map((plan, idx) => {
+        const item = this.planToItem(this.picker.category, m, plan);
+        const grandTotal = this.itemTotalContract(item);
+        const careScore = this.careServiceScore(item);
+        return {
+          idx, plan,
+          label: plan.term + ' · ' + this.serviceTypeTag(plan.serviceType),
+          serviceCycle: plan.serviceType !== 'No Service' ? plan.serviceCycle : '—',
+          careSummary: this.compareCareSummary(item),
+          careScore,
+          monthlyAvg: this.compareMonthlyAvg(plan, grandTotal),
+          promoLabel: this.comparePromoLabel(plan),
+          postPromoLabel: this.comparePostPromoLabel(plan),
+          firstPayment: this.itemFirstPayment(item),
+          grandTotal,
+          saving: plan.totalSaving || 0,
+          isRecommended: this.isRecommendedPlan(this.picker.category, plan, m),
+        };
       });
+      return this.applyCompareWorthHighlight(rows);
+    },
+    pickPlanFromCompare(idx) {
+      if (this.picker.model === '') return;
+      this.picker.plan = idx;
+      this.addToCart();
+    },
+    categoryModels() {
+      if (!this.picker.category) return [];
+      return this.catalog[this.picker.category]?.models || [];
+    },
+    compareBTerms() {
+      const terms = new Set();
+      const order = ['2Y', '5Y', '6Y', '7Y'];
+      this.categoryModels().forEach(m => (m.plans || []).forEach(p => terms.add(p.term)));
+      return [...terms].sort((a, b) => {
+        const ai = order.indexOf(a), bi = order.indexOf(b);
+        return (ai < 0 ? 99 : ai) - (bi < 0 ? 99 : bi);
+      });
+    },
+    compareBServices() {
+      const services = new Set();
+      const order = ['Visit', 'Self', 'No Service'];
+      this.categoryModels().forEach(m => {
+        (m.plans || []).forEach(p => {
+          if (p.term === this.compareB.term) services.add(p.serviceType);
+        });
+      });
+      return [...services].sort((a, b) => {
+        const ai = order.indexOf(a), bi = order.indexOf(b);
+        return (ai < 0 ? 99 : ai) - (bi < 0 ? 99 : bi);
+      });
+    },
+    initCompareBForCategory() {
+      const terms = this.compareBTerms();
+      this.compareB.term = terms.includes('5Y') ? '5Y' : (terms[0] || '5Y');
+      this.onCompareBFilterChange();
+      this.compareB.modelIndices = [];
+    },
+    onCompareBFilterChange() {
+      const services = this.compareBServices();
+      if (services.length && !services.includes(this.compareB.serviceType)) {
+        this.compareB.serviceType = services.includes('Visit') ? 'Visit' : services[0];
+      }
+    },
+    compareBFilterLabel() {
+      return this.compareB.term + ' · ' + this.compareCareSummary({ serviceType: this.compareB.serviceType, outright: false });
+    },
+    isCompareBModelSelected(idx) {
+      return this.compareB.modelIndices.includes(idx);
+    },
+    toggleCompareBModel(idx) {
+      const pos = this.compareB.modelIndices.indexOf(idx);
+      if (pos >= 0) {
+        this.compareB.modelIndices.splice(pos, 1);
+      } else if (this.compareB.modelIndices.length < 4) {
+        this.compareB.modelIndices.push(idx);
+        this.compareB.modelIndices.sort((a, b) => a - b);
+      } else {
+        this.showToast('เลือกได้สูงสุด 4 รุ่น');
+      }
+    },
+    findPlanForCompareB(model, term, serviceType) {
+      return (model.plans || []).find(p => p.term === term && p.serviceType === serviceType) || null;
+    },
+    applyCompareBPriceHighlight(rows) {
+      const priced = rows.filter(r => !r.unavailable && r.grandTotal > 0);
+      rows.forEach(r => {
+        r.isBest = false;
+        r.diffFromMin = 0;
+        r.diffLabel = '—';
+      });
+      if (!priced.length) return rows;
+      const minTotal = Math.min(...priced.map(r => r.grandTotal));
+      priced.forEach(r => {
+        const diff = Math.round((r.grandTotal - minTotal) * 100) / 100;
+        r.diffFromMin = diff;
+        if (Math.abs(diff) < 0.01) {
+          r.isBest = priced.length > 1;
+          r.diffLabel = priced.length > 1 ? 'ถูกสุด' : '—';
+        } else {
+          r.diffLabel = '+฿' + this.fmtMoney(diff);
+        }
+      });
+      return rows;
+    },
+    compareModelsMatrix() {
+      const cat = this.picker.category;
+      if (!cat || !this.compareB.modelIndices.length) return [];
+      const { term, serviceType } = this.compareB;
+      const models = this.categoryModels();
+      const rows = this.compareB.modelIndices.map(mi => {
+        const m = models[mi];
+        if (!m) return null;
+        const plan = this.findPlanForCompareB(m, term, serviceType);
+        if (!plan) {
+          return { modelIdx: mi, code: m.code, name: m.name, unavailable: true, isBest: false };
+        }
+        const item = this.planToItem(cat, m, plan);
+        const grandTotal = this.itemTotalContract(item);
+        return {
+          modelIdx: mi, unavailable: false,
+          code: m.code, name: m.name,
+          promoLabel: this.comparePromoLabel(plan),
+          postPromoLabel: this.comparePostPromoLabel(plan),
+          firstPayment: this.itemFirstPayment(item),
+          grandTotal,
+          saving: plan.totalSaving || 0,
+        };
+      }).filter(Boolean);
+      return this.applyCompareBPriceHighlight(rows);
+    },
+    pickModelFromCompareB(modelIdx) {
+      const m = this.categoryModels()[modelIdx];
+      if (!m) return;
+      const plan = this.findPlanForCompareB(m, this.compareB.term, this.compareB.serviceType);
+      if (!plan) return;
+      this.picker.model = modelIdx;
+      this.picker.plan = m.plans.indexOf(plan);
+      this.addToCart();
+    },
+    addToCart() {
+      const m = this.currentModel();
+      if (!m || this.picker.plan === '') return;
+      const plan = m.plans[this.picker.plan];
+      this.cart.push(this.planToItem(this.picker.category, m, plan));
       this.showToast('เพิ่ม ' + m.code + ' เรียบร้อย');
       this.picker.model = ''; this.picker.plan = '';
     },
@@ -1616,6 +2080,34 @@ function lgCalculator() {
     totalTvAdvance() { return this.tvAdvanceItems().reduce((s, it) => s + it.advancePayment, 0); },
     advanceItems() { return this.cart.filter(it => it.advancePayment > 0); },
 
+    itemFirstPayment(item) {
+      const advance = item.advancePayment || 0;
+      // TV/จอ/ลำโพง (Advance) และซื้อขาด — ยอดครั้งแรก = advance เท่านั้น ไม่รวมงวดที่ 1
+      if (item.outright || advance > 0) return Math.round(advance * 100) / 100;
+      const bill1 = this.itemComboSchedule(item).bills.find(b => b.bill === 1);
+      return Math.round((bill1 ? bill1.price : 0) * 100) / 100;
+    },
+    firstPaymentBreakdown() {
+      return this.cart.map(it => {
+        const advance = it.advancePayment || 0;
+        const skipBill1 = it.outright || advance > 0;
+        const bill1 = skipBill1 ? 0 : (this.itemComboSchedule(it).bills.find(b => b.bill === 1)?.price || 0);
+        return { item: it, advance, bill1, total: this.itemFirstPayment(it) };
+      });
+    },
+    firstPaymentTotal() {
+      return Math.round(this.cart.reduce((s, it) => s + this.itemFirstPayment(it), 0) * 100) / 100;
+    },
+    firstPaymentItemLabel(row) {
+      const parts = [];
+      if (row.advance > 0) {
+        parts.push(row.item.outright ? 'ซื้อขาด ฿' + row.advance.toLocaleString() : 'ล่วงหน้า ฿' + row.advance.toLocaleString());
+      }
+      if (row.bill1 > 0) parts.push('งวด 1 ฿' + this.bht(row.bill1).toLocaleString());
+      const detail = parts.length ? '<span style="color:#9ca3af;font-size:10px;display:block">' + parts.join(' + ') + '</span>' : '';
+      return '฿' + this.fmtMoney(row.total) + detail;
+    },
+
     // คำนวณตารางบิลของสินค้าชิ้นหนึ่ง หลังหัก Combo แบบเฉลี่ย
     itemComboSchedule(item) {
       const cr = this.comboRate();
@@ -1653,14 +2145,14 @@ function lgCalculator() {
           out.push({ bill: k, base: bills[k], price: billPrice(raw, bills[k]) });
         }
       } else {
-        // === สินค้า Subscribe ทั่วไป ===
-        // บิลแรกเก็บเต็ม (ไม่หัก combo) แล้วนำ combo ของบิลแรกไปเฉลี่ยลดบิล 2..months
-        // เฉลี่ย = ปัดขึ้น 2 ตำแหน่ง (ceil) ตามระบบจริง
-        const bill1Per = (months > 1 && cr > 0) ? ceil2((bills[1] * cr) / (months - 1)) : 0;
+        // === สินค้า Subscribe ทั่วไป (ไม่มี Advance) ===
+        // บิลแรกเก็บเต็ม (ไม่หัก combo) แล้วนำ combo ของบิลแรกไปลดทั้งหมดที่งวดที่ 2
+        const bill1Combo = (months > 1 && cr > 0) ? (bills[1] * cr) : 0;
         for (let k = 1; k <= months; k++) {
           let raw;
-          if (k === 1) raw = bills[k];                   // บิลแรกเก็บเต็ม
-          else raw = bills[k] - bills[k] * cr - bill1Per;
+          if (k === 1) raw = bills[k];                                        // บิลแรกเก็บเต็ม
+          else if (k === 2) raw = bills[k] - bills[k] * cr - bill1Combo;     // งวด 2 รับ combo บิลแรกทั้งก้อน
+          else raw = bills[k] - bills[k] * cr;                                // งวด 3+ หัก combo ปกติ
           out.push({ bill: k, base: bills[k], price: billPrice(raw, bills[k]) });
         }
       }
@@ -1826,11 +2318,36 @@ function lgCalculator() {
       if (code.includes('RV10') || name.includes('อบผ้า')) return 'เครื่องอบผ้า';
       return item.category;
     },
+    isNoMaintenanceWarranty(item) {
+      return ['โทรทัศน์ Life Style / OLED / QNED / NANO', 'ลำโพง / ซาวด์บาร์', 'มอนิเตอร์', 'ไมโครเวฟ'].includes(item.category);
+    },
+    isCenterRepairItem(item) {
+      const code = (item.code || '').toUpperCase();
+      const name = (item.name || '').toLowerCase();
+      if (item.category === 'ไมโครเวฟ') return true;
+      if (item.category === 'ลำโพง / ซาวด์บาร์') {
+        if (code.includes('XBOOM') || name.includes('bluetooth speaker')) return true;
+        if (name.includes('sound bar') || name.includes('soundbar')) return true;
+        return false;
+      }
+      if (item.category === 'เครื่องดูดฝุ่น') {
+        return code.includes('A9T-CORE') || code.includes('A9T-LITE');
+      }
+      return false;
+    },
+    warrantyLineText(item, years) {
+      const y = years != null ? years : Math.round((item.totalContractMonths || 60) / 12);
+      let line = 'รับประกันตลอดสัญญา ' + y + ' ปี | ครอบคลุมค่าซ่อม';
+      if (!this.isNoMaintenanceWarranty(item)) line += 'และบำรุงรักษา';
+      if (this.isCenterRepairItem(item)) {
+        line += ' · ลูกค้านำสินค้าส่งซ่อมที่ศูนย์บริการแอลจีด้วยตนเอง';
+      }
+      return line;
+    },
 
     careService(item) {
       if (item.serviceType === 'No Service') {
-        const centerCats = ['ไมโครเวฟ', 'ลำโพง / ซาวด์บาร์'];
-        const info = centerCats.includes(item.category)
+        const info = this.isCenterRepairItem(item)
           ? this.serviceInfo.noService.center
           : this.serviceInfo.noService.onsite;
         return { ...info, note: info.note };
@@ -1926,6 +2443,10 @@ function lgCalculator() {
           benefit = '🏠 ช่างผู้เชี่ยวชาญบริการถึงบ้าน ' + visits + ' · เปลี่ยนอะไหล่/ไส้กรองให้';
         } else if (b.serviceType === 'Self') {
           benefit = '📦 LG ส่งอะไหล่ถึงบ้าน ' + b.partsPerYear + ' รอบ/ปี · เปลี่ยนเอง';
+        } else if (this.isCenterRepairItem({ category: b.category, code: b.code, name: b.name })) {
+          benefit = '🛡️ รับประกันตลอดสัญญา · ซ่อมฟรีเมื่อมีปัญหา · นำสินค้าส่งซ่อมที่ศูนย์บริการแอลจีด้วยตนเอง';
+        } else if (this.isNoMaintenanceWarranty({ category: b.category })) {
+          benefit = '🛡️ รับประกันตลอดสัญญา · ซ่อมฟรีเมื่อมีปัญหา · ช่างบริการถึงบ้านเมื่อแจ้งซ่อม';
         } else {
           benefit = '🛡️ ไม่มีบริการบำรุงรักษา · รับประกันตลอดสัญญา · ซ่อมฟรีเมื่อมีปัญหา';
         }
@@ -1951,6 +2472,21 @@ function lgCalculator() {
       txt += '<span style="background:#e0e7ff;color:#3730a3;padding:2px 9px;border-radius:99px">' + n + ' รายการ</span>';
       if (hasCombo) txt += '<span style="background:#fef9c3;color:#92400e;padding:2px 9px;border-radius:99px">' + this.comboLabel() + ' ' + cr + '%' + (this.specialCombo ? ' 🔥' : '') + '</span>';
       txt += '<span style="background:#f0fdf4;color:#166534;padding:2px 9px;border-radius:99px">' + this.promoDateText() + '</span>';
+      txt += '</div>';
+
+      // ─── First payment card ───
+      txt += '<div style="background:linear-gradient(135deg,#ede9fe,#f5f3ff);border:2px solid #c4b5fd;border-radius:10px;padding:12px 14px;margin-bottom:12px">';
+      txt += '<div style="font-size:0.78em;color:#6d28d9;margin-bottom:2px">💰 ยอดชำระครั้งแรกรวม</div>';
+      txt += '<div style="font-size:1.5em;font-weight:700;color:#5b21b6;line-height:1.1">฿' + this.fmtMoney(this.firstPaymentTotal()) + '</div>';
+      txt += '<div style="margin-top:6px;font-size:0.8em;color:#6b7280">TV/จอ/ลำโพง = ล่วงหน้าอย่างเดียว · สินค้าอื่น = งวดที่ 1</div>';
+      this.firstPaymentBreakdown().forEach(row => {
+        const parts = [];
+        if (row.advance > 0) parts.push(row.item.outright ? 'ซื้อขาด ฿' + row.advance.toLocaleString() : 'ล่วงหน้า ฿' + row.advance.toLocaleString());
+        if (row.bill1 > 0) parts.push('งวด 1 ฿' + this.bht(row.bill1).toLocaleString());
+        txt += '<div style="font-size:0.78em;margin-top:3px;color:#4b5563">· ' + row.item.code + ': <strong>฿' + this.fmtMoney(row.total) + '</strong>';
+        if (parts.length) txt += ' <span style="color:#9ca3af">(' + parts.join(' + ') + ')</span>';
+        txt += '</div>';
+      });
       txt += '</div>';
 
       // ─── Hero price card ───
@@ -2027,7 +2563,8 @@ function lgCalculator() {
       if (this.hasTvAdvance()) {
         txt += '<div style="color:#7c3aed;margin-top:3px">💳 จ่ายก้อนแรก (ตอนเริ่มสัญญา): <strong>฿' + this.totalTvAdvance().toLocaleString() + '</strong></div>';
       }
-      txt += '<div style="color:#15803d;margin-top:3px">💰 ประหยัดรวมตลอดสัญญา: <strong>฿' + this.totalSaving().toLocaleString() + '</strong></div>';
+      txt += '<div style="color:#5b21b6;margin-top:5px;font-weight:600">💰 ยอดชำระครั้งแรกรวม: <strong>฿' + this.fmtMoney(this.firstPaymentTotal()) + '</strong></div>';
+      txt += '<div style="color:#15803d;margin-top:3px">ประหยัดรวมตลอดสัญญา: <strong>฿' + this.totalSaving().toLocaleString() + '</strong></div>';
       txt += '<div style="font-weight:700;color:#a50034;margin-top:5px;font-size:1.05em">📊 ยอดรวมทั้งสัญญา: ฿' + this.fmtMoney(this.grandTotal()) + '</div>';
       txt += '</div>';
       return txt;
@@ -2051,6 +2588,13 @@ function lgCalculator() {
       let headerSub = ct + ' | ' + this.promoDateText();
       if (hasCombo) headerSub += ' | ' + this.comboLabel() + ' ' + cr + '%';
       lines.push(headerSub);
+      lines.push('ยอดชำระครั้งแรกรวม: ' + this.fmtMoney(this.firstPaymentTotal()) + ' บาท');
+      this.firstPaymentBreakdown().forEach(row => {
+        const parts = [];
+        if (row.advance > 0) parts.push(row.item.outright ? 'ซื้อขาด ' + row.advance.toLocaleString() : 'ล่วงหน้า ' + row.advance.toLocaleString());
+        if (row.bill1 > 0) parts.push('งวด 1 ' + this.bht(row.bill1).toLocaleString());
+        lines.push('  ' + row.item.code + ': ' + this.fmtMoney(row.total) + ' บาท' + (parts.length ? ' (' + parts.join(' + ') + ')' : ''));
+      });
 
       // PRODUCT DETAILS
       this.cart.forEach((it, i) => {
@@ -2093,7 +2637,7 @@ function lgCalculator() {
         if (care.note) lines.push('  * ' + care.note);
 
         lines.push('');
-        lines.push('รับประกันตลอดสัญญา ' + years + ' ปี | ครอบคลุมค่าซ่อมและบำรุงรักษา');
+        lines.push(this.warrantyLineText(it, Math.round((it.totalContractMonths || 60) / 12)));
 
         if (i < this.cart.length - 1) {
           lines.push('');
@@ -2116,6 +2660,7 @@ function lgCalculator() {
         if (this.hasTvAdvance()) {
           lines.push('จ่ายล่วงหน้ารวม: ' + this.totalTvAdvance().toLocaleString() + ' บาท');
         }
+        lines.push('ยอดชำระครั้งแรกรวม: ' + this.fmtMoney(this.firstPaymentTotal()) + ' บาท');
         if (this.totalSaving() > 0) {
           lines.push('ประหยัดรวมตลอดสัญญา: ' + this.totalSaving().toLocaleString() + ' บาท');
         }
