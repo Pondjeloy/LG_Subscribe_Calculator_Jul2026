@@ -9,6 +9,7 @@
 <meta http-equiv="Pragma" content="no-cache" />
 <meta http-equiv="Expires" content="0" />
 <title>LG Subscribe Calculator v7 | เครื่องคำนวณราคาสินค้า</title>
+
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet" />
@@ -961,14 +962,14 @@ function lgCalculator() {
     promoConfig: {
       normal: {
         name: 'K-HOUSE Combo',
-        dateStart: '2569-06-01', dateEnd: '2569-06-30',
+        dateStart: '2569-07-01', dateEnd: '2569-07-31',
         // tiers: [{ min: จำนวนชิ้นเริ่มรับสิทธิ์, rate: เปอร์เซ็นต์ }] เรียงจากน้อยไปมาก
         newTiers:   [ {min:2, rate:10} ],   // COMBO_NEW_K-HOUSE_(2 UNITS UP)
         existTiers: [ {min:1, rate:10} ]    // COMBO_K-HOUSE_ADD_(1 UNIT UP)
       },
       special: {
         name: 'K-HOUSE Combo',
-        dateStart: '2569-06-01', dateEnd: '2569-06-30',
+        dateStart: '2569-07-01', dateEnd: '2569-07-31',
         newTiers:   [ {min:2, rate:10} ],
         existTiers: [ {min:1, rate:10} ]
       }
@@ -979,7 +980,7 @@ function lgCalculator() {
     compareB: { term: '5Y', serviceType: 'Visit', modelIndices: [] },
     cart: [],
     toast: { show: false, msg: '' },
-    buildVersion: '2026.06.26-v7',
+    buildVersion: '2026.07.01-v1',
 
     visitServiceLabel(withEnglish = false) {
       const label = 'ช่างผู้เชี่ยวชาญบริการถึงบ้าน';
@@ -1107,12 +1108,12 @@ function lgCalculator() {
           { term:'6Y', serviceType:'Visit', serviceCycle:'ทุก 24 เดือน', regular:749, effectiveMonthly:374, promoMonths:3, postPromoPrice:749, promo:'ลด 50% 3 บิลแรก (374) จากนั้น 749/เดือน', totalContractMonths:72, totalSaving:1125 }
         ]},
         { code:'GC-L257KQKW.AEPPLMT', name:'Side by Side · 22.6 คิว', plans:[
-          { term:'5Y', serviceType:'Visit', serviceCycle:'ทุก 24 เดือน', regular:749, effectiveMonthly:749, promoMonths:0, postPromoPrice:749, promo:'', totalContractMonths:60, totalSaving:0 },
-          { term:'6Y', serviceType:'Visit', serviceCycle:'ทุก 24 เดือน', regular:649, effectiveMonthly:649, promoMonths:0, postPromoPrice:649, promo:'', totalContractMonths:72, totalSaving:0 }
+          { term:'5Y', serviceType:'Visit', serviceCycle:'ทุก 24 เดือน', regular:749, effectiveMonthly:374, promoMonths:3, postPromoPrice:749, billSchedule:[{'range': 'บิล 1-3', 'price': 374, 'note': 'โปรลด 50%'}, {'range': 'บิล 4-60', 'price': 749, 'note': ''}], promo:'ลด 50% 3 บิลแรก (374) จากนั้น 749/เดือน', totalContractMonths:60, totalSaving:1125 },
+          { term:'6Y', serviceType:'Visit', serviceCycle:'ทุก 24 เดือน', regular:649, effectiveMonthly:324, promoMonths:3, postPromoPrice:649, billSchedule:[{'range': 'บิล 1-3', 'price': 324, 'note': 'โปรลด 50%'}, {'range': 'บิล 4-72', 'price': 649, 'note': ''}], promo:'ลด 50% 3 บิลแรก (324) จากนั้น 649/เดือน', totalContractMonths:72, totalSaving:975 }
         ]},
         { code:'GC-B257SQYL.AMCPLMT', name:'Side by Side · 22 คิว (NEW)', plans:[
-          { term:'5Y', serviceType:'Visit', serviceCycle:'ทุก 24 เดือน', regular:549, effectiveMonthly:549, promoMonths:0, postPromoPrice:549, promo:'', totalContractMonths:60, totalSaving:0 },
-          { term:'6Y', serviceType:'Visit', serviceCycle:'ทุก 24 เดือน', regular:449, effectiveMonthly:449, promoMonths:0, postPromoPrice:449, promo:'', totalContractMonths:72, totalSaving:0 }
+          { term:'5Y', serviceType:'Visit', serviceCycle:'ทุก 24 เดือน', regular:549, effectiveMonthly:149, promoMonths:1, postPromoPrice:549, billSchedule:[{'range': 'บิล 1', 'price': 149, 'note': 'ราคา 149.-'}, {'range': 'บิล 2-60', 'price': 549, 'note': ''}], promo:'ราคา 149.- (1 รอบบิลแรก) จากนั้น 549/เดือน', totalContractMonths:60, totalSaving:400 },
+          { term:'6Y', serviceType:'Visit', serviceCycle:'ทุก 24 เดือน', regular:449, effectiveMonthly:149, promoMonths:1, postPromoPrice:449, billSchedule:[{'range': 'บิล 1', 'price': 149, 'note': 'ราคา 149.-'}, {'range': 'บิล 2-72', 'price': 449, 'note': ''}], promo:'ราคา 149.- (1 รอบบิลแรก) จากนั้น 449/เดือน', totalContractMonths:72, totalSaving:300 }
         ]},
       ]},
       'ตู้เย็น Plumbing': { models: [
@@ -1139,14 +1140,14 @@ function lgCalculator() {
           { term:'6Y', serviceType:'Visit', serviceCycle:'ทุก 24 เดือน', regular:949, effectiveMonthly:474, promoMonths:3, postPromoPrice:949, promo:'ลด 50% 3 บิลแรก (474) จากนั้น 949/เดือน', totalContractMonths:72, totalSaving:1425 }
         ]},
         { code:'GV-B25FFGDB.ABMPLMT', name:'Multi Door · 21.6 คิว', plans:[
-          { term:'5Y', serviceType:'Visit', serviceCycle:'ทุก 24 เดือน', regular:749, effectiveMonthly:749, promoMonths:0, postPromoPrice:749, promo:'', totalContractMonths:60, totalSaving:0 },
-          { term:'6Y', serviceType:'Visit', serviceCycle:'ทุก 24 เดือน', regular:649, effectiveMonthly:649, promoMonths:0, postPromoPrice:649, promo:'', totalContractMonths:72, totalSaving:0 }
+          { term:'5Y', serviceType:'Visit', serviceCycle:'ทุก 24 เดือน', regular:699, effectiveMonthly:149, promoMonths:1, postPromoPrice:699, billSchedule:[{'range': 'บิล 1', 'price': 149, 'note': 'ราคา 149.-'}, {'range': 'บิล 2-60', 'price': 699, 'note': ''}], promo:'ราคา 149.- (1 รอบบิลแรก) จากนั้น 699/เดือน', totalContractMonths:60, totalSaving:550 },
+          { term:'6Y', serviceType:'Visit', serviceCycle:'ทุก 24 เดือน', regular:599, effectiveMonthly:149, promoMonths:1, postPromoPrice:599, billSchedule:[{'range': 'บิล 1', 'price': 149, 'note': 'ราคา 149.-'}, {'range': 'บิล 2-72', 'price': 599, 'note': ''}], promo:'ราคา 149.- (1 รอบบิลแรก) จากนั้น 599/เดือน', totalContractMonths:72, totalSaving:450 }
         ]}
       ]},
       'ตู้เย็น Top/Bottom Freezer': { models: [
         { code:'GN-F392PQAK.AEPPLM1', name:'Top Freezer · 13.98 คิว', plans:[
-          { term:'5Y', serviceType:'Visit', serviceCycle:'ทุก 24 เดือน', regular:449, effectiveMonthly:449, promoMonths:0, postPromoPrice:449, promo:'', totalContractMonths:60, totalSaving:0 },
-          { term:'6Y', serviceType:'Visit', serviceCycle:'ทุก 24 เดือน', regular:349, effectiveMonthly:349, promoMonths:0, postPromoPrice:349, promo:'', totalContractMonths:72, totalSaving:0 }
+          { term:'5Y', serviceType:'Visit', serviceCycle:'ทุก 24 เดือน', regular:449, effectiveMonthly:224, promoMonths:3, postPromoPrice:449, billSchedule:[{'range': 'บิล 1-3', 'price': 224, 'note': 'โปรลด 50%'}, {'range': 'บิล 4-60', 'price': 449, 'note': ''}], promo:'ลด 50% 3 บิลแรก (224) จากนั้น 449/เดือน', totalContractMonths:60, totalSaving:675 },
+          { term:'6Y', serviceType:'Visit', serviceCycle:'ทุก 24 เดือน', regular:349, effectiveMonthly:174, promoMonths:3, postPromoPrice:349, billSchedule:[{'range': 'บิล 1-3', 'price': 174, 'note': 'โปรลด 50%'}, {'range': 'บิล 4-72', 'price': 349, 'note': ''}], promo:'ลด 50% 3 บิลแรก (174) จากนั้น 349/เดือน', totalContractMonths:72, totalSaving:525 }
         ]},
         { code:'GN-F452PQAK.AEPPLMT', name:'Top Freezer · 16.2 คิว', plans:[
           { term:'5Y', serviceType:'Visit', serviceCycle:'ทุก 24 เดือน', regular:599, effectiveMonthly:299, promoMonths:3, postPromoPrice:599, promo:'ลด 50% 3 บิลแรก (299) จากนั้น 599/เดือน', totalContractMonths:60, totalSaving:900 },
@@ -1171,10 +1172,10 @@ function lgCalculator() {
           { term:'6Y', serviceType:'Self', serviceCycle:'ทุก 12 เดือน', regular:1999, effectiveMonthly:149, promoMonths:1, postPromoPrice:1999, billSchedule:[{range:'บิล 1',price:149,note:'ราคาพิเศษ'},{range:'บิล 2-6',price:999,note:'ลด 50%'},{range:'บิล 7-72',price:1999,note:'ราคาปกติ'}], promo:'บิลแรก 149 ต่อด้วยลด 50% 5 รอบบิล (999) จากนั้น 1,999/เดือน', totalContractMonths:72, totalSaving:6850 }
         ]},
         { code:'WT2116SHEG.ABGPETH', name:'Wash Tower · ซัก 21/อบ 16 กก.', plans:[
-          { term:'5Y', serviceType:'Visit', serviceCycle:'ทุก 12 เดือน', regular:1999, effectiveMonthly:149, promoMonths:1, postPromoPrice:1999, billSchedule:[{range:'บิล 1',price:149,note:'ราคาพิเศษ'},{range:'บิล 2-6',price:999,note:'ลด 50%'},{range:'บิล 7-60',price:1999,note:'ราคาปกติ'}], promo:'บิลแรก 149 ต่อด้วยลด 50% 5 รอบบิล (999) จากนั้น 1,999/เดือน', totalContractMonths:60, totalSaving:6850 },
-          { term:'5Y', serviceType:'Self', serviceCycle:'ทุก 12 เดือน', regular:1899, effectiveMonthly:149, promoMonths:1, postPromoPrice:1899, billSchedule:[{range:'บิล 1',price:149,note:'ราคาพิเศษ'},{range:'บิล 2-6',price:949,note:'ลด 50%'},{range:'บิล 7-60',price:1899,note:'ราคาปกติ'}], promo:'บิลแรก 149 ต่อด้วยลด 50% 5 รอบบิล (949) จากนั้น 1,899/เดือน', totalContractMonths:60, totalSaving:6500 },
-          { term:'6Y', serviceType:'Visit', serviceCycle:'ทุก 12 เดือน', regular:1749, effectiveMonthly:149, promoMonths:1, postPromoPrice:1749, billSchedule:[{range:'บิล 1',price:149,note:'ราคาพิเศษ'},{range:'บิล 2-6',price:874,note:'ลด 50%'},{range:'บิล 7-72',price:1749,note:'ราคาปกติ'}], promo:'บิลแรก 149 ต่อด้วยลด 50% 5 รอบบิล (874) จากนั้น 1,749/เดือน', totalContractMonths:72, totalSaving:5975 },
-          { term:'6Y', serviceType:'Self', serviceCycle:'ทุก 12 เดือน', regular:1649, effectiveMonthly:149, promoMonths:1, postPromoPrice:1649, billSchedule:[{range:'บิล 1',price:149,note:'ราคาพิเศษ'},{range:'บิล 2-6',price:824,note:'ลด 50%'},{range:'บิล 7-72',price:1649,note:'ราคาปกติ'}], promo:'บิลแรก 149 ต่อด้วยลด 50% 5 รอบบิล (824) จากนั้น 1,649/เดือน', totalContractMonths:72, totalSaving:5625 }
+          { term:'5Y', serviceType:'Visit', serviceCycle:'ทุก 12 เดือน', regular:1999, effectiveMonthly:149, promoMonths:1, postPromoPrice:1999, billSchedule:[{'range': 'บิล 1', 'price': 149, 'note': 'ราคาพิเศษ'}, {'range': 'บิล 2-8', 'price': 999, 'note': 'ลด 50%'}, {'range': 'บิล 9-60', 'price': 1999, 'note': 'ราคาปกติ'}], promo:'บิลแรก 149 ต่อด้วยลด 50% 7 รอบบิล (999) จากนั้น 1,999/เดือน', totalContractMonths:60, totalSaving:8850 },
+          { term:'5Y', serviceType:'Self', serviceCycle:'ทุก 12 เดือน', regular:1899, effectiveMonthly:149, promoMonths:1, postPromoPrice:1899, billSchedule:[{'range': 'บิล 1', 'price': 149, 'note': 'ราคาพิเศษ'}, {'range': 'บิล 2-8', 'price': 949, 'note': 'ลด 50%'}, {'range': 'บิล 9-60', 'price': 1899, 'note': 'ราคาปกติ'}], promo:'บิลแรก 149 ต่อด้วยลด 50% 7 รอบบิล (949) จากนั้น 1,899/เดือน', totalContractMonths:60, totalSaving:8400 },
+          { term:'6Y', serviceType:'Visit', serviceCycle:'ทุก 12 เดือน', regular:1749, effectiveMonthly:149, promoMonths:1, postPromoPrice:1749, billSchedule:[{'range': 'บิล 1', 'price': 149, 'note': 'ราคาพิเศษ'}, {'range': 'บิล 2-8', 'price': 874, 'note': 'ลด 50%'}, {'range': 'บิล 9-72', 'price': 1749, 'note': 'ราคาปกติ'}], promo:'บิลแรก 149 ต่อด้วยลด 50% 7 รอบบิล (874) จากนั้น 1,749/เดือน', totalContractMonths:72, totalSaving:7725 },
+          { term:'6Y', serviceType:'Self', serviceCycle:'ทุก 12 เดือน', regular:1649, effectiveMonthly:149, promoMonths:1, postPromoPrice:1649, billSchedule:[{'range': 'บิล 1', 'price': 149, 'note': 'ราคาพิเศษ'}, {'range': 'บิล 2-8', 'price': 824, 'note': 'ลด 50%'}, {'range': 'บิล 9-72', 'price': 1649, 'note': 'ราคาปกติ'}], promo:'บิลแรก 149 ต่อด้วยลด 50% 7 รอบบิล (824) จากนั้น 1,649/เดือน', totalContractMonths:72, totalSaving:7275 }
         ]},
         { code:'WT1410NHEG.ABGPQTH', name:'Wash Tower · ซัก 14/อบ 10 กก. (Green)', plans:[
           { term:'5Y', serviceType:'Visit', serviceCycle:'ทุก 12 เดือน', regular:1599, effectiveMonthly:149, promoMonths:1, postPromoPrice:1599, billSchedule:[{range:'บิล 1',price:149,note:'ราคาพิเศษ'},{range:'บิล 2-6',price:799,note:'ลด 50%'},{range:'บิล 7-60',price:1599,note:'ราคาปกติ'}], promo:'บิลแรก 149 ต่อด้วยลด 50% 5 รอบบิล (799) จากนั้น 1,599/เดือน', totalContractMonths:60, totalSaving:5450 },
@@ -1191,10 +1192,10 @@ function lgCalculator() {
       ]},
       'เครื่องซักผ้า Front Load': { models: [
         { code:'F2520RNTB.AEBPETH', name:'ซัก 20/อบ 10 กก.', plans:[
-          { term:'5Y', serviceType:'Visit', serviceCycle:'ทุก 12 เดือน', regular:899, effectiveMonthly:449, promoMonths:6, postPromoPrice:899, promo:'ลด 50% 6 บิลแรก (449) จากนั้น 899/เดือน', totalContractMonths:60, totalSaving:2700 },
-          { term:'5Y', serviceType:'Self', serviceCycle:'ทุก 12 เดือน', regular:849, effectiveMonthly:424, promoMonths:6, postPromoPrice:849, promo:'ลด 50% 6 บิลแรก (424) จากนั้น 849/เดือน', totalContractMonths:60, totalSaving:2550 },
-          { term:'6Y', serviceType:'Visit', serviceCycle:'ทุก 12 เดือน', regular:849, effectiveMonthly:424, promoMonths:6, postPromoPrice:849, promo:'ลด 50% 6 บิลแรก (424) จากนั้น 849/เดือน', totalContractMonths:72, totalSaving:2550 },
-          { term:'6Y', serviceType:'Self', serviceCycle:'ทุก 12 เดือน', regular:799, effectiveMonthly:399, promoMonths:6, postPromoPrice:799, promo:'ลด 50% 6 บิลแรก (399) จากนั้น 799/เดือน', totalContractMonths:72, totalSaving:2400 }
+          { term:'5Y', serviceType:'Visit', serviceCycle:'ทุก 12 เดือน', regular:899, effectiveMonthly:149, promoMonths:1, postPromoPrice:899, billSchedule:[{'range': 'บิล 1', 'price': 149, 'note': 'ราคาพิเศษ'}, {'range': 'บิล 2-8', 'price': 449, 'note': 'ลด 50%'}, {'range': 'บิล 9-60', 'price': 899, 'note': 'ราคาปกติ'}], promo:'บิลแรก 149 ต่อด้วยลด 50% 7 รอบบิล (449) จากนั้น 899/เดือน', totalContractMonths:60, totalSaving:3900 },
+          { term:'5Y', serviceType:'Self', serviceCycle:'ทุก 12 เดือน', regular:849, effectiveMonthly:149, promoMonths:1, postPromoPrice:849, billSchedule:[{'range': 'บิล 1', 'price': 149, 'note': 'ราคาพิเศษ'}, {'range': 'บิล 2-8', 'price': 424, 'note': 'ลด 50%'}, {'range': 'บิล 9-60', 'price': 849, 'note': 'ราคาปกติ'}], promo:'บิลแรก 149 ต่อด้วยลด 50% 7 รอบบิล (424) จากนั้น 849/เดือน', totalContractMonths:60, totalSaving:3675 },
+          { term:'6Y', serviceType:'Visit', serviceCycle:'ทุก 12 เดือน', regular:849, effectiveMonthly:149, promoMonths:1, postPromoPrice:849, billSchedule:[{'range': 'บิล 1', 'price': 149, 'note': 'ราคาพิเศษ'}, {'range': 'บิล 2-8', 'price': 424, 'note': 'ลด 50%'}, {'range': 'บิล 9-72', 'price': 849, 'note': 'ราคาปกติ'}], promo:'บิลแรก 149 ต่อด้วยลด 50% 7 รอบบิล (424) จากนั้น 849/เดือน', totalContractMonths:72, totalSaving:3675 },
+          { term:'6Y', serviceType:'Self', serviceCycle:'ทุก 12 เดือน', regular:799, effectiveMonthly:149, promoMonths:1, postPromoPrice:799, billSchedule:[{'range': 'บิล 1', 'price': 149, 'note': 'ราคาพิเศษ'}, {'range': 'บิล 2-8', 'price': 399, 'note': 'ลด 50%'}, {'range': 'บิล 9-72', 'price': 799, 'note': 'ราคาปกติ'}], promo:'บิลแรก 149 ต่อด้วยลด 50% 7 รอบบิล (399) จากนั้น 799/เดือน', totalContractMonths:72, totalSaving:3450 }
         ]},
         { code:'FV1413H4M.AMBPETH', name:'ซัก 13/อบ 8 กก.', plans:[
           { term:'5Y', serviceType:'Visit', serviceCycle:'ทุก 12 เดือน', regular:749, effectiveMonthly:149, promoMonths:3, postPromoPrice:749, promo:'ราคา 149.- (1-3 รอบบิลแรก) จากนั้น 749/เดือน', totalContractMonths:60, totalSaving:1800 },
@@ -1209,18 +1210,18 @@ function lgCalculator() {
           { term:'6Y', serviceType:'Self', serviceCycle:'ทุก 12 เดือน', regular:549, effectiveMonthly:274, promoMonths:6, postPromoPrice:549, promo:'ลด 50% 6 บิลแรก (274) จากนั้น 549/เดือน', totalContractMonths:72, totalSaving:1650 }
         ]},
         { code:'FV1409H4W.ABWPETH', name:'ซัก 9/อบ 5 กก. (NEW)', plans:[
-          { term:'5Y', serviceType:'Visit', serviceCycle:'ทุก 12 เดือน', regular:399, effectiveMonthly:399, promoMonths:0, postPromoPrice:399, promo:'', totalContractMonths:60, totalSaving:0 },
-          { term:'5Y', serviceType:'Self', serviceCycle:'ทุก 12 เดือน', regular:349, effectiveMonthly:349, promoMonths:0, postPromoPrice:349, promo:'', totalContractMonths:60, totalSaving:0 },
-          { term:'6Y', serviceType:'Visit', serviceCycle:'ทุก 12 เดือน', regular:349, effectiveMonthly:349, promoMonths:0, postPromoPrice:349, promo:'', totalContractMonths:72, totalSaving:0 },
-          { term:'6Y', serviceType:'Self', serviceCycle:'ทุก 12 เดือน', regular:299, effectiveMonthly:299, promoMonths:0, postPromoPrice:299, promo:'', totalContractMonths:72, totalSaving:0 }
+          { term:'5Y', serviceType:'Visit', serviceCycle:'ทุก 12 เดือน', regular:399, effectiveMonthly:199, promoMonths:3, postPromoPrice:399, billSchedule:[{'range': 'บิล 1-3', 'price': 199, 'note': 'โปรลด 50%'}, {'range': 'บิล 4-60', 'price': 399, 'note': ''}], promo:'ลด 50% 3 บิลแรก (199) จากนั้น 399/เดือน', totalContractMonths:60, totalSaving:600 },
+          { term:'5Y', serviceType:'Self', serviceCycle:'ทุก 12 เดือน', regular:349, effectiveMonthly:174, promoMonths:3, postPromoPrice:349, billSchedule:[{'range': 'บิล 1-3', 'price': 174, 'note': 'โปรลด 50%'}, {'range': 'บิล 4-60', 'price': 349, 'note': ''}], promo:'ลด 50% 3 บิลแรก (174) จากนั้น 349/เดือน', totalContractMonths:60, totalSaving:525 },
+          { term:'6Y', serviceType:'Visit', serviceCycle:'ทุก 12 เดือน', regular:349, effectiveMonthly:174, promoMonths:3, postPromoPrice:349, billSchedule:[{'range': 'บิล 1-3', 'price': 174, 'note': 'โปรลด 50%'}, {'range': 'บิล 4-72', 'price': 349, 'note': ''}], promo:'ลด 50% 3 บิลแรก (174) จากนั้น 349/เดือน', totalContractMonths:72, totalSaving:525 },
+          { term:'6Y', serviceType:'Self', serviceCycle:'ทุก 12 เดือน', regular:299, effectiveMonthly:149, promoMonths:3, postPromoPrice:299, billSchedule:[{'range': 'บิล 1-3', 'price': 149, 'note': 'โปรลด 50%'}, {'range': 'บิล 4-72', 'price': 299, 'note': ''}], promo:'ลด 50% 3 บิลแรก (149) จากนั้น 299/เดือน', totalContractMonths:72, totalSaving:450 }
         ]}
       ]},
       'เครื่องซักผ้า Top Load': { models: [
         { code:'TX2725AT9G.AEGPETH', name:'Top Load · 25 กก. · AI DD Inverter', plans:[
-          { term:'5Y', serviceType:'Visit', serviceCycle:'ทุก 12 เดือน', regular:649, effectiveMonthly:649, promoMonths:0, postPromoPrice:649, promo:'', totalContractMonths:60, totalSaving:0 },
-          { term:'5Y', serviceType:'Self', serviceCycle:'ทุก 12 เดือน', regular:599, effectiveMonthly:599, promoMonths:0, postPromoPrice:599, promo:'', totalContractMonths:60, totalSaving:0 },
-          { term:'6Y', serviceType:'Visit', serviceCycle:'ทุก 12 เดือน', regular:599, effectiveMonthly:599, promoMonths:0, postPromoPrice:599, promo:'', totalContractMonths:72, totalSaving:0 },
-          { term:'6Y', serviceType:'Self', serviceCycle:'ทุก 12 เดือน', regular:549, effectiveMonthly:549, promoMonths:0, postPromoPrice:549, promo:'', totalContractMonths:72, totalSaving:0 }
+          { term:'5Y', serviceType:'Visit', serviceCycle:'ทุก 12 เดือน', regular:649, effectiveMonthly:149, promoMonths:1, postPromoPrice:649, billSchedule:[{'range': 'บิล 1', 'price': 149, 'note': 'ราคา 149.-'}, {'range': 'บิล 2-60', 'price': 649, 'note': ''}], promo:'ราคา 149.- (1 รอบบิลแรก) จากนั้น 649/เดือน', totalContractMonths:60, totalSaving:500 },
+          { term:'5Y', serviceType:'Self', serviceCycle:'ทุก 12 เดือน', regular:599, effectiveMonthly:149, promoMonths:1, postPromoPrice:599, billSchedule:[{'range': 'บิล 1', 'price': 149, 'note': 'ราคา 149.-'}, {'range': 'บิล 2-60', 'price': 599, 'note': ''}], promo:'ราคา 149.- (1 รอบบิลแรก) จากนั้น 599/เดือน', totalContractMonths:60, totalSaving:450 },
+          { term:'6Y', serviceType:'Visit', serviceCycle:'ทุก 12 เดือน', regular:599, effectiveMonthly:149, promoMonths:1, postPromoPrice:599, billSchedule:[{'range': 'บิล 1', 'price': 149, 'note': 'ราคา 149.-'}, {'range': 'บิล 2-72', 'price': 599, 'note': ''}], promo:'ราคา 149.- (1 รอบบิลแรก) จากนั้น 599/เดือน', totalContractMonths:72, totalSaving:450 },
+          { term:'6Y', serviceType:'Self', serviceCycle:'ทุก 12 เดือน', regular:549, effectiveMonthly:149, promoMonths:1, postPromoPrice:549, billSchedule:[{'range': 'บิล 1', 'price': 149, 'note': 'ราคา 149.-'}, {'range': 'บิล 2-72', 'price': 549, 'note': ''}], promo:'ราคา 149.- (1 รอบบิลแรก) จากนั้น 549/เดือน', totalContractMonths:72, totalSaving:400 }
         ]},
         { code:'TX2723ST5J.APBPETH', name:'Top Load · 23 กก. · AI DD Inverter', plans:[
           { term:'5Y', serviceType:'Visit', serviceCycle:'ทุก 12 เดือน', regular:649, effectiveMonthly:649, promoMonths:0, postPromoPrice:649, promo:'', totalContractMonths:60, totalSaving:0 },
@@ -1237,10 +1238,10 @@ function lgCalculator() {
       ]},
       'เครื่องอบผ้า / Styler / ล้างจาน': { models: [
         { code:'RV10VHP4B.BMBPETH', name:'เครื่องอบผ้า 10 กก.', plans:[
-          { term:'5Y', serviceType:'Visit', serviceCycle:'ทุก 12 เดือน', regular:849, effectiveMonthly:424, promoMonths:6, postPromoPrice:849, promo:'ลด 50% 6 บิลแรก (424) จากนั้น 849/เดือน', totalContractMonths:60, totalSaving:2550 },
-          { term:'5Y', serviceType:'Self', serviceCycle:'ทุก 12 เดือน', regular:749, effectiveMonthly:374, promoMonths:6, postPromoPrice:749, promo:'ลด 50% 6 บิลแรก (374) จากนั้น 749/เดือน', totalContractMonths:60, totalSaving:2250 },
-          { term:'6Y', serviceType:'Visit', serviceCycle:'ทุก 12 เดือน', regular:749, effectiveMonthly:374, promoMonths:6, postPromoPrice:749, promo:'ลด 50% 6 บิลแรก (374) จากนั้น 749/เดือน', totalContractMonths:72, totalSaving:2250 },
-          { term:'6Y', serviceType:'Self', serviceCycle:'ทุก 12 เดือน', regular:649, effectiveMonthly:324, promoMonths:6, postPromoPrice:649, promo:'ลด 50% 6 บิลแรก (324) จากนั้น 649/เดือน', totalContractMonths:72, totalSaving:1950 }
+          { term:'5Y', serviceType:'Visit', serviceCycle:'ทุก 12 เดือน', regular:849, effectiveMonthly:149, promoMonths:1, postPromoPrice:849, billSchedule:[{'range': 'บิล 1', 'price': 149, 'note': 'ราคาพิเศษ'}, {'range': 'บิล 2-8', 'price': 424, 'note': 'ลด 50%'}, {'range': 'บิล 9-60', 'price': 849, 'note': 'ราคาปกติ'}], promo:'บิลแรก 149 ต่อด้วยลด 50% 7 รอบบิล (424) จากนั้น 849/เดือน', totalContractMonths:60, totalSaving:3675 },
+          { term:'5Y', serviceType:'Self', serviceCycle:'ทุก 12 เดือน', regular:749, effectiveMonthly:149, promoMonths:1, postPromoPrice:749, billSchedule:[{'range': 'บิล 1', 'price': 149, 'note': 'ราคาพิเศษ'}, {'range': 'บิล 2-8', 'price': 374, 'note': 'ลด 50%'}, {'range': 'บิล 9-60', 'price': 749, 'note': 'ราคาปกติ'}], promo:'บิลแรก 149 ต่อด้วยลด 50% 7 รอบบิล (374) จากนั้น 749/เดือน', totalContractMonths:60, totalSaving:3225 },
+          { term:'6Y', serviceType:'Visit', serviceCycle:'ทุก 12 เดือน', regular:749, effectiveMonthly:149, promoMonths:1, postPromoPrice:749, billSchedule:[{'range': 'บิล 1', 'price': 149, 'note': 'ราคาพิเศษ'}, {'range': 'บิล 2-8', 'price': 374, 'note': 'ลด 50%'}, {'range': 'บิล 9-72', 'price': 749, 'note': 'ราคาปกติ'}], promo:'บิลแรก 149 ต่อด้วยลด 50% 7 รอบบิล (374) จากนั้น 749/เดือน', totalContractMonths:72, totalSaving:3225 },
+          { term:'6Y', serviceType:'Self', serviceCycle:'ทุก 12 เดือน', regular:649, effectiveMonthly:149, promoMonths:1, postPromoPrice:649, billSchedule:[{'range': 'บิล 1', 'price': 149, 'note': 'ราคาพิเศษ'}, {'range': 'บิล 2-8', 'price': 324, 'note': 'ลด 50%'}, {'range': 'บิล 9-72', 'price': 649, 'note': 'ราคาปกติ'}], promo:'บิลแรก 149 ต่อด้วยลด 50% 7 รอบบิล (324) จากนั้น 649/เดือน', totalContractMonths:72, totalSaving:2775 }
         ]},
         { code:'S3MFC.ALBPETH', name:'ตู้ถนอมผ้า Styler (3 ไม้แขวน)', plans:[
           { term:'5Y', serviceType:'Self', serviceCycle:'ทุก 12 เดือน', regular:899, effectiveMonthly:149, promoMonths:1, postPromoPrice:899, billSchedule:[{range:'บิล 1',price:149,note:'ราคาพิเศษ'},{range:'บิล 2-12',price:449,note:'ลด 50%'},{range:'บิล 13-60',price:899,note:'ราคาปกติ'}], promo:'ลด 50% 11 รอบบิล (449) บิลแรก 149 จากนั้น 899/เดือน', totalContractMonths:60, totalSaving:5700 },
@@ -1287,7 +1288,7 @@ function lgCalculator() {
           { term:'5Y', serviceType:'Self',  serviceCycle:'ทุก 12 เดือน', regular:399, effectiveMonthly:199, promoMonths:6, postPromoPrice:399, promo:'ลด 50% 6 บิลแรก (199) จากนั้น 399/เดือน', totalContractMonths:60, totalSaving:1200 }
         ]},
         { code:'AS35GGW10.ATH', name:'AeroHit · 32 ตร.ม. (ไม่มีรีโมท)', plans:[
-          { term:'5Y', serviceType:'Visit', serviceCycle:'ทุก 6 เดือน', regular:249, effectiveMonthly:249, promoMonths:0, postPromoPrice:249, promo:'', totalContractMonths:60, totalSaving:0 },
+          { term:'5Y', serviceType:'Visit', serviceCycle:'ทุก 6 เดือน', regular:249, effectiveMonthly:124, promoMonths:2, postPromoPrice:249, billSchedule:[{range:'บิล 1-2',price:124,note:'โปรลด 50%'},{range:'บิล 3-60',price:249,note:''}], promo:'ลด 50% 2 บิลแรก (124) จากนั้น 249/เดือน', totalContractMonths:60, totalSaving:375 },
           { term:'5Y', serviceType:'Self',  serviceCycle:'ทุก 6 เดือน', regular:199, effectiveMonthly:199, promoMonths:0, postPromoPrice:199, promo:'', totalContractMonths:60, totalSaving:0 }
         ]},
         { code:'AS65GDBY0.ABAE', name:'Alpha Pet · 61.2 ตร.ม. · H13 HEPA', plans:[
@@ -1339,20 +1340,20 @@ function lgCalculator() {
       ]},
       'เครื่องปรับอากาศ DUAL INVERTER': { models: [
         { code:'IXY11A', name:'DUAL INVERTER · 9,212 BTU · เบอร์ 5', plans:[
-          { term:'5Y', serviceType:'Visit', serviceCycle:'ทุก 6 เดือน',  regular:499, effectiveMonthly:499, promoMonths:0, postPromoPrice:499, promo:'', totalContractMonths:60, totalSaving:0 },
-          { term:'5Y', serviceType:'Visit', serviceCycle:'ทุก 12 เดือน', regular:399, effectiveMonthly:399, promoMonths:0, postPromoPrice:399, promo:'', totalContractMonths:60, totalSaving:0 }
+          { term:'5Y', serviceType:'Visit', serviceCycle:'ทุก 6 เดือน', regular:499, effectiveMonthly:149, promoMonths:1, postPromoPrice:499, billSchedule:[{range:'บิล 1',price:149,note:'ราคาพิเศษ'},{range:'บิล 2-60',price:499,note:''}], promo:'ราคา 149.- (1 รอบบิลแรก) จากนั้น 499/เดือน', totalContractMonths:60, totalSaving:350 },
+          { term:'5Y', serviceType:'Visit', serviceCycle:'ทุก 12 เดือน', regular:399, effectiveMonthly:149, promoMonths:1, postPromoPrice:399, billSchedule:[{range:'บิล 1',price:149,note:'ราคาพิเศษ'},{range:'บิล 2-60',price:399,note:''}], promo:'ราคา 149.- (1 รอบบิลแรก) จากนั้น 399/เดือน', totalContractMonths:60, totalSaving:250 }
         ]},
         { code:'IXY13A', name:'DUAL INVERTER · 12,283 BTU · เบอร์ 5', plans:[
-          { term:'5Y', serviceType:'Visit', serviceCycle:'ทุก 6 เดือน',  regular:549, effectiveMonthly:549, promoMonths:0, postPromoPrice:549, promo:'', totalContractMonths:60, totalSaving:0 },
-          { term:'5Y', serviceType:'Visit', serviceCycle:'ทุก 12 เดือน', regular:449, effectiveMonthly:449, promoMonths:0, postPromoPrice:449, promo:'', totalContractMonths:60, totalSaving:0 }
+          { term:'5Y', serviceType:'Visit', serviceCycle:'ทุก 6 เดือน', regular:549, effectiveMonthly:149, promoMonths:1, postPromoPrice:549, billSchedule:[{'range': 'บิล 1', 'price': 149, 'note': 'ราคา 149.-'}, {'range': 'บิล 2-60', 'price': 549, 'note': ''}], promo:'ราคา 149.- (1 รอบบิลแรก) จากนั้น 549/เดือน', totalContractMonths:60, totalSaving:400 },
+          { term:'5Y', serviceType:'Visit', serviceCycle:'ทุก 12 เดือน', regular:449, effectiveMonthly:149, promoMonths:1, postPromoPrice:449, billSchedule:[{'range': 'บิล 1', 'price': 149, 'note': 'ราคา 149.-'}, {'range': 'บิล 2-60', 'price': 449, 'note': ''}], promo:'ราคา 149.- (1 รอบบิลแรก) จากนั้น 449/เดือน', totalContractMonths:60, totalSaving:300 }
         ]},
         { code:'IXY18A', name:'DUAL INVERTER · 18,084 BTU · เบอร์ 5', plans:[
-          { term:'5Y', serviceType:'Visit', serviceCycle:'ทุก 6 เดือน',  regular:749, effectiveMonthly:749, promoMonths:0, postPromoPrice:749, promo:'', totalContractMonths:60, totalSaving:0 },
-          { term:'5Y', serviceType:'Visit', serviceCycle:'ทุก 12 เดือน', regular:649, effectiveMonthly:649, promoMonths:0, postPromoPrice:649, promo:'', totalContractMonths:60, totalSaving:0 }
+          { term:'5Y', serviceType:'Visit', serviceCycle:'ทุก 6 เดือน', regular:699, effectiveMonthly:149, promoMonths:1, postPromoPrice:699, billSchedule:[{'range': 'บิล 1', 'price': 149, 'note': 'ราคา 149.-'}, {'range': 'บิล 2-60', 'price': 699, 'note': ''}], promo:'ราคา 149.- (1 รอบบิลแรก) จากนั้น 699/เดือน', totalContractMonths:60, totalSaving:550 },
+          { term:'5Y', serviceType:'Visit', serviceCycle:'ทุก 12 เดือน', regular:599, effectiveMonthly:149, promoMonths:1, postPromoPrice:599, billSchedule:[{'range': 'บิล 1', 'price': 149, 'note': 'ราคา 149.-'}, {'range': 'บิล 2-60', 'price': 599, 'note': ''}], promo:'ราคา 149.- (1 รอบบิลแรก) จากนั้น 599/เดือน', totalContractMonths:60, totalSaving:450 }
         ]},
         { code:'IXY24A', name:'DUAL INVERTER · 21,154 BTU · เบอร์ 5', plans:[
-          { term:'5Y', serviceType:'Visit', serviceCycle:'ทุก 6 เดือน',  regular:899, effectiveMonthly:899, promoMonths:0, postPromoPrice:899, promo:'', totalContractMonths:60, totalSaving:0 },
-          { term:'5Y', serviceType:'Visit', serviceCycle:'ทุก 12 เดือน', regular:799, effectiveMonthly:799, promoMonths:0, postPromoPrice:799, promo:'', totalContractMonths:60, totalSaving:0 }
+          { term:'5Y', serviceType:'Visit', serviceCycle:'ทุก 6 เดือน', regular:849, effectiveMonthly:149, promoMonths:1, postPromoPrice:849, billSchedule:[{'range': 'บิล 1', 'price': 149, 'note': 'ราคา 149.-'}, {'range': 'บิล 2-60', 'price': 849, 'note': ''}], promo:'ราคา 149.- (1 รอบบิลแรก) จากนั้น 849/เดือน', totalContractMonths:60, totalSaving:700 },
+          { term:'5Y', serviceType:'Visit', serviceCycle:'ทุก 12 เดือน', regular:749, effectiveMonthly:149, promoMonths:1, postPromoPrice:749, billSchedule:[{'range': 'บิล 1', 'price': 149, 'note': 'ราคา 149.-'}, {'range': 'บิล 2-60', 'price': 749, 'note': ''}], promo:'ราคา 149.- (1 รอบบิลแรก) จากนั้น 749/เดือน', totalContractMonths:60, totalSaving:600 }
         ]}
       ]},
       'เครื่องปรับอากาศ ARTCOOL': { models: [
@@ -1381,10 +1382,10 @@ function lgCalculator() {
       ]},
       'โทรทัศน์ Life Style / OLED / QNED / NANO': { models: [
         { code:'27LX6TDGA.ATM', name:'StanbyME 2 · Portable Screen', plans:[
-          { term:'5Y', serviceType:'No Service', serviceCycle:'ไม่มีบริการ', regular:749, effectiveMonthly:374.50, promoMonths:12, postPromoPrice:749, advancePayment:4494, billSchedule:[{range:'บิล 1-12',price:374.5,note:'ครึ่งราคา (จ่ายล่วงหน้าแล้ว)'},{range:'บิล 13-24',price:374,note:'โปรลด 50% รายเดือน'},{range:'บิล 25-60',price:749,note:'ราคาปกติ'}], promo:'Adv. 50% 12 บิลแรก (374.50) → บิล 13-24 (374) → บิล 25-60 (749)', totalContractMonths:60, totalSaving:4500 }
+          { term:'5Y', serviceType:'No Service', serviceCycle:'ไม่มีบริการ', regular:749, effectiveMonthly:374.5, promoMonths:12, postPromoPrice:749, advancePayment:4494, billSchedule:[{'range': 'บิล 1-12', 'price': 374.5, 'note': 'ครึ่งราคา (จ่ายล่วงหน้าแล้ว)'}, {'range': 'บิล 13-24', 'price': 374, 'note': 'โปรลด 50% รายเดือน'}, {'range': 'บิล 25-60', 'price': 749, 'note': 'ราคาปกติ'}], promo:'บิล 1-12: ฿374.5 → บิล 13-24: ฿374 → บิล 25-60: ฿749', totalContractMonths:60, totalSaving:4500 }
         ]},
         { code:'OLED48C6PSA.ATM', name:'LG OLED evo C6 · 48"', plans:[
-          { term:'5Y', serviceType:'No Service', serviceCycle:'ไม่มีบริการ', regular:699, effectiveMonthly:349.50, promoMonths:0, postPromoPrice:699, advancePayment:4194, billSchedule:[{range:'บิล 1-12',price:349.5,note:'ครึ่งราคา (จ่ายล่วงหน้าแล้ว)'},{range:'บิล 13-60',price:699,note:'ราคาปกติ'}], promo:'Adv. 50% 12 บิลแรก (349.50) → บิล 13-60 (699)', totalContractMonths:60, totalSaving:0 }
+          { term:'5Y', serviceType:'No Service', serviceCycle:'ไม่มีบริการ', regular:699, effectiveMonthly:349.5, promoMonths:8, postPromoPrice:699, advancePayment:4194, billSchedule:[{'range': 'บิล 1-12', 'price': 349.5, 'note': 'ครึ่งราคา (จ่ายล่วงหน้าแล้ว)'}, {'range': 'บิล 13-20', 'price': 349, 'note': 'โปรลด 50% รายเดือน'}, {'range': 'บิล 21-60', 'price': 699, 'note': 'ราคาปกติ'}], promo:'บิล 1-12: ฿349.5 → บิล 13-20: ฿349 → บิล 21-60: ฿699', totalContractMonths:60, totalSaving:2800 }
         ]},
         { code:'OLED55C6PSA.ATM', name:'LG OLED evo C6 · 55" (NEW)', plans:[
           { term:'5Y', serviceType:'No Service', serviceCycle:'ไม่มีบริการ', regular:1099, effectiveMonthly:549.50, promoMonths:6, postPromoPrice:1099, advancePayment:6594, billSchedule:[{range:'บิล 1-12',price:549.5,note:'ครึ่งราคา (จ่ายล่วงหน้าแล้ว)'},{range:'บิล 13-18',price:549,note:'โปรลด 50% รายเดือน'},{range:'บิล 19-60',price:1099,note:'ราคาปกติ'}], promo:'Adv. 50% 12 บิลแรก (549.50) → บิล 13-18 (549) → บิล 19-60 (1,099)', totalContractMonths:60, totalSaving:3300 }
@@ -1402,7 +1403,7 @@ function lgCalculator() {
           { term:'5Y', serviceType:'No Service', serviceCycle:'ไม่มีบริการ', regular:649, effectiveMonthly:324.50, promoMonths:0, postPromoPrice:649, advancePayment:3894, billSchedule:[{range:'บิล 1-12',price:324.5,note:'ครึ่งราคา (จ่ายล่วงหน้าแล้ว)'},{range:'บิล 13-60',price:649,note:'ราคาปกติ'}], promo:'Adv. 50% 12 บิลแรก (324.50) → บิล 13-60 (649)', totalContractMonths:60, totalSaving:0 }
         ]},
         { code:'75QNED86BSA.ATM', name:'LG QNED 86 · 75"', plans:[
-          { term:'5Y', serviceType:'No Service', serviceCycle:'ไม่มีบริการ', regular:849, effectiveMonthly:424.50, promoMonths:0, postPromoPrice:849, advancePayment:5094, billSchedule:[{range:'บิล 1-12',price:424.5,note:'ครึ่งราคา (จ่ายล่วงหน้าแล้ว)'},{range:'บิล 13-60',price:849,note:'ราคาปกติ'}], promo:'Adv. 50% 12 บิลแรก (424.50) → บิล 13-60 (849)', totalContractMonths:60, totalSaving:0 }
+          { term:'5Y', serviceType:'No Service', serviceCycle:'ไม่มีบริการ', regular:849, effectiveMonthly:424.5, promoMonths:0, postPromoPrice:849, advancePayment:5094, billSchedule:[{'range': 'บิล 1-12', 'price': 424.5, 'note': 'ครึ่งราคา (จ่ายล่วงหน้าแล้ว)'}, {'range': 'บิล 13-60', 'price': 849, 'note': 'ราคาปกติ'}], promo:'บิล 1-12: ฿424.5 → บิล 13-60: ฿849', totalContractMonths:60, totalSaving:0 }
         ]},
         { code:'75QNED88BSA.ATM', name:'LG QNED 88 · 75" (NEW)', plans:[
           { term:'5Y', serviceType:'No Service', serviceCycle:'ไม่มีบริการ', regular:899, effectiveMonthly:449.50, promoMonths:0, postPromoPrice:899, advancePayment:5394, billSchedule:[{range:'บิล 1-12',price:449.5,note:'ครึ่งราคา (จ่ายล่วงหน้าแล้ว)'},{range:'บิล 13-60',price:899,note:'ราคาปกติ'}], promo:'Adv. 50% 12 บิลแรก (449.50) → บิล 13-60 (899)', totalContractMonths:60, totalSaving:0 }
@@ -1431,7 +1432,7 @@ function lgCalculator() {
           { term:'5Y', serviceType:'No Service', serviceCycle:'ไม่มีบริการ', regular:699, effectiveMonthly:349.50, promoMonths:12, postPromoPrice:699, advancePayment:4194, billSchedule:[{range:'บิล 1-12',price:349.5,note:'ครึ่งราคา (จ่ายล่วงหน้าแล้ว)'},{range:'บิล 13-24',price:349,note:'โปรลด 50% รายเดือน'},{range:'บิล 25-60',price:699,note:'ราคาปกติ'}], promo:'Adv. 50% 12 บิลแรก (349.50) → บิล 13-24 (349) → บิล 25-60 (699)', totalContractMonths:60, totalSaving:4200 }
         ]},
         { code:'27GX704A-B.ATM', name:'UltraGear GX7 27" 240Hz OLED QHD', plans:[
-          { term:'5Y', serviceType:'No Service', serviceCycle:'ไม่มีบริการ', regular:399, effectiveMonthly:199.50, promoMonths:3, postPromoPrice:399, advancePayment:2394, billSchedule:[{range:'บิล 1-12',price:199.5,note:'ครึ่งราคา (จ่ายล่วงหน้าแล้ว)'},{range:'บิล 13-15',price:199,note:'โปรลด 50% รายเดือน'},{range:'บิล 16-60',price:399,note:'ราคาปกติ'}], promo:'Adv. 50% 12 บิลแรก (199.50) → บิล 13-15 (199) → บิล 16-60 (399)', totalContractMonths:60, totalSaving:600 }
+          { term:'5Y', serviceType:'No Service', serviceCycle:'ไม่มีบริการ', regular:349, effectiveMonthly:174.5, promoMonths:3, postPromoPrice:349, advancePayment:2094, billSchedule:[{'range': 'บิล 1-12', 'price': 174.5, 'note': 'ครึ่งราคา (จ่ายล่วงหน้าแล้ว)'}, {'range': 'บิล 13-15', 'price': 174, 'note': 'โปรลด 50% รายเดือน'}, {'range': 'บิล 16-60', 'price': 349, 'note': 'ราคาปกติ'}], promo:'บิล 1-12: ฿174.5 → บิล 13-15: ฿174 → บิล 16-60: ฿349', totalContractMonths:60, totalSaving:525 }
         ]},
         { code:'40U990A-W.ATM', name:'LG UltraFine 40" Nano IPS 5K2K (NEW)', plans:[
           { term:'5Y', serviceType:'No Service', serviceCycle:'ไม่มีบริการ', regular:999, effectiveMonthly:499.50, promoMonths:6, postPromoPrice:999, advancePayment:5994, billSchedule:[{range:'บิล 1-12',price:499.5,note:'ครึ่งราคา (จ่ายล่วงหน้าแล้ว)'},{range:'บิล 13-18',price:499,note:'โปรลด 50% รายเดือน'},{range:'บิล 19-60',price:999,note:'ราคาปกติ'}], promo:'Adv. 50% 12 บิลแรก (499.50) → บิล 13-18 (499) → บิล 19-60 (999)', totalContractMonths:60, totalSaving:3000 }
@@ -1688,13 +1689,13 @@ function lgCalculator() {
       this.promoConfig = {
         normal: {
           name: 'K-HOUSE Combo',
-          dateStart: '2569-06-01', dateEnd: '2569-06-30',
+          dateStart: '2569-07-01', dateEnd: '2569-07-31',
           newTiers:   [ {min:2, rate:10} ],
           existTiers: [ {min:1, rate:10} ]
         },
         special: {
           name: 'K-HOUSE Combo',
-          dateStart: '2569-06-01', dateEnd: '2569-06-30',
+          dateStart: '2569-07-01', dateEnd: '2569-07-31',
           newTiers:   [ {min:2, rate:10} ],
           existTiers: [ {min:1, rate:10} ]
         }
@@ -2674,6 +2675,7 @@ function lgCalculator() {
   }
 }
 </script>
+
 
 <script>
 (()=>{var nt=!1,it=!1,W=[],ot=-1;function Ut(e){Rn(e)}function Rn(e){W.includes(e)||W.push(e),Mn()}function Wt(e){let t=W.indexOf(e);t!==-1&&t>ot&&W.splice(t,1)}function Mn(){!it&&!nt&&(nt=!0,queueMicrotask(Nn))}function Nn(){nt=!1,it=!0;for(let e=0;e<W.length;e++)W[e](),ot=e;W.length=0,ot=-1,it=!1}var T,N,$,at,st=!0;function Gt(e){st=!1,e(),st=!0}function Jt(e){T=e.reactive,$=e.release,N=t=>e.effect(t,{scheduler:r=>{st?Ut(r):r()}}),at=e.raw}function ct(e){N=e}function Yt(e){let t=()=>{};return[n=>{let i=N(n);return e._x_effects||(e._x_effects=new Set,e._x_runEffects=()=>{e._x_effects.forEach(o=>o())}),e._x_effects.add(i),t=()=>{i!==void 0&&(e._x_effects.delete(i),$(i))},i},()=>{t()}]}function ve(e,t){let r=!0,n,i=N(()=>{let o=e();JSON.stringify(o),r?n=o:queueMicrotask(()=>{t(o,n),n=o}),r=!1});return()=>$(i)}var Xt=[],Zt=[],Qt=[];function er(e){Qt.push(e)}function te(e,t){typeof t=="function"?(e._x_cleanups||(e._x_cleanups=[]),e._x_cleanups.push(t)):(t=e,Zt.push(t))}function Ae(e){Xt.push(e)}function Oe(e,t,r){e._x_attributeCleanups||(e._x_attributeCleanups={}),e._x_attributeCleanups[t]||(e._x_attributeCleanups[t]=[]),e._x_attributeCleanups[t].push(r)}function lt(e,t){e._x_attributeCleanups&&Object.entries(e._x_attributeCleanups).forEach(([r,n])=>{(t===void 0||t.includes(r))&&(n.forEach(i=>i()),delete e._x_attributeCleanups[r])})}function tr(e){for(e._x_effects?.forEach(Wt);e._x_cleanups?.length;)e._x_cleanups.pop()()}var ut=new MutationObserver(mt),ft=!1;function ue(){ut.observe(document,{subtree:!0,childList:!0,attributes:!0,attributeOldValue:!0}),ft=!0}function dt(){kn(),ut.disconnect(),ft=!1}var le=[];function kn(){let e=ut.takeRecords();le.push(()=>e.length>0&&mt(e));let t=le.length;queueMicrotask(()=>{if(le.length===t)for(;le.length>0;)le.shift()()})}function m(e){if(!ft)return e();dt();let t=e();return ue(),t}var pt=!1,Se=[];function rr(){pt=!0}function nr(){pt=!1,mt(Se),Se=[]}function mt(e){if(pt){Se=Se.concat(e);return}let t=[],r=new Set,n=new Map,i=new Map;for(let o=0;o<e.length;o++)if(!e[o].target._x_ignoreMutationObserver&&(e[o].type==="childList"&&(e[o].removedNodes.forEach(s=>{s.nodeType===1&&s._x_marker&&r.add(s)}),e[o].addedNodes.forEach(s=>{if(s.nodeType===1){if(r.has(s)){r.delete(s);return}s._x_marker||t.push(s)}})),e[o].type==="attributes")){let s=e[o].target,a=e[o].attributeName,c=e[o].oldValue,l=()=>{n.has(s)||n.set(s,[]),n.get(s).push({name:a,value:s.getAttribute(a)})},u=()=>{i.has(s)||i.set(s,[]),i.get(s).push(a)};s.hasAttribute(a)&&c===null?l():s.hasAttribute(a)?(u(),l()):u()}i.forEach((o,s)=>{lt(s,o)}),n.forEach((o,s)=>{Xt.forEach(a=>a(s,o))});for(let o of r)t.some(s=>s.contains(o))||Zt.forEach(s=>s(o));for(let o of t)o.isConnected&&Qt.forEach(s=>s(o));t=null,r=null,n=null,i=null}function Ce(e){return z(B(e))}function k(e,t,r){return e._x_dataStack=[t,...B(r||e)],()=>{e._x_dataStack=e._x_dataStack.filter(n=>n!==t)}}function B(e){return e._x_dataStack?e._x_dataStack:typeof ShadowRoot=="function"&&e instanceof ShadowRoot?B(e.host):e.parentNode?B(e.parentNode):[]}function z(e){return new Proxy({objects:e},Dn)}var Dn={ownKeys({objects:e}){return Array.from(new Set(e.flatMap(t=>Object.keys(t))))},has({objects:e},t){return t==Symbol.unscopables?!1:e.some(r=>Object.prototype.hasOwnProperty.call(r,t)||Reflect.has(r,t))},get({objects:e},t,r){return t=="toJSON"?Pn:Reflect.get(e.find(n=>Reflect.has(n,t))||{},t,r)},set({objects:e},t,r,n){let i=e.find(s=>Object.prototype.hasOwnProperty.call(s,t))||e[e.length-1],o=Object.getOwnPropertyDescriptor(i,t);return o?.set&&o?.get?o.set.call(n,r)||!0:Reflect.set(i,t,r)}};function Pn(){return Reflect.ownKeys(this).reduce((t,r)=>(t[r]=Reflect.get(this,r),t),{})}function Te(e){let t=n=>typeof n=="object"&&!Array.isArray(n)&&n!==null,r=(n,i="")=>{Object.entries(Object.getOwnPropertyDescriptors(n)).forEach(([o,{value:s,enumerable:a}])=>{if(a===!1||s===void 0||typeof s=="object"&&s!==null&&s.__v_skip)return;let c=i===""?o:`${i}.${o}`;typeof s=="object"&&s!==null&&s._x_interceptor?n[o]=s.initialize(e,c,o):t(s)&&s!==n&&!(s instanceof Element)&&r(s,c)})};return r(e)}function Re(e,t=()=>{}){let r={initialValue:void 0,_x_interceptor:!0,initialize(n,i,o){return e(this.initialValue,()=>In(n,i),s=>ht(n,i,s),i,o)}};return t(r),n=>{if(typeof n=="object"&&n!==null&&n._x_interceptor){let i=r.initialize.bind(r);r.initialize=(o,s,a)=>{let c=n.initialize(o,s,a);return r.initialValue=c,i(o,s,a)}}else r.initialValue=n;return r}}function In(e,t){return t.split(".").reduce((r,n)=>r[n],e)}function ht(e,t,r){if(typeof t=="string"&&(t=t.split(".")),t.length===1)e[t[0]]=r;else{if(t.length===0)throw error;return e[t[0]]||(e[t[0]]={}),ht(e[t[0]],t.slice(1),r)}}var ir={};function y(e,t){ir[e]=t}function fe(e,t){let r=Ln(t);return Object.entries(ir).forEach(([n,i])=>{Object.defineProperty(e,`$${n}`,{get(){return i(t,r)},enumerable:!1})}),e}function Ln(e){let[t,r]=_t(e),n={interceptor:Re,...t};return te(e,r),n}function or(e,t,r,...n){try{return r(...n)}catch(i){re(i,e,t)}}function re(e,t,r=void 0){e=Object.assign(e??{message:"No error message given."},{el:t,expression:r}),console.warn(`Alpine Expression Error: ${e.message}
