@@ -981,7 +981,7 @@ function lgCalculator() {
     compareB: { term: '5Y', serviceType: 'Visit', modelIndices: [] },
     cart: [],
     toast: { show: false, msg: '' },
-    buildVersion: '2026.07.01-v3',
+    buildVersion: '2026.07.01-v4',
 
     visitServiceLabel(withEnglish = false) {
       const label = 'ช่างผู้เชี่ยวชาญบริการถึงบ้าน';
@@ -1155,56 +1155,6 @@ function lgCalculator() {
         { code:'IXY24A', name:'DUAL INVERTER · 21,154 BTU · เบอร์ 5', plans:[
           { term:'5Y', serviceType:'Visit', serviceCycle:'ทุก 6 เดือน', regular:849, effectiveMonthly:149, promoMonths:1, postPromoPrice:849, billSchedule:[{'range': 'บิล 1', 'price': 149, 'note': 'ราคา 149.-'}, {'range': 'บิล 2-60', 'price': 849, 'note': ''}], promo:'ราคา 149.- (1 รอบบิลแรก) จากนั้น 849/เดือน', totalContractMonths:60, totalSaving:700 },
           { term:'5Y', serviceType:'Visit', serviceCycle:'ทุก 12 เดือน', regular:749, effectiveMonthly:149, promoMonths:1, postPromoPrice:749, billSchedule:[{'range': 'บิล 1', 'price': 149, 'note': 'ราคา 149.-'}, {'range': 'บิล 2-60', 'price': 749, 'note': ''}], promo:'ราคา 149.- (1 รอบบิลแรก) จากนั้น 749/เดือน', totalContractMonths:60, totalSaving:600 }
-        ]}
-      ]},
-      'แอร์เชิงพาณิชย์ SAC': { models: [
-        { code:'ZV-Q18GM1E0.EWGHATH', name:'Ceiling Suspended · 18,000 BTU', plans:[
-          { term:'5Y', serviceType:'Visit', serviceCycle:'ทุก 4 เดือน', regular:1599, effectiveMonthly:1599, promoMonths:0, postPromoPrice:1599, promo:'', totalContractMonths:60, totalSaving:0 }
-        ]},
-        { code:'ZT-Q18GPLE0.EWGHATH', name:'4-Way Cassette · 18,000 BTU', plans:[
-          { term:'5Y', serviceType:'Visit', serviceCycle:'ทุก 4 เดือน', regular:1949, effectiveMonthly:1949, promoMonths:0, postPromoPrice:1949, promo:'', totalContractMonths:60, totalSaving:0 }
-        ]},
-        { code:'ZT-Q12GULA0.EWGHATH', name:'1-Way Cassette · 12,000 BTU', plans:[
-          { term:'5Y', serviceType:'Visit', serviceCycle:'ทุก 4 เดือน', regular:1499, effectiveMonthly:1499, promoMonths:0, postPromoPrice:1499, promo:'', totalContractMonths:60, totalSaving:0 }
-        ]},
-        { code:'ZT-Q48GYLA0.EWGHATH', name:'4-Way Cassette · 48,000 BTU', plans:[
-          { term:'5Y', serviceType:'Visit', serviceCycle:'ทุก 4 เดือน', regular:2799, effectiveMonthly:2799, promoMonths:0, postPromoPrice:2799, promo:'', totalContractMonths:60, totalSaving:0 }
-        ]},
-        { code:'ZVQ18GM1E0.EWGHATH', name:'SAC · ZVQ18GM1E0', plans:[
-          { term:'5Y', serviceType:'Visit', serviceCycle:'ทุก 4 เดือน', regular:1599, effectiveMonthly:1599, promoMonths:0, postPromoPrice:1599, promo:'', totalContractMonths:60, totalSaving:0 }
-        ]},
-        { code:'ZVQ24GM1E0.EWGHATH', name:'SAC · ZVQ24GM1E0', plans:[
-          { term:'5Y', serviceType:'Visit', serviceCycle:'ทุก 4 เดือน', regular:1699, effectiveMonthly:1699, promoMonths:0, postPromoPrice:1699, promo:'', totalContractMonths:60, totalSaving:0 }
-        ]},
-        { code:'ZVQ36GM2E0.EWGHATH', name:'SAC · ZVQ36GM2E0', plans:[
-          { term:'5Y', serviceType:'Visit', serviceCycle:'ทุก 4 เดือน', regular:1849, effectiveMonthly:1849, promoMonths:0, postPromoPrice:1849, promo:'', totalContractMonths:60, totalSaving:0 }
-        ]},
-        { code:'ZTQ12GULA0.EWGHATH', name:'SAC · ZTQ12GULA0', plans:[
-          { term:'5Y', serviceType:'Visit', serviceCycle:'ทุก 4 เดือน', regular:1499, effectiveMonthly:1499, promoMonths:0, postPromoPrice:1499, promo:'', totalContractMonths:60, totalSaving:0 }
-        ]},
-        { code:'ZTQ18GTLA0.EWGHATH', name:'SAC · ZTQ18GTLA0', plans:[
-          { term:'5Y', serviceType:'Visit', serviceCycle:'ทุก 4 เดือน', regular:1599, effectiveMonthly:1599, promoMonths:0, postPromoPrice:1599, promo:'', totalContractMonths:60, totalSaving:0 }
-        ]},
-        { code:'ZTQ24GTLA0.EWGHATH', name:'SAC · ZTQ24GTLA0', plans:[
-          { term:'5Y', serviceType:'Visit', serviceCycle:'ทุก 4 เดือน', regular:1799, effectiveMonthly:1799, promoMonths:0, postPromoPrice:1799, promo:'', totalContractMonths:60, totalSaving:0 }
-        ]},
-        { code:'ZTQ18GPLE0.EWGHATH', name:'SAC · ZTQ18GPLE0', plans:[
-          { term:'5Y', serviceType:'Visit', serviceCycle:'ทุก 4 เดือน', regular:1949, effectiveMonthly:1949, promoMonths:0, postPromoPrice:1949, promo:'', totalContractMonths:60, totalSaving:0 }
-        ]},
-        { code:'ZTQ24GPLA0.EWGHATH', name:'SAC · ZTQ24GPLA0', plans:[
-          { term:'5Y', serviceType:'Visit', serviceCycle:'ทุก 4 เดือน', regular:1899, effectiveMonthly:1899, promoMonths:0, postPromoPrice:1899, promo:'', totalContractMonths:60, totalSaving:0 }
-        ]},
-        { code:'ZTQ36GNLA0.EWGHATH', name:'SAC · ZTQ36GNLA0', plans:[
-          { term:'5Y', serviceType:'Visit', serviceCycle:'ทุก 4 เดือน', regular:2349, effectiveMonthly:2349, promoMonths:0, postPromoPrice:2349, promo:'', totalContractMonths:60, totalSaving:0 }
-        ]},
-        { code:'ZTQ48GMLA0.EWGHATH', name:'SAC · ZTQ48GMLA0', plans:[
-          { term:'5Y', serviceType:'Visit', serviceCycle:'ทุก 4 เดือน', regular:2499, effectiveMonthly:2499, promoMonths:0, postPromoPrice:2499, promo:'', totalContractMonths:60, totalSaving:0 }
-        ]},
-        { code:'ZTQ36GYLA0.EWGHATH', name:'SAC · ZTQ36GYLA0', plans:[
-          { term:'5Y', serviceType:'Visit', serviceCycle:'ทุก 4 เดือน', regular:2599, effectiveMonthly:2599, promoMonths:0, postPromoPrice:2599, promo:'', totalContractMonths:60, totalSaving:0 }
-        ]},
-        { code:'ZTQ48GYLA0.EWGHATH', name:'SAC · ZTQ48GYLA0', plans:[
-          { term:'5Y', serviceType:'Visit', serviceCycle:'ทุก 4 เดือน', regular:2799, effectiveMonthly:2799, promoMonths:0, postPromoPrice:2799, promo:'', totalContractMonths:60, totalSaving:0 }
         ]}
       ]},
       'โทรทัศน์ Life Style / OLED / QNED / NANO': { models: [
