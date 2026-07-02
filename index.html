@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- LG Subscribe Calculator build 2026.07.02-v15 -->
+<!-- LG Subscribe Calculator build 2026.07.02-v16 -->
 <html lang="th">
 <head>
 <meta charset="UTF-8" />
@@ -438,9 +438,9 @@
         <div class="grid grid-cols-1 md-grid-2 gap-3 mb-4">
           <div>
             <label class="text-xs text-gray-500 mb-1 block font-medium">หมวดสินค้า / Category</label>
-            <select x-model="picker.category" @change="picker.model=''; picker.plan=''; showComparePlans=false; showCompareModels=false; initCompareBForCategory();">
+            <select x-model="picker.category" @change="onCategoryChange()">
               <option value="">— เลือกหมวด —</option>
-              <template x-for="cat in catalogCategoryList()" :key="cat">
+              <template x-for="cat in categoryList" :key="cat">
                 <option :value="cat" x-text="cat"></option>
               </template>
             </select>
@@ -449,8 +449,8 @@
             <label class="text-xs text-gray-500 mb-1 block font-medium">รุ่นสินค้า / Model</label>
             <select x-model="picker.model" :disabled="!picker.category" @change="picker.plan=''; showComparePlans=false">
               <option value="">— เลือกรุ่น —</option>
-              <template x-for="(m, idx) in categoryModels()" :key="m.code">
-                <option :value="String(idx)" x-text="m.code + ' — ' + m.name"></option>
+              <template x-for="m in modelList" :key="m.idx">
+                <option :value="m.idx" x-text="m.label"></option>
               </template>
             </select>
           </div>
@@ -976,12 +976,14 @@ function lgCalculator() {
       }
     },
     picker: { category: '', model: '', plan: '' },
+    categoryList: [],
+    modelList: [],
     showComparePlans: false,
     showCompareModels: false,
     compareB: { term: '5Y', serviceType: 'Visit', modelIndices: [] },
     cart: [],
     toast: { show: false, msg: '' },
-    buildVersion: '2026.07.02-v15',
+    buildVersion: '2026.07.02-v16',
 
     visitServiceLabel(withEnglish = false) {
       const label = 'ช่างผู้เชี่ยวชาญบริการถึงบ้าน';
@@ -1706,9 +1708,29 @@ function lgCalculator() {
           }
         }
       } catch(e) {}
+      this.refreshCategoryList();
+      this.refreshModelList();
+    },
+    refreshCategoryList() {
+      this.categoryList = Object.keys(this.catalog || {});
+    },
+    refreshModelList() {
+      const models = this.catalog[this.picker.category]?.models || [];
+      this.modelList = models.map((m, idx) => ({
+        idx: String(idx),
+        label: m.code + ' — ' + m.name,
+      }));
+    },
+    onCategoryChange() {
+      this.picker.model = '';
+      this.picker.plan = '';
+      this.showComparePlans = false;
+      this.showCompareModels = false;
+      this.refreshModelList();
+      this.initCompareBForCategory();
     },
     catalogCategoryList() {
-      return Object.keys(this.catalog || {});
+      return this.categoryList;
     },
     savePromoConfig() {
       try {
