@@ -982,8 +982,11 @@ function lgCalculator() {
       }
     },
     picker: { category: '', model: '', plan: '' },
-    categoryImages: {
-      'ตู้เย็น Multi-Door': 'assets/products/multi-door-refrigerator.png',
+    modelImages: {
+      'GC-G24FFQKB.AEEPLM1': 'assets/products/gc-g24ffqkb.png',
+      'GC-V22FFQMB.AEPPLMT': 'assets/products/gc-v22ffqmb.png',
+      'GV-B25FFGDB.ABMPLMT': 'assets/products/gv-b25ffgdb.png',
+      'GV-V25FFGRB.ABMPLMT': 'assets/products/gv-v25ffgrb.png',
     },
     categoryList: [],
     modelList: [],
@@ -992,15 +995,15 @@ function lgCalculator() {
     compareB: { term: '5Y', serviceType: 'Visit', modelIndices: [] },
     cart: [],
     toast: { show: false, msg: '' },
-    buildVersion: '2026.07.02-v19',
+    buildVersion: '2026.07.02-v20',
 
     hasModelSelected() {
       const v = this.picker.model;
       return v !== '' && v !== null && v !== undefined;
     },
     modelImage() {
-      if (!this.hasModelSelected() || !this.picker.category || !this.currentModel()) return '';
-      return this.categoryImages[this.picker.category] || '';
+      if (!this.hasModelSelected() || !this.currentModel()) return '';
+      return this.modelImages[this.currentModel().code] || '';
     },
     visitServiceLabel(withEnglish = false) {
       const label = 'ช่างผู้เชี่ยวชาญบริการถึงบ้าน';
