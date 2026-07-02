@@ -153,6 +153,8 @@
   .summary-promo-box{background:linear-gradient(135deg,rgba(200,16,46,.08),rgba(255,255,255,.74));border:1px solid rgba(200,16,46,.18);border-radius:8px;padding:16px}
   .summary-advance-box{background:rgba(15,118,110,.07);border:1px solid rgba(15,118,110,.18);border-radius:8px;padding:16px}
   .summary-first-pay-box{background:linear-gradient(135deg,rgba(124,58,237,.1),rgba(15,118,110,.06));border:2px solid rgba(124,58,237,.32);border-radius:8px;padding:16px}
+  .category-product-img{display:flex;align-items:center;justify-content:center;background:linear-gradient(180deg,#fff,#f8f6f3);border:1px solid var(--lg-line);border-radius:8px;padding:12px;min-height:160px}
+  .category-product-img img{max-width:100%;max-height:220px;object-fit:contain}
   /* Special Combo Banner */
   .special-combo-banner{position:relative;overflow:hidden;border-radius:8px;padding:20px 22px;background:linear-gradient(135deg,#7f0020 0%,#C8102E 55%,#e8354f 100%);border:1px solid rgba(255,255,255,.2);transition:all .3s;box-shadow:0 8px 24px rgba(200,16,46,.25)}
   .special-combo-banner::after{content:'';position:absolute;inset:1px;border-radius:7px;border:1px solid rgba(255,255,255,.16);pointer-events:none}
@@ -454,6 +456,10 @@
               </template>
             </select>
           </div>
+        </div>
+
+        <div class="category-product-img mb-4" x-show="categoryImage(picker.category)" x-cloak>
+          <img :src="categoryImage(picker.category)" :alt="picker.category" loading="lazy" decoding="async" />
         </div>
 
         <div x-show="picker.model !== ''">
@@ -976,6 +982,9 @@ function lgCalculator() {
       }
     },
     picker: { category: '', model: '', plan: '' },
+    categoryImages: {
+      'ตู้เย็น Multi-Door': 'assets/products/multi-door-refrigerator.jpg',
+    },
     categoryList: [],
     modelList: [],
     showComparePlans: false,
@@ -985,6 +994,9 @@ function lgCalculator() {
     toast: { show: false, msg: '' },
     buildVersion: '2026.07.02-v18',
 
+    categoryImage(cat) {
+      return (cat && this.categoryImages[cat]) ? this.categoryImages[cat] : '';
+    },
     visitServiceLabel(withEnglish = false) {
       const label = 'ช่างผู้เชี่ยวชาญบริการถึงบ้าน';
       return withEnglish ? label + ' (Visit)' : label;
