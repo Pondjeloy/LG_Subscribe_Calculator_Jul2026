@@ -975,7 +975,7 @@ function lgCalculator() {
     compareB: { term: '5Y', serviceType: 'Visit', modelIndices: [] },
     cart: [],
     toast: { show: false, msg: '' },
-    buildVersion: '2026.07.02-v9',
+    buildVersion: '2026.07.02-v10',
 
     visitServiceLabel(withEnglish = false) {
       const label = 'ช่างผู้เชี่ยวชาญบริการถึงบ้าน';
@@ -1372,7 +1372,10 @@ function lgCalculator() {
           { term:'5Y', serviceType:'No Service', serviceCycle:'ไม่มีบริการ', regular:1349, effectiveMonthly:674.5, promoMonths:0, postPromoPrice:1349, advancePayment:8094, billSchedule:[{'range': 'บิล 1-12', 'price': 674.5, 'note': 'ครึ่งราคา (จ่ายล่วงหน้าแล้ว)'}, {'range': 'บิล 13-60', 'price': 1349, 'note': 'ราคาปกติ'}], promo:'บิล 1-12: ฿674.5 → บิล 13-60: ฿1349', totalContractMonths:60, totalSaving:0 }
         ]},
         { code:'OLED48C6PSA.ATM', name:'LG OLED evo C6 · 48"', plans:[
-          { term:'5Y', serviceType:'No Service', serviceCycle:'ไม่มีบริการ', regular:699, effectiveMonthly:349.5, promoMonths:0, postPromoPrice:699, advancePayment:4194, billSchedule:[{'range': 'บิล 1-12', 'price': 349.5, 'note': 'ครึ่งราคา (จ่ายล่วงหน้าแล้ว)'}, {'range': 'บิล 13-60', 'price': 699, 'note': 'ราคาปกติ'}], promo:'บิล 1-12: ฿349.5 → บิล 13-60: ฿699', totalContractMonths:60, totalSaving:0 }
+          { term:'5Y', serviceType:'No Service', serviceCycle:'ไม่มีบริการ', regular:699, effectiveMonthly:349.5, promoMonths:8, postPromoPrice:699, advancePayment:4194, billSchedule:[{'range': 'บิล 1-12', 'price': 349.5, 'note': 'ครึ่งราคา (จ่ายล่วงหน้าแล้ว)'}, {'range': 'บิล 13-20', 'price': 349, 'note': 'โปรลด 50% รายเดือน'}, {'range': 'บิล 21-60', 'price': 699, 'note': 'ราคาปกติ'}], promo:'บิล 1-12: ฿349.5 → บิล 13-20: ฿349 → บิล 21-60: ฿699', totalContractMonths:60, totalSaving:2800 }
+        ]},
+        { code:'OLED48C6PSA.BOUNCE', name:'LG OLED evo C6 · 48" + xboom BOUNCE', plans:[
+          { term:'5Y', serviceType:'No Service', serviceCycle:'ไม่มีบริการ', regular:699, effectiveMonthly:349.5, promoMonths:3, postPromoPrice:699, advancePayment:4194, billSchedule:[{'range': 'บิล 1-12', 'price': 349.5, 'note': 'ครึ่งราคา (จ่ายล่วงหน้าแล้ว)'}, {'range': 'บิล 13-15', 'price': 349, 'note': 'โปรลด 50% รายเดือน'}, {'range': 'บิล 16-60', 'price': 699, 'note': 'ราคาปกติ'}], promo:'บิล 1-12: ฿349.5 → บิล 13-15: ฿349 → บิล 16-60: ฿699', totalContractMonths:60, totalSaving:1050 }
         ]},
         { code:'OLED55C6PSA.ATM', name:'LG OLED evo C6 · 55"', plans:[
           { term:'5Y', serviceType:'No Service', serviceCycle:'ไม่มีบริการ', regular:1099, effectiveMonthly:549.5, promoMonths:8, postPromoPrice:1099, advancePayment:6594, billSchedule:[{'range': 'บิล 1-12', 'price': 549.5, 'note': 'ครึ่งราคา (จ่ายล่วงหน้าแล้ว)'}, {'range': 'บิล 13-20', 'price': 549.0, 'note': 'โปรลด 50%'}, {'range': 'บิล 19-60', 'price': 1099.0, 'note': 'ราคาปกติ'}], promo:'บิล 1-12: ฿549.5 → บิล 13-20: ฿549.0 → บิล 19-60: ฿1099.0', totalContractMonths:60, totalSaving:4400 }
