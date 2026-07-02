@@ -449,7 +449,7 @@
           </div>
           <div>
             <label class="text-xs text-gray-500 mb-1 block font-medium">รุ่นสินค้า / Model</label>
-            <select x-model="picker.model" :disabled="!picker.category" @change="picker.plan=''; showComparePlans=false">
+            <select x-model="picker.model" :disabled="!picker.category" @change="onModelChange()">
               <option value="">— เลือกรุ่น —</option>
               <template x-for="m in modelList" :key="m.idx">
                 <option :value="m.idx" x-text="m.label"></option>
@@ -458,10 +458,11 @@
           </div>
         </div>
 
-        <div x-show="picker.model !== ''">
-          <div class="category-product-img mb-3" x-show="modelImage()" x-cloak>
-            <img :src="modelImage()" :alt="currentModel()?.name || ''" loading="lazy" decoding="async" />
-          </div>
+        <div class="category-product-img mb-3" x-show="hasModelSelected() && modelImage()" x-cloak>
+          <img :src="modelImage()" :alt="currentModel()?.name || ''" loading="lazy" decoding="async" />
+        </div>
+
+        <div x-show="hasModelSelected()">
           <label class="text-xs text-gray-500 mb-2 block font-medium">เลือกแพ็คเกจ / Subscription Plan</label>
           <div class="washer-rec-tip" x-show="showSixYearVisitRecTip()">
             <span x-show="isWasherCategory(picker.category)">💡 เครื่องซักผ้าทุกประเภท สัญญา <strong>6 ปี</strong> คุ้มที่สุด<span x-show="isWasherDeepCleanCategory(picker.category)"> · แนะนำ Visit — ล้างใหญ่ 2 ครั้ง (เดือน 36 และ 72)</span></span>
@@ -507,13 +508,13 @@
         </div>
 
         <!-- เปรียบเทียบแพ็คเกจทุกสัญญา (แนว A) -->
-        <div class="compare-toggle-wrap" x-show="picker.model !== '' && (currentModel()?.plans?.length || 0) > 1">
+        <div class="compare-toggle-wrap" x-show="hasModelSelected() && (currentModel()?.plans?.length || 0) > 1">
           <button type="button" class="btn-compare-toggle" :class="showComparePlans ? 'active' : ''" @click="showComparePlans = !showComparePlans">
             <span>📊 เปรียบเทียบแพ็คเกจทุกสัญญา</span>
             <span x-text="showComparePlans ? '▲ ซ่อน' : '▼ แสดง'"></span>
           </button>
         </div>
-        <div class="compare-plan-box" x-show="picker.model !== '' && showComparePlans && (currentModel()?.plans?.length || 0) > 1">
+        <div class="compare-plan-box" x-show="hasModelSelected() && showComparePlans && (currentModel()?.plans?.length || 0) > 1">
           <div class="cp-head">📊 เปรียบเทียบแพ็คเกจทุกสัญญา</div>
           <div class="cp-sub">
             <span x-text="currentModel()?.code + ' — ' + currentModel()?.name"></span>
@@ -637,7 +638,7 @@
         </div>
 
         <div class="mt-4 flex justify-end">
-          <button class="btn-primary" @click="addToCart()" :disabled="picker.model === '' || picker.plan === ''">
+          <button class="btn-primary" @click="addToCart()" :disabled="!hasModelSelected() || picker.plan === ''">
             + เพิ่มสินค้าเข้ารายการ
           </button>
         </div>
@@ -991,10 +992,14 @@ function lgCalculator() {
     compareB: { term: '5Y', serviceType: 'Visit', modelIndices: [] },
     cart: [],
     toast: { show: false, msg: '' },
-    buildVersion: '2026.07.02-v18',
+    buildVersion: '2026.07.02-v19',
 
+    hasModelSelected() {
+      const v = this.picker.model;
+      return v !== '' && v !== null && v !== undefined;
+    },
     modelImage() {
-      if (this.picker.model === '' || !this.picker.category) return '';
+      if (!this.hasModelSelected() || !this.picker.category || !this.currentModel()) return '';
       return this.categoryImages[this.picker.category] || '';
     },
     visitServiceLabel(withEnglish = false) {
@@ -1649,6 +1654,10 @@ function lgCalculator() {
       this.showCompareModels = false;
       this.refreshModelList();
       this.initCompareBForCategory();
+    },
+    onModelChange() {
+      this.picker.plan = '';
+      this.showComparePlans = false;
     },
     catalogCategoryList() {
       return this.categoryList;
