@@ -438,20 +438,14 @@
         <div class="grid grid-cols-1 md-grid-2 gap-3 mb-4">
           <div>
             <label class="text-xs text-gray-500 mb-1 block font-medium">หมวดสินค้า / Category</label>
-            <select x-model="picker.category" @change="picker.model=''; picker.plan=''; showComparePlans=false; showCompareModels=false; initCompareBForCategory()">
+            <select x-ref="categorySelect" x-model="picker.category" x-init="$nextTick(() => fillCategorySelect())" @change="picker.model=''; picker.plan=''; showComparePlans=false; showCompareModels=false; initCompareBForCategory(); fillModelSelect()">
               <option value="">— เลือกหมวด —</option>
-              <template x-for="cat in Object.keys(catalog)" :key="cat">
-                <option :value="cat" x-text="cat"></option>
-              </template>
             </select>
           </div>
           <div>
             <label class="text-xs text-gray-500 mb-1 block font-medium">รุ่นสินค้า / Model</label>
-            <select x-model="picker.model" :disabled="!picker.category" @change="picker.plan=''; showComparePlans=false">
+            <select x-ref="modelSelect" x-model="picker.model" :disabled="!picker.category" x-init="$nextTick(() => fillModelSelect())" @change="picker.plan=''; showComparePlans=false">
               <option value="">— เลือกรุ่น —</option>
-              <template x-for="(m, idx) in (catalog[picker.category]?.models || [])" :key="picker.category + '-' + idx">
-                <option :value="idx" x-text="m.code + ' — ' + m.name"></option>
-              </template>
             </select>
           </div>
         </div>
@@ -981,7 +975,7 @@ function lgCalculator() {
     compareB: { term: '5Y', serviceType: 'Visit', modelIndices: [] },
     cart: [],
     toast: { show: false, msg: '' },
-    buildVersion: '2026.07.02-v2',
+    buildVersion: '2026.07.02-v3',
 
     visitServiceLabel(withEnglish = false) {
       const label = 'ช่างผู้เชี่ยวชาญบริการถึงบ้าน';
@@ -1699,6 +1693,22 @@ function lgCalculator() {
           }
         }
       } catch(e) {}
+      this.$nextTick(() => { this.fillCategorySelect(); this.fillModelSelect(); });
+    },
+    fillCategorySelect() {
+      const sel = this.$refs.categorySelect;
+      if (!sel || sel.dataset.filled === '1') return;
+      Object.keys(this.catalog).forEach(cat => sel.add(new Option(cat, cat)));
+      sel.dataset.filled = '1';
+    },
+    fillModelSelect() {
+      const sel = this.$refs.modelSelect;
+      if (!sel) return;
+      while (sel.options.length > 1) sel.remove(1);
+      if (!this.picker.category) return;
+      (this.catalog[this.picker.category]?.models || []).forEach((m, idx) => {
+        sel.add(new Option(m.code + ' — ' + m.name, String(idx)));
+      });
     },
     savePromoConfig() {
       try {
