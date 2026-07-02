@@ -975,7 +975,7 @@ function lgCalculator() {
     compareB: { term: '5Y', serviceType: 'Visit', modelIndices: [] },
     cart: [],
     toast: { show: false, msg: '' },
-    buildVersion: '2026.07.02-v8',
+    buildVersion: '2026.07.02-v9',
 
     visitServiceLabel(withEnglish = false) {
       const label = 'ช่างผู้เชี่ยวชาญบริการถึงบ้าน';
@@ -1307,9 +1307,11 @@ function lgCalculator() {
       ]},
       'เครื่องปรับอากาศ ARTCOOL': { models: [
         { code:'ART13A.SR1', name:'ARTCOOL', plans:[
+          { term:'5Y', serviceType:'Visit', serviceCycle:'ทุก 12 เดือน', regular:949, effectiveMonthly:149.0, promoMonths:1, postPromoPrice:949, billSchedule:[{'range': 'บิล 1', 'price': 149.0, 'note': 'ราคาพิเศษ'}, {'range': 'บิล 2-8', 'price': 474.0, 'note': 'โปรลด 50%'}, {'range': 'บิล 9-60', 'price': 949.0, 'note': 'ราคาปกติ'}], promo:'บิลแรก 149 ต่อด้วยลด 50% 7 รอบบิล (474) จากนั้น 949/เดือน', totalContractMonths:60, totalSaving:4125 },
           { term:'5Y', serviceType:'Visit', serviceCycle:'ทุก 6 เดือน', regular:1049, effectiveMonthly:149.0, promoMonths:1, postPromoPrice:1049, billSchedule:[{'range': 'บิล 1', 'price': 149.0, 'note': 'ราคาพิเศษ'}, {'range': 'บิล 2-8', 'price': 524.0, 'note': 'โปรลด 50%'}, {'range': 'บิล 9-60', 'price': 1049.0, 'note': 'ราคาปกติ'}], promo:'บิลแรก 149 ต่อด้วยลด 50% 7 รอบบิล (524) จากนั้น 1,049/เดือน', totalContractMonths:60, totalSaving:4575 }
         ]},
         { code:'ART18A.SR1', name:'ARTCOOL', plans:[
+          { term:'5Y', serviceType:'Visit', serviceCycle:'ทุก 12 เดือน', regular:1149, effectiveMonthly:149.0, promoMonths:1, postPromoPrice:1149, billSchedule:[{'range': 'บิล 1', 'price': 149.0, 'note': 'ราคาพิเศษ'}, {'range': 'บิล 2-8', 'price': 574.0, 'note': 'โปรลด 50%'}, {'range': 'บิล 9-60', 'price': 1149.0, 'note': 'ราคาปกติ'}], promo:'บิลแรก 149 ต่อด้วยลด 50% 7 รอบบิล (574) จากนั้น 1,149/เดือน', totalContractMonths:60, totalSaving:5025 },
           { term:'5Y', serviceType:'Visit', serviceCycle:'ทุก 6 เดือน', regular:1249, effectiveMonthly:149.0, promoMonths:1, postPromoPrice:1249, billSchedule:[{'range': 'บิล 1', 'price': 149.0, 'note': 'ราคาพิเศษ'}, {'range': 'บิล 2-8', 'price': 624.0, 'note': 'โปรลด 50%'}, {'range': 'บิล 9-60', 'price': 1249.0, 'note': 'ราคาปกติ'}], promo:'บิลแรก 149 ต่อด้วยลด 50% 7 รอบบิล (624) จากนั้น 1,249/เดือน', totalContractMonths:60, totalSaving:5475 }
         ]}
       ]},
