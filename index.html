@@ -1031,7 +1031,7 @@ function lgCalculator() {
     compareB: { term: '5Y', serviceType: 'Visit', modelIndices: [] },
     cart: [],
     toast: { show: false, msg: '' },
-    buildVersion: '2026.07.04-v43',
+    buildVersion: '2026.07.04-v44',
 
     hasModelSelected() {
       const v = this.picker.model;
@@ -1290,14 +1290,6 @@ function lgCalculator() {
         { code:'AS35GGW10.ATH', name:'AeroHit · 32 ตร.ม. (ไม่มีรีโมท)', plans:[
           { term:'5Y', serviceType:'Self', serviceCycle:'ทุก 6 เดือน', regular:199, effectiveMonthly:199, promoMonths:0, postPromoPrice:199, promo:'', totalContractMonths:60, totalSaving:0 },
           { term:'5Y', serviceType:'Visit', serviceCycle:'ทุก 6 เดือน', regular:249, effectiveMonthly:249, promoMonths:0, postPromoPrice:249, promo:'', totalContractMonths:60, totalSaving:14940 }
-        ]},
-        { code:'AS60GHWG0.ABAE', name:'AeroHit · 60 ตร.ม.', plans:[
-          { term:'5Y', serviceType:'Self', serviceCycle:'ทุก 6 เดือน', regular:449, effectiveMonthly:224, promoMonths:6, postPromoPrice:449, billSchedule:[{'range': 'บิล 1-6', 'price': 224, 'note': 'โปรลด 50%'}, {'range': 'บิล 7-60', 'price': 449, 'note': ''}], promo:'ลด 50% 6 บิลแรก (224) จากนั้น 449/เดือน', totalContractMonths:60, totalSaving:1350 },
-          { term:'5Y', serviceType:'Visit', serviceCycle:'ทุก 12 เดือน', regular:449, effectiveMonthly:449, promoMonths:0, postPromoPrice:449, promo:'', totalContractMonths:60, totalSaving:0 }
-        ]},
-        { code:'AS65GDBY0.ABAE', name:'AeroTower · 65 ตร.ม.', plans:[
-          { term:'5Y', serviceType:'Self', serviceCycle:'ทุก 12 เดือน', regular:699, effectiveMonthly:699, promoMonths:0, postPromoPrice:699, promo:'', totalContractMonths:60, totalSaving:0 },
-          { term:'5Y', serviceType:'Visit', serviceCycle:'ทุก 6 เดือน', regular:799, effectiveMonthly:799, promoMonths:0, postPromoPrice:799, promo:'', totalContractMonths:60, totalSaving:0 }
         ]}
       ]},
       'เครื่องลดความชื้น': { models: [
@@ -1433,6 +1425,9 @@ function lgCalculator() {
         ]},
         { code:'OLED48C6PSA.ATM', name:'LG OLED evo C6 · 48"', plans:[
           { term:'5Y', serviceType:'No Service', serviceCycle:'ไม่มีบริการ', regular:699, effectiveMonthly:349.5, promoMonths:8, postPromoPrice:699, advancePayment:4194, billSchedule:[{'range': 'บิล 1-12', 'price': 349.5, 'note': 'ครึ่งราคา (จ่ายล่วงหน้าแล้ว)'}, {'range': 'บิล 13-20', 'price': 349, 'note': 'โปรลด 50% รายเดือน'}, {'range': 'บิล 21-60', 'price': 699, 'note': 'ราคาปกติ'}], promo:'บิล 1-12: ฿349.5 → บิล 13-20: ฿349 → บิล 21-60: ฿699', totalContractMonths:60, totalSaving:2800 }
+        ]},
+        { code:'OLED48C6PSA.BOUNCE', name:'LG OLED evo C6 · 48" + xboom BOUNCE', plans:[
+          { term:'5Y', serviceType:'No Service', serviceCycle:'ไม่มีบริการ', regular:699, effectiveMonthly:349.5, promoMonths:3, postPromoPrice:699, advancePayment:4194, billSchedule:[{'range': 'บิล 1-12', 'price': 349.5, 'note': 'ครึ่งราคา (จ่ายล่วงหน้าแล้ว)'}, {'range': 'บิล 13-15', 'price': 349, 'note': 'โปรลด 50% รายเดือน'}, {'range': 'บิล 16-60', 'price': 699, 'note': 'ราคาปกติ'}], promo:'บิล 1-12: ฿349.5 → บิล 13-15: ฿349 → บิล 16-60: ฿699', totalContractMonths:60, totalSaving:1050 }
         ]},
         { code:'OLED55C6PSA.ATM', name:'ขนาดทีวีแบบไม่รวมขาตั้ง', plans:[
           { term:'5Y', serviceType:'No Service', serviceCycle:'ไม่มีบริการ', regular:1099, effectiveMonthly:549.5, promoMonths:8, postPromoPrice:1099, advancePayment:6594, billSchedule:[{'range': 'บิล 1-12', 'price': 549.5, 'note': 'ครึ่งราคา (จ่ายล่วงหน้าแล้ว)'}, {'range': 'บิล 13-20', 'price': 549.0, 'note': 'โปรลด 50%'}, {'range': 'บิล 21-60', 'price': 1099.0, 'note': 'ราคาปกติ'}], promo:'บิล 1-12: ฿549.5 → บิล 13-20: ฿549.0 → บิล 21-60: ฿1099.0', totalContractMonths:60, totalSaving:4400 }
