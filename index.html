@@ -1031,7 +1031,7 @@ function lgCalculator() {
     compareB: { term: '5Y', serviceType: 'Visit', modelIndices: [] },
     cart: [],
     toast: { show: false, msg: '' },
-    buildVersion: '2026.07.07-v47',
+    buildVersion: '2026.07.07-v48',
 
     hasModelSelected() {
       const v = this.picker.model;
@@ -1262,11 +1262,27 @@ function lgCalculator() {
         ]}
       ]},
       'เครื่องอบผ้า / Styler / ล้างจาน': { models: [
+        { code:'DFC335HM.ABMPETH', name:'เครื่องล้างจาน 15 ที่', plans:[
+          { term:'5Y', serviceType:'Self', serviceCycle:'ทุก 12 เดือน', regular:849, effectiveMonthly:149.0, promoMonths:1, postPromoPrice:849, billSchedule:[{'range': 'บิล 1', 'price': 149.0, 'note': 'ราคาพิเศษ'}, {'range': 'บิล 2-8', 'price': 424.0, 'note': 'โปรลด 50%'}, {'range': 'บิล 9-60', 'price': 849.0, 'note': 'ราคาปกติ'}], promo:'บิลแรก 149 ต่อด้วยลด 50% 7 รอบบิล (424) จากนั้น 849/เดือน', totalContractMonths:60, totalSaving:3675 },
+          { term:'5Y', serviceType:'Visit', serviceCycle:'ทุก 12 เดือน', regular:899, effectiveMonthly:149.0, promoMonths:1, postPromoPrice:899, billSchedule:[{'range': 'บิล 1', 'price': 149.0, 'note': 'ราคาพิเศษ'}, {'range': 'บิล 2-8', 'price': 449.0, 'note': 'โปรลด 50%'}, {'range': 'บิล 9-60', 'price': 899.0, 'note': 'ราคาปกติ'}], promo:'บิลแรก 149 ต่อด้วยลด 50% 7 รอบบิล (449) จากนั้น 899/เดือน', totalContractMonths:60, totalSaving:3900 },
+          { term:'6Y', serviceType:'Self', serviceCycle:'ทุก 12 เดือน', regular:749, effectiveMonthly:149.0, promoMonths:1, postPromoPrice:749, billSchedule:[{'range': 'บิล 1', 'price': 149.0, 'note': 'ราคาพิเศษ'}, {'range': 'บิล 2-8', 'price': 374.0, 'note': 'โปรลด 50%'}, {'range': 'บิล 9-72', 'price': 749.0, 'note': 'ราคาปกติ'}], promo:'บิลแรก 149 ต่อด้วยลด 50% 7 รอบบิล (374) จากนั้น 749/เดือน', totalContractMonths:72, totalSaving:3225 },
+          { term:'6Y', serviceType:'Visit', serviceCycle:'ทุก 12 เดือน', regular:799, effectiveMonthly:149.0, promoMonths:1, postPromoPrice:799, billSchedule:[{'range': 'บิล 1', 'price': 149.0, 'note': 'ราคาพิเศษ'}, {'range': 'บิล 2-8', 'price': 399.0, 'note': 'โปรลด 50%'}, {'range': 'บิล 9-72', 'price': 799.0, 'note': 'ราคาปกติ'}], promo:'บิลแรก 149 ต่อด้วยลด 50% 7 รอบบิล (399) จากนั้น 799/เดือน', totalContractMonths:72, totalSaving:3450 }
+        ]},
+        { code:'DFC533FV.APYPETH', name:'เครื่องล้างจาน 14 ที่', plans:[
+          { term:'5Y', serviceType:'Self', serviceCycle:'ทุก 12 เดือน', regular:699, effectiveMonthly:149.0, promoMonths:1, postPromoPrice:699, billSchedule:[{'range': 'บิล 1', 'price': 149.0, 'note': 'ราคาพิเศษ'}, {'range': 'บิล 2-8', 'price': 349.0, 'note': 'โปรลด 50%'}, {'range': 'บิล 9-60', 'price': 699.0, 'note': 'ราคาปกติ'}], promo:'บิลแรก 149 ต่อด้วยลด 50% 7 รอบบิล (349) จากนั้น 699/เดือน', totalContractMonths:60, totalSaving:3000 },
+          { term:'5Y', serviceType:'Visit', serviceCycle:'ทุก 12 เดือน', regular:749, effectiveMonthly:149.0, promoMonths:1, postPromoPrice:749, billSchedule:[{'range': 'บิล 1', 'price': 149.0, 'note': 'ราคาพิเศษ'}, {'range': 'บิล 2-8', 'price': 374.0, 'note': 'โปรลด 50%'}, {'range': 'บิล 9-60', 'price': 749.0, 'note': 'ราคาปกติ'}], promo:'บิลแรก 149 ต่อด้วยลด 50% 7 รอบบิล (374) จากนั้น 749/เดือน', totalContractMonths:60, totalSaving:3225 },
+          { term:'6Y', serviceType:'Self', serviceCycle:'ทุก 12 เดือน', regular:599, effectiveMonthly:149.0, promoMonths:1, postPromoPrice:599, billSchedule:[{'range': 'บิล 1', 'price': 149.0, 'note': 'ราคาพิเศษ'}, {'range': 'บิล 2-8', 'price': 299.0, 'note': 'โปรลด 50%'}, {'range': 'บิล 9-72', 'price': 599.0, 'note': 'ราคาปกติ'}], promo:'บิลแรก 149 ต่อด้วยลด 50% 7 รอบบิล (299) จากนั้น 599/เดือน', totalContractMonths:72, totalSaving:2550 },
+          { term:'6Y', serviceType:'Visit', serviceCycle:'ทุก 12 เดือน', regular:649, effectiveMonthly:149.0, promoMonths:1, postPromoPrice:649, billSchedule:[{'range': 'บิล 1', 'price': 149.0, 'note': 'ราคาพิเศษ'}, {'range': 'บิล 2-8', 'price': 324.0, 'note': 'โปรลด 50%'}, {'range': 'บิล 9-72', 'price': 649.0, 'note': 'ราคาปกติ'}], promo:'บิลแรก 149 ต่อด้วยลด 50% 7 รอบบิล (324) จากนั้น 649/เดือน', totalContractMonths:72, totalSaving:2775 }
+        ]},
         { code:'RV10VHP4B.BMBPETH', name:'เครื่องอบผ้า : 10KG', plans:[
           { term:'5Y', serviceType:'Self', serviceCycle:'ทุก 12 เดือน', regular:749, effectiveMonthly:149.0, promoMonths:1, postPromoPrice:749, billSchedule:[{'range': 'บิล 1', 'price': 149.0, 'note': 'ราคาพิเศษ'}, {'range': 'บิล 2-8', 'price': 374.0, 'note': 'โปรลด 50%'}, {'range': 'บิล 9-60', 'price': 749.0, 'note': 'ราคาปกติ'}], promo:'บิลแรก 149 ต่อด้วยลด 50% 7 รอบบิล (374) จากนั้น 749/เดือน', totalContractMonths:60, totalSaving:3225 },
           { term:'5Y', serviceType:'Visit', serviceCycle:'ทุก 12 เดือน', regular:849, effectiveMonthly:149.0, promoMonths:1, postPromoPrice:849, billSchedule:[{'range': 'บิล 1', 'price': 149.0, 'note': 'ราคาพิเศษ'}, {'range': 'บิล 2-8', 'price': 424.0, 'note': 'โปรลด 50%'}, {'range': 'บิล 9-60', 'price': 849.0, 'note': 'ราคาปกติ'}], promo:'บิลแรก 149 ต่อด้วยลด 50% 7 รอบบิล (424) จากนั้น 849/เดือน', totalContractMonths:60, totalSaving:3675 },
           { term:'6Y', serviceType:'Self', serviceCycle:'ทุก 12 เดือน', regular:649, effectiveMonthly:149.0, promoMonths:1, postPromoPrice:649, billSchedule:[{'range': 'บิล 1', 'price': 149.0, 'note': 'ราคาพิเศษ'}, {'range': 'บิล 2-8', 'price': 324.0, 'note': 'โปรลด 50%'}, {'range': 'บิล 9-72', 'price': 649.0, 'note': 'ราคาปกติ'}], promo:'บิลแรก 149 ต่อด้วยลด 50% 7 รอบบิล (324) จากนั้น 649/เดือน', totalContractMonths:72, totalSaving:2775 },
           { term:'6Y', serviceType:'Visit', serviceCycle:'ทุก 12 เดือน', regular:749, effectiveMonthly:149.0, promoMonths:1, postPromoPrice:749, billSchedule:[{'range': 'บิล 1', 'price': 149.0, 'note': 'ราคาพิเศษ'}, {'range': 'บิล 2-8', 'price': 374.0, 'note': 'โปรลด 50%'}, {'range': 'บิล 9-72', 'price': 749.0, 'note': 'ราคาปกติ'}], promo:'บิลแรก 149 ต่อด้วยลด 50% 7 รอบบิล (374) จากนั้น 749/เดือน', totalContractMonths:72, totalSaving:3225 }
+        ]},
+        { code:'S3MFC.ALBPETH', name:'LG Styler', plans:[
+          { term:'5Y', serviceType:'Self', serviceCycle:'ทุก 12 เดือน', regular:899, effectiveMonthly:149.0, promoMonths:1, postPromoPrice:899, billSchedule:[{'range': 'บิล 1', 'price': 149.0, 'note': 'ราคาพิเศษ'}, {'range': 'บิล 2-8', 'price': 449.0, 'note': 'โปรลด 50%'}, {'range': 'บิล 9-60', 'price': 899.0, 'note': 'ราคาปกติ'}], promo:'บิลแรก 149 ต่อด้วยลด 50% 7 รอบบิล (449) จากนั้น 899/เดือน', totalContractMonths:60, totalSaving:3900 },
+          { term:'6Y', serviceType:'Self', serviceCycle:'ทุก 12 เดือน', regular:799, effectiveMonthly:149.0, promoMonths:1, postPromoPrice:799, billSchedule:[{'range': 'บิล 1', 'price': 149.0, 'note': 'ราคาพิเศษ'}, {'range': 'บิล 2-8', 'price': 399.0, 'note': 'โปรลด 50%'}, {'range': 'บิล 9-72', 'price': 799.0, 'note': 'ราคาปกติ'}], promo:'บิลแรก 149 ต่อด้วยลด 50% 7 รอบบิล (399) จากนั้น 799/เดือน', totalContractMonths:72, totalSaving:3450 }
         ]}
       ]},
       'ไมโครเวฟ': { models: [
@@ -1275,6 +1291,12 @@ function lgCalculator() {
         ]}
       ]},
       'เครื่องฟอกอากาศ': { models: [
+        { code:'AS10GDBY0.ABAE', name:'Alpha Pet 104', plans:[
+          { term:'5Y', serviceType:'Self', serviceCycle:'ทุก 12 เดือน', regular:1099, effectiveMonthly:149.0, promoMonths:1, postPromoPrice:1099, billSchedule:[{'range': 'บิล 1', 'price': 149.0, 'note': 'ราคาพิเศษ'}, {'range': 'บิล 2-3', 'price': 549.0, 'note': 'โปรลด 50%'}, {'range': 'บิล 4-60', 'price': 1099.0, 'note': 'ราคาปกติ'}], promo:'บิลแรก 149 ต่อด้วยลด 50% 2 รอบบิล (549) จากนั้น 1,099/เดือน', totalContractMonths:60, totalSaving:2050 },
+          { term:'5Y', serviceType:'Self', serviceCycle:'ทุก 6 เดือน', regular:1149, effectiveMonthly:149.0, promoMonths:1, postPromoPrice:1149, billSchedule:[{'range': 'บิล 1', 'price': 149.0, 'note': 'ราคาพิเศษ'}, {'range': 'บิล 2-3', 'price': 574.0, 'note': 'โปรลด 50%'}, {'range': 'บิล 4-60', 'price': 1149.0, 'note': 'ราคาปกติ'}], promo:'บิลแรก 149 ต่อด้วยลด 50% 2 รอบบิล (574) จากนั้น 1,149/เดือน', totalContractMonths:60, totalSaving:2150 },
+          { term:'5Y', serviceType:'Visit', serviceCycle:'ทุก 12 เดือน', regular:1149, effectiveMonthly:149.0, promoMonths:1, postPromoPrice:1149, billSchedule:[{'range': 'บิล 1', 'price': 149.0, 'note': 'ราคาพิเศษ'}, {'range': 'บิล 2-3', 'price': 574.0, 'note': 'โปรลด 50%'}, {'range': 'บิล 4-60', 'price': 1149.0, 'note': 'ราคาปกติ'}], promo:'บิลแรก 149 ต่อด้วยลด 50% 2 รอบบิล (574) จากนั้น 1,149/เดือน', totalContractMonths:60, totalSaving:2150 },
+          { term:'5Y', serviceType:'Visit', serviceCycle:'ทุก 6 เดือน', regular:1199, effectiveMonthly:149.0, promoMonths:1, postPromoPrice:1199, billSchedule:[{'range': 'บิล 1', 'price': 149.0, 'note': 'ราคาพิเศษ'}, {'range': 'บิล 2-3', 'price': 599.0, 'note': 'โปรลด 50%'}, {'range': 'บิล 4-60', 'price': 1199.0, 'note': 'ราคาปกติ'}], promo:'บิลแรก 149 ต่อด้วยลด 50% 2 รอบบิล (599) จากนั้น 1,199/เดือน', totalContractMonths:60, totalSaving:2250 }
+        ]},
         { code:'AS25GCBY0.ABAE', name:'AeroCat', plans:[
           { term:'5Y', serviceType:'Self', serviceCycle:'ทุก 12 เดือน', regular:549, effectiveMonthly:149.0, promoMonths:1, postPromoPrice:549, billSchedule:[{'range': 'บิล 1', 'price': 149.0, 'note': 'ราคาพิเศษ'}, {'range': 'บิล 2-3', 'price': 274.0, 'note': 'โปรลด 50%'}, {'range': 'บิล 4-60', 'price': 549.0, 'note': 'ราคาปกติ'}], promo:'บิลแรก 149 ต่อด้วยลด 50% 2 รอบบิล (274) จากนั้น 549/เดือน', totalContractMonths:60, totalSaving:950 },
           { term:'5Y', serviceType:'Visit', serviceCycle:'ทุก 12 เดือน', regular:599, effectiveMonthly:149.0, promoMonths:1, postPromoPrice:599, billSchedule:[{'range': 'บิล 1', 'price': 149.0, 'note': 'ราคาพิเศษ'}, {'range': 'บิล 2-3', 'price': 299.0, 'note': 'โปรลด 50%'}, {'range': 'บิล 4-60', 'price': 599.0, 'note': 'ราคาปกติ'}], promo:'บิลแรก 149 ต่อด้วยลด 50% 2 รอบบิล (299) จากนั้น 599/เดือน', totalContractMonths:60, totalSaving:1050 }
@@ -1285,21 +1307,15 @@ function lgCalculator() {
         ]},
         { code:'AS60GHWG0.ABAE', name:'AeroHit 60', plans:[
           { term:'5Y', serviceType:'Self', serviceCycle:'ทุก 12 เดือน', regular:399, effectiveMonthly:149.0, promoMonths:1, postPromoPrice:399, billSchedule:[{'range': 'บิล 1', 'price': 149.0, 'note': 'ราคาพิเศษ'}, {'range': 'บิล 2-3', 'price': 199.0, 'note': 'โปรลด 50%'}, {'range': 'บิล 4-60', 'price': 399.0, 'note': 'ราคาปกติ'}], promo:'บิลแรก 149 ต่อด้วยลด 50% 2 รอบบิล (199) จากนั้น 399/เดือน', totalContractMonths:60, totalSaving:650 },
-          { term:'5Y', serviceType:'Visit', serviceCycle:'ทุก 12 เดือน', regular:449, effectiveMonthly:149.0, promoMonths:1, postPromoPrice:449, billSchedule:[{'range': 'บิล 1', 'price': 149.0, 'note': 'ราคาพิเศษ'}, {'range': 'บิล 2-3', 'price': 224.0, 'note': 'โปรลด 50%'}, {'range': 'บิล 4-60', 'price': 449.0, 'note': 'ราคาปกติ'}], promo:'บิลแรก 149 ต่อด้วยลด 50% 2 รอบบิล (224) จากนั้น 449/เดือน', totalContractMonths:60, totalSaving:750 },
           { term:'5Y', serviceType:'Self', serviceCycle:'ทุก 6 เดือน', regular:449, effectiveMonthly:149.0, promoMonths:1, postPromoPrice:449, billSchedule:[{'range': 'บิล 1', 'price': 149.0, 'note': 'ราคาพิเศษ'}, {'range': 'บิล 2-3', 'price': 224.0, 'note': 'โปรลด 50%'}, {'range': 'บิล 4-60', 'price': 449.0, 'note': 'ราคาปกติ'}], promo:'บิลแรก 149 ต่อด้วยลด 50% 2 รอบบิล (224) จากนั้น 449/เดือน', totalContractMonths:60, totalSaving:750 },
+          { term:'5Y', serviceType:'Visit', serviceCycle:'ทุก 12 เดือน', regular:449, effectiveMonthly:149.0, promoMonths:1, postPromoPrice:449, billSchedule:[{'range': 'บิล 1', 'price': 149.0, 'note': 'ราคาพิเศษ'}, {'range': 'บิล 2-3', 'price': 224.0, 'note': 'โปรลด 50%'}, {'range': 'บิล 4-60', 'price': 449.0, 'note': 'ราคาปกติ'}], promo:'บิลแรก 149 ต่อด้วยลด 50% 2 รอบบิล (224) จากนั้น 449/เดือน', totalContractMonths:60, totalSaving:750 },
           { term:'5Y', serviceType:'Visit', serviceCycle:'ทุก 6 เดือน', regular:499, effectiveMonthly:149.0, promoMonths:1, postPromoPrice:499, billSchedule:[{'range': 'บิล 1', 'price': 149.0, 'note': 'ราคาพิเศษ'}, {'range': 'บิล 2-3', 'price': 249.0, 'note': 'โปรลด 50%'}, {'range': 'บิล 4-60', 'price': 499.0, 'note': 'ราคาปกติ'}], promo:'บิลแรก 149 ต่อด้วยลด 50% 2 รอบบิล (249) จากนั้น 499/เดือน', totalContractMonths:60, totalSaving:850 }
         ]},
         { code:'AS65GDBY0.ABAE', name:'Alpha Pet 65', plans:[
           { term:'5Y', serviceType:'Self', serviceCycle:'ทุก 12 เดือน', regular:699, effectiveMonthly:149.0, promoMonths:1, postPromoPrice:699, billSchedule:[{'range': 'บิล 1', 'price': 149.0, 'note': 'ราคาพิเศษ'}, {'range': 'บิล 2-3', 'price': 349.0, 'note': 'โปรลด 50%'}, {'range': 'บิล 4-60', 'price': 699.0, 'note': 'ราคาปกติ'}], promo:'บิลแรก 149 ต่อด้วยลด 50% 2 รอบบิล (349) จากนั้น 699/เดือน', totalContractMonths:60, totalSaving:1250 },
-          { term:'5Y', serviceType:'Visit', serviceCycle:'ทุก 12 เดือน', regular:749, effectiveMonthly:149.0, promoMonths:1, postPromoPrice:749, billSchedule:[{'range': 'บิล 1', 'price': 149.0, 'note': 'ราคาพิเศษ'}, {'range': 'บิล 2-3', 'price': 374.0, 'note': 'โปรลด 50%'}, {'range': 'บิล 4-60', 'price': 749.0, 'note': 'ราคาปกติ'}], promo:'บิลแรก 149 ต่อด้วยลด 50% 2 รอบบิล (374) จากนั้น 749/เดือน', totalContractMonths:60, totalSaving:1350 },
           { term:'5Y', serviceType:'Self', serviceCycle:'ทุก 6 เดือน', regular:749, effectiveMonthly:149.0, promoMonths:1, postPromoPrice:749, billSchedule:[{'range': 'บิล 1', 'price': 149.0, 'note': 'ราคาพิเศษ'}, {'range': 'บิล 2-3', 'price': 374.0, 'note': 'โปรลด 50%'}, {'range': 'บิล 4-60', 'price': 749.0, 'note': 'ราคาปกติ'}], promo:'บิลแรก 149 ต่อด้วยลด 50% 2 รอบบิล (374) จากนั้น 749/เดือน', totalContractMonths:60, totalSaving:1350 },
+          { term:'5Y', serviceType:'Visit', serviceCycle:'ทุก 12 เดือน', regular:749, effectiveMonthly:149.0, promoMonths:1, postPromoPrice:749, billSchedule:[{'range': 'บิล 1', 'price': 149.0, 'note': 'ราคาพิเศษ'}, {'range': 'บิล 2-3', 'price': 374.0, 'note': 'โปรลด 50%'}, {'range': 'บิล 4-60', 'price': 749.0, 'note': 'ราคาปกติ'}], promo:'บิลแรก 149 ต่อด้วยลด 50% 2 รอบบิล (374) จากนั้น 749/เดือน', totalContractMonths:60, totalSaving:1350 },
           { term:'5Y', serviceType:'Visit', serviceCycle:'ทุก 6 เดือน', regular:799, effectiveMonthly:149.0, promoMonths:1, postPromoPrice:799, billSchedule:[{'range': 'บิล 1', 'price': 149.0, 'note': 'ราคาพิเศษ'}, {'range': 'บิล 2-3', 'price': 399.0, 'note': 'โปรลด 50%'}, {'range': 'บิล 4-60', 'price': 799.0, 'note': 'ราคาปกติ'}], promo:'บิลแรก 149 ต่อด้วยลด 50% 2 รอบบิล (399) จากนั้น 799/เดือน', totalContractMonths:60, totalSaving:1450 }
-        ]},
-        { code:'AS10GDBY0.ABAE', name:'Alpha Pet 104', plans:[
-          { term:'5Y', serviceType:'Self', serviceCycle:'ทุก 12 เดือน', regular:1099, effectiveMonthly:149.0, promoMonths:1, postPromoPrice:1099, billSchedule:[{'range': 'บิล 1', 'price': 149.0, 'note': 'ราคาพิเศษ'}, {'range': 'บิล 2-3', 'price': 549.0, 'note': 'โปรลด 50%'}, {'range': 'บิล 4-60', 'price': 1099.0, 'note': 'ราคาปกติ'}], promo:'บิลแรก 149 ต่อด้วยลด 50% 2 รอบบิล (549) จากนั้น 1,099/เดือน', totalContractMonths:60, totalSaving:2050 },
-          { term:'5Y', serviceType:'Visit', serviceCycle:'ทุก 12 เดือน', regular:1149, effectiveMonthly:149.0, promoMonths:1, postPromoPrice:1149, billSchedule:[{'range': 'บิล 1', 'price': 149.0, 'note': 'ราคาพิเศษ'}, {'range': 'บิล 2-3', 'price': 574.0, 'note': 'โปรลด 50%'}, {'range': 'บิล 4-60', 'price': 1149.0, 'note': 'ราคาปกติ'}], promo:'บิลแรก 149 ต่อด้วยลด 50% 2 รอบบิล (574) จากนั้น 1,149/เดือน', totalContractMonths:60, totalSaving:2150 },
-          { term:'5Y', serviceType:'Self', serviceCycle:'ทุก 6 เดือน', regular:1149, effectiveMonthly:149.0, promoMonths:1, postPromoPrice:1149, billSchedule:[{'range': 'บิล 1', 'price': 149.0, 'note': 'ราคาพิเศษ'}, {'range': 'บิล 2-3', 'price': 574.0, 'note': 'โปรลด 50%'}, {'range': 'บิล 4-60', 'price': 1149.0, 'note': 'ราคาปกติ'}], promo:'บิลแรก 149 ต่อด้วยลด 50% 2 รอบบิล (574) จากนั้น 1,149/เดือน', totalContractMonths:60, totalSaving:2150 },
-          { term:'5Y', serviceType:'Visit', serviceCycle:'ทุก 6 เดือน', regular:1199, effectiveMonthly:149.0, promoMonths:1, postPromoPrice:1199, billSchedule:[{'range': 'บิล 1', 'price': 149.0, 'note': 'ราคาพิเศษ'}, {'range': 'บิล 2-3', 'price': 599.0, 'note': 'โปรลด 50%'}, {'range': 'บิล 4-60', 'price': 1199.0, 'note': 'ราคาปกติ'}], promo:'บิลแรก 149 ต่อด้วยลด 50% 2 รอบบิล (599) จากนั้น 1,199/เดือน', totalContractMonths:60, totalSaving:2250 }
         ]}
       ]},
       'เครื่องลดความชื้น': { models: [
@@ -1377,34 +1393,34 @@ function lgCalculator() {
         { code:'ZT-Q18GPLE0.EWGHATH', name:'Ceiling Suspended · 18 HP', plans:[
           { term:'5Y', serviceType:'Visit', serviceCycle:'ทุก 4 เดือน', regular:1949, effectiveMonthly:1949, promoMonths:0, postPromoPrice:1949, promo:'', totalContractMonths:60, totalSaving:0 }
         ]},
-        { code:'ZT-Q48GYLA0.EWGHATH', name:'Ceiling Suspended · 48 HP', plans:[
-          { term:'5Y', serviceType:'Visit', serviceCycle:'ทุก 4 เดือน', regular:2799, effectiveMonthly:2799, promoMonths:0, postPromoPrice:2799, promo:'', totalContractMonths:60, totalSaving:0 }
-        ]},
-        { code:'ZTQ18GTLA0.EWGHATH', name:'ZTQ18GTLA0.EWGHATH', plans:[
+        { code:'ZT-Q18GTLA0.EWGHATH', name:'ZT-Q18GTLA0.EWGHATH', plans:[
           { term:'5Y', serviceType:'Visit', serviceCycle:'ทุก 4 เดือน', regular:1599, effectiveMonthly:1599, promoMonths:0, postPromoPrice:1599, promo:'', totalContractMonths:60, totalSaving:0 }
         ]},
-        { code:'ZTQ24GPLA0.EWGHATH', name:'ZTQ24GPLA0.EWGHATH', plans:[
+        { code:'ZT-Q24GPLA0.EWGHATH', name:'ZT-Q24GPLA0.EWGHATH', plans:[
           { term:'5Y', serviceType:'Visit', serviceCycle:'ทุก 4 เดือน', regular:1899, effectiveMonthly:1899, promoMonths:0, postPromoPrice:1899, promo:'', totalContractMonths:60, totalSaving:0 }
         ]},
-        { code:'ZTQ24GTLA0.EWGHATH', name:'ZTQ24GTLA0.EWGHATH', plans:[
+        { code:'ZT-Q24GTLA0.EWGHATH', name:'ZT-Q24GTLA0.EWGHATH', plans:[
           { term:'5Y', serviceType:'Visit', serviceCycle:'ทุก 4 เดือน', regular:1799, effectiveMonthly:1799, promoMonths:0, postPromoPrice:1799, promo:'', totalContractMonths:60, totalSaving:0 }
         ]},
-        { code:'ZTQ36GNLA0.EWGHATH', name:'ZTQ36GNLA0.EWGHATH', plans:[
+        { code:'ZT-Q36GNLA0.EWGHATH', name:'ZT-Q36GNLA0.EWGHATH', plans:[
           { term:'5Y', serviceType:'Visit', serviceCycle:'ทุก 4 เดือน', regular:2349, effectiveMonthly:2349, promoMonths:0, postPromoPrice:2349, promo:'', totalContractMonths:60, totalSaving:0 }
         ]},
-        { code:'ZTQ36GYLA0.EWGHATH', name:'ZTQ36GYLA0.EWGHATH', plans:[
+        { code:'ZT-Q36GYLA0.EWGHATH', name:'ZT-Q36GYLA0.EWGHATH', plans:[
           { term:'5Y', serviceType:'Visit', serviceCycle:'ทุก 4 เดือน', regular:2599, effectiveMonthly:2599, promoMonths:0, postPromoPrice:2599, promo:'', totalContractMonths:60, totalSaving:0 }
         ]},
-        { code:'ZTQ48GMLA0.EWGHATH', name:'ZTQ48GMLA0.EWGHATH', plans:[
+        { code:'ZT-Q48GMLA0.EWGHATH', name:'ZT-Q48GMLA0.EWGHATH', plans:[
           { term:'5Y', serviceType:'Visit', serviceCycle:'ทุก 4 เดือน', regular:2499, effectiveMonthly:2499, promoMonths:0, postPromoPrice:2499, promo:'', totalContractMonths:60, totalSaving:0 }
+        ]},
+        { code:'ZT-Q48GYLA0.EWGHATH', name:'Ceiling Suspended · 48 HP', plans:[
+          { term:'5Y', serviceType:'Visit', serviceCycle:'ทุก 4 เดือน', regular:2799, effectiveMonthly:2799, promoMonths:0, postPromoPrice:2799, promo:'', totalContractMonths:60, totalSaving:0 }
         ]},
         { code:'ZV-Q18GM1E0.EWGHATH', name:'1 Way Cassette · 18 HP', plans:[
           { term:'5Y', serviceType:'Visit', serviceCycle:'ทุก 4 เดือน', regular:1599, effectiveMonthly:1599, promoMonths:0, postPromoPrice:1599, promo:'', totalContractMonths:60, totalSaving:0 }
         ]},
-        { code:'ZVQ24GM1E0.EWGHATH', name:'ZVQ24GM1E0.EWGHATH', plans:[
+        { code:'ZV-Q24GM1E0.EWGHATH', name:'ZV-Q24GM1E0.EWGHATH', plans:[
           { term:'5Y', serviceType:'Visit', serviceCycle:'ทุก 4 เดือน', regular:1699, effectiveMonthly:1699, promoMonths:0, postPromoPrice:1699, promo:'', totalContractMonths:60, totalSaving:0 }
         ]},
-        { code:'ZVQ36GM2E0.EWGHATH', name:'ZVQ36GM2E0.EWGHATH', plans:[
+        { code:'ZV-Q36GM2E0.EWGHATH', name:'ZV-Q36GM2E0.EWGHATH', plans:[
           { term:'5Y', serviceType:'Visit', serviceCycle:'ทุก 4 เดือน', regular:1849, effectiveMonthly:1849, promoMonths:0, postPromoPrice:1849, promo:'', totalContractMonths:60, totalSaving:0 }
         ]}
       ]},
