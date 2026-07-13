@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- LG Subscribe Calculator build 2026.07.13-v67 · SUBSCRIBE DAY active = grand total gradient -->
+<!-- LG Subscribe Calculator build 2026.07.13-v68 · PROMOTION PERIOD follows special combo -->
 <html lang="th">
 <head>
 <meta charset="UTF-8" />
@@ -127,7 +127,22 @@
   .card::before{display:none}
   .card>*{position:relative}
   .card:hover{box-shadow:var(--shadow-md)}
-  .promo-card-on{box-shadow:0 0 0 1px var(--ink)}
+  /* PROMOTION PERIOD — เปิดคอมโบพิเศษ: โทนเดียวกับ summary-grand-box */
+  .promo-card-on{
+    background:linear-gradient(145deg,#111 0%,#1a0a10 45%,#A50034 100%) !important;
+    border-color:transparent !important;
+    box-shadow:0 12px 32px rgba(92,14,37,.28) !important;
+    color:#fff !important;
+  }
+  .promo-card-on .font-display,
+  .promo-card-on .font-display[style]{color:#fff !important}
+  .promo-card-on .text-xs,
+  .promo-card-on .text-xs[style],
+  .promo-card-on [style*="color:var(--ink)"],
+  .promo-card-on [style*="color:var(--ink-2)"],
+  .promo-card-on [style*="color:var(--muted)"]{color:rgba(255,255,255,.78) !important}
+  .promo-card-on .promo-period-label{color:rgba(255,255,255,.65) !important}
+
 
   select,input[type=text],input[type=number]{
     font-family:inherit;background:var(--fill);border:1px solid transparent;
@@ -593,7 +608,6 @@
   .btn-compare-toggle.active { border-color: var(--blood) !important; color: var(--blood) !important; background: var(--blood-soft) !important; }
   .cart-item { border-left: 3px solid var(--blood); }
   .summary-first-pay-box { border-left: 3px solid var(--blood); background: #fff; }
-  .promo-card-on { box-shadow: 0 0 0 1.5px var(--blood) !important; }
   header { border-bottom-color: rgba(200,16,46,.08); }
 
 
@@ -1096,17 +1110,17 @@
  <div class="sticky-summary space-y-4">
 
  <div class="card p-5" :class="specialCombo ? 'promo-card-on' : ''">
- <div class="text-xs text-gray-500 font-mono uppercase tracking-wider mb-1">PROMOTION PERIOD</div>
+ <div class="text-xs font-mono uppercase tracking-wider mb-1 promo-period-label" :style="specialCombo ? '' : 'color:var(--muted)'">PROMOTION PERIOD</div>
  <template x-if="!specialCombo">
  <div>
- <div class="font-display font-bold text-lg" x-text="fmtDate(promoConfig.normal.dateStart) + ' – ' + fmtDate(promoConfig.normal.dateEnd)"></div>
- <div class="text-xs text-gray-500 mt-1" x-text="promoConfig.normal.name + ' · LG Subscribe'"></div>
+ <div class="font-display font-bold text-lg" style="color:var(--ink)" x-text="promoConfig.normal.name"></div>
+ <div class="text-xs mt-1" style="color:var(--muted)" x-text="fmtDate(promoConfig.normal.dateStart) + ' – ' + fmtDate(promoConfig.normal.dateEnd) + ' · โปรคอมโบปกติ'"></div>
  </div>
  </template>
  <template x-if="specialCombo">
  <div>
- <div class="font-display font-bold text-lg" style="color:var(--ink)" x-text="fmtDate(promoConfig.special.dateStart) + ' – ' + fmtDate(promoConfig.special.dateEnd)"></div>
- <div class="text-xs mt-1" style="color:var(--ink-2);font-weight:600" x-text="promoConfig.special.name + ' · ส่วนลดสูงสุด ' + Math.max(...promoConfig.special.newTiers.map(t=>t.rate), ...promoConfig.special.existTiers.map(t=>t.rate)) + '%'"></div>
+ <div class="font-display font-bold text-lg" x-text="promoConfig.special.name"></div>
+ <div class="text-xs mt-1" x-text="fmtDate(promoConfig.special.dateStart) + ' – ' + fmtDate(promoConfig.special.dateEnd) + ' · ส่วนลดสูงสุด ' + Math.max(...promoConfig.special.newTiers.map(t=>t.rate), ...promoConfig.special.existTiers.map(t=>t.rate)) + '%'"></div>
  </div>
  </template>
  </div>
@@ -1352,7 +1366,7 @@ function lgCalculator() {
  compareB: { term: '5Y', serviceType: 'Visit', modelIndices: [] },
  cart: [],
  toast: { show: false, msg: '' },
- buildVersion: '2026.07.13-v67',
+ buildVersion: '2026.07.13-v68',
 
  hasModelSelected() {
  const v = this.picker.model;
