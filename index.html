@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- LG Subscribe Calculator build 2026.07.13-v55 -->
+<!-- LG Subscribe Calculator build 2026.07.13-v56 -->
 <html lang="th">
 <head>
 <meta charset="UTF-8" />
@@ -443,7 +443,7 @@
             <select x-model="picker.category" @change="onCategoryChange()">
               <option value="">— เลือกหมวด —</option>
               <template x-for="cat in categoryList" :key="cat">
-                <option :value="cat" x-text="cat"></option>
+                <option :value="cat" x-text="categoryDisplayName(cat)"></option>
               </template>
             </select>
           </div>
@@ -569,7 +569,7 @@
         <div class="compare-b-panel" x-show="picker.category && showCompareModels && categoryModels().length > 1">
           <div class="cp-head">🔀 เปรียบเทียบหลายรุ่น — <span x-text="compareBFilterLabel()"></span></div>
           <div class="cp-sub">
-            <span x-text="picker.category"></span>
+            <span x-text="categoryDisplayName(picker.category)"></span>
             <span x-show="comboRate() > 0" style="color:#7c3aed"> · ราคารวมสัญญาหลัง combo <span x-text="Math.round(comboRate()*100)+'%'"></span> แล้ว</span>
           </div>
           <div class="compare-b-filters">
@@ -666,7 +666,7 @@
                 <div class="flex-1 min-w-0">
                   <div class="flex items-center gap-2 flex-wrap mb-1">
                     <span class="text-xs text-gray-400 font-mono" x-text="'#' + (i+1).toString().padStart(2,'0')"></span>
-                    <span class="font-semibold text-sm" x-text="careCategoryLabel(item)"></span>
+                    <span class="font-semibold text-sm" x-text="productTypeLabel(item)"></span>
                   </div>
                   <div class="font-mono text-xs text-gray-700" x-text="item.code"></div>
                   <div class="text-sm" x-text="item.name"></div>
@@ -810,7 +810,9 @@
               <template x-for="(item, i) in cart" :key="i">
                 <div class="flex justify-between items-start gap-2 text-sm">
                   <div class="flex-1 min-w-0">
-                    <div class="truncate" x-text="item.code"></div>
+                    <div class="text-xs font-medium truncate" x-text="productTypeLabel(item)"></div>
+                    <div class="truncate text-xs text-gray-600" x-text="item.name"></div>
+                    <div class="text-xs text-gray-400 font-mono truncate" x-text="item.code"></div>
                     <div class="text-xs text-gray-500" x-text="item.term + ' · ' + serviceTypeTag(item.serviceType)"></div>
                   </div>
                   <div class="text-right font-mono shrink-0" x-text="'฿' + item.effectiveMonthly.toLocaleString()"></div>
@@ -1031,7 +1033,7 @@ function lgCalculator() {
     compareB: { term: '5Y', serviceType: 'Visit', modelIndices: [] },
     cart: [],
     toast: { show: false, msg: '' },
-    buildVersion: '2026.07.13-v55',
+    buildVersion: '2026.07.13-v56',
 
     hasModelSelected() {
       const v = this.picker.model;
@@ -2482,13 +2484,56 @@ function lgCalculator() {
       return promoSaving + this.grandTotalSaving();
     },
 
-    careCategoryLabel(item) {
+    // ชื่อหมวดที่อ่านง่าย (dropdown / ข้อความลูกค้า) — key ภายใน catalog คงเดิม
+    categoryDisplayName(cat) {
+      if (!cat) return '';
+      const map = {
+        'ตู้เย็น Side-by-Side': 'ตู้เย็น Side by Side',
+        'ตู้เย็น Multi-Door': 'ตู้เย็น Multi-Door (หลายประตู)',
+        'ตู้เย็น Top/Bottom Freezer': 'ตู้เย็น ช่องแช่แข็งบน-ล่าง',
+        'ตู้เย็น Plumbing': 'ตู้เย็น ระบบต่อท่อน้ำ',
+        'Wash Tower': 'Wash Tower (ซัก+อบ ในเครื่องเดียว)',
+        'เครื่องซักผ้า Front Load': 'เครื่องซักผ้าฝาหน้า',
+        'เครื่องซักผ้า Top Load': 'เครื่องซักผ้าฝาบน',
+        'เครื่องอบผ้า / Styler / ล้างจาน': 'เครื่องอบผ้า / Styler / ล้างจาน',
+        'ไมโครเวฟ': 'ไมโครเวฟ',
+        'เครื่องฟอกอากาศ': 'เครื่องฟอกอากาศ',
+        'เครื่องลดความชื้น': 'เครื่องลดความชื้น',
+        'เครื่องปรับอากาศ DUALCOOL AI': 'แอร์ DUALCOOL AI',
+        'เครื่องปรับอากาศ ARTCOOL': 'แอร์ ARTCOOL',
+        'เครื่องปรับอากาศ DUAL INVERTER': 'แอร์ DUAL INVERTER',
+        'แอร์เชิงพาณิชย์ SAC': 'แอร์เชิงพาณิชย์ (SAC)',
+        'โทรทัศน์ Life Style / OLED / QNED / NANO': 'โทรทัศน์ / TV',
+        'มอนิเตอร์': 'มอนิเตอร์ / จอคอมพิวเตอร์',
+        'ลำโพง / ซาวด์บาร์': 'ลำโพง / ซาวด์บาร์',
+        'เครื่องดูดฝุ่น': 'เครื่องดูดฝุ่น',
+        'เครื่องกรองน้ำ': 'เครื่องกรองน้ำ',
+      };
+      return map[cat] || cat;
+    },
+    // ประเภทสินค้าต่อชิ้น (แยกอบผ้า/Styler/ล้างจานจากหมวดรวม)
+    productTypeLabel(item) {
+      if (!item) return '';
       const code = item.code || '';
       const name = item.name || '';
       if (code.includes('DFC') || name.includes('ล้างจาน')) return 'เครื่องล้างจาน';
-      if (code.includes('S3MFC') || name.includes('Styler')) return 'LG Styler';
+      if (code.includes('S3MFC') || name.includes('Styler')) return 'LG Styler (ตู้รีดผ้า)';
       if (code.includes('RV10') || name.includes('อบผ้า')) return 'เครื่องอบผ้า';
-      return item.category;
+      return this.categoryDisplayName(item.category);
+    },
+    // บรรทัดหัวข้อสินค้าในสรุป/คัดลอก — ประเภท · ชื่อ (รหัส)
+    productSummaryTitle(item) {
+      const type = this.productTypeLabel(item);
+      const name = (item.name || '').trim();
+      const code = item.code || '';
+      let line = type || 'สินค้า';
+      if (name) line += ' · ' + name;
+      if (code) line += ' (' + code + ')';
+      return line;
+    },
+    // alias เดิม (ถ้ามีที่อื่นเรียก)
+    careCategoryLabel(item) {
+      return this.productTypeLabel(item);
     },
     isNoMaintenanceWarranty(item) {
       return ['โทรทัศน์ Life Style / OLED / QNED / NANO', 'ลำโพง / ซาวด์บาร์', 'มอนิเตอร์', 'ไมโครเวฟ'].includes(item.category);
@@ -2686,10 +2731,10 @@ function lgCalculator() {
         txt += '<div style="border:1px solid #e5e7eb;border-radius:8px;padding:10px 12px;margin-bottom:7px;background:#fafafa">';
         // Title
         txt += '<div style="display:flex;justify-content:space-between;align-items:flex-start;gap:6px;margin-bottom:3px">';
-        txt += '<div><span style="font-weight:700;color:#a50034">' + (i+1) + '.</span> <strong>' + it.name + '</strong></div>';
+        txt += '<div><span style="font-weight:700;color:#a50034">' + (i+1) + '.</span> <strong>' + this.productSummaryTitle(it) + '</strong></div>';
         txt += '<span style="font-size:0.75em;background:#f3f4f6;color:#374151;padding:2px 7px;border-radius:4px;white-space:nowrap">' + it.term + '</span>';
         txt += '</div>';
-        txt += '<div style="font-size:0.78em;color:#6b7280;margin-bottom:6px">' + it.category + ' · ' + it.code + ' · สัญญา ' + (it.totalContractMonths || 60) + ' เดือน</div>';
+        txt += '<div style="font-size:0.78em;color:#6b7280;margin-bottom:6px">' + this.productTypeLabel(it) + ' · สัญญา ' + (it.totalContractMonths || 60) + ' เดือน</div>';
         // Pricing
         txt += '<div style="font-size:0.85em;margin-bottom:3px">';
         if (it.billSchedule) {
@@ -2754,7 +2799,7 @@ function lgCalculator() {
 
       // HEADER
       const headerTitle = this.cart.length === 1
-        ? 'LG SUBSCRIBE — ' + this.cart[0].code
+        ? 'LG SUBSCRIBE — ' + this.productTypeLabel(this.cart[0]) + ' · ' + this.cart[0].code
         : 'LG SUBSCRIBE — ' + this.cart.length + ' รายการ';
       lines.push(headerTitle);
       let headerSub = ct + ' | ' + this.promoDateText();
@@ -2772,8 +2817,9 @@ function lgCalculator() {
       this.cart.forEach((it, i) => {
         const care = this.careService(it);
         lines.push('');
-        if (this.cart.length > 1) lines.push((i + 1) + '. ' + it.name);
-        else lines.push(it.name);
+        const title = this.productSummaryTitle(it);
+        if (this.cart.length > 1) lines.push((i + 1) + '. ' + title);
+        else lines.push(title);
         lines.push('สัญญา ' + it.term + ' (' + (it.totalContractMonths || 60) + ' เดือน) | บริการ: ' + this.formatServiceDetail(it, true));
 
         // Bill schedule — รวมเป็นบล็อกเดียว แสดงราคาหลังหักส่วนลดคอมโบแล้ว
