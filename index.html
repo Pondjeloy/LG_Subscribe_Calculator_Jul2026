@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- LG Subscribe Calculator build 2026.07.13-v54 -->
+<!-- LG Subscribe Calculator build 2026.07.13-v55 -->
 <html lang="th">
 <head>
 <meta charset="UTF-8" />
@@ -479,7 +479,7 @@
                       <div class="flex items-center gap-2 flex-wrap mb-1">
                         <span class="font-semibold text-sm" x-text="plan.term"></span>
                         <span class="tag" :class="'tag-' + plan.serviceType.toLowerCase().replace(' ','')" x-text="serviceTypeTag(plan.serviceType)"></span>
-                        <span class="text-xs text-gray-500" x-text="planServiceNote(plan)"></span>
+                        <span class="text-xs text-gray-500" x-show="planServiceNote(plan)" x-text="planServiceNote(plan)"></span>
                         <span x-show="plan.promo" class="tag tag-promo">🎁 มีโปร</span>
                         <span x-show="isRecommendedPlan(picker.category, plan)" class="tag tag-recommend">⭐ แนะนำ</span>
                       </div>
@@ -1031,7 +1031,7 @@ function lgCalculator() {
     compareB: { term: '5Y', serviceType: 'Visit', modelIndices: [] },
     cart: [],
     toast: { show: false, msg: '' },
-    buildVersion: '2026.07.13-v54',
+    buildVersion: '2026.07.13-v55',
 
     hasModelSelected() {
       const v = this.picker.model;
@@ -1113,8 +1113,8 @@ function lgCalculator() {
       return 'แนะนำ 6 ปี Visit — คุ้มที่สุด';
     },
     planServiceNote(plan) {
-      // No Service: ไม่โชว์ "บริการ: ไม่มี..." — ลูกค้ามักเข้าใจผิด
-      if (plan.serviceType === 'No Service') return 'รับประกันตลอดสัญญา';
+      // No Service: tag แสดง "รับประกันตลอดสัญญา" แล้ว — อย่าซ้ำใน note
+      if (plan.serviceType === 'No Service') return '';
       return 'รอบบริการ: ' + plan.serviceCycle;
     },
 
