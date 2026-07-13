@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- LG Subscribe Calculator build 2026.07.13-v60 -->
+<!-- LG Subscribe Calculator build 2026.07.13-v61 -->
 <html lang="th">
 <head>
 <meta charset="UTF-8" />
@@ -127,14 +127,14 @@
   .plan-card{border:1px solid #e2e8f0;border-radius:8px;padding:14px;cursor:pointer;transition:all .2s;display:block;background:#fff}
   .plan-card.active{border-color:rgba(200,16,46,.5);background:linear-gradient(135deg,rgba(200,16,46,.05),#fff 68%);box-shadow:0 4px 12px rgba(200,16,46,.08)}
   .plan-card:hover{border-color:rgba(200,16,46,.35);box-shadow:0 4px 10px rgba(15,23,42,.06)}
-  .plan-periods{margin-top:10px;padding-top:8px;border-top:1px dashed #e5e7eb}
-  .plan-periods-head{font-size:11px;font-weight:700;color:#6b7280;margin-bottom:5px;letter-spacing:.02em}
-  .plan-period-row{display:grid;grid-template-columns:1fr auto auto;gap:6px 10px;align-items:baseline;font-size:12px;padding:2px 0;color:#374151}
+  .plan-periods{margin-top:6px;padding-top:5px;border-top:1px dashed #e5e7eb}
+  .plan-periods-head{font-size:10.5px;font-weight:700;color:#6b7280;margin-bottom:2px;letter-spacing:.02em}
+  .plan-period-row{display:grid;grid-template-columns:1fr auto auto;gap:2px 8px;align-items:baseline;font-size:11.5px;padding:0;line-height:1.35;color:#374151}
   .plan-period-row .pp-label{font-weight:500}
   .plan-period-row .pp-price{font-family:'JetBrains Mono',monospace;font-weight:700;color:var(--lg-red);white-space:nowrap}
   .plan-period-row .pp-note{font-size:10px;color:#6b7280;white-space:nowrap}
   .plan-period-row.pp-adv .pp-price{color:#7c3aed}
-  .plan-period-foot{margin-top:4px;font-size:10.5px;color:#9ca3af}
+  .plan-period-foot{margin-top:2px;font-size:10px;color:#9ca3af;line-height:1.3}
 
   .price-highlight{font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;color:var(--lg-red);letter-spacing:0}
 
@@ -249,7 +249,7 @@
   .summary-green-box{background:rgba(15,118,110,.08);border:1px solid rgba(15,118,110,.18);border-radius:8px;padding:16px}
   .summary-grand-box{background:linear-gradient(135deg,#19171b 0%,#34232a 42%,#7a0026 100%);border-radius:8px;padding:20px;margin-bottom:12px;box-shadow:0 22px 46px rgba(55,22,34,.24)}
   .grand-breakdown{margin-top:10px;padding-top:10px;border-top:1px solid rgba(255,255,255,.2)}
-  .summary-plain-box{background:#f8fafc;border:1px solid var(--lg-line);border-radius:8px;padding:13px;font-size:12px;color:#374151;line-height:1.7}
+  .summary-plain-box{background:#f8fafc;border:1px solid var(--lg-line);border-radius:8px;padding:10px;font-size:12px;color:#374151;line-height:1.4}
   .annual-value-box{background:linear-gradient(135deg,rgba(15,118,110,.08),rgba(201,154,82,.08));border:1px solid rgba(15,118,110,.2);border-radius:10px;padding:14px;position:relative;overflow:hidden}
   .annual-value-box .av-head{font-size:11px;font-weight:700;color:#0f766e;text-transform:uppercase;letter-spacing:.04em;margin-bottom:6px}
   .annual-value-box .av-price{font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;font-size:26px;color:var(--lg-red);line-height:1.1}
@@ -1054,7 +1054,7 @@ function lgCalculator() {
     compareB: { term: '5Y', serviceType: 'Visit', modelIndices: [] },
     cart: [],
     toast: { show: false, msg: '' },
-    buildVersion: '2026.07.13-v60',
+    buildVersion: '2026.07.13-v61',
 
     hasModelSelected() {
       const v = this.picker.model;
@@ -2823,17 +2823,17 @@ function lgCalculator() {
         if (it.outright) {
           txt += '<div style="font-size:0.85em;color:#7c3aed;margin-bottom:3px">🛒 ซื้อขาด <strong>฿' + it.advancePayment.toLocaleString() + '</strong> (รวมเครื่อง + บริการ 2 ปี · ลด 10%)</div>';
         } else {
-          txt += '<div style="font-size:0.85em;margin-bottom:6px;background:#fff;border:1px solid #e5e7eb;border-radius:6px;padding:8px 10px">';
-          txt += '<div style="font-weight:700;font-size:0.9em;margin-bottom:4px;color:#374151">📅 สรุปจ่ายต่อเดือน · สัญญา ' + (it.term || '') + ' (' + years + ' ปี)</div>';
+          txt += '<div style="font-size:0.82em;margin-bottom:4px;background:#fff;border:1px solid #e5e7eb;border-radius:6px;padding:6px 8px;line-height:1.35">';
+          txt += '<div style="font-weight:700;font-size:0.88em;margin-bottom:2px;color:#374151">📅 จ่าย/เดือน · ' + (it.term || '') + ' (' + years + 'ปี)</div>';
           this.itemMonthlyPeriodLines(it).forEach(line => {
             const noteHtml = line.note ? ' <span style="color:#9ca3af;font-size:0.85em">(' + line.note + ')</span>' : '';
-            txt += '<div style="display:flex;justify-content:space-between;gap:8px;padding:2px 0">';
+            txt += '<div style="display:flex;justify-content:space-between;gap:6px;padding:0">';
             txt += '<span>' + line.label + noteHtml + '</span>';
             txt += '<strong style="color:' + (line.kind === 'advance' ? '#7c3aed' : '#a50034') + ';white-space:nowrap">' + line.priceText + '</strong>';
             txt += '</div>';
           });
           if (it.totalSaving > 0) {
-            txt += '<div style="margin-top:4px;font-size:0.8em;color:#15803d">ประหยัด ฿' + it.totalSaving.toLocaleString() + ' ตลอดสัญญา</div>';
+            txt += '<div style="margin-top:2px;font-size:0.8em;color:#15803d">ประหยัด ฿' + it.totalSaving.toLocaleString() + '</div>';
           }
           txt += '</div>';
         }
@@ -2882,97 +2882,66 @@ function lgCalculator() {
       const headerTitle = this.cart.length === 1
         ? 'LG SUBSCRIBE — ' + this.productTypeLabel(this.cart[0]) + ' · ' + this.cart[0].code
         : 'LG SUBSCRIBE — ' + this.cart.length + ' รายการ';
+      // รูปแบบแน่นสำหรับ LINE มือถือ — ไม่เว้นบรรทัดว่าง / ไม่ padEnd (กันล้นจอ)
       lines.push(headerTitle);
-      let headerSub = ct + ' | ' + this.promoDateText();
-      if (hasCombo) headerSub += ' | ' + this.comboLabel() + ' ' + cr + '%';
+      let headerSub = ct + ' · ' + this.promoDateText();
+      if (hasCombo) headerSub += ' · ' + this.comboLabel() + ' ' + cr + '%';
       lines.push(headerSub);
-      lines.push('ยอดชำระครั้งแรกรวม: ' + this.fmtMoney(this.firstPaymentTotal()) + ' บาท');
+      lines.push('ครั้งแรก ' + this.fmtMoney(this.firstPaymentTotal()) + ' บาท');
       this.firstPaymentBreakdown().forEach(row => {
         const parts = [];
-        if (row.advance > 0) parts.push(row.item.outright ? 'ซื้อขาด ' + row.advance.toLocaleString() : 'ล่วงหน้า ' + row.advance.toLocaleString());
-        if (row.bill1 > 0) parts.push('งวด 1 ' + this.bht(row.bill1).toLocaleString());
-        lines.push('  ' + row.item.code + ': ' + this.fmtMoney(row.total) + ' บาท' + (parts.length ? ' (' + parts.join(' + ') + ')' : ''));
+        if (row.advance > 0) parts.push(row.item.outright ? 'ซื้อขาด' : 'ล่วงหน้า');
+        if (row.bill1 > 0) parts.push('งวด1');
+        lines.push('· ' + row.item.code + ' ' + this.fmtMoney(row.total) + (parts.length ? ' (' + parts.join('+') + ')' : ''));
       });
 
-      // PRODUCT DETAILS
+      // PRODUCT DETAILS — แน่นต่อเนื่อง
       this.cart.forEach((it, i) => {
         const care = this.careService(it);
-        lines.push('');
         const title = this.productSummaryTitle(it);
         const months = it.totalContractMonths || 60;
         const years = Math.round(months / 12);
-        if (this.cart.length > 1) lines.push((i + 1) + '. ' + title);
-        else lines.push(title);
-        lines.push('สัญญา ' + it.term + ' (' + years + ' ปี · ' + months + ' งวด) | บริการ: ' + this.formatServiceDetail(it, true));
+        if (i > 0) lines.push('—');
+        lines.push((this.cart.length > 1 ? (i + 1) + '. ' : '') + title);
+        lines.push(it.term + ' · ' + years + 'ปี/' + months + 'งวด · ' + this.formatServiceDetail(it, false));
 
-        // สรุปจ่ายต่อเดือนแยกช่วงงวด
-        lines.push('');
-        lines.push('สรุปจ่ายต่อเดือน · สัญญา ' + it.term + ' (' + years + ' ปี)');
         const ranges = this.billRangeTotals(it);
         const advance = it.advancePayment || 0;
-        const COL = 36;
         if (advance > 0) {
-          lines.push(('  จ่ายล่วงหน้า (ตอนเริ่มสัญญา)').padEnd(COL) + this.fmtMoney(advance) + ' บาท');
+          lines.push('ล่วงหน้า ' + this.fmtMoney(advance) + ' บาท');
         }
         ranges.forEach(r => {
-          let tag = '';
-          if (r.isAdvanceHalf) tag = ' (ครึ่งราคา)';
-          else if (r.isPromo) tag = ' (โปร)';
-          else tag = ' (ปกติ)';
-          const label = ('  ' + r.rangeLabel + tag).padEnd(COL);
-          lines.push(label + this.fmtBillPrice(r.pricePerMonth) + ' บาท/เดือน  × ' + r.months + ' งวด');
+          let tag = r.isAdvanceHalf ? 'ครึ่งราคา' : (r.isPromo ? 'โปร' : 'ปกติ');
+          lines.push(r.rangeLabel + ' ' + this.fmtBillPrice(r.pricePerMonth) + '/ด. (' + tag + ') ×' + r.months);
         });
-
-        // Per-item total
-        lines.push('');
         const totalItem = ranges.reduce((s, r) => s + r.total, 0) + advance;
-        let totalLine = 'รวมทั้งสัญญา ' + months + ' งวด · ' + years + ' ปี'
-          + (advance > 0 ? ' + จ่ายล่วงหน้า' : '')
-          + ' = ' + this.fmtMoney(totalItem) + ' บาท';
-        if (it.totalSaving > 0) totalLine += ' | ประหยัด ' + it.totalSaving.toLocaleString() + ' บาท';
+        let totalLine = 'รวม ' + this.fmtMoney(totalItem) + ' บาท';
+        if (it.totalSaving > 0) totalLine += ' · ประหยัด ' + it.totalSaving.toLocaleString();
         lines.push(totalLine);
         if (ann && this.cart.length === 1) {
-          lines.push('เฉลี่ย ' + ann.perMonth.toLocaleString() + ' บาท/เดือน (' + ann.perYear.toLocaleString() + ' บาท/ปี)');
+          lines.push('เฉลี่ย ' + ann.perMonth.toLocaleString() + '/ด. · ' + ann.perYear.toLocaleString() + '/ปี');
         }
 
-        // Care Service
-        lines.push('');
-        lines.push('Care Service ที่จะได้รับ');
-        care.items.forEach(svc => {
-          lines.push('  - ' + svc.label + '  (' + svc.freq + ')');
-        });
-        if (care.note) lines.push('  * ' + care.note);
-
-        lines.push('');
-        lines.push(this.warrantyLineText(it, Math.round((it.totalContractMonths || 60) / 12)));
-
-        if (i < this.cart.length - 1) {
-          lines.push('');
-          lines.push('─────────────────────────');
+        // Care บรรทัดเดียว (สั้น)
+        if (care.items && care.items.length) {
+          lines.push('Care: ' + care.items.map(s => s.label).join(' · '));
         }
+        lines.push(this.warrantyLineText(it, years));
       });
 
-      // GRAND TOTAL (multiple items)
+      // GRAND TOTAL (หลายรายการ)
       if (this.cart.length > 1) {
-        lines.push('');
-        lines.push('─────────────────────────');
-        lines.push('สรุปรวมทุกรายการ');
+        lines.push('—');
+        lines.push('สรุปรวม ' + this.cart.length + ' รายการ');
         if (hasCombo) {
-          lines.push('ส่วนลด ' + this.comboLabel() + ' ' + cr + '%: −' + this.comboDiscount().toLocaleString() + ' บาท/เดือน');
-          lines.push('ค่าเช่าสุทธิ/เดือน: ' + this.netMonthly().toLocaleString() + ' บาท');
+          lines.push(this.comboLabel() + ' ' + cr + '% · สุทธิ ' + this.netMonthly().toLocaleString() + '/ด.');
         }
-        if (this.hasOutright()) {
-          lines.push('ซื้อขาดรวม: ' + this.totalOutright().toLocaleString() + ' บาท');
-        }
-        if (this.hasTvAdvance()) {
-          lines.push('จ่ายล่วงหน้ารวม: ' + this.totalTvAdvance().toLocaleString() + ' บาท');
-        }
-        lines.push('ยอดชำระครั้งแรกรวม: ' + this.fmtMoney(this.firstPaymentTotal()) + ' บาท');
-        if (this.totalSaving() > 0) {
-          lines.push('ประหยัดรวมตลอดสัญญา: ' + this.totalSaving().toLocaleString() + ' บาท');
-        }
-        lines.push('รวมตลอดสัญญา: ' + this.fmtMoney(this.grandTotal()) + ' บาท');
-        if (ann) lines.push('เฉลี่ย ' + ann.perMonth.toLocaleString() + ' บาท/เดือน (' + ann.perYear.toLocaleString() + ' บาท/ปี)');
+        if (this.hasOutright()) lines.push('ซื้อขาดรวม ' + this.totalOutright().toLocaleString() + ' บาท');
+        if (this.hasTvAdvance()) lines.push('ล่วงหน้ารวม ' + this.totalTvAdvance().toLocaleString() + ' บาท');
+        lines.push('ครั้งแรกรวม ' + this.fmtMoney(this.firstPaymentTotal()) + ' บาท');
+        if (this.totalSaving() > 0) lines.push('ประหยัดรวม ' + this.totalSaving().toLocaleString() + ' บาท');
+        lines.push('รวมตลอดสัญญา ' + this.fmtMoney(this.grandTotal()) + ' บาท');
+        if (ann) lines.push('เฉลี่ย ' + ann.perMonth.toLocaleString() + '/ด. · ' + ann.perYear.toLocaleString() + '/ปี');
       }
 
       this.copyText(lines.join('\n'), 'คัดลอกข้อความสรุปแล้ว ✓');
