@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- LG Subscribe Calculator build 2026.07.13-v53 -->
+<!-- LG Subscribe Calculator build 2026.07.13-v54 -->
 <html lang="th">
 <head>
 <meta charset="UTF-8" />
@@ -761,7 +761,7 @@
                   <div class="bill-step-note">
                     <span x-show="comboRate() > 0 && seg.base !== seg.price" x-text="'ราคาเต็ม ฿' + bht(seg.base).toLocaleString() + ' − combo'"></span>
                     <span x-show="comboRate() > 0 && seg.start === 1 && !item.advancePayment" style="color:#7c3aed">บิลแรกเก็บเต็ม*</span>
-                    <span x-show="comboRate() === 0" x-text="seg.base !== item.postPromoPrice ? 'ช่วงโปร' : 'ราคาปกติ'"></span>
+                    <span x-show="comboRate() === 0" x-text="billRangeTotals(item).find(r => r.start === seg.start)?.isAdvanceHalf ? 'ครึ่งราคา (จ่ายล่วงหน้าแล้ว)' : (seg.base !== item.postPromoPrice ? 'ช่วงโปร' : 'ราคาปกติ')"></span>
                   </div>
                 </div>
               </template>
@@ -1031,7 +1031,7 @@ function lgCalculator() {
     compareB: { term: '5Y', serviceType: 'Visit', modelIndices: [] },
     cart: [],
     toast: { show: false, msg: '' },
-    buildVersion: '2026.07.13-v53',
+    buildVersion: '2026.07.13-v54',
 
     hasModelSelected() {
       const v = this.picker.model;
