@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- LG Subscribe Calculator build 2026.07.02-v16 -->
+<!-- LG Subscribe Calculator build 2026.07.13-v52 -->
 <html lang="th">
 <head>
 <meta charset="UTF-8" />
@@ -1031,7 +1031,7 @@ function lgCalculator() {
     compareB: { term: '5Y', serviceType: 'Visit', modelIndices: [] },
     cart: [],
     toast: { show: false, msg: '' },
-    buildVersion: '2026.07.07-v51',
+    buildVersion: '2026.07.13-v52',
 
     hasModelSelected() {
       const v = this.picker.model;
@@ -1048,10 +1048,9 @@ function lgCalculator() {
     serviceTypeLabel(serviceType, withEnglish = false) {
       if (serviceType === 'Visit') return this.visitServiceLabel(withEnglish);
       if (serviceType === 'Self') return withEnglish ? 'รับอะไหล่เปลี่ยนเอง (Self)' : 'รับอะไหล่เปลี่ยนเอง';
+      // No Service: เน้นรับประกัน — ไม่ใช้คำว่า "ไม่มีบริการ..." เพราะลูกค้าเข้าใจผิดว่าไม่มีประกัน
       if (serviceType === 'No Service') {
-        return withEnglish
-          ? 'ไม่มีบริการบำรุงรักษา (No Service) · รับประกันตลอดสัญญา'
-          : 'ไม่มีบริการบำรุงรักษา · รับประกันตลอดสัญญา';
+        return withEnglish ? 'รับประกันตลอดสัญญา (Warranty)' : 'รับประกันตลอดสัญญา';
       }
       return withEnglish ? 'รับประกันตลอดสัญญา' : 'รับประกัน';
     },
@@ -1063,7 +1062,7 @@ function lgCalculator() {
     serviceTypeTag(serviceType) {
       if (serviceType === 'Visit') return 'ช่างผู้เชี่ยวชาญบริการถึงบ้าน';
       if (serviceType === 'Self') return 'รับอะไหล่เปลี่ยนเอง';
-      if (serviceType === 'No Service') return 'ไม่มีบริการบำรุงรักษา';
+      if (serviceType === 'No Service') return 'รับประกันตลอดสัญญา';
       return serviceType;
     },
     isWasherCategory(cat) {
@@ -1114,7 +1113,8 @@ function lgCalculator() {
       return 'แนะนำ 6 ปี Visit — คุ้มที่สุด';
     },
     planServiceNote(plan) {
-      if (plan.serviceType === 'No Service') return 'บริการ: ไม่มีบริการบำรุงรักษา · รับประกันตลอดสัญญา';
+      // No Service: ไม่โชว์ "บริการ: ไม่มี..." — ลูกค้ามักเข้าใจผิด
+      if (plan.serviceType === 'No Service') return 'รับประกันตลอดสัญญา';
       return 'รอบบริการ: ' + plan.serviceCycle;
     },
 
@@ -1773,11 +1773,11 @@ function lgCalculator() {
         ]}
       },
       'noService': {
-        onsite: { title:'🛡️ รับประกันตลอดสัญญา · ไม่มีบริการบำรุงรักษา (On-site Repair)', items:[
+        onsite: { title:'🛡️ รับประกันตลอดสัญญา · ช่างซ่อมถึงบ้านเมื่อแจ้งซ่อม (On-site)', items:[
           {label:'รับประกันตลอดอายุสัญญา', freq:'ช่างผู้เชี่ยวชาญบริการถึงบ้าน'},
           {label:'ติดต่อศูนย์บริการ LG เมื่อมีปัญหา', freq:'On-site Service'}
         ], note:'TV, Monitor — ช่างผู้เชี่ยวชาญบริการถึงบ้าน (On-site)' },
-        center: { title:'📺 ไม่มีบริการเข้าบ้าน (No Service)', items:[
+        center: { title:'🛡️ รับประกันตลอดสัญญา · ส่งซ่อมศูนย์บริการ LG', items:[
           {label:'รับประกันตลอดอายุสัญญา', freq:'นำสินค้าส่งซ่อมที่ศูนย์บริการ LG'},
           {label:'ติดต่อศูนย์บริการ LG เมื่อมีปัญหา', freq:'Drop-off Service'}
         ], note:'ไมโครเวฟ, ซาวด์บาร์, xboom Bluetooth speaker, เครื่องดูดฝุ่น A9T-CORE/A9T-LITE — นำสินค้าส่งซ่อมที่ศูนย์บริการแอลจีด้วยตนเอง' }
@@ -1902,7 +1902,8 @@ function lgCalculator() {
       if (item.outright) return 'ซื้อขาด';
       if (item.serviceType === 'Visit') return 'Visit';
       if (item.serviceType === 'Self') return 'Self';
-      return 'No Service';
+      // ไม่ใช้คำว่า No Service — ลูกค้าเข้าใจผิดว่าไม่มีประกัน
+      return 'รับประกัน';
     },
     compareMonthlyAvg(plan, grandTotal) {
       const months = plan.totalContractMonths || 60;
@@ -2598,7 +2599,7 @@ function lgCalculator() {
         } else if (this.isNoMaintenanceWarranty({ category: b.category })) {
           benefit = '🛡️ รับประกันตลอดสัญญา · ซ่อมฟรีเมื่อมีปัญหา · ช่างบริการถึงบ้านเมื่อแจ้งซ่อม';
         } else {
-          benefit = '🛡️ ไม่มีบริการบำรุงรักษา · รับประกันตลอดสัญญา · ซ่อมฟรีเมื่อมีปัญหา';
+          benefit = '🛡️ รับประกันตลอดสัญญา · ซ่อมฟรีเมื่อมีปัญหา';
         }
         h += '<div class="av-item"><span class="av-check">✓</span><span><strong>' + b.code + '</strong> — ' + benefit + '</span></div>';
       });
