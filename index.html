@@ -2701,7 +2701,7 @@ function lgCalculator() {
  },
     billRangeHtml() {
       if (this.cart.length === 0) return '';
-      let h = '<div class="av-head" style="color:#7a0026"> สรุปจ่ายต่อเดือน · แยกช่วงงวด</div>';
+      let h = '<div class="av-head" style="color:#7a0026">สรุปจ่ายต่อเดือน · แยกช่วงงวด</div>';
       h += '<div style="font-size:11px;color:#6b7280;margin-bottom:8px">ราคาต่อเดือนหลังหักส่วนลดคอมโบแล้ว</div>';
       this.cart.forEach((it, i) => {
         const ranges = this.billRangeTotals(it);
@@ -2714,7 +2714,7 @@ function lgCalculator() {
         h += ' <span style="font-weight:500;color:#6b7280;font-size:11px">· สัญญา ' + (it.term || '') + ' (' + years + ' ปี · ' + months + ' งวด)</span></div>';
         h += '<div class="br-rows">';
         if (advance > 0) {
-          h += '<div class="br-row"><span class="br-range"> จ่ายล่วงหน้า</span><span class="br-calc">ตอนเริ่มสัญญา</span><span class="br-total">฿' + this.fmtMoney(advance) + '</span></div>';
+          h += '<div class="br-row"><span class="br-range">จ่ายล่วงหน้า</span><span class="br-calc">ตอนเริ่มสัญญา</span><span class="br-total">฿' + this.fmtMoney(advance) + '</span></div>';
         }
         ranges.forEach(r => {
           let label = r.rangeLabel;
@@ -2742,7 +2742,7 @@ function lgCalculator() {
       // Grand total
       const grand = this.grandTotal();
       h += '<div class="br-grand">';
-      h += '<span><strong> ยอดรวมทั้งหมด</strong></span>';
+      h += '<span><strong>ยอดรวมทั้งหมด</strong></span>';
       h += '<span><strong>฿' + this.fmtMoney(grand) + '</strong></span>';
       h += '</div>';
       return h;
@@ -2997,29 +2997,29 @@ function lgCalculator() {
     annualValueHtml() {
       const ann = this.annualBreakdown();
       if (!ann) return '';
-      let h = '<div class="av-head"> ค่าใช้จ่ายเฉลี่ยต่อปี · LG Subscribe</div>';
+      let h = '<div class="av-head">ค่าใช้จ่ายเฉลี่ยต่อปี · LG Subscribe</div>';
       h += '<div class="av-price">฿' + ann.perYear.toLocaleString() + '<small>/ปี</small></div>';
       h += '<div class="av-sub">เฉลี่ย ฿' + ann.perMonth.toLocaleString() + '/เดือน · จ่าย 12 งวด/ปี · รวม ' + ann.years + ' ปี = ฿' + this.fmtMoney(ann.totalContract) + '</div>';
-      h += '<div class="av-list"><strong style="color:#0f766e"> จ่ายปีละ ฿' + ann.perYear.toLocaleString() + ' ลูกค้าได้:</strong>';
+      h += '<div class="av-list"><strong style="color:#0f766e">จ่ายปีละ ฿' + ann.perYear.toLocaleString() + ' ลูกค้าได้:</strong>';
       ann.benefitsPerYear.forEach(b => {
         let benefit = '';
         if (b.serviceType === 'Visit') {
           const visits = b.visitsPerYear >= 1 ? b.visitsPerYear + ' ครั้ง/ปี' : '1 ครั้งใน 2 ปี';
-          benefit = ' ช่างผู้เชี่ยวชาญบริการถึงบ้าน ' + visits + ' · เปลี่ยนอะไหล่/ไส้กรองให้';
+          benefit = 'ช่างผู้เชี่ยวชาญบริการถึงบ้าน ' + visits + ' · เปลี่ยนอะไหล่/ไส้กรองให้';
         } else if (b.serviceType === 'Self') {
-          benefit = ' LG ส่งอะไหล่ถึงบ้าน ' + b.partsPerYear + ' รอบ/ปี · เปลี่ยนเอง';
+          benefit = 'LG ส่งอะไหล่ถึงบ้าน ' + b.partsPerYear + ' รอบ/ปี · เปลี่ยนเอง';
         } else if (this.isCenterRepairItem({ category: b.category, code: b.code, name: b.name })) {
-          benefit = ' รับประกันตลอดสัญญา · ซ่อมฟรีเมื่อมีปัญหา · นำสินค้าส่งซ่อมที่ศูนย์บริการแอลจีด้วยตนเอง';
+          benefit = 'รับประกันตลอดสัญญา · ซ่อมฟรีเมื่อมีปัญหา · นำสินค้าส่งซ่อมที่ศูนย์บริการแอลจีด้วยตนเอง';
         } else if (this.isNoMaintenanceWarranty({ category: b.category })) {
-          benefit = ' รับประกันตลอดสัญญา · ซ่อมฟรีเมื่อมีปัญหา · ช่างบริการถึงบ้านเมื่อแจ้งซ่อม';
+          benefit = 'รับประกันตลอดสัญญา · ซ่อมฟรีเมื่อมีปัญหา · ช่างบริการถึงบ้านเมื่อแจ้งซ่อม';
         } else {
-          benefit = ' รับประกันตลอดสัญญา · ซ่อมฟรีเมื่อมีปัญหา';
+          benefit = 'รับประกันตลอดสัญญา · ซ่อมฟรีเมื่อมีปัญหา';
         }
         h += '<div class="av-item"><span class="av-check"></span><span><strong>' + b.code + '</strong> — ' + benefit + '</span></div>';
       });
       h += '<div class="av-item"><span class="av-check"></span><span><strong>รับประกันสินค้าตลอด ' + ann.years + ' ปี</strong> · ไม่ต้องจ่ายค่าซ่อมเพิ่ม</span></div>';
       h += '</div>';
-      h += '<div class="av-compare"> <strong>คุ้มกว่าซื้อขาด</strong> — ซื้อขาดต้องจ่ายค่าซ่อม/บำรุงรักษาเอง · Subscribe รวมครบทุกอย่างในค่าเช่าเดียว</div>';
+      h += '<div class="av-compare"><strong>คุ้มกว่าซื้อขาด</strong> — ซื้อขาดต้องจ่ายค่าซ่อม/บำรุงรักษาเอง · Subscribe รวมครบทุกอย่างในค่าเช่าเดียว</div>';
       return h;
     },
 
@@ -3035,13 +3035,13 @@ function lgCalculator() {
       let txt = '<div style="display:flex;flex-wrap:wrap;gap:5px;margin-bottom:10px;font-size:0.82em">';
       txt += '<span style="background:#fee2e2;color:#991b1b;padding:2px 9px;border-radius:99px;font-weight:600">' + ct + '</span>';
       txt += '<span style="background:#e0e7ff;color:#3730a3;padding:2px 9px;border-radius:99px">' + n + ' รายการ</span>';
-      if (hasCombo) txt += '<span style="background:#fef9c3;color:#92400e;padding:2px 9px;border-radius:99px">' + this.comboLabel() + ' ' + cr + '%' + (this.specialCombo ? ' ' : '') + '</span>';
+      if (hasCombo) txt += '<span style="background:#fef9c3;color:#92400e;padding:2px 9px;border-radius:99px">' + this.comboLabel() + ' ' + cr + '%' + (this.specialCombo ? '' : '') + '</span>';
       txt += '<span style="background:#f0fdf4;color:#166534;padding:2px 9px;border-radius:99px">' + this.promoDateText() + '</span>';
       txt += '</div>';
 
       // ─── First payment card ───
       txt += '<div style="background:linear-gradient(135deg,#ede9fe,#f5f3ff);border:2px solid #c4b5fd;border-radius:10px;padding:12px 14px;margin-bottom:12px">';
-      txt += '<div style="font-size:0.78em;color:#6d28d9;margin-bottom:2px"> ยอดชำระครั้งแรกรวม</div>';
+      txt += '<div style="font-size:0.78em;color:#6d28d9;margin-bottom:2px">ยอดชำระครั้งแรกรวม</div>';
       txt += '<div style="font-size:1.5em;font-weight:700;color:#5b21b6;line-height:1.1">฿' + this.fmtMoney(this.firstPaymentTotal()) + '</div>';
       txt += '<div style="margin-top:6px;font-size:0.8em;color:#6b7280">TV/จอ/ลำโพง = ล่วงหน้าอย่างเดียว · สินค้าอื่น = งวดที่ 1</div>';
       this.firstPaymentBreakdown().forEach(row => {
@@ -3056,18 +3056,18 @@ function lgCalculator() {
 
       // ─── Hero price card ───
       txt += '<div style="background:linear-gradient(135deg,#fff5f5,#fff);border:1.5px solid #fca5a5;border-radius:10px;padding:12px 14px;margin-bottom:12px">';
-      txt += '<div style="font-size:0.78em;color:#9ca3af;margin-bottom:1px"> โปรเริ่มต้น (งวดที่ ' + lowest.bill + ')</div>';
+      txt += '<div style="font-size:0.78em;color:#9ca3af;margin-bottom:1px">โปรเริ่มต้น (งวดที่ ' + lowest.bill + ')</div>';
       txt += '<div style="font-size:1.6em;font-weight:700;color:#a50034;line-height:1.1">฿' + this.fmtMoney(lowest.price) + '<span style="font-size:0.5em;font-weight:400;color:#6b7280">/เดือน</span></div>';
       if (this.hasPromoFirstMonths()) {
         const maxM = Math.max(...this.cart.map(it => it.promoMonths));
-        txt += '<div style="margin-top:5px;font-size:0.85em"> <strong>' + maxM + ' เดือนแรก</strong>: ฿' + this.promoMonthly().toLocaleString() + '/เดือน &nbsp;→&nbsp; <strong>หลังหมดโปร</strong>: ฿' + this.netMonthly().toLocaleString() + '/เดือน</div>';
+        txt += '<div style="margin-top:5px;font-size:0.85em"><strong>' + maxM + ' เดือนแรก</strong>: ฿' + this.promoMonthly().toLocaleString() + '/เดือน &nbsp;→&nbsp; <strong>หลังหมดโปร</strong>: ฿' + this.netMonthly().toLocaleString() + '/เดือน</div>';
       } else {
-        txt += '<div style="margin-top:5px;font-size:0.85em"> จ่ายรายเดือน <strong>฿' + this.netMonthly().toLocaleString() + '</strong>/เดือน ตลอดสัญญา</div>';
+        txt += '<div style="margin-top:5px;font-size:0.85em">จ่ายรายเดือน <strong>฿' + this.netMonthly().toLocaleString() + '</strong>/เดือน ตลอดสัญญา</div>';
       }
       if (hasCombo) {
-        txt += '<div style="margin-top:3px;font-size:0.82em;color:#7c3aed"> ส่วนลด ' + this.comboLabel() + ' ' + cr + '% — ประหยัด ฿' + this.comboDiscount().toLocaleString() + '/เดือน</div>';
+        txt += '<div style="margin-top:3px;font-size:0.82em;color:#7c3aed">ส่วนลด ' + this.comboLabel() + ' ' + cr + '% — ประหยัด ฿' + this.comboDiscount().toLocaleString() + '/เดือน</div>';
       }
-      txt += '<div style="margin-top:3px;font-size:0.78em;color:#9ca3af"> ' + this.customerPromoRuleText() + '</div>';
+      txt += '<div style="margin-top:3px;font-size:0.78em;color:#9ca3af">' + this.customerPromoRuleText() + '</div>';
       txt += '</div>';
 
       // ─── Per-item cards ───
@@ -3087,10 +3087,10 @@ function lgCalculator() {
         txt += '<div style="font-size:0.78em;color:#6b7280;margin-bottom:6px">' + this.productTypeLabel(it) + ' · สัญญา ' + (it.term || '') + ' (' + years + ' ปี · ' + months + ' งวด)</div>';
         // สรุปจ่ายต่อเดือนแยกช่วง
         if (it.outright) {
-          txt += '<div style="font-size:0.85em;color:#7c3aed;margin-bottom:3px"> ซื้อขาด <strong>฿' + it.advancePayment.toLocaleString() + '</strong> (รวมเครื่อง + บริการ 2 ปี · ลด 10%)</div>';
+          txt += '<div style="font-size:0.85em;color:#7c3aed;margin-bottom:3px">ซื้อขาด <strong>฿' + it.advancePayment.toLocaleString() + '</strong> (รวมเครื่อง + บริการ 2 ปี · ลด 10%)</div>';
         } else {
           txt += '<div style="font-size:0.82em;margin-bottom:4px;background:#fff;border:1px solid #e5e7eb;border-radius:6px;padding:6px 8px;line-height:1.35">';
-          txt += '<div style="font-weight:700;font-size:0.88em;margin-bottom:2px;color:#374151"> จ่าย/เดือน · ' + (it.term || '') + ' (' + years + 'ปี)</div>';
+          txt += '<div style="font-weight:700;font-size:0.88em;margin-bottom:2px;color:#374151">จ่าย/เดือน · ' + (it.term || '') + ' (' + years + 'ปี)</div>';
           this.itemMonthlyPeriodLines(it).forEach(line => {
             const noteHtml = line.note ? ' <span style="color:#9ca3af;font-size:0.85em">(' + line.note + ')</span>' : '';
             txt += '<div style="display:flex;justify-content:space-between;gap:6px;padding:0">';
@@ -3108,7 +3108,7 @@ function lgCalculator() {
         txt += '<div style="font-size:0.78em;color:#6b7280;margin-left:17px">';
         care.items.forEach(svc => { txt += svc.label + ' (' + svc.freq + ')　'; });
         txt += '</div>';
-        txt += '<div style="font-size:0.78em;color:#9ca3af;margin-left:17px;margin-top:1px"> ' + care.note + '</div>';
+        txt += '<div style="font-size:0.78em;color:#9ca3af;' + care.note + '</div>';
         txt += '</div>';
       });
 
@@ -3117,19 +3117,19 @@ function lgCalculator() {
       if (hasCombo) {
         txt += '<div style="font-size:0.85em;color:#374151">ยอดรวมก่อนส่วนลด: ฿' + this.totalMonthly().toLocaleString() + '/เดือน</div>';
         txt += '<div style="font-size:0.85em;color:#7c3aed">ส่วนลด ' + this.comboLabel() + ' ' + cr + '%: −฿' + this.comboDiscount().toLocaleString() + '/เดือน</div>';
-        txt += '<div style="font-weight:600;margin-top:2px"> ค่าเช่าสุทธิ/เดือน: ฿' + this.netMonthly().toLocaleString() + '</div>';
+        txt += '<div style="font-weight:600;margin-top:2px">ค่าเช่าสุทธิ/เดือน: ฿' + this.netMonthly().toLocaleString() + '</div>';
       } else {
-        txt += '<div style="font-weight:600"> ค่าเช่ารายเดือน: ฿' + this.netMonthly().toLocaleString() + '</div>';
+        txt += '<div style="font-weight:600">ค่าเช่ารายเดือน: ฿' + this.netMonthly().toLocaleString() + '</div>';
       }
       if (this.hasOutright()) {
-        txt += '<div style="color:#7c3aed;margin-top:3px"> ซื้อขาดรวม: <strong>฿' + this.totalOutright().toLocaleString() + '</strong></div>';
+        txt += '<div style="color:#7c3aed;margin-top:3px">ซื้อขาดรวม: <strong>฿' + this.totalOutright().toLocaleString() + '</strong></div>';
       }
       if (this.hasTvAdvance()) {
-        txt += '<div style="color:#7c3aed;margin-top:3px"> จ่ายก้อนแรก (ตอนเริ่มสัญญา): <strong>฿' + this.totalTvAdvance().toLocaleString() + '</strong></div>';
+        txt += '<div style="color:#7c3aed;margin-top:3px">จ่ายก้อนแรก (ตอนเริ่มสัญญา): <strong>฿' + this.totalTvAdvance().toLocaleString() + '</strong></div>';
       }
-      txt += '<div style="color:#5b21b6;margin-top:5px;font-weight:600"> ยอดชำระครั้งแรกรวม: <strong>฿' + this.fmtMoney(this.firstPaymentTotal()) + '</strong></div>';
+      txt += '<div style="color:#5b21b6;margin-top:5px;font-weight:600">ยอดชำระครั้งแรกรวม: <strong>฿' + this.fmtMoney(this.firstPaymentTotal()) + '</strong></div>';
       txt += '<div style="color:#15803d;margin-top:3px">ประหยัดรวมตลอดสัญญา: <strong>฿' + this.totalSaving().toLocaleString() + '</strong></div>';
-      txt += '<div style="font-weight:700;color:#a50034;margin-top:5px;font-size:1.05em"> ยอดรวมทั้งสัญญา: ฿' + this.fmtMoney(this.grandTotal()) + '</div>';
+      txt += '<div style="font-weight:700;color:#a50034;margin-top:5px;font-size:1.05em">ยอดรวมทั้งสัญญา: ฿' + this.fmtMoney(this.grandTotal()) + '</div>';
       txt += '</div>';
       return txt;
     },
