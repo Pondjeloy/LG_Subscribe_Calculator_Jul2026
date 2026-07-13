@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- LG Subscribe Calculator build 2026.07.13-v59 -->
+<!-- LG Subscribe Calculator build 2026.07.13-v60 -->
 <html lang="th">
 <head>
 <meta charset="UTF-8" />
@@ -135,27 +135,6 @@
   .plan-period-row .pp-note{font-size:10px;color:#6b7280;white-space:nowrap}
   .plan-period-row.pp-adv .pp-price{color:#7c3aed}
   .plan-period-foot{margin-top:4px;font-size:10.5px;color:#9ca3af}
-
-  /* สรุปชำระรวมทั้งตะกร้า แยกช่วงงวด (คอมโบ) */
-  .cart-combined-box{background:linear-gradient(135deg,#f5f3ff,#fff);border:1.5px solid #c4b5fd;border-radius:10px;padding:12px 12px 10px}
-  .cart-combined-box .ccb-head{font-size:12.5px;font-weight:700;color:#5b21b6;margin-bottom:2px}
-  .cart-combined-box .ccb-sub{font-size:10.5px;color:#6b7280;margin-bottom:8px;line-height:1.4}
-  .cart-combined-box .ccb-first{display:flex;justify-content:space-between;align-items:center;background:#ede9fe;border-radius:6px;padding:6px 9px;font-size:12px;margin-bottom:8px;color:#5b21b6}
-  .cart-combined-box .ccb-first strong{font-family:'JetBrains Mono',monospace;font-size:14px}
-  .cart-combined-box .ccb-rows{display:flex;flex-direction:column;gap:4px}
-  .cart-combined-box .ccb-row{display:grid;grid-template-columns:1fr auto auto;gap:6px;align-items:start;font-size:11.5px;padding:5px 0;border-bottom:1px dashed #e9e5ff}
-  .cart-combined-box .ccb-row:last-child{border-bottom:none}
-  .cart-combined-box .ccb-range{font-weight:600;color:#1f2937;display:block}
-  .cart-combined-box .ccb-note{font-size:10px;color:#7c3aed;display:block;margin-top:1px}
-  .cart-combined-box .ccb-mid{font-family:'JetBrains Mono',monospace;font-weight:700;color:var(--lg-red);white-space:nowrap;font-size:12px}
-  .cart-combined-box .ccb-right{text-align:right;font-size:10.5px;color:#6b7280;white-space:nowrap}
-  .cart-combined-box .ccb-right strong{display:block;font-family:'JetBrains Mono',monospace;color:#1f2937;font-size:12px;margin-top:1px}
-  .cart-combined-box .ccb-foot{display:flex;justify-content:space-between;align-items:center;margin-top:8px;padding-top:8px;border-top:1.5px solid #c4b5fd;font-size:12px;font-weight:600;color:#5b21b6}
-  .cart-combined-box .ccb-foot strong{font-family:'JetBrains Mono',monospace;font-size:15px;color:var(--lg-red)}
-  @media(max-width:420px){
-    .cart-combined-box .ccb-row{grid-template-columns:1fr;gap:2px}
-    .cart-combined-box .ccb-right{text-align:left}
-  }
 
   .price-highlight{font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;color:var(--lg-red);letter-spacing:0}
 
@@ -940,35 +919,6 @@
               <div class="text-xs text-gray-600 mt-1" x-text="promoDescription()"></div>
             </div>
 
-            <!-- สรุปชำระรวมทั้งตะกร้า แยกช่วงงวด (คอมโบ 5Y+6Y) -->
-            <div class="cart-combined-box mb-3" x-show="cart.length > 0 && cartCombinedBillSchedule().periods.length">
-              <div class="ccb-head">📅 สรุปชำระรวมทุกชิ้น · แยกช่วงงวด</div>
-              <div class="ccb-sub" x-text="cartCombinedBillSchedule().subtitle"></div>
-              <div class="ccb-first" x-show="cartCombinedBillSchedule().firstPayment > 0">
-                <span>ยอดชำระครั้งแรก</span>
-                <strong x-text="'฿' + fmtMoney(cartCombinedBillSchedule().firstPayment)"></strong>
-              </div>
-              <div class="ccb-rows">
-                <template x-for="(p, pi) in cartCombinedBillSchedule().periods" :key="pi">
-                  <div class="ccb-row">
-                    <div class="ccb-left">
-                      <span class="ccb-range" x-text="p.rangeLabel"></span>
-                      <span class="ccb-note" x-show="p.note" x-text="p.note"></span>
-                    </div>
-                    <div class="ccb-mid" x-text="'฿' + fmtBillPrice(p.total) + '/เดือน'"></div>
-                    <div class="ccb-right">
-                      <span x-text="'× ' + p.months + ' งวด'"></span>
-                      <strong x-text="'฿' + fmtMoney(p.periodTotal)"></strong>
-                    </div>
-                  </div>
-                </template>
-              </div>
-              <div class="ccb-foot">
-                <span>รวมเงินทั้งสัญญา (ทุกชิ้น)</span>
-                <strong x-text="'฿' + fmtMoney(grandTotal())"></strong>
-              </div>
-            </div>
-
             <!-- Grand Total ตลอดสัญญา -->
             <div class="summary-grand-box">
               <div class="text-xs uppercase tracking-wider mb-1" style="color:rgba(255,255,255,.85)">💰 ยอดรวมตลอดสัญญา (Total Contract Value)</div>
@@ -1104,7 +1054,7 @@ function lgCalculator() {
     compareB: { term: '5Y', serviceType: 'Visit', modelIndices: [] },
     cart: [],
     toast: { show: false, msg: '' },
-    buildVersion: '2026.07.13-v59',
+    buildVersion: '2026.07.13-v60',
 
     hasModelSelected() {
       const v = this.picker.model;
@@ -2483,168 +2433,10 @@ function lgCalculator() {
       });
       return result;
     },
-    /**
-     * สรุปยอดชำระรายเดือนรวมทั้งตะกร้า (หลัง combo)
-     * รวม 5Y+6Y: งวดที่ยังมีหลายชิ้นรวมกัน · หลัง 5Y จบเหลือแค่ 6Y
-     */
-    cartCombinedBillSchedule() {
-      const items = this.cart.filter(it => !it.outright);
-      const advanceAll = this.totalAdvance();
-      const firstPay = this.firstPaymentTotal();
-      if (!items.length) {
-        return {
-          advance: advanceAll,
-          firstPayment: firstPay,
-          periods: [],
-          maxMonths: 0,
-          maxYears: 0,
-          terms: [],
-          subtitle: '',
-          itemCount: 0,
-          hasMixedTerms: false,
-        };
-      }
-      const schedules = items.map(it => {
-        const months = it.totalContractMonths || 60;
-        const byBill = {};
-        this.itemComboSchedule(it).bills.forEach(b => { byBill[b.bill] = b.price; });
-        return { it, months, byBill, term: it.term || (months >= 72 ? '6Y' : '5Y') };
-      });
-      const maxMonths = Math.max(...schedules.map(s => s.months));
-      const monthRows = [];
-      for (let k = 1; k <= maxMonths; k++) {
-        let total = 0;
-        let active = 0;
-        const termSet = new Set();
-        schedules.forEach(s => {
-          if (k <= s.months) {
-            total += s.byBill[k] || 0;
-            active++;
-            termSet.add(s.term);
-          }
-        });
-        monthRows.push({
-          bill: k,
-          total: Math.round(total * 100) / 100,
-          active,
-          terms: [...termSet].sort(),
-        });
-      }
-      const periods = [];
-      let cur = null;
-      monthRows.forEach(m => {
-        const same = cur
-          && Math.abs(cur.total - m.total) < 0.015
-          && cur.active === m.active
-          && cur.terms.join() === m.terms.join();
-        if (same) {
-          cur.end = m.bill;
-          cur.months = cur.end - cur.start + 1;
-        } else {
-          if (cur) periods.push(cur);
-          cur = {
-            start: m.bill,
-            end: m.bill,
-            months: 1,
-            total: m.total,
-            active: m.active,
-            terms: m.terms.slice(),
-          };
-        }
-      });
-      if (cur) periods.push(cur);
-
-      const totalItems = items.length;
-      periods.forEach(p => {
-        p.rangeLabel = p.start === p.end
-          ? ('งวดที่ ' + p.start)
-          : ('งวดที่ ' + p.start + '-' + p.end);
-        p.periodTotal = Math.round(p.total * p.months * 100) / 100;
-        // หมายเหตุเมื่อเหลือชิ้นเดียว / หมด 5Y แล้ว
-        let note = '';
-        if (totalItems > 1) {
-          if (p.active < totalItems) {
-            note = 'เหลือ ' + p.active + '/' + totalItems + ' รายการ (' + p.terms.join('+') + ')';
-          } else {
-            note = 'รวม ' + p.active + ' รายการ';
-          }
-        }
-        p.note = note;
-      });
-
-      const terms = [...new Set(schedules.map(s => s.term))].sort();
-      const hasMixedTerms = terms.length > 1;
-      const maxYears = Math.round(maxMonths / 12);
-      let subtitle = items.length + ' รายการ';
-      if (this.comboRate() > 0) {
-        subtitle += ' · หลัง combo ' + Math.round(this.comboRate() * 100) + '%';
-      }
-      if (hasMixedTerms) {
-        subtitle += ' · ผสมสัญญา ' + terms.join(' + ') + ' · ยาวสุด ' + maxYears + ' ปี (' + maxMonths + ' งวด)';
-      } else {
-        subtitle += ' · สัญญา ' + (terms[0] || '') + ' · ' + maxYears + ' ปี (' + maxMonths + ' งวด)';
-      }
-
-      return {
-        advance: advanceAll,
-        firstPayment: firstPay,
-        periods,
-        maxMonths,
-        maxYears,
-        terms,
-        subtitle,
-        itemCount: items.length,
-        hasMixedTerms,
-      };
-    },
-    cartCombinedPeriodText() {
-      const c = this.cartCombinedBillSchedule();
-      if (!c.periods.length) return '';
-      const lines = [];
-      lines.push('สรุปชำระรวมทุกชิ้น · ' + c.subtitle);
-      if (c.firstPayment > 0) {
-        lines.push('  ยอดชำระครั้งแรก' + ' '.repeat(8) + this.fmtMoney(c.firstPayment) + ' บาท');
-      }
-      c.periods.forEach(p => {
-        const note = p.note ? ' (' + p.note + ')' : '';
-        lines.push('  ' + p.rangeLabel + note);
-        lines.push('    ' + this.fmtBillPrice(p.total) + ' บาท/เดือน × ' + p.months + ' งวด = ' + this.fmtMoney(p.periodTotal) + ' บาท');
-      });
-      lines.push('  รวมทั้งสัญญา (ทุกชิ้น) = ' + this.fmtMoney(this.grandTotal()) + ' บาท');
-      return lines.join('\n');
-    },
-
     billRangeHtml() {
       if (this.cart.length === 0) return '';
-      let h = '';
-      // ── รวมทั้งตะกร้าก่อน (คอมโบ 5Y+6Y) ──
-      const comb = this.cartCombinedBillSchedule();
-      if (comb.periods.length) {
-        h += '<div class="av-head" style="color:#5b21b6">📅 สรุปชำระรวมทุกชิ้น · แยกช่วงงวด</div>';
-        h += '<div style="font-size:11px;color:#6b7280;margin-bottom:8px">' + comb.subtitle + ' · ราคาหลังหัก combo แล้ว</div>';
-        h += '<div class="br-item" style="border-color:#c4b5fd;background:linear-gradient(135deg,#faf5ff,#fff)">';
-        if (comb.firstPayment > 0) {
-          h += '<div class="br-row"><span class="br-range">💰 ยอดชำระครั้งแรก</span><span class="br-calc">ล่วงหน้า + งวดแรก (ตามกฎ)</span><span class="br-total">฿' + this.fmtMoney(comb.firstPayment) + '</span></div>';
-        }
-        comb.periods.forEach(p => {
-          h += '<div class="br-row">';
-          h += '<span class="br-range">' + p.rangeLabel;
-          if (p.note) h += ' <span style="color:#7c3aed;font-size:10px">(' + p.note + ')</span>';
-          h += '</span>';
-          h += '<span class="br-calc"><strong style="color:#a50034">฿' + this.fmtBillPrice(p.total) + '/เดือน</strong> × ' + p.months + ' งวด</span>';
-          h += '<span class="br-total">฿' + this.fmtMoney(p.periodTotal) + '</span>';
-          h += '</div>';
-        });
-        h += '<div class="br-row br-sum">';
-        h += '<span class="br-range"><strong>รวมทุกชิ้นทั้งสัญญา</strong></span>';
-        h += '<span class="br-calc">ยาวสุด ' + comb.maxYears + ' ปี · ' + comb.maxMonths + ' งวด</span>';
-        h += '<span class="br-total"><strong>฿' + this.fmtMoney(this.grandTotal()) + '</strong></span>';
-        h += '</div></div>';
-        h += '<div style="font-size:11px;color:#9ca3af;margin:10px 0 6px;font-weight:600">รายละเอียดแยกรายการ</div>';
-      }
-
-      h += '<div class="av-head" style="color:#7a0026">📋 จ่ายต่อเดือนแยกรุ่น</div>';
-      h += '<div style="font-size:11px;color:#6b7280;margin-bottom:8px">ราคาหลังหักส่วนลดคอมโบแล้ว</div>';
+      let h = '<div class="av-head" style="color:#7a0026">📅 สรุปจ่ายต่อเดือน · แยกช่วงงวด</div>';
+      h += '<div style="font-size:11px;color:#6b7280;margin-bottom:8px">ราคาต่อเดือนหลังหักส่วนลดคอมโบแล้ว</div>';
       this.cart.forEach((it, i) => {
         const ranges = this.billRangeTotals(it);
         const totalItem = ranges.reduce((s, r) => s + r.total, 0);
@@ -2996,25 +2788,6 @@ function lgCalculator() {
       });
       txt += '</div>';
 
-      // ─── สรุปชำระรวมทุกชิ้น แยกช่วงงวด (คอมโบ 5Y+6Y) ──
-      const comb = this.cartCombinedBillSchedule();
-      if (comb.periods.length) {
-        txt += '<div style="background:linear-gradient(135deg,#faf5ff,#fff);border:1.5px solid #c4b5fd;border-radius:10px;padding:12px 14px;margin-bottom:12px">';
-        txt += '<div style="font-weight:700;color:#5b21b6;font-size:0.9em;margin-bottom:2px">📅 สรุปชำระรวมทุกชิ้น · แยกช่วงงวด</div>';
-        txt += '<div style="font-size:0.78em;color:#6b7280;margin-bottom:8px">' + comb.subtitle + '</div>';
-        comb.periods.forEach(p => {
-          txt += '<div style="display:flex;justify-content:space-between;gap:8px;padding:4px 0;border-bottom:1px dashed #e9e5ff;font-size:0.85em">';
-          txt += '<div><strong>' + p.rangeLabel + '</strong>';
-          if (p.note) txt += ' <span style="color:#7c3aed;font-size:0.85em">(' + p.note + ')</span>';
-          txt += '<div style="font-size:0.8em;color:#9ca3af">× ' + p.months + ' งวด = ฿' + this.fmtMoney(p.periodTotal) + '</div></div>';
-          txt += '<strong style="color:#a50034;white-space:nowrap">฿' + this.fmtBillPrice(p.total) + '/เดือน</strong>';
-          txt += '</div>';
-        });
-        txt += '<div style="display:flex;justify-content:space-between;margin-top:8px;font-weight:700;color:#5b21b6;font-size:0.9em">';
-        txt += '<span>รวมทั้งสัญญา (ทุกชิ้น)</span><span style="color:#a50034">฿' + this.fmtMoney(this.grandTotal()) + '</span>';
-        txt += '</div></div>';
-      }
-
       // ─── Hero price card ───
       txt += '<div style="background:linear-gradient(135deg,#fff5f5,#fff);border:1.5px solid #fca5a5;border-radius:10px;padding:12px 14px;margin-bottom:12px">';
       txt += '<div style="font-size:0.78em;color:#9ca3af;margin-bottom:1px">🔥 โปรเริ่มต้น (งวดที่ ' + lowest.bill + ')</div>';
@@ -3120,13 +2893,6 @@ function lgCalculator() {
         if (row.bill1 > 0) parts.push('งวด 1 ' + this.bht(row.bill1).toLocaleString());
         lines.push('  ' + row.item.code + ': ' + this.fmtMoney(row.total) + ' บาท' + (parts.length ? ' (' + parts.join(' + ') + ')' : ''));
       });
-
-      // สรุปชำระรวมทุกชิ้น (คอมโบ 5Y+6Y)
-      const combText = this.cartCombinedPeriodText();
-      if (combText) {
-        lines.push('');
-        lines.push(combText);
-      }
 
       // PRODUCT DETAILS
       this.cart.forEach((it, i) => {
