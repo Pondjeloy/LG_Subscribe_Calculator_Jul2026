@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- LG Subscribe Calculator build 2026.07.13-v52 -->
+<!-- LG Subscribe Calculator build 2026.07.13-v53 -->
 <html lang="th">
 <head>
 <meta charset="UTF-8" />
@@ -1031,7 +1031,7 @@ function lgCalculator() {
     compareB: { term: '5Y', serviceType: 'Visit', modelIndices: [] },
     cart: [],
     toast: { show: false, msg: '' },
-    buildVersion: '2026.07.13-v52',
+    buildVersion: '2026.07.13-v53',
 
     hasModelSelected() {
       const v = this.picker.model;
@@ -2314,13 +2314,31 @@ function lgCalculator() {
     // ═══════════════════════════════════════════════════════════
     // BILL RANGE TOTALS — รวมค่าเช่าตามช่วงงวด (เช่น งวด 1-6 รวม ฿X)
     // ═══════════════════════════════════════════════════════════
+    // หา note จาก billSchedule ของช่วงงวด (เช่น "ครึ่งราคา (จ่ายล่วงหน้าแล้ว)" / "โปรลด 50%")
+    billSegNote(item, start, end) {
+      if (!item.billSchedule) return '';
+      for (const seg of item.billSchedule) {
+        const rng = (seg.range || '').replace('บิล ', '');
+        let a, b;
+        if (rng.includes('-')) { const p = rng.split('-'); a = +p[0]; b = +p[1]; }
+        else { a = b = +rng; }
+        if (start >= a && end <= b) return seg.note || '';
+      }
+      return '';
+    },
     billRangeTotals(item) {
       const segs = this.itemComboSegments(item).segments;
       const result = [];
+      const halfApprox = (item.postPromoPrice || item.regular || 0) / 2;
       segs.forEach(seg => {
         // ใช้ base (ราคาก่อนหัก combo) เพื่อกำหนดว่าช่วงนี้เป็นโปรหรือไม่
         // ถ้าใช้ seg.price จะผิดเพราะ combo ทำให้ราคาต่ำกว่า postPromoPrice ทุกช่วง
-        const isPromo = seg.base < item.postPromoPrice;
+        const note = this.billSegNote(item, seg.start, seg.end);
+        // TV/จอ Advance: บิล 1-12 ครึ่งราคาเพราะจ่ายล่วงหน้าแล้ว — ไม่ใช่โปร (ลูกค้ามักเข้าใจผิด)
+        const isAdvanceHalf = !!(item.advancePayment > 0 && !item.outright
+          && (note.includes('ครึ่งราคา') || note.includes('จ่ายล่วงหน้า')
+            || (seg.end <= 12 && Math.abs(seg.base - halfApprox) < 1)));
+        const isPromo = !isAdvanceHalf && seg.base < item.postPromoPrice;
         // ── เก็บแต่ละช่วงราคาเป็นบล็อกเดียว ไม่แยกตามปี ──
         const months = seg.end - seg.start + 1;
         result.push({
@@ -2331,6 +2349,7 @@ function lgCalculator() {
           total: Math.round(seg.price * months * 100) / 100,
           rangeLabel: seg.start === seg.end ? ('งวดที่ ' + seg.start) : ('งวดที่ ' + seg.start + '-' + seg.end),
           isPromo,
+          isAdvanceHalf,
         });
       });
       return result;
@@ -2352,7 +2371,9 @@ function lgCalculator() {
         ranges.forEach(r => {
           let label = r.rangeLabel;
           let tag = '';
-          if (r.isPromo) {
+          if (r.isAdvanceHalf) {
+            tag = ' <span style="color:#7c3aed;font-size:10px;font-weight:600">(ครึ่งราคา · จ่ายล่วงหน้าแล้ว)</span>';
+          } else if (r.isPromo) {
             tag = ' <span style="color:#0f766e;font-size:10px;font-weight:600">(โปร)</span>';
           }
           h += '<div class="br-row">';
@@ -2760,19 +2781,25 @@ function lgCalculator() {
         lines.push('ค่าเช่ารายงวด');
         const ranges = this.billRangeTotals(it);
         const advance = it.advancePayment || 0;
+        // pad กว้างพอให้ราคาไม่ติดกับ (โปร)/(ครึ่งราคา)
+        const COL = 32;
         if (advance > 0) {
-          lines.push(('  จ่ายล่วงหน้า').padEnd(16) + this.fmtMoney(advance) + ' บาท');
+          lines.push(('  จ่ายล่วงหน้า').padEnd(COL) + this.fmtMoney(advance) + ' บาท');
         }
         ranges.forEach(r => {
-          const tag = r.isPromo ? ' (โปร)' : '';
-          const label = ('  ' + r.rangeLabel + tag).padEnd(16);
+          let tag = '';
+          if (r.isAdvanceHalf) tag = ' (ครึ่งราคา · จ่ายล่วงหน้าแล้ว)';
+          else if (r.isPromo) tag = ' (โปร)';
+          const label = ('  ' + r.rangeLabel + tag).padEnd(COL);
           lines.push(label + this.fmtBillPrice(r.pricePerMonth) + ' บาท/เดือน');
         });
 
         // Per-item total
         lines.push('');
         const totalItem = ranges.reduce((s, r) => s + r.total, 0) + advance;
-        let totalLine = 'รวม ' + (it.totalContractMonths || 60) + ' งวด = ' + this.fmtMoney(totalItem) + ' บาท';
+        let totalLine = 'รวม ' + (it.totalContractMonths || 60) + ' งวด'
+          + (advance > 0 ? ' + จ่ายล่วงหน้า' : '')
+          + ' = ' + this.fmtMoney(totalItem) + ' บาท';
         if (it.totalSaving > 0) totalLine += ' | ประหยัด ' + it.totalSaving.toLocaleString() + ' บาท';
         lines.push(totalLine);
         if (ann && this.cart.length === 1) {
