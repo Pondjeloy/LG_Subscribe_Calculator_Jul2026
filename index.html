@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- LG Subscribe Calculator build 2026.07.13-v64 · luxe mono UI + customer copy text v62 -->
+<!-- LG Subscribe Calculator build 2026.07.13-v65 · luxe mono UI + customer copy text v62 -->
 <html lang="th">
 <head>
 <meta charset="UTF-8" />
@@ -1326,7 +1326,7 @@ function lgCalculator() {
  compareB: { term: '5Y', serviceType: 'Visit', modelIndices: [] },
  cart: [],
  toast: { show: false, msg: '' },
- buildVersion: '2026.07.13-v64',
+ buildVersion: '2026.07.13-v65',
 
  hasModelSelected() {
  const v = this.picker.model;
@@ -3148,80 +3148,139 @@ function lgCalculator() {
       const hasCombo = this.comboRate() > 0;
       const cr = Math.round(this.comboRate() * 100);
       const ct = this.customerType === 'new' ? 'ลูกค้าใหม่' : 'ลูกค้าเก่า';
-      const allMonths = this.cart.map(it => it.totalContractMonths || 60);
-      const maxMonths = Math.max(...allMonths);
-      const years = Math.round(maxMonths / 12);
       const ann = this.annualBreakdown();
       const lines = [];
 
-      // HEADER
+      // ── HEADER ──
       const headerTitle = this.cart.length === 1
-        ? 'LG SUBSCRIBE — ' + this.productTypeLabel(this.cart[0]) + ' · ' + this.cart[0].code
+        ? 'LG SUBSCRIBE — ' + this.cart[0].code
         : 'LG SUBSCRIBE — ' + this.cart.length + ' รายการ';
-      // รูปแบบแน่นสำหรับ LINE มือถือ — ไม่เว้นบรรทัดว่าง / ไม่ padEnd (กันล้นจอ)
       lines.push(headerTitle);
-      let headerSub = ct + ' · ' + this.promoDateText();
-      if (hasCombo) headerSub += ' · ' + this.comboLabel() + ' ' + cr + '%';
+
+      let headerSub = ct + ' | ' + this.promoDateText();
+      if (hasCombo) headerSub += ' | ' + this.comboLabel() + ' ' + cr + '%';
       lines.push(headerSub);
-      lines.push('ครั้งแรก = ' + this.fmtMoney(this.firstPaymentTotal()) + ' บาท');
+
+      lines.push('ยอดชำระครั้งแรกรวม: ' + this.fmtMoney(this.firstPaymentTotal()) + ' บาท');
       this.firstPaymentBreakdown().forEach(row => {
         const parts = [];
-        if (row.advance > 0) parts.push(row.item.outright ? 'ซื้อขาด' : 'ล่วงหน้า');
-        if (row.bill1 > 0) parts.push('งวด1');
-        lines.push('· ' + row.item.code + ' = ' + this.fmtMoney(row.total) + (parts.length ? ' (' + parts.join('+') + ')' : ''));
+        if (row.advance > 0) {
+          parts.push(row.item.outright
+            ? ('ซื้อขาด ' + this.fmtMoney(row.advance))
+            : ('ล่วงหน้า ' + this.fmtMoney(row.advance)));
+        }
+        if (row.bill1 > 0) {
+          parts.push('งวด 1 ' + this.fmtMoney(this.bht(row.bill1)));
+        }
+        lines.push(
+          '  ' + row.item.code + ': ' + this.fmtMoney(row.total) + ' บาท'
+          + (parts.length ? ' (' + parts.join(' + ') + ')' : '')
+        );
       });
 
-      // PRODUCT DETAILS — แน่นต่อเนื่อง
+      // ── EACH PRODUCT ──
       this.cart.forEach((it, i) => {
         const care = this.careService(it);
-        const title = this.productSummaryTitle(it);
         const months = it.totalContractMonths || 60;
         const years = Math.round(months / 12);
-        if (i > 0) lines.push('—');
-        lines.push((this.cart.length > 1 ? (i + 1) + '. ' : '') + title);
-        lines.push(it.term + ' · ' + years + 'ปี/' + months + 'งวด · ' + this.formatServiceDetail(it, false));
-
         const ranges = this.billRangeTotals(it);
         const advance = it.advancePayment || 0;
-        if (advance > 0) {
-          lines.push('ล่วงหน้า = ' + this.fmtMoney(advance) + ' บาท');
-        }
-        ranges.forEach(r => {
-          let tag = r.isAdvanceHalf ? 'ครึ่งราคา' : (r.isPromo ? 'โปร' : 'ปกติ');
-          // ราคา/เดือน × งวด = รวมช่วง
-          lines.push(
-            r.rangeLabel + ' ' + this.fmtBillPrice(r.pricePerMonth) + '/ด. (' + tag + ') ×' + r.months
-            + ' = ' + this.fmtMoney(r.total) + ' บาท'
-          );
-        });
         const totalItem = ranges.reduce((s, r) => s + r.total, 0) + advance;
-        let totalLine = 'รวมทั้งสัญญา = ' + this.fmtMoney(totalItem) + ' บาท';
-        if (it.totalSaving > 0) totalLine += ' · ประหยัด ' + it.totalSaving.toLocaleString();
-        lines.push(totalLine);
-        if (ann && this.cart.length === 1) {
-          lines.push('เฉลี่ย = ' + ann.perMonth.toLocaleString() + '/ด. · ' + ann.perYear.toLocaleString() + '/ปี');
+
+        lines.push('');
+        // ชื่อรุ่น (หลายชิ้นใส่ลำดับ)
+        const name = (it.name || '').trim() || it.code;
+        lines.push((this.cart.length > 1 ? (i + 1) + '. ' : '') + name);
+
+        // สัญญา + บริการ
+        lines.push(
+          'สัญญา ' + (it.term || '') + ' (' + months + ' เดือน) | บริการ: '
+          + this.formatServiceDetail(it, true)
+        );
+
+        lines.push('');
+        if (it.outright) {
+          lines.push('ซื้อขาด');
+          lines.push('  ราคาซื้อขาด ' + this.fmtMoney(advance) + ' บาท (รวมเครื่อง + บริการ 2 ปี · ลด 10%)');
+        } else {
+          lines.push('ค่าเช่ารายงวด');
+          if (advance > 0) {
+            lines.push('  จ่ายล่วงหน้า ' + this.fmtMoney(advance) + ' บาท (ตอนเริ่มสัญญา)');
+          }
+          ranges.forEach(r => {
+            let tag = '';
+            if (r.isAdvanceHalf) tag = '(ครึ่งราคา)';
+            else if (r.isPromo) tag = '(โปร)';
+            // โปร/ครึ่งราคา: ติด tag กับราคา · ปกติ: เว้นวรรค 2 ช่อง ไม่ใส่ (ปกติ)
+            const pricePart = tag
+              ? (tag + this.fmtBillPrice(r.pricePerMonth) + ' บาท/เดือน')
+              : ('  ' + this.fmtBillPrice(r.pricePerMonth) + ' บาท/เดือน');
+            lines.push('  ' + r.rangeLabel + (tag ? ' ' + pricePart : pricePart));
+          });
         }
 
-        // Care บรรทัดเดียว (สั้น)
-        if (care.items && care.items.length) {
-          lines.push('Care: ' + care.items.map(s => s.label).join(' · '));
+        lines.push('');
+        let totalLine = 'รวม ' + months + ' งวด = ' + this.fmtMoney(totalItem) + ' บาท';
+        if (it.totalSaving > 0) {
+          totalLine += ' | ประหยัด ' + it.totalSaving.toLocaleString() + ' บาท';
         }
+        lines.push(totalLine);
+
+        // เฉลี่ย — รายชิ้นเมื่อ 1 ชิ้นใช้ annualBreakdown; หลายชิ้นคำนวณต่อชิ้น
+        if (this.cart.length === 1 && ann) {
+          lines.push(
+            'เฉลี่ย ' + ann.perMonth.toLocaleString() + ' บาท/เดือน ('
+            + ann.perYear.toLocaleString() + ' บาท/ปี)'
+          );
+        } else {
+          const perM = Math.round(totalItem / months);
+          const perY = Math.round(totalItem / years);
+          lines.push(
+            'เฉลี่ย ' + perM.toLocaleString() + ' บาท/เดือน ('
+            + perY.toLocaleString() + ' บาท/ปี)'
+          );
+        }
+
+        // Care Service
+        if (care.items && care.items.length) {
+          lines.push('');
+          lines.push('Care Service ที่จะได้รับ');
+          care.items.forEach(svc => {
+            lines.push('  - ' + svc.label + '  (' + svc.freq + ')');
+          });
+          if (care.note) {
+            lines.push('  * ' + care.note);
+          }
+        }
+
+        lines.push('');
         lines.push(this.warrantyLineText(it, years));
       });
 
-      // GRAND TOTAL (หลายรายการ)
+      // ── GRAND TOTAL (หลายรายการ) ──
       if (this.cart.length > 1) {
-        lines.push('—');
+        lines.push('');
         lines.push('สรุปรวม ' + this.cart.length + ' รายการ');
         if (hasCombo) {
-          lines.push(this.comboLabel() + ' ' + cr + '% · สุทธิ = ' + this.netMonthly().toLocaleString() + '/ด.');
+          lines.push(this.comboLabel() + ' ' + cr + '% · ค่าเช่าสุทธิ ' + this.netMonthly().toLocaleString() + ' บาท/เดือน');
         }
-        if (this.hasOutright()) lines.push('ซื้อขาดรวม = ' + this.totalOutright().toLocaleString() + ' บาท');
-        if (this.hasTvAdvance()) lines.push('ล่วงหน้ารวม = ' + this.totalTvAdvance().toLocaleString() + ' บาท');
-        lines.push('ครั้งแรกรวม = ' + this.fmtMoney(this.firstPaymentTotal()) + ' บาท');
-        if (this.totalSaving() > 0) lines.push('ประหยัดรวม = ' + this.totalSaving().toLocaleString() + ' บาท');
-        lines.push('รวมตลอดสัญญา = ' + this.fmtMoney(this.grandTotal()) + ' บาท');
-        if (ann) lines.push('เฉลี่ย = ' + ann.perMonth.toLocaleString() + '/ด. · ' + ann.perYear.toLocaleString() + '/ปี');
+        if (this.hasOutright()) {
+          lines.push('ซื้อขาดรวม: ' + this.totalOutright().toLocaleString() + ' บาท');
+        }
+        if (this.hasTvAdvance()) {
+          lines.push('จ่ายล่วงหน้ารวม: ' + this.totalTvAdvance().toLocaleString() + ' บาท');
+        }
+        lines.push('ยอดชำระครั้งแรกรวม: ' + this.fmtMoney(this.firstPaymentTotal()) + ' บาท');
+        if (this.totalSaving() > 0) {
+          lines.push('ประหยัดรวม: ' + this.totalSaving().toLocaleString() + ' บาท');
+        }
+        lines.push('รวมตลอดสัญญา: ' + this.fmtMoney(this.grandTotal()) + ' บาท');
+        if (ann) {
+          lines.push(
+            'เฉลี่ย ' + ann.perMonth.toLocaleString() + ' บาท/เดือน ('
+            + ann.perYear.toLocaleString() + ' บาท/ปี)'
+          );
+        }
       }
 
       this.copyText(lines.join('\n'), 'คัดลอกข้อความสรุปแล้ว ✓');
