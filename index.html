@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- LG Subscribe Calculator build 2026.07.13-v66 · luxe UI · no emoji customer text -->
+<!-- LG Subscribe Calculator build 2026.07.13-v67 · SUBSCRIBE DAY active = grand total gradient -->
 <html lang="th">
 <head>
 <meta charset="UTF-8" />
@@ -260,38 +260,74 @@
   .category-product-img{display:flex;align-items:center;justify-content:center;padding:16px;min-height:160px;background:var(--fill);border-radius:var(--radius-sm)}
   .category-product-img img{max-width:100%;max-height:200px;object-fit:contain;filter:drop-shadow(0 10px 24px rgba(0,0,0,.08))}
 
-  /* promo panel — soft elevated light, not loud color */
+  /* promo panel — ปิด: ขาว · เปิด: โทนเดียวกับ summary-grand-box (Total Contract) */
   .special-combo-banner{
     position:relative;overflow:hidden;border-radius:var(--radius);
     padding:20px 22px;background:#fff;border:1px solid var(--line);
-    box-shadow:var(--shadow-sm);
+    box-shadow:var(--shadow-sm);transition:background .2s, border-color .2s, box-shadow .2s;
   }
   .special-combo-banner::after{display:none}
-  .special-combo-banner.active{border-color:var(--blood);box-shadow:0 0 0 1.5px var(--blood)}
   .special-combo-glow,.special-fire{display:none}
-  .special-combo-banner .font-display,
-  .special-combo-banner [style*="color:#fff"],
-  .special-combo-banner [style*="color:rgba(255"]{color:var(--ink)!important}
-  .special-combo-banner .text-xs{color:var(--muted)!important}
+  /* ปิด (default light) */
+  .special-combo-banner:not(.active) .font-display{color:var(--ink)!important}
+  .special-combo-banner:not(.active) .text-xs{color:var(--muted)!important}
+  /* เปิด = พื้นไล่สีเดียวกับ ยอดรวมตลอดสัญญา · Total Contract Value */
+  .special-combo-banner.active{
+    background:linear-gradient(145deg,#111 0%,#1a0a10 45%,#A50034 100%);
+    border-color:transparent;
+    box-shadow:0 12px 32px rgba(92,14,37,.28);
+    color:#fff;
+  }
+  .special-combo-banner.active .font-display,
+  .special-combo-banner.active .font-display[style],
+  .special-combo-banner.active .font-semibold,
+  .special-combo-banner.active .font-semibold[style]{color:#fff!important}
+  .special-combo-banner.active .text-xs,
+  .special-combo-banner.active .text-xs[style],
+  .special-combo-banner.active [style*="color:var(--muted)"],
+  .special-combo-banner.active [style*="color:var(--ink)"],
+  .special-combo-banner.active [style*="color:var(--ink-2)"]{color:rgba(255,255,255,.78)!important}
+  .special-combo-banner.active [style*="color:#fff"],
+  .special-combo-banner.active [style*="color: #fff"]{color:#fff!important}
   .special-toggle{display:flex;align-items:center;gap:8px;cursor:pointer}
   .special-toggle input{display:none}
   .special-toggle-slider{width:42px;height:26px;background:var(--fill-2);border-radius:980px;position:relative;transition:background .2s}
   .special-toggle-slider::before{content:'';position:absolute;top:3px;left:3px;width:20px;height:20px;background:#fff;border-radius:50%;box-shadow:0 1px 3px rgba(0,0,0,.15);transition:transform .2s}
-  .special-toggle input:checked + .special-toggle-slider{background:var(--blood)}
-  .special-toggle input:checked + .special-toggle-slider::before{transform:translateX(16px)}
+  .special-toggle input:checked + .special-toggle-slider{background:#fff}
+  .special-toggle input:checked + .special-toggle-slider::before{transform:translateX(16px);background:var(--blood)}
+  .special-combo-banner.active .special-toggle-slider{background:rgba(255,255,255,.22)}
+  .special-combo-banner.active .special-toggle input:checked + .special-toggle-slider{background:#fff}
   .special-combo-rates{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
   .special-rate-card{
     flex:1;min-width:160px;background:var(--fill);
     border:1px solid transparent;border-radius:var(--radius-sm);padding:12px 14px;
   }
   .special-rate-card strong{color:var(--ink)}
+  .special-combo-banner.active .special-rate-card{
+    background:rgba(255,255,255,.10);border:1px solid rgba(255,255,255,.14);
+  }
+  .special-combo-banner.active .special-rate-card,
+  .special-combo-banner.active .special-rate-card .text-xs,
+  .special-combo-banner.active .special-rate-card div{color:rgba(255,255,255,.88)!important}
+  .special-combo-banner.active .special-rate-card strong{color:#fff!important}
   .special-settings-btn{
     background:var(--fill);border:1px solid var(--line);color:var(--ink);
     padding:7px 14px;border-radius:980px;font-size:12px;cursor:pointer;font-family:inherit;font-weight:500;transition:background .15s;
   }
   .special-settings-btn:hover{background:var(--fill-2)}
+  .special-combo-banner.active .special-settings-btn{
+    background:rgba(255,255,255,.12);border-color:rgba(255,255,255,.28);color:#fff;
+  }
+  .special-combo-banner.active .special-settings-btn:hover{background:rgba(255,255,255,.2)}
   .combo-settings{margin-top:14px;background:var(--fill);border:1px solid var(--line);border-radius:var(--radius-sm);padding:14px}
+  .special-combo-banner.active .combo-settings{
+    background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.14);
+  }
   .combo-settings-block{background:#fff;border:1px solid var(--line);border-radius:var(--radius-sm);padding:12px;margin-bottom:10px}
+  .special-combo-banner.active .combo-settings-block{background:rgba(255,255,255,.96);border-color:transparent}
+  .special-combo-banner.active .combo-settings-block .font-semibold,
+  .special-combo-banner.active .combo-settings-block .combo-set-label,
+  .special-combo-banner.active .combo-settings-block .combo-tier-label{color:var(--ink)!important}
   .combo-set-label{font-size:11px;color:var(--muted);display:block;margin-bottom:4px}
   .combo-set-input{width:100%;background:var(--fill);border:none;border-radius:8px;padding:8px 10px;font-size:13px;font-family:inherit;color:var(--ink)}
   .combo-tier-group{background:var(--fill);border-radius:8px;padding:8px}
@@ -306,11 +342,10 @@
   .combo-btn-save:hover{opacity:.88}
   .combo-btn-reset{background:transparent;border:1px solid var(--line-strong);color:var(--ink);padding:9px 14px;border-radius:980px;cursor:pointer;font-family:inherit;font-size:13px}
   .combo-btn-reset:hover{background:rgba(0,0,0,.04)}
-  /* force light text on dark banners → now light panel, override white inline */
-  .special-combo-banner [style*="color:#fff"],
-  .special-combo-banner [style*="color: #fff"],
-  .special-combo-banner [style*="color:rgba(255,255,255"]{color:var(--ink)!important}
-  .special-combo-banner .font-semibold[style*="color:#fff"]{color:var(--ink)!important}
+  .special-combo-banner.active .combo-btn-reset{
+    border-color:rgba(255,255,255,.35);color:#fff;
+  }
+  .special-combo-banner.active .combo-btn-reset:hover{background:rgba(255,255,255,.1)}
 
 
   /* Compare A/B table — 100% width, no horizontal scroll */
@@ -1317,7 +1352,7 @@ function lgCalculator() {
  compareB: { term: '5Y', serviceType: 'Visit', modelIndices: [] },
  cart: [],
  toast: { show: false, msg: '' },
- buildVersion: '2026.07.13-v66',
+ buildVersion: '2026.07.13-v67',
 
  hasModelSelected() {
  const v = this.picker.model;
