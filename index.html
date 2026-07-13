@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- LG Subscribe Calculator build 2026.07.13-v57 -->
+<!-- LG Subscribe Calculator build 2026.07.13-v58 -->
 <html lang="th">
 <head>
 <meta charset="UTF-8" />
@@ -127,6 +127,14 @@
   .plan-card{border:1px solid #e2e8f0;border-radius:8px;padding:14px;cursor:pointer;transition:all .2s;display:block;background:#fff}
   .plan-card.active{border-color:rgba(200,16,46,.5);background:linear-gradient(135deg,rgba(200,16,46,.05),#fff 68%);box-shadow:0 4px 12px rgba(200,16,46,.08)}
   .plan-card:hover{border-color:rgba(200,16,46,.35);box-shadow:0 4px 10px rgba(15,23,42,.06)}
+  .plan-periods{margin-top:10px;padding-top:8px;border-top:1px dashed #e5e7eb}
+  .plan-periods-head{font-size:11px;font-weight:700;color:#6b7280;margin-bottom:5px;letter-spacing:.02em}
+  .plan-period-row{display:grid;grid-template-columns:1fr auto auto;gap:6px 10px;align-items:baseline;font-size:12px;padding:2px 0;color:#374151}
+  .plan-period-row .pp-label{font-weight:500}
+  .plan-period-row .pp-price{font-family:'JetBrains Mono',monospace;font-weight:700;color:var(--lg-red);white-space:nowrap}
+  .plan-period-row .pp-note{font-size:10px;color:#6b7280;white-space:nowrap}
+  .plan-period-row.pp-adv .pp-price{color:#7c3aed}
+  .plan-period-foot{margin-top:4px;font-size:10.5px;color:#9ca3af}
 
   .price-highlight{font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;color:var(--lg-red);letter-spacing:0}
 
@@ -501,6 +509,18 @@
                         x-text="'หลังโปร ฿' + plan.postPromoPrice.toLocaleString() + '/เดือน'"></div>
                     </div>
                   </div>
+                  <!-- สรุปจ่ายต่อเดือนแยกช่วงงวด (5Y / 6Y) -->
+                  <div class="plan-periods" x-show="!plan.outright && planMonthlyPeriods(plan).length">
+                    <div class="plan-periods-head" x-text="'📅 สรุปจ่ายต่อเดือน · สัญญา ' + planTermYears(plan)"></div>
+                    <template x-for="(line, li) in planMonthlyPeriods(plan)" :key="li">
+                      <div class="plan-period-row" :class="line.kind === 'advance' ? 'pp-adv' : ''">
+                        <span class="pp-label" x-text="line.label"></span>
+                        <span class="pp-price" x-text="line.priceText"></span>
+                        <span class="pp-note" x-show="line.note" x-text="line.note"></span>
+                      </div>
+                    </template>
+                    <div class="plan-period-foot" x-text="planContractFoot(plan)"></div>
+                  </div>
                 </div>
               </label>
             </template>
@@ -544,6 +564,7 @@
                       <span x-text="row.label"></span>
                       <span class="cp-badge-rec" x-show="row.isRecommended && !row.isBest">แนะนำ</span>
                       <div class="cp-sub" x-text="row.serviceCycle"></div>
+                      <div class="cp-sub" style="margin-top:4px;white-space:pre-line;line-height:1.35;color:#4b5563" x-text="row.periodText"></div>
                     </td>
                     <td class="cp-care" x-text="row.careSummary"></td>
                     <td class="cp-num" x-text="row.promoLabel"></td>
@@ -1033,7 +1054,7 @@ function lgCalculator() {
     compareB: { term: '5Y', serviceType: 'Visit', modelIndices: [] },
     cart: [],
     toast: { show: false, msg: '' },
-    buildVersion: '2026.07.13-v57',
+    buildVersion: '2026.07.13-v58',
 
     hasModelSelected() {
       const v = this.picker.model;
@@ -1118,6 +1139,61 @@ function lgCalculator() {
       // No Service: tag แสดง "รับประกันตลอดสัญญา" แล้ว — อย่าซ้ำใน note
       if (plan.serviceType === 'No Service') return '';
       return 'รอบบริการ: ' + plan.serviceCycle;
+    },
+    planTermYears(plan) {
+      if (!plan) return '';
+      const months = plan.totalContractMonths || (plan.term === '6Y' ? 72 : 60);
+      const y = Math.round(months / 12);
+      return (plan.term || (y + 'Y')) + ' (' + y + ' ปี · ' + months + ' งวด)';
+    },
+    planContractFoot(plan) {
+      if (!plan || plan.outright) return '';
+      const months = plan.totalContractMonths || 60;
+      const y = Math.round(months / 12);
+      let s = 'รวม ' + months + ' งวด · ' + y + ' ปี';
+      if (plan.advancePayment > 0 && !plan.outright) s += ' + จ่ายล่วงหน้า';
+      if (plan.totalSaving > 0) s += ' · ประหยัด ฿' + plan.totalSaving.toLocaleString();
+      return s;
+    },
+    /** สรุปจ่ายต่อเดือนแยกช่วงงวด — ใช้กับ plan ตอนเลือก / item ในตะกร้า */
+    itemMonthlyPeriodLines(item) {
+      if (!item || item.outright) return [];
+      const lines = [];
+      const adv = item.advancePayment || 0;
+      if (adv > 0) {
+        lines.push({
+          kind: 'advance',
+          label: 'จ่ายล่วงหน้า',
+          priceText: '฿' + this.fmtMoney(adv),
+          note: 'ตอนเริ่มสัญญา',
+        });
+      }
+      this.billRangeTotals(item).forEach(r => {
+        let note = '';
+        if (r.isAdvanceHalf) note = 'ครึ่งราคา';
+        else if (r.isPromo) note = 'โปร';
+        else note = 'ปกติ';
+        lines.push({
+          kind: 'period',
+          label: r.rangeLabel,
+          priceText: '฿' + this.fmtBillPrice(r.pricePerMonth) + '/เดือน',
+          note,
+          months: r.months,
+          total: r.total,
+        });
+      });
+      return lines;
+    },
+    planMonthlyPeriods(plan) {
+      if (!plan || plan.outright) return [];
+      const m = this.currentModel();
+      if (!m || !this.picker.category) return [];
+      return this.itemMonthlyPeriodLines(this.planToItem(this.picker.category, m, plan));
+    },
+    itemPeriodText(item) {
+      return this.itemMonthlyPeriodLines(item).map(l => {
+        return l.label + ' ' + l.priceText + (l.note ? ' (' + l.note + ')' : '');
+      }).join('\n');
     },
 
     catalog: {
@@ -1953,6 +2029,7 @@ function lgCalculator() {
           idx, plan,
           label: plan.term + ' · ' + this.serviceTypeTag(plan.serviceType),
           serviceCycle: plan.serviceType !== 'No Service' ? plan.serviceCycle : '—',
+          periodText: this.itemPeriodText(item),
           careSummary: this.compareCareSummary(item),
           careScore,
           monthlyAvg: this.compareMonthlyAvg(plan, grandTotal),
@@ -2358,35 +2435,40 @@ function lgCalculator() {
     },
     billRangeHtml() {
       if (this.cart.length === 0) return '';
-      let h = '<div class="av-head" style="color:#7a0026">📅 ค่าเช่าตามช่วงงวด · รวมเป็นเงินจริง</div>';
-      h += '<div style="font-size:11px;color:#6b7280;margin-bottom:8px">ราคาต่อเดือนคือราคาหลังหักส่วนลดคอมโบแล้ว</div>';
+      let h = '<div class="av-head" style="color:#7a0026">📅 สรุปจ่ายต่อเดือน · แยกช่วงงวด</div>';
+      h += '<div style="font-size:11px;color:#6b7280;margin-bottom:8px">ราคาต่อเดือนหลังหักส่วนลดคอมโบแล้ว · แยกชัดแต่ละสัญญา 5 ปี / 6 ปี</div>';
       this.cart.forEach((it, i) => {
         const ranges = this.billRangeTotals(it);
         const totalItem = ranges.reduce((s, r) => s + r.total, 0);
         const advance = it.advancePayment || 0;
+        const months = it.totalContractMonths || 60;
+        const years = Math.round(months / 12);
         h += '<div class="br-item">';
-        h += '<div class="br-title"><span>' + (i+1) + '.</span> <strong>' + it.code + '</strong></div>';
+        h += '<div class="br-title"><span>' + (i+1) + '.</span> <strong>' + this.productTypeLabel(it) + ' · ' + it.code + '</strong>';
+        h += ' <span style="font-weight:500;color:#6b7280;font-size:11px">· สัญญา ' + (it.term || '') + ' (' + years + ' ปี · ' + months + ' งวด)</span></div>';
         h += '<div class="br-rows">';
         if (advance > 0) {
-          h += '<div class="br-row"><span class="br-range">💳 จ่ายล่วงหน้า</span><span class="br-calc">฿' + advance.toLocaleString() + '</span><span class="br-total"></span></div>';
+          h += '<div class="br-row"><span class="br-range">💳 จ่ายล่วงหน้า</span><span class="br-calc">ตอนเริ่มสัญญา</span><span class="br-total">฿' + this.fmtMoney(advance) + '</span></div>';
         }
         ranges.forEach(r => {
           let label = r.rangeLabel;
           let tag = '';
           if (r.isAdvanceHalf) {
-            tag = ' <span style="color:#7c3aed;font-size:10px;font-weight:600">(ครึ่งราคา · จ่ายล่วงหน้าแล้ว)</span>';
+            tag = ' <span style="color:#7c3aed;font-size:10px;font-weight:600">(ครึ่งราคา)</span>';
           } else if (r.isPromo) {
             tag = ' <span style="color:#0f766e;font-size:10px;font-weight:600">(โปร)</span>';
+          } else {
+            tag = ' <span style="color:#9ca3af;font-size:10px">(ปกติ)</span>';
           }
           h += '<div class="br-row">';
           h += '<span class="br-range">' + label + tag + '</span>';
-          h += '<span class="br-calc">฿' + this.fmtBillPrice(r.pricePerMonth) + ' × ' + r.months + ' งวด</span>';
+          h += '<span class="br-calc"><strong style="color:#a50034">฿' + this.fmtBillPrice(r.pricePerMonth) + '/เดือน</strong> × ' + r.months + ' งวด</span>';
           h += '<span class="br-total">฿' + this.fmtMoney(r.total) + '</span>';
           h += '</div>';
         });
         h += '<div class="br-row br-sum">';
-        h += '<span class="br-range"><strong>รวม</strong></span>';
-        h += '<span class="br-calc">' + (it.totalContractMonths || 60) + ' งวด' + (advance > 0 ? ' + จ่ายล่วงหน้า' : '') + '</span>';
+        h += '<span class="br-range"><strong>รวมทั้งสัญญา</strong></span>';
+        h += '<span class="br-calc">' + months + ' งวด · ' + years + ' ปี' + (advance > 0 ? ' + ล่วงหน้า' : '') + '</span>';
         h += '<span class="br-total"><strong>฿' + this.fmtMoney(totalItem + advance) + '</strong></span>';
         h += '</div>';
         h += '</div></div>';
@@ -2734,27 +2816,26 @@ function lgCalculator() {
         txt += '<div><span style="font-weight:700;color:#a50034">' + (i+1) + '.</span> <strong>' + this.productSummaryTitle(it) + '</strong></div>';
         txt += '<span style="font-size:0.75em;background:#f3f4f6;color:#374151;padding:2px 7px;border-radius:4px;white-space:nowrap">' + it.term + '</span>';
         txt += '</div>';
-        txt += '<div style="font-size:0.78em;color:#6b7280;margin-bottom:6px">' + this.productTypeLabel(it) + ' · สัญญา ' + (it.totalContractMonths || 60) + ' เดือน</div>';
-        // Pricing
-        txt += '<div style="font-size:0.85em;margin-bottom:3px">';
-        if (it.billSchedule) {
-          txt += '💰 <strong>ตารางชำระ:</strong><div style="margin:3px 0 3px 16px">';
-          it.billSchedule.forEach(seg => {
-            txt += '<div>' + seg.range + ': <strong>฿' + this.bht(seg.price).toLocaleString() + '/เดือน</strong>';
-            if (seg.note) txt += ' <span style="color:#6b7280;font-size:0.9em">(' + seg.note + ')</span>';
-            txt += '</div>';
-          });
-          txt += '</div>';
-        } else if (it.promo) {
-          txt += '💰 ' + it.promo;
-        } else {
-          txt += '💰 ฿' + it.postPromoPrice.toLocaleString() + '/เดือน';
-        }
-        txt += '</div>';
+        const months = it.totalContractMonths || 60;
+        const years = Math.round(months / 12);
+        txt += '<div style="font-size:0.78em;color:#6b7280;margin-bottom:6px">' + this.productTypeLabel(it) + ' · สัญญา ' + (it.term || '') + ' (' + years + ' ปี · ' + months + ' งวด)</div>';
+        // สรุปจ่ายต่อเดือนแยกช่วง
         if (it.outright) {
           txt += '<div style="font-size:0.85em;color:#7c3aed;margin-bottom:3px">🛒 ซื้อขาด <strong>฿' + it.advancePayment.toLocaleString() + '</strong> (รวมเครื่อง + บริการ 2 ปี · ลด 10%)</div>';
-        } else if (it.advancePayment) {
-          txt += '<div style="font-size:0.85em;color:#7c3aed;margin-bottom:3px">💳 จ่ายก้อนแรก <strong>฿' + it.advancePayment.toLocaleString() + '</strong> (Advance 50% × 12 บิล)</div>';
+        } else {
+          txt += '<div style="font-size:0.85em;margin-bottom:6px;background:#fff;border:1px solid #e5e7eb;border-radius:6px;padding:8px 10px">';
+          txt += '<div style="font-weight:700;font-size:0.9em;margin-bottom:4px;color:#374151">📅 สรุปจ่ายต่อเดือน · สัญญา ' + (it.term || '') + ' (' + years + ' ปี)</div>';
+          this.itemMonthlyPeriodLines(it).forEach(line => {
+            const noteHtml = line.note ? ' <span style="color:#9ca3af;font-size:0.85em">(' + line.note + ')</span>' : '';
+            txt += '<div style="display:flex;justify-content:space-between;gap:8px;padding:2px 0">';
+            txt += '<span>' + line.label + noteHtml + '</span>';
+            txt += '<strong style="color:' + (line.kind === 'advance' ? '#7c3aed' : '#a50034') + ';white-space:nowrap">' + line.priceText + '</strong>';
+            txt += '</div>';
+          });
+          if (it.totalSaving > 0) {
+            txt += '<div style="margin-top:4px;font-size:0.8em;color:#15803d">ประหยัด ฿' + it.totalSaving.toLocaleString() + ' ตลอดสัญญา</div>';
+          }
+          txt += '</div>';
         }
         // Service
         txt += '<div style="font-size:0.85em;margin-bottom:2px">' + stIcon + ' <strong>' + serviceDetail + '</strong></div>';
@@ -2818,32 +2899,34 @@ function lgCalculator() {
         const care = this.careService(it);
         lines.push('');
         const title = this.productSummaryTitle(it);
+        const months = it.totalContractMonths || 60;
+        const years = Math.round(months / 12);
         if (this.cart.length > 1) lines.push((i + 1) + '. ' + title);
         else lines.push(title);
-        lines.push('สัญญา ' + it.term + ' (' + (it.totalContractMonths || 60) + ' เดือน) | บริการ: ' + this.formatServiceDetail(it, true));
+        lines.push('สัญญา ' + it.term + ' (' + years + ' ปี · ' + months + ' งวด) | บริการ: ' + this.formatServiceDetail(it, true));
 
-        // Bill schedule — รวมเป็นบล็อกเดียว แสดงราคาหลังหักส่วนลดคอมโบแล้ว
+        // สรุปจ่ายต่อเดือนแยกช่วงงวด
         lines.push('');
-        lines.push('ค่าเช่ารายงวด');
+        lines.push('สรุปจ่ายต่อเดือน · สัญญา ' + it.term + ' (' + years + ' ปี)');
         const ranges = this.billRangeTotals(it);
         const advance = it.advancePayment || 0;
-        // pad กว้างพอให้ราคาไม่ติดกับ (โปร)/(ครึ่งราคา)
-        const COL = 32;
+        const COL = 36;
         if (advance > 0) {
-          lines.push(('  จ่ายล่วงหน้า').padEnd(COL) + this.fmtMoney(advance) + ' บาท');
+          lines.push(('  จ่ายล่วงหน้า (ตอนเริ่มสัญญา)').padEnd(COL) + this.fmtMoney(advance) + ' บาท');
         }
         ranges.forEach(r => {
           let tag = '';
-          if (r.isAdvanceHalf) tag = ' (ครึ่งราคา · จ่ายล่วงหน้าแล้ว)';
+          if (r.isAdvanceHalf) tag = ' (ครึ่งราคา)';
           else if (r.isPromo) tag = ' (โปร)';
+          else tag = ' (ปกติ)';
           const label = ('  ' + r.rangeLabel + tag).padEnd(COL);
-          lines.push(label + this.fmtBillPrice(r.pricePerMonth) + ' บาท/เดือน');
+          lines.push(label + this.fmtBillPrice(r.pricePerMonth) + ' บาท/เดือน  × ' + r.months + ' งวด');
         });
 
         // Per-item total
         lines.push('');
         const totalItem = ranges.reduce((s, r) => s + r.total, 0) + advance;
-        let totalLine = 'รวม ' + (it.totalContractMonths || 60) + ' งวด'
+        let totalLine = 'รวมทั้งสัญญา ' + months + ' งวด · ' + years + ' ปี'
           + (advance > 0 ? ' + จ่ายล่วงหน้า' : '')
           + ' = ' + this.fmtMoney(totalItem) + ' บาท';
         if (it.totalSaving > 0) totalLine += ' | ประหยัด ' + it.totalSaving.toLocaleString() + ' บาท';
