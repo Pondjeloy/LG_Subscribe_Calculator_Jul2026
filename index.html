@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- LG Subscribe Calculator build 2026.07.13-v76 · PROMOTION PERIOD follows special combo -->
+<!-- LG Subscribe Calculator build 2026.07.13-v77 · PROMOTION PERIOD follows special combo -->
 <html lang="th">
 <head>
 <meta charset="UTF-8" />
@@ -1407,7 +1407,7 @@ function lgCalculator() {
  compareB: { term: '5Y', serviceType: 'Visit', modelIndices: [] },
  cart: [],
  toast: { show: false, msg: '' },
- buildVersion: '2026.07.13-v76',
+ buildVersion: '2026.07.13-v77',
 
  hasModelSelected() {
  const v = this.picker.model;
@@ -2725,7 +2725,8 @@ function lgCalculator() {
  if (adv > 0) {
  // === สินค้า Advance (TV/จอ/ลำโพง) ===
  // เงินก้อนแรกเก็บราคาเต็ม (ไม่หัก combo) แล้วนำ combo ของยอด advance ไปเฉลี่ยลดทุกบิล
- // ทุกบิล (รวมบิล 1) หัก combo ตามปกติ — ไม่มีแนวคิด "บิลแรกเก็บเต็ม"const advPerBill = cr > 0 ? ceil2((adv * cr) / months) : 0;
+ // ทุกบิล (รวมบิล 1) หัก combo ตามปกติ — ไม่มีแนวคิด "บิลแรกเก็บเต็ม"
+ const advPerBill = cr > 0 ? ceil2((adv * cr) / months) : 0;
  for (let k = 1; k <= months; k++) {
  const raw = bills[k] - bills[k] * cr - advPerBill;
  out.push({ bill: k, base: bills[k], price: billPrice(raw, bills[k]) });
@@ -2768,7 +2769,7 @@ function lgCalculator() {
  segs.forEach(seg => {
  // ใช้ base (ราคาก่อนหัก combo) เพื่อกำหนดว่าช่วงนี้เป็นโปรหรือไม่
  // ถ้าใช้ seg.price จะผิดเพราะ combo ทำให้ราคาต่ำกว่า postPromoPrice ทุกช่วง
- const note = this.billSegNote(item, seg.start, seg.end);
+ const note = this.billSegNote(item, seg.start, seg.end) || '';
  // TV/จอ Advance: บิล 1-12 ครึ่งราคาเพราะจ่ายล่วงหน้าแล้ว — ไม่ใช่โปร (ลูกค้ามักเข้าใจผิด)
  const isAdvanceHalf = !!(item.advancePayment > 0 && !item.outright
  && (note.includes('ครึ่งราคา') || note.includes('จ่ายล่วงหน้า')
