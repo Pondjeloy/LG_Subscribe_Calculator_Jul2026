@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- LG Subscribe Calculator build 2026.07.13-v77 · PROMOTION PERIOD follows special combo -->
+<!-- LG Subscribe Calculator build 2026.07.13-v78 · PROMOTION PERIOD follows special combo -->
 <html lang="th">
 <head>
 <meta charset="UTF-8" />
@@ -1407,7 +1407,7 @@ function lgCalculator() {
  compareB: { term: '5Y', serviceType: 'Visit', modelIndices: [] },
  cart: [],
  toast: { show: false, msg: '' },
- buildVersion: '2026.07.13-v77',
+ buildVersion: '2026.07.13-v78',
 
  hasModelSelected() {
  const v = this.picker.model;
@@ -2568,9 +2568,12 @@ function lgCalculator() {
  },
  comboLabel() {
  const name = this.activePromo().name || 'Combo';
- const d = document.createElement('div');
- d.textContent = name;
- return d.innerHTML;
+ // Escape HTML without requiring document (safe in copy/summary paths)
+ return String(name)
+   .replace(/&/g, '&amp;')
+   .replace(/</g, '&lt;')
+   .replace(/>/g, '&gt;')
+   .replace(/"/g, '&quot;');
  },
  comboPeriod() {
  const p = this.activePromo();
@@ -2623,15 +2626,16 @@ function lgCalculator() {
  const benefitsPerYear = [];
  this.cart.forEach(it => {
  const care = this.careService(it);
+ const cycle = it.serviceCycle || '';
  const visitsPerYear = it.serviceType === 'Visit'
- ? (it.serviceCycle.includes('3') ? 4
- : it.serviceCycle.includes('4') ? 3
- : it.serviceCycle.includes('6') ? 2
- : it.serviceCycle.includes('12') ? 1
- : it.serviceCycle.includes('24') ? 0.5 : 1)
+ ? (cycle.includes('3') ? 4
+ : cycle.includes('4') ? 3
+ : cycle.includes('6') ? 2
+ : cycle.includes('12') ? 1
+ : cycle.includes('24') ? 0.5 : 1)
  : 0;
  const partsPerYear = it.serviceType === 'Self'
- ? (it.serviceCycle.includes('6') ? 2 : 1)
+ ? (cycle.includes('6') ? 2 : 1)
  : 0;
  benefitsPerYear.push({
  code: it.code,
@@ -2703,10 +2707,12 @@ function lgCalculator() {
  const bills = new Array(months + 1).fill(0);
  if (item.billSchedule) {
  item.billSchedule.forEach(seg => {
- const rng = seg.range.replace('บิล ', '');
+ if (!seg || seg.range == null || seg.price == null) return;
+ const rng = String(seg.range).replace('บิล ', '');
  let a, b;
  if (rng.includes('-')) { const p = rng.split('-'); a = +p[0]; b = +p[1]; }
  else { a = b = +rng; }
+ if (!Number.isFinite(a) || !Number.isFinite(b)) return;
  for (let k = a; k <= b && k <= months; k++) bills[k] = seg.price;
  });
  } else {
@@ -2901,10 +2907,12 @@ function lgCalculator() {
  if (it.billSchedule) {
  const bills = new Array(months + 1).fill(0);
  it.billSchedule.forEach(seg => {
- const rng = seg.range.replace('บิล ', '');
+ if (!seg || seg.range == null || seg.price == null) return;
+ const rng = String(seg.range).replace('บิล ', '');
  let a, b;
  if (rng.includes('-')) { const p = rng.split('-'); a = +p[0]; b = +p[1]; }
  else { a = b = +rng; }
+ if (!Number.isFinite(a) || !Number.isFinite(b)) return;
  for (let k = a; k <= b && k <= months; k++) bills[k] = seg.price;
  });
  for (let k = 1; k <= months; k++) total += bills[k];
@@ -3199,7 +3207,7 @@ function lgCalculator() {
         txt += '<div style="font-size:0.78em;color:#6b7280;margin-left:17px">';
         care.items.forEach(svc => { txt += svc.label + ' (' + svc.freq + ')　'; });
         txt += '</div>';
-        txt += '<div style="font-size:0.78em;color:#9ca3af;' + care.note + '</div>';
+        if (care.note) txt += '<div style="font-size:0.78em;color:#9ca3af">' + care.note + '</div>';
         txt += '</div>';
       });
 
