@@ -1264,62 +1264,32 @@
 
 
  <div class="mt-4 quote-print-box" x-show="cart.length > 0" style="border:1px solid var(--line);border-radius:10px;padding:12px;background:#fafafa">
-              <div class="text-xs font-semibold mb-1" style="color:var(--blood)">ใบเสนอราคาแบบทางการ (ฟอร์มบริษัท)</div>
-              <div class="text-xs text-gray-500 mb-3">กรอกข้อมูลลูกค้าให้ครบ แล้วกดพิมพ์ — ออกตามแบบฟอร์ม LG พร้อมโลโก้</div>
-              <div class="space-y-2 mb-3" style="font-size:11px">
-                <div>
-                  <label class="text-xs text-gray-500">นามผู้รับ / บริษัท *</label>
-                  <input class="w-full text-xs" style="border:1px solid #e5e7eb;border-radius:6px;padding:6px 8px" placeholder="เช่น บริษัท …… จำกัด / คุณ……" x-model="quoteCustomer.name" />
+              <div class="text-xs font-semibold mb-1" style="color:var(--blood)">ใบเสนอราคา (ฟอร์มบริษัท · 1 หน้า)</div>
+              <div class="text-xs text-gray-500 mb-2">กรอกข้อมูล แล้วกดพิมพ์ — ออกแบบให้จบในหน้าเดียว</div>
+              <div class="space-y-1.5 mb-2" style="font-size:11px">
+                <div class="text-xs font-semibold text-gray-600">ข้อมูลลูกค้า</div>
+                <input class="w-full text-xs" style="border:1px solid #e5e7eb;border-radius:6px;padding:5px 8px" placeholder="นามผู้รับ / บริษัท *" x-model="quoteCustomer.name" />
+                <input class="w-full text-xs" style="border:1px solid #e5e7eb;border-radius:6px;padding:5px 8px" placeholder="ที่อยู่ บรรทัด 1" x-model="quoteCustomer.address" />
+                <input class="w-full text-xs" style="border:1px solid #e5e7eb;border-radius:6px;padding:5px 8px" placeholder="ที่อยู่ บรรทัด 2" x-model="quoteCustomer.address2" />
+                <div class="grid grid-cols-2 gap-1.5">
+                  <input class="w-full text-xs" style="border:1px solid #e5e7eb;border-radius:6px;padding:5px 8px" placeholder="เลขผู้เสียภาษี" x-model="quoteCustomer.taxId" />
+                  <input class="w-full text-xs" style="border:1px solid #e5e7eb;border-radius:6px;padding:5px 8px" placeholder="สาขา" x-model="quoteCustomer.branch" />
+                  <input class="w-full text-xs" style="border:1px solid #e5e7eb;border-radius:6px;padding:5px 8px" placeholder="ผู้ติดต่อ" x-model="quoteCustomer.contact" />
+                  <input class="w-full text-xs" style="border:1px solid #e5e7eb;border-radius:6px;padding:5px 8px" placeholder="เบอร์โทรลูกค้า" x-model="quoteCustomer.phone" />
                 </div>
-                <div>
-                  <label class="text-xs text-gray-500">ที่อยู่ บรรทัด 1</label>
-                  <input class="w-full text-xs" style="border:1px solid #e5e7eb;border-radius:6px;padding:6px 8px" placeholder="เลขที่ อาคาร ถนน" x-model="quoteCustomer.address" />
+                <input class="w-full text-xs" style="border:1px solid #e5e7eb;border-radius:6px;padding:5px 8px" placeholder="E-Mail ลูกค้า" x-model="quoteCustomer.email" />
+                <div class="grid grid-cols-2 gap-1.5">
+                  <input class="w-full text-xs" style="border:1px solid #e5e7eb;border-radius:6px;padding:5px 8px" placeholder="เลขที่เอกสาร" x-model="quoteCustomer.docNo" />
+                  <input type="number" min="1" max="90" class="w-full text-xs" style="border:1px solid #e5e7eb;border-radius:6px;padding:5px 8px" placeholder="มีผล (วัน)" x-model.number="quoteCustomer.validDays" />
                 </div>
-                <div>
-                  <label class="text-xs text-gray-500">ที่อยู่ บรรทัด 2</label>
-                  <input class="w-full text-xs" style="border:1px solid #e5e7eb;border-radius:6px;padding:6px 8px" placeholder="แขวง/เขต จังหวัด รหัสไปรษณีย์" x-model="quoteCustomer.address2" />
+                <div class="text-xs font-semibold text-gray-600" style="margin-top:6px">ข้อมูลผู้เสนอราคา</div>
+                <input class="w-full text-xs" style="border:1px solid #e5e7eb;border-radius:6px;padding:5px 8px" placeholder="ตำแหน่ง / ฝ่าย" x-model="quoteCustomer.sellerTitle" />
+                <input class="w-full text-xs" style="border:1px solid #e5e7eb;border-radius:6px;padding:5px 8px" placeholder="ชื่อผู้เสนอราคา *" x-model="quoteCustomer.sellerName" />
+                <div class="grid grid-cols-2 gap-1.5">
+                  <input class="w-full text-xs" style="border:1px solid #e5e7eb;border-radius:6px;padding:5px 8px" placeholder="โทรผู้เสนอราคา" x-model="quoteCustomer.sellerPhone" />
+                  <input class="w-full text-xs" style="border:1px solid #e5e7eb;border-radius:6px;padding:5px 8px" placeholder="อีเมลผู้เสนอราคา" x-model="quoteCustomer.sellerEmail" />
                 </div>
-                <div class="grid grid-cols-2 gap-2">
-                  <div>
-                    <label class="text-xs text-gray-500">เลขประจำตัวผู้เสียภาษี</label>
-                    <input class="w-full text-xs" style="border:1px solid #e5e7eb;border-radius:6px;padding:6px 8px" placeholder="0-0000-00000-00-0" x-model="quoteCustomer.taxId" />
-                  </div>
-                  <div>
-                    <label class="text-xs text-gray-500">สาขาที่</label>
-                    <input class="w-full text-xs" style="border:1px solid #e5e7eb;border-radius:6px;padding:6px 8px" placeholder="สำนักงานใหญ่" x-model="quoteCustomer.branch" />
-                  </div>
-                </div>
-                <div class="grid grid-cols-2 gap-2">
-                  <div>
-                    <label class="text-xs text-gray-500">ผู้ติดต่อ</label>
-                    <input class="w-full text-xs" style="border:1px solid #e5e7eb;border-radius:6px;padding:6px 8px" placeholder="ชื่อ-นามสกุล" x-model="quoteCustomer.contact" />
-                  </div>
-                  <div>
-                    <label class="text-xs text-gray-500">เบอร์โทรศัพท์</label>
-                    <input class="w-full text-xs" style="border:1px solid #e5e7eb;border-radius:6px;padding:6px 8px" placeholder="0x-xxx-xxxx" x-model="quoteCustomer.phone" />
-                  </div>
-                </div>
-                <div>
-                  <label class="text-xs text-gray-500">E-Mail</label>
-                  <input class="w-full text-xs" style="border:1px solid #e5e7eb;border-radius:6px;padding:6px 8px" placeholder="name@company.com" x-model="quoteCustomer.email" />
-                </div>
-                <div class="grid grid-cols-2 gap-2">
-                  <div>
-                    <label class="text-xs text-gray-500">เลขที่เอกสาร</label>
-                    <input class="w-full text-xs" style="border:1px solid #e5e7eb;border-radius:6px;padding:6px 8px" placeholder="ว่าง = อัตโนมัติ" x-model="quoteCustomer.docNo" />
-                  </div>
-                  <div>
-                    <label class="text-xs text-gray-500">ใบมีผล (วัน)</label>
-                    <input type="number" min="1" max="90" class="w-full text-xs" style="border:1px solid #e5e7eb;border-radius:6px;padding:6px 8px" x-model.number="quoteCustomer.validDays" />
-                  </div>
-                </div>
-                <div style="border-top:1px dashed #e5e7eb;padding-top:8px;margin-top:4px">
-                  <div class="text-xs text-gray-500 mb-1">ผู้เสนอราคา (แสดงท้ายใบ)</div>
-                  <div class="grid grid-cols-2 gap-2">
-                    <input class="w-full text-xs" style="border:1px solid #e5e7eb;border-radius:6px;padding:6px 8px" placeholder="ชื่อผู้เสนอราคา" x-model="quoteCustomer.sellerName" />
-                    <input class="w-full text-xs" style="border:1px solid #e5e7eb;border-radius:6px;padding:6px 8px" placeholder="โทรผู้เสนอราคา" x-model="quoteCustomer.sellerPhone" />
-                  </div>
-                </div>
+                <input class="w-full text-xs" style="border:1px solid #e5e7eb;border-radius:6px;padding:5px 8px" placeholder="LINE ผู้เสนอราคา" x-model="quoteCustomer.sellerLine" />
               </div>
               <div class="space-y-2">
                 <button class="btn-primary" style="width:100%" @click="printQuotation()">พิมพ์ใบเสนอราคา</button>
@@ -1477,7 +1447,7 @@ function lgCalculator() {
  compareB: { term: '5Y', serviceType: 'Visit', modelIndices: [] },
  cart: [],
  toast: { show: false, msg: '' },
- buildVersion: '2026.07.15-v81',
+ buildVersion: '2026.07.15-v82',
  quoteCustomer: {
    name: '',
    address: '',
@@ -1489,10 +1459,11 @@ function lgCalculator() {
    email: '',
    validDays: 15,
    docNo: '',
-   sellerName: 'POND — LG Subscribe',
+   sellerName: 'POND',
    sellerPhone: '',
    sellerLine: 'https://line.me/ti/p/jRpW3PMC_e',
    sellerTitle: 'ฝ่ายเสนอราคา LG Subscribe',
+   sellerEmail: '',
  },
 
  hasModelSelected() {
@@ -3532,10 +3503,9 @@ function lgCalculator() {
       const excl = Math.round(grand * 100 / 107 * 100) / 100;
       const vat = Math.round((grand - excl) * 100) / 100;
       const logo = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjI1IiBoZWlnaHQ9Ijk5IiB2aWV3Qm94PSIwIDAgMjI1IDk5IiBmaWxsPSJub25lIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8ZyBjbGlwLXBhdGg9InVybCgjY2xpcDBfNDE1XzEzMDk2NCkiPgo8cGF0aCBkPSJNMTM0Ljg3NCA2OC43ODMxSDE2NS4yNzRWODEuMjQ4N0gxMjAuMjAyVjE3LjIzNzNIMTM0Ljg3NFY2OC43ODMxWiIgZmlsbD0iIzcwNzA3MCIvPgo8cGF0aCBkPSJNMTk3LjUzNCA1Ni44NDUxSDIwOS40ODJWNjguMDQ2MkMyMDcuMjg4IDY4Ljg4OTIgMjAyLjk4NyA2OS43MzIzIDE5OC45MDUgNjkuNzMyM0MxODUuNjk0IDY5LjczMjMgMTgxLjMwMSA2Mi45NzExIDE4MS4zMDEgNDkuMjQxQzE4MS4zMDEgMzYuMTM3NCAxODUuNDgzIDI4LjQyNjUgMTk4LjY4MiAyOC40MjY1QzIwNi4wMzkgMjguNDI2NSAyMTAuMjEzIDMwLjc1MzMgMjEzLjY3NSAzNS4xOTA0TDIyMi44MDIgMjYuNzM3NkMyMTcuMjI3IDE4LjcyNiAyMDcuNSAxNi4yOTgxIDE5OC4zNjUgMTYuMjk4MUMxNzcuODMgMTYuMjg5NyAxNjcuMDMzIDI3LjU4MDcgMTY3LjAzMyA0OS4xMzE0QzE2Ny4wMzMgNzAuNTc1MyAxNzYuNzkgODIuMjAwNyAxOTguMjU2IDgyLjIwMDdDMjA4LjExMyA4Mi4yMDA3IDIxNy43NDggNzkuNjcxNiAyMjIuOTkyIDc1Ljk2NTFWNDQuOTA3OEgxOTcuNTM0VjU2Ljg0NTFaIiBmaWxsPSIjNzA3MDcwIi8+CjxwYXRoIGQ9Ik04My44MzEgODQuNTA0NUMxMDMuMDA4IDY1LjE3MzYgMTAzLjAwNyAzMy44MzEgODMuODI5IDE0LjQ5OUM2NC42NTA4IC00LjgzMzA3IDMzLjU1NzYgLTQuODMzOTYgMTQuMzgwNSAxNC40OTdDLTQuNzk2NjQgMzMuODI3OSAtNC43OTU3NiA2NS4xNzA1IDE0LjM4MjUgODQuNTAyNUMzMy41NjA3IDEwMy44MzUgNjQuNjUzOCAxMDMuODM1IDgzLjgzMSA4NC41MDQ1WiIgZmlsbD0iI0E1MDAzNCIvPgo8cGF0aCBkPSJNNjEuMTE4NCA2Ni42MDc5SDUxLjA4MjZWMjguNTk4NEg0Ny4zNzIxVjcwLjM1OTRINTEuMDkwOVY3MC4zMzQxSDYxLjEyNjhMNjEuMTE4NCA2Ni42MDc5WiIgZmlsbD0id2hpdGUiLz4KPHBhdGggZD0iTTg2LjE0ODUgNTEuMDczN0g2MS4xNzU5VjQ3LjM0NDdIODkuODA4OEM4OS44NDc5IDQ4LjA2NjkgODkuODY3NCA0OC43ODkxIDg5Ljg2NzQgNDkuNTE5OEM4OS44Njc0IDcxLjk3MjUgNzEuNzEzNiA5MC4xNzA3IDQ5LjMyNTIgOTAuMTcwN0MyNi45MzY4IDkwLjE3MDcgOC43ODAyNyA3MS45ODA5IDguNzgwMjcgNDkuNTE2OUM4Ljc4MDI3IDI3LjA1MyAyNi45MzEzIDguODY1OTcgNDkuMzIyNCA4Ljg2NTk3QzQ5LjkxMzQgOC44NjU5NyA1MC41MDE2IDguODc4MTQgNTEuMDg3MSA4LjkwMjVWMTIuNjAzNEM1MC41MDE2IDEyLjU3NzIgNDkuOTE1MyAxMi41NjQxIDQ5LjMyOCAxMi41NjQxQzI4Ljk3NzUgMTIuNTY0MSAxMi40NzQgMjkuMTEgMTIuNDc0IDQ5LjUxNjlDMTIuNDc0IDY5LjkyMzkgMjguOTc0NyA4Ni40NzI2IDQ5LjMyOCA4Ni40NzI2QzY5LjEyMSA4Ni40NzI2IDg1LjI4OTkgNzAuODE3NSA4Ni4xNDU3IDUxLjE3NzdMODYuMTQ4NSA1MS4wNzM3WiIgZmlsbD0id2hpdGUiLz4KPHBhdGggZD0iTTM0LjIwNjYgMzkuODQ5NkMzNS4zMjYzIDM5Ljg0NDEgMzYuNDE5MyAzOS41MDQzIDM3LjM0NzYgMzguODczMkMzOC4yNzYgMzguMjQyMSAzOC45OTgxIDM3LjM0NzkgMzkuNDIyNyAzNi4zMDM2QzM5Ljg0NzQgMzUuMjU5MiAzOS45NTU3IDM0LjExMTQgMzkuNzMzOSAzMy4wMDVDMzkuNTEyMSAzMS44OTg3IDM4Ljk3MDEgMzAuODgzNCAzOC4xNzY0IDMwLjA4NzJDMzcuMzgyNyAyOS4yOTExIDM2LjM3MjggMjguNzQ5NyAzNS4yNzQyIDI4LjUzMTZDMzQuMTc1NiAyOC4zMTM0IDMzLjAzNzQgMjguNDI4MiAzMi4wMDM1IDI4Ljg2MTRDMzAuOTY5NSAyOS4yOTQ2IDMwLjA4NiAzMC4wMjY4IDI5LjQ2NDUgMzAuOTY1N0MyOC44NDI5IDMxLjkwNDYgMjguNTExMiAzMy4wMDggMjguNTExMiAzNC4xMzY3QzI4LjUxMzEgMzQuODg4OCAyOC42NjE4IDM1LjYzMzEgMjguOTQ5IDM2LjMyNzNDMjkuMjM2MiAzNy4wMjE0IDI5LjY1NjMgMzcuNjUxNyAzMC4xODUxIDM4LjE4MjJDMzAuNzE0IDM4LjcxMjcgMzEuMzQxMyAzOS4xMzMgMzIuMDMxMyAzOS40MTkxQzMyLjcyMTMgMzkuNzA1MiAzMy40NjA1IDM5Ljg1MTUgMzQuMjA2NiAzOS44NDk2WiIgZmlsbD0id2hpdGUiLz4KPC9nPgo8ZGVmcz4KPGNsaXBQYXRoIGlkPSJjbGlwMF80MTVfMTMwOTY0Ij4KPHJlY3Qgd2lkdGg9IjIyMyIgaGVpZ2h0PSI5OSIgZmlsbD0id2hpdGUiLz4KPC9jbGlwUGF0aD4KPC9kZWZzPgo8L3N2Zz4K';
-      const dash = '................................................';
       const esc = (s) => String(s == null ? '' : s)
         .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
-      const blank = (v, fb) => esc((v && String(v).trim()) ? v : (fb || dash));
+      const val = (v, fb) => esc((v && String(v).trim()) ? String(v).trim() : (fb || '—'));
 
       let itemsHtml = '';
       this.cart.forEach((it, i) => {
@@ -3544,63 +3514,45 @@ function lgCalculator() {
         const ranges = this.billRangeTotals(it);
         const advance = it.advancePayment || 0;
         const totalItem = ranges.reduce((s, r) => s + r.total, 0) + advance;
-        const care = this.careService(it);
         const title = this.productSummaryTitle(it);
         const service = this.formatServiceDetail(it);
-        // ราคาต่อรอบบิลอ้างอิง: โปรแรก หรือ regular หลัง combo segment แรก
         const baseMonthly = ranges.length ? ranges[0].pricePerMonth : (it.effectiveMonthly || it.regular || 0);
         const discPer = Math.max(0, (it.regular || 0) - baseMonthly);
 
-        itemsHtml += '<tr class="main">';
+        itemsHtml += '<tr>';
         itemsHtml += '<td class="c">' + (i + 1) + '</td>';
         itemsHtml += '<td class="code">' + esc(it.code) + '</td>';
-        itemsHtml += '<td class="desc"><div class="desc-title">' + esc(title) + '</div>';
-        itemsHtml += '<div class="desc-sub">' + esc(it.code) + (it.name ? ' · ' + esc(it.name) : '') + '</div>';
-        itemsHtml += '<div class="desc-sub">สัญญา ' + esc(it.term || '') + ' (' + years + ' ปี · ' + months + ' งวด) · ' + esc(service) + '</div>';
-        if (it.outright) itemsHtml += '<div class="desc-sub">ซื้อขาด (รวมเครื่อง + บริการ 2 ปี · ลด 10%)</div>';
+        itemsHtml += '<td><span class="name">' + esc(title) + '</span>';
+        itemsHtml += '<div class="sub">สัญญา ' + esc(it.term || '') + ' (' + years + ' ปี · ' + months + ' งวด) · ' + esc(service) + '</div>';
+        if (it.outright) {
+          itemsHtml += '<div class="sub">ซื้อขาด ฿' + this.fmtMoney(advance) + '</div>';
+        } else {
+          const bits = [];
+          if (advance > 0) bits.push('ล่วงหน้า ฿' + this.fmtMoney(advance));
+          ranges.forEach(r => {
+            let tag = r.isAdvanceHalf ? 'ครึ่งราคา' : (r.isPromo ? 'โปร' : 'ปกติ');
+            bits.push(esc(r.rangeLabel) + ' ' + tag + ' ฿' + this.fmtBillPrice(r.pricePerMonth) + '/ด.');
+          });
+          if (bits.length) itemsHtml += '<div class="sub">' + bits.join(' · ') + '</div>';
+        }
         itemsHtml += '</td>';
         itemsHtml += '<td class="c">1</td>';
-        itemsHtml += '<td class="c">' + (it.outright ? '—' : months) + '</td>';
+        itemsHtml += '<td class="c">' + (it.outright ? '—' : String(months)) + '</td>';
         itemsHtml += '<td class="num">' + (it.outright ? '—' : ('฿' + this.fmtBillPrice(baseMonthly))) + '</td>';
         itemsHtml += '<td class="num">' + (discPer > 0 && !it.outright ? ('฿' + this.fmtMoney(discPer)) : '—') + '</td>';
-        itemsHtml += '<td class="num"><strong>฿' + this.fmtMoney(totalItem) + '</strong></td>';
+        itemsHtml += '<td class="num"><span class="name">฿' + this.fmtMoney(totalItem) + '</span></td>';
         itemsHtml += '</tr>';
-
-        if (advance > 0) {
-          itemsHtml += '<tr class="sub"><td></td><td></td>';
-          itemsHtml += '<td class="desc-sub" colspan="3">· ' + (it.outright ? 'ราคาซื้อขาด' : 'จ่ายล่วงหน้า (Advance) ตอนเริ่มสัญญา') + '</td>';
-          itemsHtml += '<td class="num">฿' + this.fmtMoney(advance) + '</td>';
-          itemsHtml += '<td class="num">฿' + this.fmtMoney(advance) + '</td></tr>';
-        }
-        if (!it.outright) {
-          ranges.forEach(r => {
-            let tag = r.isAdvanceHalf ? ' (ครึ่งราคา)' : (r.isPromo ? ' (โปร)' : '');
-            itemsHtml += '<tr class="sub"><td></td><td></td>';
-            itemsHtml += '<td class="desc-sub" colspan="2">· ' + esc(r.rangeLabel) + tag + ' · ฿' + this.fmtBillPrice(r.pricePerMonth) + '/เดือน × ' + r.months + ' งวด</td>';
-            itemsHtml += '<td class="c">' + r.months + '</td>';
-            itemsHtml += '<td class="num">฿' + this.fmtBillPrice(r.pricePerMonth) + '</td>';
-            itemsHtml += '<td class="num">—</td>';
-            itemsHtml += '<td class="num">฿' + this.fmtMoney(r.total) + '</td></tr>';
-          });
-        }
-        if (care.items && care.items.length) {
-          itemsHtml += '<tr class="sub"><td></td><td></td><td class="desc-sub care" colspan="6">· Care Service: ';
-          itemsHtml += care.items.map(svc => esc(svc.label) + ' (' + esc(svc.freq) + ')').join(' · ');
-          itemsHtml += '</td></tr>';
-        }
       });
 
-      let firstPayDetail = '';
-      this.firstPaymentBreakdown().forEach(row => {
-        const parts = [];
-        if (row.advance > 0) parts.push(row.item.outright ? ('ซื้อขาด ฿' + this.fmtMoney(row.advance)) : ('ล่วงหน้า ฿' + this.fmtMoney(row.advance)));
-        if (row.bill1 > 0) parts.push('งวด 1 ฿' + this.fmtMoney(this.bht(row.bill1)));
-        firstPayDetail += '<div class="fp-line"><span>' + esc(row.item.code) + '</span><span>฿' + this.fmtMoney(row.total)
-          + (parts.length ? ' <i>(' + parts.join(' + ') + ')</i>' : '') + '</span></div>';
-      });
-
+      const sellerName = val(q.sellerName, 'POND');
+      const sellerPhone = val(q.sellerPhone, '—');
+      const sellerLine = val(q.sellerLine, 'https://line.me/ti/p/jRpW3PMC_e');
+      const sellerTitle = val(q.sellerTitle, 'ฝ่ายเสนอราคา LG Subscribe');
+      const sellerEmail = val(q.sellerEmail, '—');
       const remarkValid = 'ขอสงวนสิทธิ์การเสนอราคาไว้จนถึงวันที่ ' + this.quoteDateText(validTo);
-      const sellerPhone = (q.sellerPhone && String(q.sellerPhone).trim()) ? q.sellerPhone : '—';
+      const addr2row = (q.address2 && String(q.address2).trim())
+        ? ('<tr><td class="lbl"></td><td class="val" colspan="3">' + esc(q.address2) + '</td></tr>')
+        : '';
 
       return `<!DOCTYPE html>
 <html lang="th">
@@ -3609,74 +3561,62 @@ function lgCalculator() {
 <title>ใบเสนอราคา — ${esc(docNo)}</title>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Sarabun:wght@400;600;700&display=swap');
-  @page { size: A4 portrait; margin: 10mm 11mm 12mm 11mm; }
+  @page { size: A4 portrait; margin: 8mm 9mm 8mm 9mm; }
   * { box-sizing: border-box; }
-  body { margin: 0; padding: 0; color: #111; font-family: "Sarabun", "TH Sarabun New", "Tahoma", "Arial", sans-serif; font-size: 12px; background: #fff; }
-  .sheet { width: 100%; max-width: 190mm; margin: 0 auto; }
-  /* ── header like company form ── */
-  .top { display: grid; grid-template-columns: 78px 1fr 210px; gap: 10px; align-items: start; padding-bottom: 8px; border-bottom: 2.5px solid #a50034; }
-  .logo { width: 72px; height: auto; display: block; }
-  .co .th { font-size: 13.5px; font-weight: 700; margin: 0 0 1px; line-height: 1.3; }
-  .co .en { font-size: 10.5px; color: #333; margin: 0 0 3px; font-weight: 600; }
-  .co .addr { font-size: 10px; color: #444; line-height: 1.45; margin: 0; }
-  .title-block { text-align: center; padding-top: 2px; }
-  .title-block .th-title { font-size: 22px; font-weight: 700; color: #a50034; letter-spacing: 1px; margin: 0; line-height: 1.1; }
-  .title-block .en-title { font-size: 13px; font-weight: 700; color: #222; margin: 2px 0 8px; }
-  .title-block .meta { font-size: 11px; text-align: left; line-height: 1.65; border: 1px solid #ddd; border-radius: 4px; padding: 6px 8px; background: #fafafa; }
-  .title-block .meta b { display: inline-block; min-width: 52px; color: #555; font-weight: 600; }
-  /* ── customer block ── */
-  .cust { margin: 12px 0 10px; }
+  body { margin: 0; padding: 0; color: #1a1a1a; font-family: "Sarabun","TH Sarabun New","Tahoma",sans-serif; font-size: 11px; background: #fff; }
+  .sheet { width: 100%; max-width: 192mm; margin: 0 auto; }
+  .name { font-weight: 700; color: #1a1a1a; }
+  .top { display: grid; grid-template-columns: 64px 1fr 188px; gap: 8px; align-items: start; padding-bottom: 6px; border-bottom: 2px solid #a50034; margin-bottom: 8px; }
+  .logo { width: 60px; height: auto; display: block; }
+  .co .th { font-size: 12px; font-weight: 700; color: #1a1a1a; margin: 0; line-height: 1.25; }
+  .co .en { font-size: 9.5px; color: #1a1a1a; margin: 1px 0 2px; font-weight: 600; }
+  .co .addr { font-size: 9px; color: #333; line-height: 1.35; margin: 0; }
+  .title-block { text-align: center; }
+  .title-block .th-title { font-size: 18px; font-weight: 700; color: #a50034; margin: 0; letter-spacing: .5px; }
+  .title-block .en-title { font-size: 11px; font-weight: 700; color: #1a1a1a; margin: 1px 0 4px; }
+  .meta { font-size: 10px; text-align: left; line-height: 1.45; padding: 4px 6px; background: #f7f7f7; border: 1px solid #e5e5e5; }
+  .meta b { display: inline-block; min-width: 48px; font-weight: 600; color: #1a1a1a; }
+  .cust { margin: 0 0 6px; }
   .cust table { width: 100%; border-collapse: collapse; }
-  .cust td { padding: 3px 4px; vertical-align: top; font-size: 12px; }
-  .cust .lbl { width: 92px; color: #333; white-space: nowrap; }
-  .cust .val { font-weight: 600; border-bottom: 1px dotted #ccc; min-height: 18px; }
-  .cust .lbl2 { width: 70px; color: #333; white-space: nowrap; padding-left: 10px; }
-  .badge-row { margin-top: 6px; font-size: 10.5px; color: #555; }
-  .badge { display: inline-block; border: 1px solid #ddd; border-radius: 99px; padding: 1px 8px; margin-right: 4px; background: #f8f8f8; }
-  /* ── items table (company form columns) ── */
-  table.items { width: 100%; border-collapse: collapse; margin-top: 6px; }
-  table.items thead th { background: #a50034; color: #fff; font-size: 11px; font-weight: 700; padding: 7px 4px; border: 1px solid #8a002c; text-align: center; vertical-align: middle; }
-  table.items td { border: 1px solid #cfcfcf; padding: 5px 5px; vertical-align: top; font-size: 11px; }
-  table.items tr.main td { background: #fff; }
-  table.items tr.sub td { background: #fcfcfc; border-top-style: dashed; }
+  .cust td { padding: 1.5px 3px; vertical-align: top; font-size: 11px; color: #1a1a1a; }
+  .cust .lbl { width: 88px; color: #333; white-space: nowrap; }
+  .cust .lbl2 { width: 64px; color: #333; white-space: nowrap; padding-left: 8px; }
+  .cust .val { font-weight: 700; color: #1a1a1a; }
+  .meta-line { font-size: 9.5px; color: #444; margin: 2px 0 4px; }
+  table.items { width: 100%; border-collapse: collapse; }
+  table.items th { background: #a50034; color: #fff; font-size: 10px; font-weight: 700; padding: 4px 3px; border: 1px solid #8a002c; text-align: center; }
+  table.items td { border: 1px solid #d0d0d0; padding: 3px 4px; vertical-align: top; font-size: 10px; color: #1a1a1a; }
   table.items .c { text-align: center; }
   table.items .num { text-align: right; white-space: nowrap; font-variant-numeric: tabular-nums; }
-  table.items .code { font-family: Consolas, "Courier New", monospace; font-size: 10.5px; font-weight: 700; white-space: nowrap; }
-  table.items .desc-title { font-weight: 700; font-size: 11.5px; color: #111; }
-  table.items .desc-sub { font-size: 10px; color: #555; margin-top: 1px; font-weight: 400; }
-  table.items .care { color: #166534; }
-  /* ── bottom ── */
-  .bottom { display: grid; grid-template-columns: 1.15fr 0.95fr; gap: 12px; margin-top: 10px; align-items: start; }
-  .remark-box { border: 1px solid #ddd; border-radius: 4px; padding: 8px 10px; min-height: 120px; }
-  .remark-box h3 { margin: 0 0 6px; font-size: 12px; color: #a50034; }
-  .remark-box ul { margin: 0; padding-left: 16px; font-size: 10.5px; line-height: 1.55; color: #333; }
-  .remark-box li { margin: 2px 0; }
-  .baht-box { margin-top: 8px; border: 1px solid #bbb; background: #f7f7f7; padding: 7px 9px; font-size: 12px; font-weight: 700; }
-  .baht-box .lbl { font-size: 10px; color: #555; font-weight: 600; display: block; margin-bottom: 2px; }
-  .sum-box { border: 1px solid #bbb; border-radius: 4px; overflow: hidden; }
-  .sum-box .row { display: flex; justify-content: space-between; gap: 8px; padding: 6px 10px; border-bottom: 1px solid #e5e5e5; font-size: 11.5px; }
-  .sum-box .row span:last-child { font-weight: 700; white-space: nowrap; font-variant-numeric: tabular-nums; }
-  .sum-box .row.muted { color: #555; background: #fafafa; }
-  .sum-box .row.first { background: #f3eefc; color: #4c1d95; font-weight: 700; }
-  .sum-box .row.grand { background: #a50034; color: #fff; font-size: 13.5px; font-weight: 700; border: 0; }
-  .sum-box .fp { padding: 4px 10px 6px; border-bottom: 1px solid #e5e5e5; background: #faf8ff; }
-  .sum-box .fp-line { display: flex; justify-content: space-between; font-size: 10px; color: #555; padding: 1px 0; }
-  .sum-box .fp-line i { font-style: normal; color: #888; }
-  /* ── signature ── */
-  .sign { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 16px; }
-  .sign .box { border: 1px solid #ccc; border-radius: 4px; padding: 10px 12px; min-height: 110px; }
-  .sign h4 { margin: 0 0 8px; font-size: 11.5px; color: #a50034; border-bottom: 1px solid #eee; padding-bottom: 4px; }
-  .sign .info { font-size: 11px; line-height: 1.55; color: #222; }
-  .sign .sig-line { margin-top: 26px; text-align: center; font-size: 11px; color: #333; }
-  .sign .sig-date { text-align: center; font-size: 10px; color: #666; margin-top: 4px; }
-  .foot { margin-top: 12px; border-top: 1px solid #ddd; padding-top: 8px; text-align: center; font-size: 10.5px; color: #333; line-height: 1.5; }
-  .foot strong { color: #a50034; }
-  .no-print { text-align: center; margin: 12px auto 14px; }
-  .no-print button { background: #a50034; color: #fff; border: 0; border-radius: 8px; padding: 10px 18px; font-size: 14px; cursor: pointer; margin: 0 4px; font-family: inherit; }
+  table.items .code { font-family: Consolas,"Courier New",monospace; font-size: 9.5px; font-weight: 700; color: #1a1a1a; white-space: nowrap; }
+  table.items .sub { font-size: 9px; color: #444; margin-top: 1px; font-weight: 400; line-height: 1.3; }
+  .bottom { display: grid; grid-template-columns: 1.2fr .9fr; gap: 8px; margin-top: 6px; align-items: start; }
+  .remark-box { border: 1px solid #d0d0d0; padding: 6px 8px; }
+  .remark-box h3 { margin: 0 0 3px; font-size: 10.5px; font-weight: 700; color: #1a1a1a; }
+  .remark-box ul { margin: 0; padding-left: 14px; font-size: 9.5px; line-height: 1.4; color: #333; }
+  .baht { margin-top: 5px; font-size: 10.5px; font-weight: 700; color: #1a1a1a; }
+  .sum-box { border: 1px solid #d0d0d0; }
+  .sum-box .row { display: flex; justify-content: space-between; gap: 6px; padding: 4px 8px; border-bottom: 1px solid #e8e8e8; font-size: 10.5px; color: #1a1a1a; }
+  .sum-box .row:last-child { border-bottom: 0; }
+  .sum-box .row span:last-child { font-weight: 700; white-space: nowrap; color: #1a1a1a; }
+  .sum-box .row.grand { background: #a50034; color: #fff; font-size: 12px; font-weight: 700; }
+  .sum-box .row.grand span:last-child { color: #fff; }
+  .sum-box .row .en { display: block; font-size: 8.5px; font-weight: 400; opacity: .85; }
+  .sign { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 8px; }
+  .sign .box { border: 1px solid #d0d0d0; padding: 6px 8px; min-height: 72px; }
+  .sign h4 { margin: 0 0 4px; font-size: 10.5px; font-weight: 700; color: #1a1a1a; }
+  .sign .info { font-size: 10px; line-height: 1.4; color: #1a1a1a; }
+  .sign .info .name { font-size: 11px; }
+  .sign .sig { margin-top: 14px; text-align: center; font-size: 10px; color: #1a1a1a; }
+  .sign .sig small { display: block; margin-top: 2px; font-size: 9px; color: #444; }
+  .foot { margin-top: 6px; padding-top: 4px; border-top: 1px solid #e0e0e0; text-align: center; font-size: 9px; color: #333; line-height: 1.35; }
+  .no-print { text-align: center; margin: 10px auto 12px; }
+  .no-print button { background: #a50034; color: #fff; border: 0; border-radius: 8px; padding: 9px 16px; font-size: 13px; cursor: pointer; margin: 0 4px; font-family: inherit; }
   .no-print button.ghost { background: #fff; color: #a50034; border: 1px solid #a50034; }
   @media print {
     .no-print { display: none !important; }
     body { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    .sheet { max-width: none; }
   }
 ${'</'+'style>'}
 </head>
@@ -3693,7 +3633,7 @@ ${'</'+'style>'}
         <p class="en">LG Electronics (Thailand) Co., Ltd. (Head Office)</p>
         <p class="addr">เลขที่ 195 อาคารวัน แบงค็อก ทาวเวอร์ 4 ห้องเลขที่ 2301-2314 ชั้น 23 ถนนวิทยุ</p>
         <p class="addr">แขวงลุมพินี เขตปทุมวัน กรุงเทพมหานคร 10330</p>
-        <p class="addr">เลขประจำตัวผู้เสียภาษี 0105540033379 &nbsp;|&nbsp; ฝ่ายบริการลูกค้า 02-057-5757</p>
+        <p class="addr">เลขประจำตัวผู้เสียภาษี 0105540033379 | ฝ่ายบริการลูกค้า 02-057-5757</p>
       </div>
       <div class="title-block">
         <p class="th-title">ใบเสนอราคา</p>
@@ -3709,59 +3649,36 @@ ${'</'+'style>'}
 
     <div class="cust">
       <table>
+        <tr><td class="lbl">นามผู้รับ :</td><td class="val" colspan="3">${val(q.name, '—')}</td></tr>
+        <tr><td class="lbl">ที่อยู่ :</td><td class="val" colspan="3">${val(q.address, '—')}</td></tr>
+        ${addr2row}
         <tr>
-          <td class="lbl">นามผู้รับ :</td>
-          <td class="val" colspan="3">${blank(q.name)}</td>
+          <td class="lbl">เลขผู้เสียภาษี :</td><td class="val">${val(q.taxId, '—')}</td>
+          <td class="lbl2">สาขาที่ :</td><td class="val">${val(q.branch, 'สำนักงานใหญ่')}</td>
         </tr>
         <tr>
-          <td class="lbl">ที่อยู่ :</td>
-          <td class="val" colspan="3">${blank(q.address)}</td>
+          <td class="lbl">ผู้ติดต่อ :</td><td class="val">${val(q.contact, '—')}</td>
+          <td class="lbl2">โทรศัพท์ :</td><td class="val">${val(q.phone, '—')}</td>
         </tr>
-        <tr>
-          <td class="lbl"></td>
-          <td class="val" colspan="3">${blank(q.address2, ' ')}</td>
-        </tr>
-        <tr>
-          <td class="lbl">เลขผู้เสียภาษี :</td>
-          <td class="val">${blank(q.taxId, '—')}</td>
-          <td class="lbl2">สาขาที่ :</td>
-          <td class="val">${blank(q.branch, 'สำนักงานใหญ่')}</td>
-        </tr>
-        <tr>
-          <td class="lbl">ผู้ติดต่อ :</td>
-          <td class="val">${blank(q.contact, '—')}</td>
-          <td class="lbl2">โทรศัพท์ :</td>
-          <td class="val">${blank(q.phone, '—')}</td>
-        </tr>
-        <tr>
-          <td class="lbl">E-Mail :</td>
-          <td class="val" colspan="3">${blank(q.email, '—')}</td>
-        </tr>
+        <tr><td class="lbl">E-Mail :</td><td class="val" colspan="3">${val(q.email, '—')}</td></tr>
       </table>
-      <div class="badge-row">
-        <span class="badge">${ct}</span>
-        <span class="badge">${esc(this.promoDateText())}</span>
-        ${hasCombo ? '<span class="badge">' + esc(this.comboLabel()) + ' ' + cr + '%</span>' : ''}
-        <span class="badge">${this.cart.length} รายการ</span>
-      </div>
+      <div class="meta-line">${ct} · ${esc(this.promoDateText())}${hasCombo ? ' · ' + esc(this.comboLabel()) + ' ' + cr + '%' : ''} · ${this.cart.length} รายการ</div>
     </div>
 
     <table class="items">
       <thead>
         <tr>
-          <th style="width:40px">ลำดับ</th>
-          <th style="width:96px">รหัสสินค้า</th>
+          <th style="width:34px">ลำดับ</th>
+          <th style="width:90px">รหัสสินค้า</th>
           <th>รายการสินค้า</th>
-          <th style="width:48px">จำนวน</th>
-          <th style="width:56px">รอบบิล</th>
-          <th style="width:88px">ราคาต่อ<br/>รอบบิล</th>
-          <th style="width:72px">ส่วนลด<br/><span style="font-weight:400;font-size:9px">บาท</span></th>
-          <th style="width:96px">ยอดสุทธิ</th>
+          <th style="width:42px">จำนวน</th>
+          <th style="width:48px">รอบบิล</th>
+          <th style="width:78px">ราคาต่อรอบบิล</th>
+          <th style="width:64px">ส่วนลด</th>
+          <th style="width:88px">ยอดสุทธิ</th>
         </tr>
       </thead>
-      <tbody>
-        ${itemsHtml}
-      </tbody>
+      <tbody>${itemsHtml}</tbody>
     </table>
 
     <div class="bottom">
@@ -3770,26 +3687,19 @@ ${'</'+'style>'}
         <ul>
           <li>${esc(remarkValid)}</li>
           <li>*ราคารวมค่าจัดส่งและค่าติดตั้งเบื้องต้นเรียบร้อยแล้ว (เงื่อนไขพื้นที่มาตรฐานตามบริษัท)</li>
-          <li>ชำระล่วงหน้า 1 เดือน (TV / Monitor / Speaker ชำระล่วงหน้า 6 เดือน)</li>
-          <li>โปรโมชันใช้ได้เฉพาะแบบ Subscribe · ราคาอาจเปลี่ยนแปลงตามประกาศบริษัทฯ</li>
-          <li>ยอดชำระครั้งแรก: สินค้าทั่วไป = งวดที่ 1 · TV/จอ/ลำโพง = เงินล่วงหน้าอย่างเดียว · ซื้อขาด = ราคาซื้อขาด</li>
-          <li>Care Service / รอบบริการ ตามแพ็คเกจที่ระบุในรายการสินค้า</li>
+          <li>ชำระล่วงหน้า 1 เดือน (TV/Monitor/Speaker ชำระล่วงหน้า 6 เดือน) · โปรโมชันใช้ได้เฉพาะแบบ Subscribe</li>
+          <li>ยอดชำระครั้งแรก: สินค้าทั่วไป = งวดที่ 1 · TV/จอ/ลำโพง = ล่วงหน้าอย่างเดียว · ซื้อขาด = ราคาซื้อขาด</li>
         </ul>
-        <div class="baht-box">
-          <span class="lbl">฿ BAHT</span>
-          ${esc(this.bahtText(grand))}
-        </div>
+        <div class="baht">฿ BAHT : ${esc(this.bahtText(grand))}</div>
       </div>
       <div class="sum-box">
-        <div class="row first"><span>ยอดชำระครั้งแรกรวม</span><span>฿${this.fmtMoney(firstPay)}</span></div>
-        <div class="fp">${firstPayDetail}</div>
-        ${hasCombo ? '<div class="row muted"><span>ส่วนลด ' + esc(this.comboLabel()) + ' ' + cr + '%</span><span>ใช้แล้วในยอด</span></div>' : ''}
-        ${this.hasTvAdvance() ? '<div class="row muted"><span>จ่ายล่วงหน้ารวม (TV/จอ/ลำโพง)</span><span>฿' + this.fmtMoney(this.totalTvAdvance()) + '</span></div>' : ''}
-        ${this.hasOutright() ? '<div class="row muted"><span>ซื้อขาดรวม</span><span>฿' + this.fmtMoney(this.totalOutright()) + '</span></div>' : ''}
-        <div class="row"><span>รวมเงินค่าสินค้า<br/><i style="font-style:normal;font-size:10px;color:#777">Total Excl. VAT</i></span><span>฿${this.fmtMoney(excl)}</span></div>
-        <div class="row"><span>ภาษีมูลค่าเพิ่ม<br/><i style="font-style:normal;font-size:10px;color:#777">VAT 7.00%</i></span><span>฿${this.fmtMoney(vat)}</span></div>
-        <div class="row grand"><span>ยอดรวมทั้งสิ้น<br/><i style="font-style:normal;font-size:10px;opacity:.9">Total Inc. VAT</i></span><span>฿${this.fmtMoney(grand)}</span></div>
-        ${this.totalSaving() > 0 ? '<div class="row muted"><span>ประหยัดตลอดสัญญา</span><span>฿' + this.fmtMoney(this.totalSaving()) + '</span></div>' : ''}
+        <div class="row"><span>ยอดชำระครั้งแรกรวม</span><span>฿${this.fmtMoney(firstPay)}</span></div>
+        ${hasCombo ? '<div class="row"><span>ส่วนลด ' + esc(this.comboLabel()) + ' ' + cr + '%</span><span>ใช้แล้วในยอด</span></div>' : ''}
+        ${this.hasTvAdvance() ? '<div class="row"><span>จ่ายล่วงหน้ารวม</span><span>฿' + this.fmtMoney(this.totalTvAdvance()) + '</span></div>' : ''}
+        ${this.hasOutright() ? '<div class="row"><span>ซื้อขาดรวม</span><span>฿' + this.fmtMoney(this.totalOutright()) + '</span></div>' : ''}
+        <div class="row"><span>รวมเงินค่าสินค้า<span class="en">Total Excl. VAT</span></span><span>฿${this.fmtMoney(excl)}</span></div>
+        <div class="row"><span>ภาษีมูลค่าเพิ่ม<span class="en">VAT 7.00%</span></span><span>฿${this.fmtMoney(vat)}</span></div>
+        <div class="row grand"><span>ยอดรวมทั้งสิ้น<span class="en">Total Inc. VAT</span></span><span>฿${this.fmtMoney(grand)}</span></div>
       </div>
     </div>
 
@@ -3797,27 +3707,23 @@ ${'</'+'style>'}
       <div class="box">
         <h4>ผู้เสนอราคา / Issued by</h4>
         <div class="info">
-          <div>${esc(q.sellerTitle || 'ฝ่ายเสนอราคา LG Subscribe')}</div>
-          <div>ชื่อ: ${esc(q.sellerName || 'POND — LG Subscribe')}</div>
-          <div>โทร: ${esc(sellerPhone)}</div>
-          <div>LINE: ${esc(q.sellerLine || 'https://line.me/ti/p/jRpW3PMC_e')}</div>
+          <div>${sellerTitle}</div>
+          <div>ชื่อ: <span class="name">${sellerName}</span></div>
+          <div>โทร: ${sellerPhone}</div>
+          <div>E-Mail: ${sellerEmail}</div>
+          <div>LINE: ${sellerLine}</div>
         </div>
-        <div class="sig-line">ลงชื่อ ..............................................</div>
-        <div class="sig-date">วันที่ ........../........../..........</div>
+        <div class="sig">ลงชื่อ ........................................<small>วันที่ ......../......../........</small></div>
       </div>
       <div class="box">
         <h4>สำหรับลูกค้า / Customer Acknowledgement</h4>
-        <div class="info">ข้าพเจ้าได้อ่านและยืนยันรายการพร้อมราคาตามใบเสนอราคานี้</div>
-        <div class="sig-line">ลงชื่อ ..............................................</div>
-        <div class="sig-date">(..........................................................)</div>
-        <div class="sig-date">วันที่ ........../........../..........</div>
+        <div class="info">ข้าพเจ้ายืนยันรายการและราคาตามใบเสนอราคานี้</div>
+        <div class="sig">ลงชื่อ ........................................<small>(........................................)</small><small>วันที่ ......../......../........</small></div>
       </div>
     </div>
 
     <div class="foot">
-      <div><strong>ติดต่อศูนย์บริการลูกค้าของเราได้ทาง :</strong></div>
-      <div>Line: @Lgthailand (8.00-18.00) &nbsp;·&nbsp; ฝ่ายบริการลูกค้า 02-057-5757</div>
-      <div>ฝ่ายเสนอราคา LG Subscribe: ${esc(q.sellerName || 'POND')} &nbsp;·&nbsp; LINE ${esc(q.sellerLine || 'https://line.me/ti/p/jRpW3PMC_e')}</div>
+      ติดต่อ: Line @Lgthailand (8.00-18.00) · ฝ่ายบริการลูกค้า 02-057-5757 · ผู้เสนอราคา <span class="name">${sellerName}</span> · LINE ${sellerLine}
     </div>
   </div>
   ${'<'+'script>'}window.addEventListener('load',function(){setTimeout(function(){window.print()},280)});${'</'+'script>'}
