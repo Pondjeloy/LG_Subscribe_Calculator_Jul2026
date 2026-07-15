@@ -1263,7 +1263,32 @@
  </div>
 
 
- <div class="mt-4">
+ <div class="mt-4 quote-print-box" x-show="cart.length > 0" style="border:1px solid var(--line);border-radius:10px;padding:12px;background:#fafafa">
+              <div class="text-xs font-semibold mb-2" style="color:var(--blood)">ใบเสนอราคาแบบทางการ (พิมพ์)</div>
+              <div class="text-xs text-gray-500 mb-2">กรอกข้อมูลลูกค้า แล้วกดพิมพ์ — ออกหน้าตาตามฟอร์ม LG Subscribe</div>
+              <div class="space-y-2 mb-3">
+                <input class="w-full text-xs" style="border:1px solid #e5e7eb;border-radius:6px;padding:6px 8px" placeholder="นามผู้รับ / บริษัท" x-model="quoteCustomer.name" />
+                <input class="w-full text-xs" style="border:1px solid #e5e7eb;border-radius:6px;padding:6px 8px" placeholder="ที่อยู่" x-model="quoteCustomer.address" />
+                <div class="grid grid-cols-2 gap-2">
+                  <input class="w-full text-xs" style="border:1px solid #e5e7eb;border-radius:6px;padding:6px 8px" placeholder="เลขผู้เสียภาษี" x-model="quoteCustomer.taxId" />
+                  <input class="w-full text-xs" style="border:1px solid #e5e7eb;border-radius:6px;padding:6px 8px" placeholder="สาขา" x-model="quoteCustomer.branch" />
+                </div>
+                <div class="grid grid-cols-2 gap-2">
+                  <input class="w-full text-xs" style="border:1px solid #e5e7eb;border-radius:6px;padding:6px 8px" placeholder="ผู้ติดต่อ" x-model="quoteCustomer.contact" />
+                  <input class="w-full text-xs" style="border:1px solid #e5e7eb;border-radius:6px;padding:6px 8px" placeholder="เบอร์โทร" x-model="quoteCustomer.phone" />
+                </div>
+                <input class="w-full text-xs" style="border:1px solid #e5e7eb;border-radius:6px;padding:6px 8px" placeholder="E-Mail" x-model="quoteCustomer.email" />
+                <div class="grid grid-cols-2 gap-2">
+                  <input class="w-full text-xs" style="border:1px solid #e5e7eb;border-radius:6px;padding:6px 8px" placeholder="เลขที่เอกสาร (ว่าง = อัตโนมัติ)" x-model="quoteCustomer.docNo" />
+                  <input type="number" min="1" max="90" class="w-full text-xs" style="border:1px solid #e5e7eb;border-radius:6px;padding:6px 8px" placeholder="มีผล (วัน)" x-model.number="quoteCustomer.validDays" />
+                </div>
+              </div>
+              <div class="space-y-2">
+                <button class="btn-primary" style="width:100%" @click="printQuotation()">พิมพ์ใบเสนอราคา</button>
+                <button class="btn-ghost" style="width:100%" @click="copySummary()">คัดลอกข้อความ</button>
+              </div>
+            </div>
+            <div class="mt-4" x-show="cart.length === 0">
               <button class="btn-primary" style="width:100%" @click="copySummary()">คัดลอกข้อความ</button>
             </div>
  </div>
@@ -1414,7 +1439,21 @@ function lgCalculator() {
  compareB: { term: '5Y', serviceType: 'Visit', modelIndices: [] },
  cart: [],
  toast: { show: false, msg: '' },
- buildVersion: '2026.07.13-v79',
+ buildVersion: '2026.07.15-v80',
+ quoteCustomer: {
+   name: '',
+   address: '',
+   taxId: '',
+   branch: 'สำนักงานใหญ่',
+   contact: '',
+   phone: '',
+   email: '',
+   validDays: 15,
+   docNo: '',
+   sellerName: 'POND — LG Subscribe',
+   sellerPhone: '',
+   sellerLine: 'https://line.me/ti/p/jRpW3PMC_e',
+ },
 
  hasModelSelected() {
  const v = this.picker.model;
@@ -3379,6 +3418,343 @@ function lgCalculator() {
       }
 
       this.copyText(lines.join('\n'), 'คัดลอกข้อความสรุปแล้ว');
+    },
+
+    // ─── Formal quotation print (Excel-style LG form) ───
+    bahtText(amount) {
+      const n = Math.round((Number(amount) || 0) * 100) / 100;
+      if (!n) return 'ศูนย์บาทถ้วน';
+      const th = ['ศูนย์', 'หนึ่ง', 'สอง', 'สาม', 'สี่', 'ห้า', 'หก', 'เจ็ด', 'แปด', 'เก้า'];
+      const readGroup = (num) => {
+        // 0–999999
+        num = Math.floor(Math.abs(num));
+        if (num === 0) return '';
+        const units = ['', 'สิบ', 'ร้อย', 'พัน', 'หมื่น', 'แสน'];
+        let s = '';
+        const str = String(num);
+        const len = str.length;
+        for (let i = 0; i < len; i++) {
+          const d = +str[i];
+          const p = len - i - 1;
+          if (d === 0) continue;
+          if (p === 0 && d === 1 && len > 1) s += 'เอ็ด';
+          else if (p === 1 && d === 1) s += 'สิบ';
+          else if (p === 1 && d === 2) s += 'ยี่สิบ';
+          else if (p === 1) s += th[d] + 'สิบ';
+          else s += th[d] + units[p];
+        }
+        return s;
+      };
+      const readInt = (num) => {
+        num = Math.floor(Math.abs(num));
+        if (num === 0) return 'ศูนย์';
+        if (num < 1000000) return readGroup(num);
+        const mil = Math.floor(num / 1000000);
+        const rest = num % 1000000;
+        return readGroup(mil) + 'ล้าน' + (rest ? readGroup(rest) : '');
+      };
+      const whole = Math.floor(n);
+      const satang = Math.round((n - whole) * 100);
+      let out = readInt(whole) + 'บาท';
+      if (satang === 0) out += 'ถ้วน';
+      else out += readInt(satang) + 'สตางค์';
+      return out;
+    },
+    quoteDateText(d) {
+      const dd = String(d.getDate()).padStart(2, '0');
+      const mm = String(d.getMonth() + 1).padStart(2, '0');
+      const yyyy = d.getFullYear();
+      return dd + '/' + mm + '/' + yyyy;
+    },
+    quoteDocNo() {
+      if (this.quoteCustomer.docNo && String(this.quoteCustomer.docNo).trim()) {
+        return String(this.quoteCustomer.docNo).trim();
+      }
+      const d = new Date();
+      const y = d.getFullYear();
+      const m = String(d.getMonth() + 1).padStart(2, '0');
+      const day = String(d.getDate()).padStart(2, '0');
+      const r = String(Math.floor(Math.random() * 900) + 100);
+      return 'QT-' + y + m + day + '-' + r;
+    },
+    quotationHtml() {
+      if (this.cart.length === 0) return '';
+      const q = this.quoteCustomer;
+      const today = new Date();
+      const validDays = Math.max(1, Number(q.validDays) || 15);
+      const validTo = new Date(today.getTime() + validDays * 86400000);
+      const docNo = this.quoteDocNo();
+      const ct = this.customerType === 'new' ? 'ลูกค้าใหม่' : 'ลูกค้าเก่า';
+      const hasCombo = this.comboRate() > 0;
+      const cr = Math.round(this.comboRate() * 100);
+      const grand = this.grandTotal();
+      const firstPay = this.firstPaymentTotal();
+      const excl = Math.round(grand * 100 / 107 * 100) / 100;
+      const vat = Math.round((grand - excl) * 100) / 100;
+      const esc = (s) => String(s == null ? '' : s)
+        .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+
+      let itemsHtml = '';
+      this.cart.forEach((it, i) => {
+        const months = it.totalContractMonths || 60;
+        const years = Math.round(months / 12);
+        const ranges = this.billRangeTotals(it);
+        const advance = it.advancePayment || 0;
+        const totalItem = ranges.reduce((s, r) => s + r.total, 0) + advance;
+        const fp = this.itemFirstPayment(it);
+        const care = this.careService(it);
+        const title = this.productSummaryTitle(it);
+        const service = this.formatServiceDetail(it);
+
+        itemsHtml += '<tr class="item-main">';
+        itemsHtml += '<td class="c">' + (i + 1) + '</td>';
+        itemsHtml += '<td class="code">' + esc(it.code) + '</td>';
+        itemsHtml += '<td class="name"><strong>' + esc(title) + '</strong>';
+        itemsHtml += '<div class="sub">' + esc(this.productTypeLabel(it)) + ' · สัญญา ' + esc(it.term || '') + ' (' + years + ' ปี · ' + months + ' งวด)</div>';
+        itemsHtml += '<div class="sub">บริการ: ' + esc(service) + '</div>';
+        if (it.outright) {
+          itemsHtml += '<div class="sub">ซื้อขาด (รวมเครื่อง + บริการ 2 ปี)</div>';
+        }
+        itemsHtml += '</td>';
+        itemsHtml += '<td class="c">1</td>';
+        itemsHtml += '<td class="c">' + months + '</td>';
+        itemsHtml += '<td class="num">฿' + this.fmtMoney(fp) + '</td>';
+        itemsHtml += '<td class="num"><strong>฿' + this.fmtMoney(totalItem) + '</strong></td>';
+        itemsHtml += '</tr>';
+
+        // bill period detail rows
+        if (advance > 0) {
+          itemsHtml += '<tr class="item-sub">';
+          itemsHtml += '<td></td><td></td>';
+          itemsHtml += '<td colspan="2" class="sub-line">· จ่ายล่วงหน้า (ตอนเริ่มสัญญา)' + (it.outright ? ' · ซื้อขาด' : '') + '</td>';
+          itemsHtml += '<td class="c">—</td>';
+          itemsHtml += '<td class="num">฿' + this.fmtMoney(advance) + '</td>';
+          itemsHtml += '<td class="num">฿' + this.fmtMoney(advance) + '</td>';
+          itemsHtml += '</tr>';
+        }
+        if (!it.outright) {
+          ranges.forEach(r => {
+            let tag = '';
+            if (r.isAdvanceHalf) tag = ' (ครึ่งราคา)';
+            else if (r.isPromo) tag = ' (โปร)';
+            itemsHtml += '<tr class="item-sub">';
+            itemsHtml += '<td></td><td></td>';
+            itemsHtml += '<td colspan="2" class="sub-line">· ' + esc(r.rangeLabel) + tag + ' · ฿' + this.fmtBillPrice(r.pricePerMonth) + '/เดือน × ' + r.months + ' งวด</td>';
+            itemsHtml += '<td class="c">' + r.months + '</td>';
+            itemsHtml += '<td class="num">฿' + this.fmtBillPrice(r.pricePerMonth) + '</td>';
+            itemsHtml += '<td class="num">฿' + this.fmtMoney(r.total) + '</td>';
+            itemsHtml += '</tr>';
+          });
+        }
+        if (care.items && care.items.length) {
+          itemsHtml += '<tr class="item-sub">';
+          itemsHtml += '<td></td><td></td>';
+          itemsHtml += '<td colspan="5" class="sub-line care">Care Service: ';
+          itemsHtml += care.items.map(svc => esc(svc.label) + ' (' + esc(svc.freq) + ')').join(' · ');
+          itemsHtml += '</td></tr>';
+        }
+      });
+
+      let firstPayRows = '';
+      this.firstPaymentBreakdown().forEach(row => {
+        const parts = [];
+        if (row.advance > 0) {
+          parts.push(row.item.outright
+            ? ('ซื้อขาด ฿' + this.fmtMoney(row.advance))
+            : ('ล่วงหน้า ฿' + this.fmtMoney(row.advance)));
+        }
+        if (row.bill1 > 0) parts.push('งวด 1 ฿' + this.fmtMoney(this.bht(row.bill1)));
+        firstPayRows += '<div class="fp-row"><span>' + esc(row.item.code) + '</span><span>฿' + this.fmtMoney(row.total)
+          + (parts.length ? ' <small>(' + parts.join(' + ') + ')</small>' : '') + '</span></div>';
+      });
+
+      return `<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="utf-8"/>
+<title>ใบเสนอราคา LG Subscribe — ${esc(docNo)}</title>
+<style>
+  @page { size: A4 portrait; margin: 12mm 12mm 14mm 12mm; }
+  * { box-sizing: border-box; }
+  body { font-family: "Sarabun", "TH Sarabun New", "Tahoma", sans-serif; font-size: 12px; color: #111; margin: 0; padding: 0; }
+  .sheet { max-width: 190mm; margin: 0 auto; }
+  .co-name { font-size: 13px; font-weight: 700; margin: 0 0 2px; }
+  .co-sub { font-size: 10px; color: #444; line-height: 1.45; margin: 0; }
+  .head { display: flex; justify-content: space-between; gap: 16px; border-bottom: 2px solid #a50034; padding-bottom: 10px; margin-bottom: 12px; }
+  .brand { flex: 1; }
+  .title-box { text-align: right; min-width: 200px; }
+  .title-box h1 { margin: 0; color: #a50034; font-size: 22px; letter-spacing: 0.5px; }
+  .title-box .en { font-size: 12px; font-weight: 600; color: #333; margin-top: 2px; }
+  .meta { margin-top: 8px; font-size: 11px; line-height: 1.6; }
+  .meta b { color: #333; }
+  .cust { margin: 10px 0 12px; border: 1px solid #ddd; border-radius: 6px; padding: 8px 10px; }
+  .cust .row { display: flex; gap: 8px; margin: 3px 0; }
+  .cust .lbl { width: 88px; color: #555; flex-shrink: 0; }
+  .cust .val { flex: 1; font-weight: 600; }
+  .tags { font-size: 10px; color: #555; margin-top: 4px; }
+  table.items { width: 100%; border-collapse: collapse; margin-top: 4px; }
+  table.items th { background: #a50034; color: #fff; font-size: 11px; font-weight: 600; padding: 7px 5px; border: 1px solid #8f002d; text-align: center; }
+  table.items td { border: 1px solid #ddd; padding: 5px 6px; vertical-align: top; font-size: 11px; }
+  table.items tr.item-main td { background: #fff; }
+  table.items tr.item-sub td { background: #fafafa; color: #444; border-top: none; }
+  table.items .c { text-align: center; }
+  table.items .num { text-align: right; white-space: nowrap; font-variant-numeric: tabular-nums; }
+  table.items .code { font-family: ui-monospace, Consolas, monospace; font-size: 10px; white-space: nowrap; }
+  table.items .name strong { font-size: 11.5px; }
+  table.items .sub { font-size: 10px; color: #555; margin-top: 2px; font-weight: 400; }
+  table.items .sub-line { font-size: 10px; color: #444; }
+  table.items .care { color: #166534; }
+  .bottom { display: flex; gap: 14px; margin-top: 12px; align-items: flex-start; }
+  .remarks { flex: 1.15; font-size: 10px; line-height: 1.55; color: #333; }
+  .remarks h3 { margin: 0 0 6px; font-size: 11px; color: #a50034; border-bottom: 1px solid #eee; padding-bottom: 3px; }
+  .remarks li { margin: 2px 0 2px 14px; }
+  .totals { flex: 0.95; border: 1px solid #ddd; border-radius: 6px; overflow: hidden; }
+  .totals .line { display: flex; justify-content: space-between; padding: 6px 10px; border-bottom: 1px solid #eee; font-size: 11px; }
+  .totals .line.grand { background: #a50034; color: #fff; font-weight: 700; font-size: 13px; border: none; }
+  .totals .line.first { background: #f5f3ff; color: #5b21b6; font-weight: 700; }
+  .totals .fp-row { display: flex; justify-content: space-between; font-size: 10px; color: #555; padding: 1px 0; }
+  .totals .fp-row small { color: #888; }
+  .baht { margin-top: 8px; background: #f0fdf4; border: 1px solid #86efac; border-radius: 6px; padding: 8px 10px; font-size: 12px; font-weight: 700; }
+  .sign { display: flex; gap: 20px; margin-top: 18px; }
+  .sign .box { flex: 1; border: 1px solid #ddd; border-radius: 6px; padding: 10px; min-height: 90px; }
+  .sign h4 { margin: 0 0 8px; font-size: 11px; color: #a50034; }
+  .sign .line { margin-top: 28px; font-size: 11px; text-align: center; color: #333; }
+  .foot { margin-top: 12px; text-align: center; font-size: 10px; color: #a50034; font-weight: 600; border-top: 1px solid #eee; padding-top: 8px; }
+  .no-print { margin: 10px auto 16px; max-width: 190mm; text-align: center; }
+  .no-print button { background: #a50034; color: #fff; border: 0; border-radius: 8px; padding: 10px 18px; font-size: 14px; cursor: pointer; margin: 0 4px; }
+  .no-print button.ghost { background: #fff; color: #a50034; border: 1px solid #a50034; }
+  @media print {
+    .no-print { display: none !important; }
+    body { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  }
+${'</'+'style>'}
+</head>
+<body>
+  <div class="no-print">
+    <button onclick="window.print()">พิมพ์ / บันทึก PDF</button>
+    <button class="ghost" onclick="window.close()">ปิดหน้าต่าง</button>
+  </div>
+  <div class="sheet">
+    <div class="head">
+      <div class="brand">
+        <p class="co-name">บริษัท แอลจี อีเลคทรอนิคส์ (ประเทศไทย) จำกัด (สำนักงานใหญ่)</p>
+        <p class="co-sub">LG Electronics (Thailand) Co., Ltd. (Head Office)</p>
+        <p class="co-sub">เลขที่ 195 อาคารวัน แบงค็อก ทาวเวอร์ 4 ห้องเลขที่ 2301-2314 ชั้น 23 ถนนวิทยุ</p>
+        <p class="co-sub">แขวงลุมพินี เขตปทุมวัน กรุงเทพมหานคร 10330</p>
+        <p class="co-sub">เลขประจำตัวผู้เสียภาษี 0105540033379 · ฝ่ายบริการลูกค้า 02-057-5757</p>
+      </div>
+      <div class="title-box">
+        <h1>ใบเสนอราคา</h1>
+        <div class="en">Quotation — LG SUBSCRIBE</div>
+        <div class="meta">
+          <div><b>เลขที่</b> ${esc(docNo)}</div>
+          <div><b>วันที่</b> ${this.quoteDateText(today)}</div>
+          <div><b>มีผลถึง</b> ${this.quoteDateText(validTo)}</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="cust">
+      <div class="row"><span class="lbl">นามผู้รับ :</span><span class="val">${esc(q.name || '................................................')}</span></div>
+      <div class="row"><span class="lbl">ที่อยู่ :</span><span class="val">${esc(q.address || '................................................')}</span></div>
+      <div class="row">
+        <span class="lbl">เลขผู้เสียภาษี :</span><span class="val">${esc(q.taxId || '—')}</span>
+        <span class="lbl" style="width:60px">สาขา :</span><span class="val">${esc(q.branch || '—')}</span>
+      </div>
+      <div class="row">
+        <span class="lbl">ผู้ติดต่อ :</span><span class="val">${esc(q.contact || '—')}</span>
+        <span class="lbl" style="width:60px">โทร :</span><span class="val">${esc(q.phone || '—')}</span>
+      </div>
+      <div class="row"><span class="lbl">E-Mail :</span><span class="val">${esc(q.email || '—')}</span></div>
+      <div class="tags">${ct} · ${esc(this.promoDateText())}${hasCombo ? ' · ' + esc(this.comboLabel()) + ' ' + cr + '%' : ''} · ${this.cart.length} รายการ</div>
+    </div>
+
+    <table class="items">
+      <thead>
+        <tr>
+          <th style="width:36px">ลำดับ</th>
+          <th style="width:92px">รหัสสินค้า</th>
+          <th>รายการสินค้า / แพ็คเกจ / บริการ</th>
+          <th style="width:48px">จำนวน</th>
+          <th style="width:56px">รอบบิล</th>
+          <th style="width:88px">ราคา/เดือน<br/>หรือครั้งแรก</th>
+          <th style="width:96px">ยอดสุทธิ</th>
+        </tr>
+      </thead>
+      <tbody>
+        ${itemsHtml}
+      </tbody>
+    </table>
+
+    <div class="bottom">
+      <div class="remarks">
+        <h3>หมายเหตุ (Remark)</h3>
+        <ol style="margin:0;padding-left:0;list-style:decimal">
+          <li>ใบเสนอราคานี้มีผลถึงวันที่ ${this.quoteDateText(validTo)}</li>
+          <li>*ราคารวมค่าจัดส่งและค่าติดตั้งเบื้องต้นเรียบร้อยแล้ว (เงื่อนไขพื้นที่มาตรฐานตามบริษัท)</li>
+          <li>ชำระล่วงหน้า 1 เดือน (TV/Monitor/Speaker ชำระล่วงหน้า 6 เดือน) · โปรโมชันใช้ได้เฉพาะแบบ Subscribe</li>
+          <li>ยอดชำระครั้งแรก: สินค้าทั่วไป = งวดที่ 1 · TV/จอ/ลำโพง = เงินล่วงหน้าอย่างเดียว · ซื้อขาด = ราคาซื้อขาด</li>
+          <li>ราคาคำนวณจาก LG Subscribe Calculator · อาจเปลี่ยนแปลงตามประกาศบริษัทฯ</li>
+          <li>Care Service / รอบบริการ ตามแพ็คเกจที่ระบุในรายการสินค้า</li>
+        </ol>
+        <div class="baht">฿ BAHT : ${esc(this.bahtText(grand))}</div>
+      </div>
+      <div class="totals">
+        <div class="line first">
+          <span>ยอดชำระครั้งแรกรวม</span>
+          <span>฿${this.fmtMoney(firstPay)}</span>
+        </div>
+        <div style="padding:6px 10px;border-bottom:1px solid #eee">${firstPayRows}</div>
+        ${hasCombo ? `<div class="line"><span>ส่วนลด ${esc(this.comboLabel())} ${cr}%</span><span>ใช้แล้วในยอด</span></div>` : ''}
+        ${this.hasTvAdvance() ? `<div class="line"><span>จ่ายล่วงหน้ารวม (TV/จอ/ลำโพง)</span><span>฿${this.fmtMoney(this.totalTvAdvance())}</span></div>` : ''}
+        ${this.hasOutright() ? `<div class="line"><span>ซื้อขาดรวม</span><span>฿${this.fmtMoney(this.totalOutright())}</span></div>` : ''}
+        <div class="line"><span>รวมเงินค่าสินค้า (ก่อน VAT)</span><span>฿${this.fmtMoney(excl)}</span></div>
+        <div class="line"><span>ภาษีมูลค่าเพิ่ม VAT 7%</span><span>฿${this.fmtMoney(vat)}</span></div>
+        <div class="line grand"><span>ยอดรวมทั้งสิ้น (Total Inc. VAT)</span><span>฿${this.fmtMoney(grand)}</span></div>
+        ${this.totalSaving() > 0 ? `<div class="line"><span>ประหยัดตลอดสัญญา</span><span>฿${this.fmtMoney(this.totalSaving())}</span></div>` : ''}
+      </div>
+    </div>
+
+    <div class="sign">
+      <div class="box">
+        <h4>ผู้เสนอราคา / Issued by</h4>
+        <div>ชื่อ: ${esc(q.sellerName || 'POND — LG Subscribe')}</div>
+        <div>โทร: ${esc(q.sellerPhone || '—')}</div>
+        <div>LINE: ${esc(q.sellerLine || 'https://line.me/ti/p/jRpW3PMC_e')}</div>
+        <div class="line">..............................................</div>
+      </div>
+      <div class="box">
+        <h4>สำหรับลูกค้า / Customer Acknowledgement</h4>
+        <div>ข้าพเจ้ายืนยันรายการและราคานี้</div>
+        <div class="line">ลงชื่อ ..............................................</div>
+        <div style="text-align:center;font-size:10px;margin-top:6px">วันที่ ........../........../..........</div>
+      </div>
+    </div>
+
+    <div class="foot">
+      ติดต่อสอบถาม / สั่งจอง: LINE ${esc(q.sellerLine || 'https://line.me/ti/p/jRpW3PMC_e')}
+      · ฝ่ายบริการลูกค้า LG 02-057-5757 · Line ทางการ @Lgthailand (8.00-18.00)
+    </div>
+  </div>
+  ${'<'+'script>'}window.addEventListener('load',function(){setTimeout(function(){window.print()},280)});${'</'+'script>'}
+${'</'+'body>'}
+${'</'+'html>'}`;
+    },
+    printQuotation() {
+      if (this.cart.length === 0) {
+        this.showToast('เลือกสินค้าในตะกร้าก่อนพิมพ์ใบเสนอราคา');
+        return;
+      }
+      const html = this.quotationHtml();
+      const w = window.open('', '_blank');
+      if (!w) {
+        this.showToast('เบราว์เซอร์บล็อกป๊อปอัป — อนุญาตแล้วกดใหม่');
+        return;
+      }
+      w.document.open();
+      w.document.write(html);
+      w.document.close();
+      this.showToast('เปิดใบเสนอราคาแล้ว — กดพิมพ์หรือบันทึกเป็น PDF');
     }
  }
 }
