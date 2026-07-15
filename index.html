@@ -1447,7 +1447,7 @@ function lgCalculator() {
  compareB: { term: '5Y', serviceType: 'Visit', modelIndices: [] },
  cart: [],
  toast: { show: false, msg: '' },
- buildVersion: '2026.07.15-v87',
+ buildVersion: '2026.07.15-v88',
  quoteCustomer: {
    name: '',
    address: '',
@@ -3514,16 +3514,23 @@ function lgCalculator() {
         const ranges = this.billRangeTotals(it);
         const advance = it.advancePayment || 0;
         const totalItem = ranges.reduce((s, r) => s + r.total, 0) + advance;
-        // ช่องรายการสินค้า: ชื่ออย่างเดียว (รหัสอยู่คอลัมน์รหัสสินค้าแล้ว)
+        // ช่องรายการสินค้า: ชื่อ + Care Service (ไม่ใส่งวด)
         const type = this.productTypeLabel(it);
         const pname = (it.name || '').trim();
         const headTitle = (type && pname) ? (type + ' · ' + pname) : (pname || type || it.code);
+        const care = this.careService(it);
+        const careDetail = this.formatServiceDetail(it);
+        let careLine = 'Care Service: ' + careDetail;
+        if (care.items && care.items.length) {
+          careLine += ' — ' + care.items.map(svc => svc.label + ' (' + svc.freq + ')').join(' · ');
+        }
 
-        // แถวหลัก — ชื่อรายการสินค้าอย่างเดียว
+        // แถวหลัก — ชื่อ + Care Service
         itemsHtml += '<tr class="main">';
         itemsHtml += '<td class="c">' + (i + 1) + '</td>';
         itemsHtml += '<td class="code">' + esc(it.code) + '</td>';
-        itemsHtml += '<td><span class="name">' + esc(headTitle) + '</span></td>';
+        itemsHtml += '<td><span class="name">' + esc(headTitle) + '</span>';
+        itemsHtml += '<div class="care-line">' + esc(careLine) + '</div></td>';
         itemsHtml += '<td class="c">1</td>';
         itemsHtml += '<td class="c">' + (it.outright ? '—' : String(months)) + '</td>';
         itemsHtml += '<td class="num">—</td>';
@@ -3623,6 +3630,7 @@ function lgCalculator() {
   table.items .num { text-align: right; white-space: nowrap; font-variant-numeric: tabular-nums; }
   table.items .code { font-family: Consolas,"Courier New",monospace; font-size: 9.5px; font-weight: 700; color: #1a1a1a; white-space: nowrap; }
   table.items .sub { font-size: 9px; color: #444; margin-top: 1px; font-weight: 400; line-height: 1.3; }
+  table.items .care-line { font-size: 9px; color: #333; margin-top: 2px; font-weight: 400; line-height: 1.35; }
   .bottom { display: grid; grid-template-columns: 1.2fr .9fr; gap: 8px; margin-top: 6px; align-items: start; }
   .remark-box { border: 1px solid #d0d0d0; padding: 6px 8px; }
   .remark-box h3 { margin: 0 0 3px; font-size: 10.5px; font-weight: 700; color: #1a1a1a; }
