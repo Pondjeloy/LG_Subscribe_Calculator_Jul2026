@@ -1447,7 +1447,7 @@ function lgCalculator() {
  compareB: { term: '5Y', serviceType: 'Visit', modelIndices: [] },
  cart: [],
  toast: { show: false, msg: '' },
- buildVersion: '2026.07.15-v86',
+ buildVersion: '2026.07.15-v87',
  quoteCustomer: {
    name: '',
    address: '',
@@ -3532,45 +3532,43 @@ function lgCalculator() {
         itemsHtml += '</tr>';
 
         if (it.outright) {
+          // ช่องรายการสินค้าเว้นว่าง — รายละเอียดอยู่คอลัมน์ตัวเลข
           itemsHtml += '<tr class="sub">';
-          itemsHtml += '<td></td><td></td>';
-          itemsHtml += '<td colspan="3">ซื้อขาด (รวมเครื่อง + บริการ 2 ปี)</td>';
-          itemsHtml += '<td class="num">—</td><td class="num">—</td>';
+          itemsHtml += '<td></td><td></td><td></td>';
+          itemsHtml += '<td class="c">—</td><td class="c">—</td>';
+          itemsHtml += '<td class="num" colspan="2">ซื้อขาด</td>';
           itemsHtml += '<td class="num">฿' + this.fmtMoney(advance) + '</td>';
           itemsHtml += '</tr>';
         } else {
           if (advance > 0) {
             itemsHtml += '<tr class="sub">';
-            itemsHtml += '<td></td><td></td>';
-            itemsHtml += '<td>จ่ายล่วงหน้า (ตอนเริ่มสัญญา)</td>';
+            itemsHtml += '<td></td><td></td><td></td>';
             itemsHtml += '<td class="c">—</td><td class="c">—</td>';
-            itemsHtml += '<td class="num">—</td><td class="num">—</td>';
+            itemsHtml += '<td class="num" colspan="2">จ่ายล่วงหน้า</td>';
             itemsHtml += '<td class="num">฿' + this.fmtMoney(advance) + '</td>';
             itemsHtml += '</tr>';
           }
-          // แยกรอบบิลเหมือน billRangeHtml / สรุปในเครื่องคิดราคา
+          // แยกรอบบิล — ช่องรายการสินค้าเว้นโล่ง (ไม่ใส่ข้อความงวด)
           ranges.forEach(r => {
             let tag = '';
-            if (r.isAdvanceHalf) tag = ' (ครึ่งราคา)';
-            else if (r.isPromo) tag = ' (โปร)';
-            else tag = ' (ปกติ)';
+            if (r.isAdvanceHalf) tag = 'ครึ่งราคา';
+            else if (r.isPromo) tag = 'โปร';
+            else tag = 'ปกติ';
             itemsHtml += '<tr class="sub">';
-            itemsHtml += '<td></td><td></td>';
-            itemsHtml += '<td>' + esc(r.rangeLabel) + tag + '</td>';
+            itemsHtml += '<td></td><td></td><td></td>';
             itemsHtml += '<td class="c">—</td>';
             itemsHtml += '<td class="c">' + r.months + '</td>';
             itemsHtml += '<td class="num">฿' + this.fmtBillPrice(r.pricePerMonth) + '/เดือน</td>';
-            itemsHtml += '<td class="num">× ' + r.months + ' งวด</td>';
+            itemsHtml += '<td class="num">' + esc(r.rangeLabel) + ' (' + tag + ') × ' + r.months + '</td>';
             itemsHtml += '<td class="num">฿' + this.fmtMoney(r.total) + '</td>';
             itemsHtml += '</tr>';
           });
-          // รวมทั้งสัญญาของรายการนี้
+          // รวมทั้งสัญญา
           itemsHtml += '<tr class="sub sum">';
-          itemsHtml += '<td></td><td></td>';
-          itemsHtml += '<td><span class="name">รวมทั้งสัญญา</span></td>';
+          itemsHtml += '<td></td><td></td><td></td>';
           itemsHtml += '<td class="c">—</td>';
           itemsHtml += '<td class="c">' + months + '</td>';
-          itemsHtml += '<td class="num" colspan="2">' + months + ' งวด · ' + years + ' ปี' + (advance > 0 ? ' + ล่วงหน้า' : '') + '</td>';
+          itemsHtml += '<td class="num" colspan="2"><span class="name">รวมทั้งสัญญา</span> ' + months + ' งวด · ' + years + ' ปี' + (advance > 0 ? ' + ล่วงหน้า' : '') + '</td>';
           itemsHtml += '<td class="num"><span class="name">฿' + this.fmtMoney(totalItem) + '</span></td>';
           itemsHtml += '</tr>';
         }
