@@ -1448,7 +1448,7 @@ function lgCalculator() {
  compareB: { term: '5Y', serviceType: 'Visit', modelIndices: [] },
  cart: [],
  toast: { show: false, msg: '' },
- buildVersion: '2026.07.15-v93',
+ buildVersion: '2026.07.15-v94',
  quoteCustomer: {
    name: '',
    address: '',
@@ -3508,48 +3508,40 @@ function lgCalculator() {
         .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
       const val = (v, fb) => esc((v && String(v).trim()) ? String(v).trim() : (fb || '—'));
 
-      // ตารางแบบฟอร์ม LG: รายการ+Care เซลล์รวม (rowspan) | รอบบิลแยกแถว + ราคา/ส่วนลด/ยอดสุทธิ
+      // ตาราง: รายการ+Care (rowspan) | รอบบิล | ราคาโปรโมชั่น | ยอดสุทธิ
       let itemsHtml = '';
       this.cart.forEach((it, i) => {
         const months = it.totalContractMonths || 60;
         const ranges = this.billRangeTotals(it);
         const advance = it.advancePayment || 0;
         const totalItem = ranges.reduce((s, r) => s + r.total, 0) + advance;
-        const listPrice = Number(it.regular || it.postPromoPrice || 0);
         const type = this.productTypeLabel(it);
         const pname = (it.name || '').trim();
         const headTitle = (it.code || '') + ' ' + ((type && pname) ? (type + ' · ' + pname) : (pname || type || ''));
         const care = this.careService(it);
         const careDetail = this.formatServiceDetail(it);
 
-        // สร้างแถวรอบบิล (ตรงสกรีนช็อตฟอร์มบริษัท)
         const periods = [];
         if (it.outright) {
-          periods.push({ bill: '—', list: '', disc: '', net: '', total: advance });
+          periods.push({ bill: '—', promo: '', total: advance });
         } else {
           if (advance > 0) {
-            periods.push({ bill: 'ล่วงหน้า', list: '', disc: '', net: '', total: advance });
+            periods.push({ bill: 'ล่วงหน้า', promo: '', total: advance });
           }
           ranges.forEach(r => {
-            const net = Number(r.pricePerMonth) || 0;
-            const disc = Math.max(0, Math.round((listPrice - net) * 100) / 100);
             const bill = r.start === r.end ? String(r.start) : (r.start + '-' + r.end);
             periods.push({
               bill,
-              list: listPrice,
-              disc: disc > 0 ? disc : '',
-              net,
+              promo: Number(r.pricePerMonth) || 0,
               total: r.total,
             });
           });
         }
         if (!periods.length) {
-          periods.push({ bill: '—', list: listPrice || '', disc: '', net: '', total: totalItem });
+          periods.push({ bill: '—', promo: '', total: totalItem });
         }
-        // rowspan ครอบทุกแถวรอบบิล + แถว Total (เซลล์รายการ+Care รวมกัน ไม่ถ่าง)
         const span = periods.length + 1;
 
-        // Care Service ในเซลล์รายการสินค้า (รวมกับชื่อรุ่น)
         let careHtml = '<div class="care-title">Care Service:</div>';
         careHtml += '<div class="care-main">' + esc(careDetail) + '</div>';
         if (care.items && care.items.length) {
@@ -3558,7 +3550,6 @@ function lgCalculator() {
           });
         }
 
-        // แถวแรก: ลำดับ/รหัส/รายการ/จำนวน (rowspan) + รอบบิลแรก
         const p0 = periods[0];
         itemsHtml += '<tr>';
         itemsHtml += '<td class="c" rowspan="' + span + '">' + (i + 1) + '</td>';
@@ -3566,28 +3557,22 @@ function lgCalculator() {
         itemsHtml += '<td class="desc" rowspan="' + span + '"><div class="name">' + esc(headTitle.trim()) + '</div>' + careHtml + '</td>';
         itemsHtml += '<td class="c" rowspan="' + span + '">1</td>';
         itemsHtml += '<td class="c">' + esc(p0.bill) + '</td>';
-        itemsHtml += '<td class="num">' + (p0.list === '' ? '—' : this.fmtBillPrice(p0.list)) + '</td>';
-        itemsHtml += '<td class="num">' + (p0.disc === '' ? '—' : this.fmtBillPrice(p0.disc)) + '</td>';
-        itemsHtml += '<td class="num">' + (p0.net === '' ? '—' : this.fmtBillPrice(p0.net)) + '</td>';
+        itemsHtml += '<td class="num">' + (p0.promo === '' ? '—' : this.fmtBillPrice(p0.promo)) + '</td>';
         itemsHtml += '<td class="num">' + this.fmtMoney(p0.total) + '</td>';
         itemsHtml += '</tr>';
 
-        // แถวรอบบิลถัดไป (ไม่มีคอลัมน์ซ้าย — ถูก rowspan แล้ว)
         for (let p = 1; p < periods.length; p++) {
           const pr = periods[p];
           itemsHtml += '<tr>';
           itemsHtml += '<td class="c">' + esc(pr.bill) + '</td>';
-          itemsHtml += '<td class="num">' + (pr.list === '' ? '—' : this.fmtBillPrice(pr.list)) + '</td>';
-          itemsHtml += '<td class="num">' + (pr.disc === '' ? '—' : this.fmtBillPrice(pr.disc)) + '</td>';
-          itemsHtml += '<td class="num">' + (pr.net === '' ? '—' : this.fmtBillPrice(pr.net)) + '</td>';
+          itemsHtml += '<td class="num">' + (pr.promo === '' ? '—' : this.fmtBillPrice(pr.promo)) + '</td>';
           itemsHtml += '<td class="num">' + this.fmtMoney(pr.total) + '</td>';
           itemsHtml += '</tr>';
         }
 
-        // แถว Total. ภายในบล็อก rowspan (5 คอลัมน์ขวา)
         itemsHtml += '<tr class="tot">';
         itemsHtml += '<td class="c"><strong>Total.</strong></td>';
-        itemsHtml += '<td class="num">—</td><td class="num">—</td><td class="num">—</td>';
+        itemsHtml += '<td class="num">—</td>';
         itemsHtml += '<td class="num"><strong>' + this.fmtMoney(totalItem) + '</strong></td>';
         itemsHtml += '</tr>';
       });
@@ -3723,13 +3708,11 @@ ${'</'+'style>'}
         <tr>
           <th style="width:36px">ลำดับ</th>
           <th style="width:92px">รหัสสินค้า</th>
-          <th style="min-width:160px">รายการสินค้า</th>
+          <th style="min-width:180px">รายการสินค้า</th>
           <th style="width:44px">จำนวน</th>
-          <th style="width:52px">รอบบิล</th>
-          <th style="width:78px">ราคาต่อ<br/>รอบบิล</th>
-          <th style="width:64px">ส่วนลด<br/>บาท</th>
-          <th style="width:78px">ราคาหลัง<br/>หักส่วนลด</th>
-          <th style="width:78px">ยอดสุทธิ</th>
+          <th style="width:56px">รอบบิล</th>
+          <th style="width:96px">ราคาโปรโมชั่น</th>
+          <th style="width:88px">ยอดสุทธิ</th>
         </tr>
       </thead>
       <tbody>${itemsHtml}</tbody>
@@ -3864,15 +3847,14 @@ ${'</'+'html>'}`;
       rows.push(['E-Mail', txt(q.email)]);
       rows.push([ct + ' · ' + this.promoDateText() + (hasCombo ? ' · ' + this.comboLabel() + ' ' + cr + '%' : '') + ' · ' + this.cart.length + ' รายการ']);
       rows.push([]);
-      // Table header — แบบฟอร์มบริษัท
-      rows.push(['ลำดับ', 'รหัสสินค้า', 'รายการสินค้า', 'จำนวน', 'รอบบิล', 'ราคาต่อรอบบิล', 'ส่วนลดบาท', 'ราคาหลังหักส่วนลด', 'ยอดสุทธิ']);
+      // Table header
+      rows.push(['ลำดับ', 'รหัสสินค้า', 'รายการสินค้า', 'จำนวน', 'รอบบิล', 'ราคาโปรโมชั่น', 'ยอดสุทธิ']);
 
       this.cart.forEach((it, i) => {
         const months = it.totalContractMonths || 60;
         const ranges = this.billRangeTotals(it);
         const advance = it.advancePayment || 0;
         const totalItem = ranges.reduce((s, r) => s + r.total, 0) + advance;
-        const listPrice = Number(it.regular || it.postPromoPrice || 0);
         const type = this.productTypeLabel(it);
         const pname = (it.name || '').trim();
         const headTitle = ((it.code || '') + ' ' + ((type && pname) ? (type + ' · ' + pname) : (pname || type || ''))).trim();
@@ -3886,17 +3868,15 @@ ${'</'+'html>'}`;
 
         const periods = [];
         if (it.outright) {
-          periods.push({ bill: '—', list: '', disc: '', net: '', total: advance });
+          periods.push({ bill: '—', promo: '', total: advance });
         } else {
-          if (advance > 0) periods.push({ bill: 'ล่วงหน้า', list: '', disc: '', net: '', total: advance });
+          if (advance > 0) periods.push({ bill: 'ล่วงหน้า', promo: '', total: advance });
           ranges.forEach(r => {
-            const net = Number(r.pricePerMonth) || 0;
-            const disc = Math.max(0, Math.round((listPrice - net) * 100) / 100);
             const bill = r.start === r.end ? String(r.start) : (r.start + '-' + r.end);
-            periods.push({ bill, list: listPrice, disc: disc > 0 ? disc : '', net, total: r.total });
+            periods.push({ bill, promo: Number(r.pricePerMonth) || 0, total: r.total });
           });
         }
-        if (!periods.length) periods.push({ bill: '—', list: listPrice || '', disc: '', net: '', total: totalItem });
+        if (!periods.length) periods.push({ bill: '—', promo: '', total: totalItem });
 
         periods.forEach((pr, pi) => {
           rows.push([
@@ -3905,13 +3885,11 @@ ${'</'+'html>'}`;
             pi === 0 ? descCell : '',
             pi === 0 ? 1 : '',
             pr.bill,
-            pr.list === '' ? '—' : money(pr.list),
-            pr.disc === '' ? '—' : money(pr.disc),
-            pr.net === '' ? '—' : money(pr.net),
+            pr.promo === '' ? '—' : money(pr.promo),
             money(pr.total),
           ]);
         });
-        rows.push(['', '', '', 'Total.', months, '—', '—', '—', money(totalItem)]);
+        rows.push(['', '', '', 'Total.', months, '—', money(totalItem)]);
       });
 
       rows.push([]);
@@ -3959,8 +3937,6 @@ ${'</'+'html>'}`;
           { wch: 42 },
           { wch: 8 },
           { wch: 10 },
-          { wch: 14 },
-          { wch: 12 },
           { wch: 14 },
           { wch: 12 },
         ];
