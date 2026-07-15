@@ -1264,8 +1264,8 @@
 
 
  <div class="mt-4 quote-print-box" x-show="cart.length > 0" style="border:1px solid var(--line);border-radius:10px;padding:12px;background:#fafafa">
-              <div class="text-xs font-semibold mb-1" style="color:var(--blood)">ใบเสนอราคา (ฟอร์มบริษัท · 1 หน้า)</div>
-              <div class="text-xs text-gray-500 mb-2">กรอกข้อมูล แล้วกดพิมพ์ — ออกแบบให้จบในหน้าเดียว</div>
+              <div class="text-xs font-semibold mb-1" style="color:var(--blood)">ใบสรุปราคา (ฟอร์มบริษัท · 1 หน้า)</div>
+              <div class="text-xs text-gray-500 mb-2">กรอกข้อมูล แล้วกดพิมพ์ / เซฟ Excel — ออกแบบให้จบในหน้าเดียว</div>
               <div class="space-y-1.5 mb-2" style="font-size:11px">
                 <div class="text-xs font-semibold text-gray-600">ข้อมูลลูกค้า</div>
                 <input class="w-full text-xs" style="border:1px solid #e5e7eb;border-radius:6px;padding:5px 8px" placeholder="นามผู้รับ / บริษัท *" x-model="quoteCustomer.name" />
@@ -1292,7 +1292,7 @@
                 <input class="w-full text-xs" style="border:1px solid #e5e7eb;border-radius:6px;padding:5px 8px" placeholder="LINE ผู้เสนอราคา" x-model="quoteCustomer.sellerLine" />
               </div>
               <div class="space-y-2">
-                <button class="btn-primary" style="width:100%" @click="printQuotation()">พิมพ์ใบเสนอราคา</button>
+                <button class="btn-primary" style="width:100%" @click="printQuotation()">พิมพ์ใบสรุปราคา</button>
                 <button class="btn-ghost" style="width:100%" @click="exportQuotationExcel()">เซฟเป็นไฟล์ Excel</button>
                 <button class="btn-ghost" style="width:100%" @click="copySummary()">คัดลอกข้อความ</button>
               </div>
@@ -1448,7 +1448,7 @@ function lgCalculator() {
  compareB: { term: '5Y', serviceType: 'Visit', modelIndices: [] },
  cart: [],
  toast: { show: false, msg: '' },
- buildVersion: '2026.07.15-v95',
+ buildVersion: '2026.07.15-v96',
  quoteCustomer: {
    name: '',
    address: '',
@@ -3508,8 +3508,9 @@ function lgCalculator() {
         .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
       const val = (v, fb) => esc((v && String(v).trim()) ? String(v).trim() : (fb || '—'));
 
-      // ตาราง: รายการ+Care | รอบบิล | ราคาปกติ | ส่วนลด | ราคาโปรโมชั่น | ยอดสุทธิ
+      // ตาราง: รายการ+Care | รอบบิล | ราคาปกติ | ราคาโปรโมชั่น | ยอดสุทธิ (ไม่มีคอลัมน์ส่วนลดรายแถว)
       let itemsHtml = '';
+      let totalDiscountAll = 0;
       this.cart.forEach((it, i) => {
         const months = it.totalContractMonths || 60;
         const ranges = this.billRangeTotals(it);
@@ -3524,26 +3525,21 @@ function lgCalculator() {
 
         const periods = [];
         if (it.outright) {
-          periods.push({ bill: '—', regular: '', disc: '', promo: '', total: advance });
+          periods.push({ bill: '—', regular: '', promo: '', total: advance });
         } else {
           if (advance > 0) {
-            periods.push({ bill: 'ล่วงหน้า', regular: '', disc: '', promo: '', total: advance });
+            periods.push({ bill: 'ล่วงหน้า', regular: '', promo: '', total: advance });
           }
           ranges.forEach(r => {
             const promo = Number(r.pricePerMonth) || 0;
-            const disc = Math.max(0, Math.round((listPrice - promo) * 100) / 100);
+            const discPer = Math.max(0, Math.round((listPrice - promo) * 100) / 100);
+            totalDiscountAll += discPer * (r.months || 0);
             const bill = r.start === r.end ? String(r.start) : (r.start + '-' + r.end);
-            periods.push({
-              bill,
-              regular: listPrice,
-              disc: disc > 0 ? disc : '',
-              promo,
-              total: r.total,
-            });
+            periods.push({ bill, regular: listPrice, promo, total: r.total });
           });
         }
         if (!periods.length) {
-          periods.push({ bill: '—', regular: listPrice || '', disc: '', promo: '', total: totalItem });
+          periods.push({ bill: '—', regular: listPrice || '', promo: '', total: totalItem });
         }
         const span = periods.length + 1;
 
@@ -3563,7 +3559,6 @@ function lgCalculator() {
         itemsHtml += '<td class="c" rowspan="' + span + '">1</td>';
         itemsHtml += '<td class="c">' + esc(p0.bill) + '</td>';
         itemsHtml += '<td class="num">' + (p0.regular === '' ? '—' : this.fmtBillPrice(p0.regular)) + '</td>';
-        itemsHtml += '<td class="num">' + (p0.disc === '' ? '—' : this.fmtBillPrice(p0.disc)) + '</td>';
         itemsHtml += '<td class="num">' + (p0.promo === '' ? '—' : this.fmtBillPrice(p0.promo)) + '</td>';
         itemsHtml += '<td class="num">' + this.fmtMoney(p0.total) + '</td>';
         itemsHtml += '</tr>';
@@ -3573,7 +3568,6 @@ function lgCalculator() {
           itemsHtml += '<tr>';
           itemsHtml += '<td class="c">' + esc(pr.bill) + '</td>';
           itemsHtml += '<td class="num">' + (pr.regular === '' ? '—' : this.fmtBillPrice(pr.regular)) + '</td>';
-          itemsHtml += '<td class="num">' + (pr.disc === '' ? '—' : this.fmtBillPrice(pr.disc)) + '</td>';
           itemsHtml += '<td class="num">' + (pr.promo === '' ? '—' : this.fmtBillPrice(pr.promo)) + '</td>';
           itemsHtml += '<td class="num">' + this.fmtMoney(pr.total) + '</td>';
           itemsHtml += '</tr>';
@@ -3581,17 +3575,18 @@ function lgCalculator() {
 
         itemsHtml += '<tr class="tot">';
         itemsHtml += '<td class="c"><strong>Total.</strong></td>';
-        itemsHtml += '<td class="num">—</td><td class="num">—</td><td class="num">—</td>';
+        itemsHtml += '<td class="num">—</td><td class="num">—</td>';
         itemsHtml += '<td class="num"><strong>' + this.fmtMoney(totalItem) + '</strong></td>';
         itemsHtml += '</tr>';
       });
+      totalDiscountAll = Math.round(totalDiscountAll * 100) / 100;
 
       const sellerName = val(q.sellerName, 'POND');
       const sellerPhone = val(q.sellerPhone, '—');
       const sellerLine = val(q.sellerLine, 'https://line.me/ti/p/jRpW3PMC_e');
       const sellerTitle = val(q.sellerTitle, 'ฝ่ายเสนอราคา LG Subscribe');
       const sellerEmail = val(q.sellerEmail, '—');
-      const remarkValid = 'ขอสงวนสิทธิ์การเสนอราคาไว้จนถึงวันที่ ' + this.quoteDateText(validTo);
+      const remarkValid = 'ขอสงวนสิทธิ์ใบสรุปราคาไว้จนถึงวันที่ ' + this.quoteDateText(validTo);
       const addr2row = (q.address2 && String(q.address2).trim())
         ? ('<tr><td class="lbl"></td><td class="val" colspan="3">' + esc(q.address2) + '</td></tr>')
         : '';
@@ -3600,7 +3595,7 @@ function lgCalculator() {
 <html lang="th">
 <head>
 <meta charset="utf-8"/>
-<title>ใบเสนอราคา — ${esc(docNo)}</title>
+<title>ใบสรุปราคา — ${esc(docNo)}</title>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Sarabun:wght@400;600;700&display=swap');
   @page { size: A4 portrait; margin: 8mm 9mm 8mm 9mm; }
@@ -3683,8 +3678,8 @@ ${'</'+'style>'}
         <p class="addr">เลขประจำตัวผู้เสียภาษี 0105540033379 | ฝ่ายบริการลูกค้า 02-057-5757</p>
       </div>
       <div class="title-block">
-        <p class="th-title">ใบเสนอราคา</p>
-        <p class="en-title">Quotation</p>
+        <p class="th-title">ใบสรุปราคา</p>
+        <p class="en-title">Price Summary</p>
         <div class="meta">
           <div><b>เลขที่</b> ${esc(docNo)}</div>
           <div><b>วันที่</b> ${this.quoteDateText(today)}</div>
@@ -3716,14 +3711,13 @@ ${'</'+'style>'}
       <thead>
         <tr>
           <th style="width:34px">ลำดับ</th>
-          <th style="width:88px">รหัสสินค้า</th>
-          <th style="min-width:150px">รายการสินค้า</th>
-          <th style="width:42px">จำนวน</th>
-          <th style="width:50px">รอบบิล</th>
-          <th style="width:78px">ราคาปกติ</th>
-          <th style="width:64px">ส่วนลด</th>
-          <th style="width:88px">ราคาโปรโมชั่น</th>
-          <th style="width:80px">ยอดสุทธิ</th>
+          <th style="width:90px">รหัสสินค้า</th>
+          <th style="min-width:160px">รายการสินค้า</th>
+          <th style="width:44px">จำนวน</th>
+          <th style="width:52px">รอบบิล</th>
+          <th style="width:82px">ราคาปกติ</th>
+          <th style="width:92px">ราคาโปรโมชั่น</th>
+          <th style="width:84px">ยอดสุทธิ</th>
         </tr>
       </thead>
       <tbody>${itemsHtml}</tbody>
@@ -3742,12 +3736,11 @@ ${'</'+'style>'}
       </div>
       <div class="sum-box">
         <div class="row"><span>ยอดชำระครั้งแรกรวม</span><span>฿${this.fmtMoney(firstPay)}</span></div>
-        ${hasCombo ? '<div class="row"><span>ส่วนลด ' + esc(this.comboLabel()) + ' ' + cr + '%</span><span>ใช้แล้วในยอด</span></div>' : ''}
+        ${hasCombo ? '<div class="row"><span>Combo ' + esc(this.comboLabel()) + ' ' + cr + '%</span><span>ใช้แล้วในยอด</span></div>' : ''}
         ${this.hasTvAdvance() ? '<div class="row"><span>จ่ายล่วงหน้ารวม</span><span>฿' + this.fmtMoney(this.totalTvAdvance()) + '</span></div>' : ''}
         ${this.hasOutright() ? '<div class="row"><span>ซื้อขาดรวม</span><span>฿' + this.fmtMoney(this.totalOutright()) + '</span></div>' : ''}
-        <div class="row"><span>รวมเงินค่าสินค้า<span class="en">Total Excl. VAT</span></span><span>฿${this.fmtMoney(excl)}</span></div>
-        <div class="row"><span>ภาษีมูลค่าเพิ่ม<span class="en">VAT 7.00%</span></span><span>฿${this.fmtMoney(vat)}</span></div>
-        <div class="row grand"><span>ยอดรวมทั้งสิ้น<span class="en">Total Inc. VAT</span></span><span>฿${this.fmtMoney(grand)}</span></div>
+        <div class="row"><span>ส่วนลดทั้งหมด</span><span>฿${this.fmtMoney(totalDiscountAll)}</span></div>
+        <div class="row grand"><span>ยอดรวมทั้งสิ้น</span><span>฿${this.fmtMoney(grand)}</span></div>
       </div>
     </div>
 
@@ -3765,7 +3758,7 @@ ${'</'+'style>'}
       </div>
       <div class="box">
         <h4>สำหรับลูกค้า / Customer Acknowledgement</h4>
-        <div class="info">ข้าพเจ้ายืนยันรายการและราคาตามใบเสนอราคานี้</div>
+        <div class="info">ข้าพเจ้ายืนยันรายการและราคาตามใบสรุปราคานี้</div>
         <div class="sig">ลงชื่อ ........................................<small>(........................................)</small><small>วันที่ ......../......../........</small></div>
       </div>
     </div>
@@ -3780,7 +3773,7 @@ ${'</'+'html>'}`;
     },
     printQuotation() {
       if (this.cart.length === 0) {
-        this.showToast('เลือกสินค้าในตะกร้าก่อนพิมพ์ใบเสนอราคา');
+        this.showToast('เลือกสินค้าในตะกร้าก่อนพิมพ์ใบสรุปราคา');
         return;
       }
       const html = this.quotationHtml();
@@ -3792,7 +3785,7 @@ ${'</'+'html>'}`;
       w.document.open();
       w.document.write(html);
       w.document.close();
-      this.showToast('เปิดใบเสนอราคาแล้ว — กดพิมพ์หรือบันทึกเป็น PDF');
+      this.showToast('เปิดใบสรุปราคาแล้ว — กดพิมพ์หรือบันทึกเป็น PDF');
     },
 
     // ─── Export quotation as Excel (.xlsx) ───
@@ -3844,7 +3837,7 @@ ${'</'+'html>'}`;
       rows.push(['แขวงลุมพินี เขตปทุมวัน กรุงเทพมหานคร 10330']);
       rows.push(['เลขประจำตัวผู้เสียภาษี 0105540033379 | ฝ่ายบริการลูกค้า 02-057-5757']);
       rows.push([]);
-      rows.push(['ใบเสนอราคา / Quotation — LG SUBSCRIBE']);
+      rows.push(['ใบสรุปราคา / Price Summary — LG SUBSCRIBE']);
       rows.push(['เลขที่', docNo, '', 'วันที่', this.quoteDateText(today)]);
       rows.push(['มีผลถึง', this.quoteDateText(validTo), '', 'โปรแกรม', 'LG SUBSCRIBE']);
       rows.push([]);
@@ -3859,8 +3852,9 @@ ${'</'+'html>'}`;
       rows.push([ct + ' · ' + this.promoDateText() + (hasCombo ? ' · ' + this.comboLabel() + ' ' + cr + '%' : '') + ' · ' + this.cart.length + ' รายการ']);
       rows.push([]);
       // Table header
-      rows.push(['ลำดับ', 'รหัสสินค้า', 'รายการสินค้า', 'จำนวน', 'รอบบิล', 'ราคาปกติ', 'ส่วนลด', 'ราคาโปรโมชั่น', 'ยอดสุทธิ']);
+      rows.push(['ลำดับ', 'รหัสสินค้า', 'รายการสินค้า', 'จำนวน', 'รอบบิล', 'ราคาปกติ', 'ราคาโปรโมชั่น', 'ยอดสุทธิ']);
 
+      let totalDiscountAll = 0;
       this.cart.forEach((it, i) => {
         const months = it.totalContractMonths || 60;
         const ranges = this.billRangeTotals(it);
@@ -3880,17 +3874,18 @@ ${'</'+'html>'}`;
 
         const periods = [];
         if (it.outright) {
-          periods.push({ bill: '—', regular: '', disc: '', promo: '', total: advance });
+          periods.push({ bill: '—', regular: '', promo: '', total: advance });
         } else {
-          if (advance > 0) periods.push({ bill: 'ล่วงหน้า', regular: '', disc: '', promo: '', total: advance });
+          if (advance > 0) periods.push({ bill: 'ล่วงหน้า', regular: '', promo: '', total: advance });
           ranges.forEach(r => {
             const promo = Number(r.pricePerMonth) || 0;
-            const disc = Math.max(0, Math.round((listPrice - promo) * 100) / 100);
+            const discPer = Math.max(0, Math.round((listPrice - promo) * 100) / 100);
+            totalDiscountAll += discPer * (r.months || 0);
             const bill = r.start === r.end ? String(r.start) : (r.start + '-' + r.end);
-            periods.push({ bill, regular: listPrice, disc: disc > 0 ? disc : '', promo, total: r.total });
+            periods.push({ bill, regular: listPrice, promo, total: r.total });
           });
         }
-        if (!periods.length) periods.push({ bill: '—', regular: listPrice || '', disc: '', promo: '', total: totalItem });
+        if (!periods.length) periods.push({ bill: '—', regular: listPrice || '', promo: '', total: totalItem });
 
         periods.forEach((pr, pi) => {
           rows.push([
@@ -3900,27 +3895,26 @@ ${'</'+'html>'}`;
             pi === 0 ? 1 : '',
             pr.bill,
             pr.regular === '' ? '—' : money(pr.regular),
-            pr.disc === '' ? '—' : money(pr.disc),
             pr.promo === '' ? '—' : money(pr.promo),
             money(pr.total),
           ]);
         });
-        rows.push(['', '', '', 'Total.', months, '—', '—', '—', money(totalItem)]);
+        rows.push(['', '', '', 'Total.', months, '—', '—', money(totalItem)]);
       });
+      totalDiscountAll = Math.round(totalDiscountAll * 100) / 100;
 
       rows.push([]);
       rows.push(['สรุปยอด']);
       rows.push(['ยอดชำระครั้งแรกรวม', money(firstPay)]);
-      if (hasCombo) rows.push(['ส่วนลด ' + this.comboLabel() + ' ' + cr + '%', 'ใช้แล้วในยอด']);
+      if (hasCombo) rows.push(['Combo ' + this.comboLabel() + ' ' + cr + '%', 'ใช้แล้วในยอด']);
       if (this.hasTvAdvance()) rows.push(['จ่ายล่วงหน้ารวม', money(this.totalTvAdvance())]);
       if (this.hasOutright()) rows.push(['ซื้อขาดรวม', money(this.totalOutright())]);
-      rows.push(['รวมเงินค่าสินค้า (Total Excl. VAT)', money(excl)]);
-      rows.push(['ภาษีมูลค่าเพิ่ม VAT 7%', money(vat)]);
-      rows.push(['ยอดรวมทั้งสิ้น (Total Inc. VAT)', money(grand)]);
+      rows.push(['ส่วนลดทั้งหมด', money(totalDiscountAll)]);
+      rows.push(['ยอดรวมทั้งสิ้น', money(grand)]);
       rows.push(['฿ BAHT', this.bahtText(grand)]);
       rows.push([]);
       rows.push(['หมายเหตุ']);
-      rows.push(['ขอสงวนสิทธิ์การเสนอราคาไว้จนถึงวันที่ ' + this.quoteDateText(validTo)]);
+      rows.push(['ขอสงวนสิทธิ์ใบสรุปราคาไว้จนถึงวันที่ ' + this.quoteDateText(validTo)]);
       rows.push(['*ราคารวมค่าจัดส่งและค่าติดตั้งเบื้องต้นเรียบร้อยแล้ว (เงื่อนไขพื้นที่มาตรฐานตามบริษัท)']);
       rows.push(['ชำระล่วงหน้า 12 เดือน 50% (TV/จอ/ลำโพง) · โปรโมชันใช้ได้เฉพาะแบบ Subscribe']);
       rows.push(['ยอดชำระครั้งแรก: สินค้าทั่วไป = งวดที่ 1 · TV/จอ/ลำโพง = ล่วงหน้าอย่างเดียว · ซื้อขาด = ราคาซื้อขาด']);
@@ -3946,7 +3940,6 @@ ${'</'+'html>'}`;
         const XLSX = await this.loadSheetJs();
         const { rows, docNo } = this.buildQuotationExcelAoA();
         const ws = XLSX.utils.aoa_to_sheet(rows);
-        // column widths
         ws['!cols'] = [
           { wch: 8 },
           { wch: 16 },
@@ -3954,19 +3947,16 @@ ${'</'+'html>'}`;
           { wch: 8 },
           { wch: 10 },
           { wch: 12 },
-          { wch: 10 },
           { wch: 14 },
           { wch: 12 },
         ];
-        // freeze header-ish area not critical
         const wb = XLSX.utils.book_new();
-        XLSX.utils.book_append_sheet(wb, ws, 'ใบเสนอราคา');
-        const fname = 'ใบเสนอราคา_' + docNo + '.xlsx';
+        XLSX.utils.book_append_sheet(wb, ws, 'ใบสรุปราคา');
+        const fname = 'ใบสรุปราคา_' + docNo + '.xlsx';
         XLSX.writeFile(wb, fname);
         this.showToast('บันทึกไฟล์ Excel แล้ว: ' + fname);
       } catch (e) {
         console.error(e);
-        // fallback: SpreadsheetML .xls without CDN
         try {
           this.exportQuotationExcelFallback();
         } catch (e2) {
@@ -3983,7 +3973,7 @@ ${'</'+'html>'}`;
       xml += '<?mso-application progid="Excel.Sheet"?>\n';
       xml += '<Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet" ';
       xml += 'xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet">\n';
-      xml += '<Worksheet ss:Name="ใบเสนอราคา"><Table>\n';
+      xml += '<Worksheet ss:Name="ใบสรุปราคา"><Table>\n';
       rows.forEach(row => {
         xml += '<Row>';
         row.forEach(cell => {
@@ -4000,11 +3990,11 @@ ${'</'+'html>'}`;
       const blob = new Blob([xml], { type: 'application/vnd.ms-excel' });
       const a = document.createElement('a');
       a.href = URL.createObjectURL(blob);
-      a.download = 'ใบเสนอราคา_' + docNo + '.xls';
+      a.download = 'ใบสรุปราคา_' + docNo + '.xls';
       document.body.appendChild(a);
       a.click();
       setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 1000);
-      this.showToast('บันทึกไฟล์ Excel แล้ว: ใบเสนอราคา_' + docNo + '.xls');
+      this.showToast('บันทึกไฟล์ Excel แล้ว: ใบสรุปราคา_' + docNo + '.xls');
     }
  }
 }
