@@ -1447,7 +1447,7 @@ function lgCalculator() {
  compareB: { term: '5Y', serviceType: 'Visit', modelIndices: [] },
  cart: [],
  toast: { show: false, msg: '' },
- buildVersion: '2026.07.15-v85',
+ buildVersion: '2026.07.15-v86',
  quoteCustomer: {
    name: '',
    address: '',
@@ -3514,18 +3514,16 @@ function lgCalculator() {
         const ranges = this.billRangeTotals(it);
         const advance = it.advancePayment || 0;
         const totalItem = ranges.reduce((s, r) => s + r.total, 0) + advance;
-        // รูปแบบเดียวกับสรุปในเครื่องคิดราคา: "Wash Tower · WT2116SHEG.ABGPETH"
-        const headTitle = this.productTypeLabel(it) + ' · ' + it.code;
-        const service = this.formatServiceDetail(it);
+        // ช่องรายการสินค้า: ชื่ออย่างเดียว (รหัสอยู่คอลัมน์รหัสสินค้าแล้ว)
+        const type = this.productTypeLabel(it);
+        const pname = (it.name || '').trim();
+        const headTitle = (type && pname) ? (type + ' · ' + pname) : (pname || type || it.code);
 
-        // แถวหลัก — ชื่อรุ่น + สัญญา
+        // แถวหลัก — ชื่อรายการสินค้าอย่างเดียว
         itemsHtml += '<tr class="main">';
         itemsHtml += '<td class="c">' + (i + 1) + '</td>';
         itemsHtml += '<td class="code">' + esc(it.code) + '</td>';
-        itemsHtml += '<td><span class="name">' + esc(headTitle) + '</span>';
-        itemsHtml += '<div class="sub">· สัญญา ' + esc(it.term || '') + ' (' + years + ' ปี · ' + months + ' งวด)';
-        if (service) itemsHtml += ' · ' + esc(service);
-        itemsHtml += '</div></td>';
+        itemsHtml += '<td><span class="name">' + esc(headTitle) + '</span></td>';
         itemsHtml += '<td class="c">1</td>';
         itemsHtml += '<td class="c">' + (it.outright ? '—' : String(months)) + '</td>';
         itemsHtml += '<td class="num">—</td>';
