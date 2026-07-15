@@ -1448,7 +1448,7 @@ function lgCalculator() {
  compareB: { term: '5Y', serviceType: 'Visit', modelIndices: [] },
  cart: [],
  toast: { show: false, msg: '' },
- buildVersion: '2026.07.15-v91',
+ buildVersion: '2026.07.15-v92',
  quoteCustomer: {
    name: '',
    address: '',
@@ -3515,7 +3515,7 @@ function lgCalculator() {
         const ranges = this.billRangeTotals(it);
         const advance = it.advancePayment || 0;
         const totalItem = ranges.reduce((s, r) => s + r.total, 0) + advance;
-        // ช่องรายการสินค้า: ชื่อ + Care Service (บรรทัดเดียวในเซลล์ ไม่แยกแถวตาราง)
+        // แถว 1 = รุ่น + ราคา | แถว 2 = Care Service (ชิดแถว ไม่ถ่าง)
         const type = this.productTypeLabel(it);
         const pname = (it.name || '').trim();
         const headTitle = (type && pname) ? (type + ' · ' + pname) : (pname || type || it.code);
@@ -3526,16 +3526,23 @@ function lgCalculator() {
           careLine += ' — ' + care.items.map(svc => svc.label + ' (' + svc.freq + ')').join(' · ');
         }
 
+        // แถว 1 — รุ่นราคาสินค้า
         itemsHtml += '<tr class="main">';
         itemsHtml += '<td class="c">' + (i + 1) + '</td>';
         itemsHtml += '<td class="code">' + esc(it.code) + '</td>';
-        itemsHtml += '<td><span class="name">' + esc(headTitle) + '</span>';
-        itemsHtml += '<div class="care-line">' + esc(careLine) + '</div></td>';
+        itemsHtml += '<td class="prod"><span class="name">' + esc(headTitle) + '</span></td>';
         itemsHtml += '<td class="c">1</td>';
         itemsHtml += '<td class="c">' + (it.outright ? '—' : String(months)) + '</td>';
         itemsHtml += '<td class="num">—</td>';
         itemsHtml += '<td class="num">—</td>';
         itemsHtml += '<td class="num"><span class="name">฿' + this.fmtMoney(totalItem) + '</span></td>';
+        itemsHtml += '</tr>';
+
+        // แถว 2 — Care Service (ช่องรายการสินค้า, แถวชิด)
+        itemsHtml += '<tr class="care">';
+        itemsHtml += '<td class="gap"></td><td class="gap"></td>';
+        itemsHtml += '<td class="care-txt">' + esc(careLine) + '</td>';
+        itemsHtml += '<td class="gap"></td><td class="gap"></td><td class="gap"></td><td class="gap"></td><td class="gap"></td>';
         itemsHtml += '</tr>';
 
         if (it.outright) {
@@ -3619,15 +3626,18 @@ function lgCalculator() {
   .meta-line { font-size: 9.5px; color: #444; margin: 2px 0 4px; }
   table.items { width: 100%; border-collapse: collapse; }
   table.items th { background: #a50034; color: #fff; font-size: 10px; font-weight: 700; padding: 4px 3px; border: 1px solid #8a002c; text-align: center; }
-  table.items td { border: 1px solid #d0d0d0; padding: 3px 4px; vertical-align: top; font-size: 10px; color: #1a1a1a; }
-  table.items tr.main td { background: #fff; }
-  table.items tr.sub td { background: #fafafa; font-size: 9.5px; color: #333; border-top-style: solid; }
+  table.items td { border: 1px solid #d0d0d0; padding: 2px 4px; vertical-align: middle; font-size: 10px; color: #1a1a1a; line-height: 1.25; }
+  /* แถว 1 รุ่น — ชิดกับแถว 2 Care Service */
+  table.items tr.main td { background: #fff; border-bottom-color: #eee; padding-bottom: 1px; }
+  table.items tr.main td.prod { vertical-align: middle; }
+  table.items tr.care td { background: #fff; border-top: none; padding-top: 0; padding-bottom: 3px; font-size: 9px; color: #333; }
+  table.items tr.care td.gap { border-top: none; }
+  table.items tr.care td.care-txt { border-top: none; color: #333; font-weight: 400; line-height: 1.3; }
+  table.items tr.sub td { background: #fafafa; font-size: 9.5px; color: #333; }
   table.items tr.sub.sum td { background: #f3f3f3; }
   table.items .c { text-align: center; }
   table.items .num { text-align: right; white-space: nowrap; font-variant-numeric: tabular-nums; }
   table.items .code { font-family: Consolas,"Courier New",monospace; font-size: 9.5px; font-weight: 700; color: #1a1a1a; white-space: nowrap; }
-  table.items .sub { font-size: 9px; color: #444; margin-top: 1px; font-weight: 400; line-height: 1.3; }
-  table.items .care-line { font-size: 9px; color: #333; margin-top: 2px; font-weight: 400; line-height: 1.35; }
   .bottom { display: grid; grid-template-columns: 1.2fr .9fr; gap: 8px; margin-top: 6px; align-items: start; }
   .remark-box { border: 1px solid #d0d0d0; padding: 6px 8px; }
   .remark-box h3 { margin: 0 0 3px; font-size: 10.5px; font-weight: 700; color: #1a1a1a; }
@@ -3867,18 +3877,20 @@ ${'</'+'html>'}`;
           careLine += ' — ' + care.items.map(svc => svc.label + ' (' + svc.freq + ')').join(' · ');
         }
 
-        // แถวสินค้าหลัก
+        // แถว 1 — รุ่นราคา
         rows.push([
           i + 1,
           it.code || '',
           headTitle,
-          careLine,
+          '',
           1,
           it.outright ? '—' : months,
           '',
           '',
           money(totalItem),
         ]);
+        // แถว 2 — Care Service
+        rows.push(['', '', careLine.startsWith('Care Service') ? careLine : ('Care Service: ' + careLine), '', '', '', '', '', '']);
 
         if (it.outright) {
           rows.push(['', '', '', '', '', '', '', 'ซื้อขาด', money(advance)]);
