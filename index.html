@@ -1448,7 +1448,7 @@ function lgCalculator() {
  compareB: { term: '5Y', serviceType: 'Visit', modelIndices: [] },
  cart: [],
  toast: { show: false, msg: '' },
- buildVersion: '2026.07.15-v94',
+ buildVersion: '2026.07.15-v95',
  quoteCustomer: {
    name: '',
    address: '',
@@ -3508,13 +3508,14 @@ function lgCalculator() {
         .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
       const val = (v, fb) => esc((v && String(v).trim()) ? String(v).trim() : (fb || '—'));
 
-      // ตาราง: รายการ+Care (rowspan) | รอบบิล | ราคาโปรโมชั่น | ยอดสุทธิ
+      // ตาราง: รายการ+Care | รอบบิล | ราคาปกติ | ส่วนลด | ราคาโปรโมชั่น | ยอดสุทธิ
       let itemsHtml = '';
       this.cart.forEach((it, i) => {
         const months = it.totalContractMonths || 60;
         const ranges = this.billRangeTotals(it);
         const advance = it.advancePayment || 0;
         const totalItem = ranges.reduce((s, r) => s + r.total, 0) + advance;
+        const listPrice = Number(it.regular || it.postPromoPrice || 0);
         const type = this.productTypeLabel(it);
         const pname = (it.name || '').trim();
         const headTitle = (it.code || '') + ' ' + ((type && pname) ? (type + ' · ' + pname) : (pname || type || ''));
@@ -3523,22 +3524,26 @@ function lgCalculator() {
 
         const periods = [];
         if (it.outright) {
-          periods.push({ bill: '—', promo: '', total: advance });
+          periods.push({ bill: '—', regular: '', disc: '', promo: '', total: advance });
         } else {
           if (advance > 0) {
-            periods.push({ bill: 'ล่วงหน้า', promo: '', total: advance });
+            periods.push({ bill: 'ล่วงหน้า', regular: '', disc: '', promo: '', total: advance });
           }
           ranges.forEach(r => {
+            const promo = Number(r.pricePerMonth) || 0;
+            const disc = Math.max(0, Math.round((listPrice - promo) * 100) / 100);
             const bill = r.start === r.end ? String(r.start) : (r.start + '-' + r.end);
             periods.push({
               bill,
-              promo: Number(r.pricePerMonth) || 0,
+              regular: listPrice,
+              disc: disc > 0 ? disc : '',
+              promo,
               total: r.total,
             });
           });
         }
         if (!periods.length) {
-          periods.push({ bill: '—', promo: '', total: totalItem });
+          periods.push({ bill: '—', regular: listPrice || '', disc: '', promo: '', total: totalItem });
         }
         const span = periods.length + 1;
 
@@ -3557,6 +3562,8 @@ function lgCalculator() {
         itemsHtml += '<td class="desc" rowspan="' + span + '"><div class="name">' + esc(headTitle.trim()) + '</div>' + careHtml + '</td>';
         itemsHtml += '<td class="c" rowspan="' + span + '">1</td>';
         itemsHtml += '<td class="c">' + esc(p0.bill) + '</td>';
+        itemsHtml += '<td class="num">' + (p0.regular === '' ? '—' : this.fmtBillPrice(p0.regular)) + '</td>';
+        itemsHtml += '<td class="num">' + (p0.disc === '' ? '—' : this.fmtBillPrice(p0.disc)) + '</td>';
         itemsHtml += '<td class="num">' + (p0.promo === '' ? '—' : this.fmtBillPrice(p0.promo)) + '</td>';
         itemsHtml += '<td class="num">' + this.fmtMoney(p0.total) + '</td>';
         itemsHtml += '</tr>';
@@ -3565,6 +3572,8 @@ function lgCalculator() {
           const pr = periods[p];
           itemsHtml += '<tr>';
           itemsHtml += '<td class="c">' + esc(pr.bill) + '</td>';
+          itemsHtml += '<td class="num">' + (pr.regular === '' ? '—' : this.fmtBillPrice(pr.regular)) + '</td>';
+          itemsHtml += '<td class="num">' + (pr.disc === '' ? '—' : this.fmtBillPrice(pr.disc)) + '</td>';
           itemsHtml += '<td class="num">' + (pr.promo === '' ? '—' : this.fmtBillPrice(pr.promo)) + '</td>';
           itemsHtml += '<td class="num">' + this.fmtMoney(pr.total) + '</td>';
           itemsHtml += '</tr>';
@@ -3572,7 +3581,7 @@ function lgCalculator() {
 
         itemsHtml += '<tr class="tot">';
         itemsHtml += '<td class="c"><strong>Total.</strong></td>';
-        itemsHtml += '<td class="num">—</td>';
+        itemsHtml += '<td class="num">—</td><td class="num">—</td><td class="num">—</td>';
         itemsHtml += '<td class="num"><strong>' + this.fmtMoney(totalItem) + '</strong></td>';
         itemsHtml += '</tr>';
       });
@@ -3706,13 +3715,15 @@ ${'</'+'style>'}
     <table class="items">
       <thead>
         <tr>
-          <th style="width:36px">ลำดับ</th>
-          <th style="width:92px">รหัสสินค้า</th>
-          <th style="min-width:180px">รายการสินค้า</th>
-          <th style="width:44px">จำนวน</th>
-          <th style="width:56px">รอบบิล</th>
-          <th style="width:96px">ราคาโปรโมชั่น</th>
-          <th style="width:88px">ยอดสุทธิ</th>
+          <th style="width:34px">ลำดับ</th>
+          <th style="width:88px">รหัสสินค้า</th>
+          <th style="min-width:150px">รายการสินค้า</th>
+          <th style="width:42px">จำนวน</th>
+          <th style="width:50px">รอบบิล</th>
+          <th style="width:78px">ราคาปกติ</th>
+          <th style="width:64px">ส่วนลด</th>
+          <th style="width:88px">ราคาโปรโมชั่น</th>
+          <th style="width:80px">ยอดสุทธิ</th>
         </tr>
       </thead>
       <tbody>${itemsHtml}</tbody>
@@ -3848,13 +3859,14 @@ ${'</'+'html>'}`;
       rows.push([ct + ' · ' + this.promoDateText() + (hasCombo ? ' · ' + this.comboLabel() + ' ' + cr + '%' : '') + ' · ' + this.cart.length + ' รายการ']);
       rows.push([]);
       // Table header
-      rows.push(['ลำดับ', 'รหัสสินค้า', 'รายการสินค้า', 'จำนวน', 'รอบบิล', 'ราคาโปรโมชั่น', 'ยอดสุทธิ']);
+      rows.push(['ลำดับ', 'รหัสสินค้า', 'รายการสินค้า', 'จำนวน', 'รอบบิล', 'ราคาปกติ', 'ส่วนลด', 'ราคาโปรโมชั่น', 'ยอดสุทธิ']);
 
       this.cart.forEach((it, i) => {
         const months = it.totalContractMonths || 60;
         const ranges = this.billRangeTotals(it);
         const advance = it.advancePayment || 0;
         const totalItem = ranges.reduce((s, r) => s + r.total, 0) + advance;
+        const listPrice = Number(it.regular || it.postPromoPrice || 0);
         const type = this.productTypeLabel(it);
         const pname = (it.name || '').trim();
         const headTitle = ((it.code || '') + ' ' + ((type && pname) ? (type + ' · ' + pname) : (pname || type || ''))).trim();
@@ -3868,15 +3880,17 @@ ${'</'+'html>'}`;
 
         const periods = [];
         if (it.outright) {
-          periods.push({ bill: '—', promo: '', total: advance });
+          periods.push({ bill: '—', regular: '', disc: '', promo: '', total: advance });
         } else {
-          if (advance > 0) periods.push({ bill: 'ล่วงหน้า', promo: '', total: advance });
+          if (advance > 0) periods.push({ bill: 'ล่วงหน้า', regular: '', disc: '', promo: '', total: advance });
           ranges.forEach(r => {
+            const promo = Number(r.pricePerMonth) || 0;
+            const disc = Math.max(0, Math.round((listPrice - promo) * 100) / 100);
             const bill = r.start === r.end ? String(r.start) : (r.start + '-' + r.end);
-            periods.push({ bill, promo: Number(r.pricePerMonth) || 0, total: r.total });
+            periods.push({ bill, regular: listPrice, disc: disc > 0 ? disc : '', promo, total: r.total });
           });
         }
-        if (!periods.length) periods.push({ bill: '—', promo: '', total: totalItem });
+        if (!periods.length) periods.push({ bill: '—', regular: listPrice || '', disc: '', promo: '', total: totalItem });
 
         periods.forEach((pr, pi) => {
           rows.push([
@@ -3885,11 +3899,13 @@ ${'</'+'html>'}`;
             pi === 0 ? descCell : '',
             pi === 0 ? 1 : '',
             pr.bill,
+            pr.regular === '' ? '—' : money(pr.regular),
+            pr.disc === '' ? '—' : money(pr.disc),
             pr.promo === '' ? '—' : money(pr.promo),
             money(pr.total),
           ]);
         });
-        rows.push(['', '', '', 'Total.', months, '—', money(totalItem)]);
+        rows.push(['', '', '', 'Total.', months, '—', '—', '—', money(totalItem)]);
       });
 
       rows.push([]);
@@ -3934,8 +3950,10 @@ ${'</'+'html>'}`;
         ws['!cols'] = [
           { wch: 8 },
           { wch: 16 },
-          { wch: 42 },
+          { wch: 40 },
           { wch: 8 },
+          { wch: 10 },
+          { wch: 12 },
           { wch: 10 },
           { wch: 14 },
           { wch: 12 },
