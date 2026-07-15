@@ -807,7 +807,7 @@
  <div class="text-xs" style="color:var(--ink-2);margin-top:2px" x-show="isRecommendedPlan(picker.category, plan)" x-text="planRecommendNote(picker.category, plan)"></div>
  <div class="text-xs text-gray-600" x-show="plan.promo" x-text="plan.promo"></div>
  <div class="text-xs" style="color:var(--ink);margin-top:4px" x-show="plan.outright && plan.advancePayment" x-text="'จ่ายครั้งเดียว ฿' + plan.advancePayment.toLocaleString() + ' (รวมเครื่อง + บริการ 2 ปี)'"></div>
- <div class="text-xs" style="color:var(--ink);margin-top:4px" x-show="plan.advancePayment && !plan.outright" x-text="'จ่ายก้อนแรก ฿' + plan.advancePayment.toLocaleString() + ' (ล่วงหน้า 50% × 12 บิล)'"></div>
+ <div class="text-xs" style="color:var(--ink);margin-top:4px" x-show="plan.advancePayment && !plan.outright" x-text="'จ่ายก้อนแรก ฿' + plan.advancePayment.toLocaleString() + ' (ชำระล่วงหน้า 12 เดือน 50%)'"></div>
  </div>
  <div class="text-right">
  <div class="text-xs text-gray-400 line-through" x-show="plan.outright && plan.regular > plan.advancePayment" x-text="'฿' + plan.regular.toLocaleString()"></div>
@@ -1202,7 +1202,7 @@
  <div class="summary-advance-box mb-3" x-show="hasTvAdvance()">
  <div class="text-xs text-gray-600 uppercase tracking-wider mb-1">เงินจ่ายก้อนแรก · Advance Payment</div>
  <div class="price-highlight text-2xl" x-text="'฿' + totalTvAdvance().toLocaleString()"></div>
- <div class="text-xs text-gray-600 mt-1">จ่ายล่วงหน้า 50% ของ 12 บิลแรก ตอนเริ่มสัญญา (TV/จอ/ลำโพง)</div>
+ <div class="text-xs text-gray-600 mt-1">ชำระล่วงหน้า 12 เดือน 50% ตอนเริ่มสัญญา (TV/จอ/ลำโพง)</div>
  <div class="mt-2" style="border-top:1px solid rgba(0,0,0,.08);padding-top:6px">
  <template x-for="(it, i) in tvAdvanceItems()" :key="i">
  <div class="flex justify-between text-xs" style="padding:2px 0">
@@ -1306,7 +1306,7 @@
  <p class="mb-1"><strong>หมายเหตุ:</strong></p>
  <ul style="list-style:disc;padding-left:18px;line-height:1.7">
  <li>ราคานี้คำนวณจากเอกสาร LGETH 2026.06.01</li>
- <li>ชำระล่วงหน้า 1 เดือน (TV/Monitor/Speaker ชำระล่วงหน้า 6 เดือน)</li>
+ <li>ชำระล่วงหน้า 12 เดือน 50% (TV/จอ/ลำโพง)</li>
  <li>โปรโมชั่นใช้ได้เฉพาะแบบ Subscribe</li>
  <li>ราคาอาจเปลี่ยนแปลงตามประกาศบริษัทฯ</li>
  </ul>
@@ -1447,7 +1447,7 @@ function lgCalculator() {
  compareB: { term: '5Y', serviceType: 'Visit', modelIndices: [] },
  cart: [],
  toast: { show: false, msg: '' },
- buildVersion: '2026.07.15-v84',
+ buildVersion: '2026.07.15-v85',
  quoteCustomer: {
    name: '',
    address: '',
@@ -3724,7 +3724,7 @@ ${'</'+'style>'}
         <ul>
           <li>${esc(remarkValid)}</li>
           <li>*ราคารวมค่าจัดส่งและค่าติดตั้งเบื้องต้นเรียบร้อยแล้ว (เงื่อนไขพื้นที่มาตรฐานตามบริษัท)</li>
-          <li>ชำระล่วงหน้า 1 เดือน (TV/Monitor/Speaker ชำระล่วงหน้า 6 เดือน) · โปรโมชันใช้ได้เฉพาะแบบ Subscribe</li>
+          <li>ชำระล่วงหน้า 12 เดือน 50% (TV/จอ/ลำโพง) · โปรโมชันใช้ได้เฉพาะแบบ Subscribe</li>
           <li>ยอดชำระครั้งแรก: สินค้าทั่วไป = งวดที่ 1 · TV/จอ/ลำโพง = ล่วงหน้าอย่างเดียว · ซื้อขาด = ราคาซื้อขาด</li>
         </ul>
         <div class="baht">฿ BAHT : ${esc(this.bahtText(grand))}</div>
