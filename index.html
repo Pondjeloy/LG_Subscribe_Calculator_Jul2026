@@ -1448,7 +1448,7 @@ function lgCalculator() {
  compareB: { term: '5Y', serviceType: 'Visit', modelIndices: [] },
  cart: [],
  toast: { show: false, msg: '' },
- buildVersion: '2026.07.15-v96',
+ buildVersion: '2026.07.15-v97',
  quoteCustomer: {
    name: '',
    address: '',
@@ -3736,7 +3736,7 @@ ${'</'+'style>'}
       </div>
       <div class="sum-box">
         <div class="row"><span>ยอดชำระครั้งแรกรวม</span><span>฿${this.fmtMoney(firstPay)}</span></div>
-        ${hasCombo ? '<div class="row"><span>Combo ' + esc(this.comboLabel()) + ' ' + cr + '%</span><span>ใช้แล้วในยอด</span></div>' : ''}
+        ${hasCombo ? '<div class="row"><span>ส่วนลด Combo ' + esc(this.comboLabel()) + ' ' + cr + '%</span><span>−฿' + this.fmtMoney(this.grandTotalSaving()) + '</span></div>' : ''}
         ${this.hasTvAdvance() ? '<div class="row"><span>จ่ายล่วงหน้ารวม</span><span>฿' + this.fmtMoney(this.totalTvAdvance()) + '</span></div>' : ''}
         ${this.hasOutright() ? '<div class="row"><span>ซื้อขาดรวม</span><span>฿' + this.fmtMoney(this.totalOutright()) + '</span></div>' : ''}
         <div class="row"><span>ส่วนลดทั้งหมด</span><span>฿${this.fmtMoney(totalDiscountAll)}</span></div>
@@ -3906,7 +3906,7 @@ ${'</'+'html>'}`;
       rows.push([]);
       rows.push(['สรุปยอด']);
       rows.push(['ยอดชำระครั้งแรกรวม', money(firstPay)]);
-      if (hasCombo) rows.push(['Combo ' + this.comboLabel() + ' ' + cr + '%', 'ใช้แล้วในยอด']);
+      if (hasCombo) rows.push(['ส่วนลด Combo ' + this.comboLabel() + ' ' + cr + '%', money(-this.grandTotalSaving())]);
       if (this.hasTvAdvance()) rows.push(['จ่ายล่วงหน้ารวม', money(this.totalTvAdvance())]);
       if (this.hasOutright()) rows.push(['ซื้อขาดรวม', money(this.totalOutright())]);
       rows.push(['ส่วนลดทั้งหมด', money(totalDiscountAll)]);
