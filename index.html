@@ -1300,7 +1300,6 @@
               </div>
               <div class="space-y-2">
                 <button class="btn-primary" style="width:100%" @click="printQuotation()">พิมพ์ใบสรุปราคา</button>
-                <button class="btn-ghost" style="width:100%" @click="exportQuotationExcel()">เซฟเป็นไฟล์ Excel</button>
                 <button class="btn-ghost" style="width:100%" @click="exportQuotationImage()">เซฟเป็นรูปภาพ</button>
                 <button class="btn-ghost" style="width:100%" @click="copySummary()">คัดลอกข้อความ</button>
               </div>
@@ -1456,7 +1455,7 @@ function lgCalculator() {
  compareB: { term: '5Y', serviceType: 'Visit', modelIndices: [] },
  cart: [],
  toast: { show: false, msg: '' },
- buildVersion: '2026.07.16-v102',
+ buildVersion: '2026.07.16-v103',
  quoteCustomer: {
    name: '',
    address: '',
@@ -3841,28 +3840,6 @@ ${'</'+'html>'}`;
       this.showToast('เปิดใบสรุปราคาแล้ว — กดพิมพ์หรือบันทึกเป็น PDF');
     },
 
-    // ─── Export quotation as Excel (.xlsx) ───
-    async loadSheetJs() {
-      if (window.XLSX && window.XLSX.utils) return window.XLSX;
-      await new Promise((resolve, reject) => {
-        const existing = document.querySelector('script[data-lg-xlsx]');
-        if (existing) {
-          existing.addEventListener('load', () => resolve());
-          existing.addEventListener('error', reject);
-          if (window.XLSX) resolve();
-          return;
-        }
-        const s = document.createElement('script');
-        s.src = 'https://cdn.sheetjs.com/xlsx-0.20.3/package/dist/xlsx.full.min.js';
-        s.async = true;
-        s.dataset.lgXlsx = '1';
-        s.onload = () => resolve();
-        s.onerror = () => reject(new Error('load xlsx failed'));
-        document.head.appendChild(s);
-      });
-      if (!window.XLSX) throw new Error('XLSX not available');
-      return window.XLSX;
-    },
     async loadHtml2Canvas() {
       if (window.html2canvas) return window.html2canvas;
       await new Promise((resolve, reject) => {
@@ -3945,198 +3922,6 @@ ${'</'+'html>'}`;
       } finally {
         if (host && host.parentNode) host.parentNode.removeChild(host);
       }
-    },
-    buildQuotationExcelAoA() {
-      const q = this.quoteCustomer;
-      const today = new Date();
-      const validDays = Math.max(1, Number(q.validDays) || 15);
-      const validTo = new Date(today.getTime() + validDays * 86400000);
-      const docNo = this.quoteDocNo();
-      const ct = this.customerType === 'new' ? 'ลูกค้าใหม่' : 'ลูกค้าเก่า';
-      const hasCombo = this.comboRate() > 0;
-      const cr = Math.round(this.comboRate() * 100);
-      const grand = this.grandTotal();
-      const firstPay = this.firstPaymentTotal();
-      const excl = Math.round(grand * 100 / 107 * 100) / 100;
-      const vat = Math.round((grand - excl) * 100) / 100;
-      const hasVal = (v) => v != null && String(v).trim() !== '';
-      const txt = (v) => (v == null ? '' : String(v)).trim();
-      const money = (n) => Math.round((Number(n) || 0) * 100) / 100;
-
-      const rows = [];
-      // Header
-      rows.push(['บริษัท แอลจี อีเลคทรอนิคส์ (ประเทศไทย) จำกัด (สำนักงานใหญ่)']);
-      rows.push(['LG Electronics (Thailand) Co., Ltd. (Head Office)']);
-      rows.push(['เลขที่ 195 อาคารวัน แบงค็อก ทาวเวอร์ 4 ห้องเลขที่ 2301-2314 ชั้น 23 ถนนวิทยุ']);
-      rows.push(['แขวงลุมพินี เขตปทุมวัน กรุงเทพมหานคร 10330']);
-      rows.push(['เลขประจำตัวผู้เสียภาษี 0105540033379 | ฝ่ายบริการลูกค้า 02-057-5757']);
-      rows.push([]);
-      rows.push(['ใบสรุปราคา / Price Summary — LG SUBSCRIBE']);
-      rows.push(['เลขที่', docNo, '', 'วันที่', this.quoteDateText(today)]);
-      rows.push(['มีผลถึง', this.quoteDateText(validTo), '', 'โปรแกรม', 'LG SUBSCRIBE']);
-      rows.push([]);
-      // Customer — เฉพาะช่องที่มีค่า
-      const custAny = hasVal(q.name) || hasVal(q.address) || hasVal(q.address2) || hasVal(q.taxId) || hasVal(q.branch) || hasVal(q.contact) || hasVal(q.phone) || hasVal(q.email);
-      if (custAny) rows.push(['ข้อมูลลูกค้า']);
-      if (hasVal(q.name)) rows.push(['นามผู้รับ', txt(q.name)]);
-      if (hasVal(q.address)) rows.push(['ที่อยู่', txt(q.address)]);
-      if (hasVal(q.address2)) rows.push(['', txt(q.address2)]);
-      if (hasVal(q.taxId)) rows.push(['เลขผู้เสียภาษี', txt(q.taxId)]);
-      if (hasVal(q.branch)) rows.push(['สาขาที่', txt(q.branch)]);
-      if (hasVal(q.contact)) rows.push(['ผู้ติดต่อ', txt(q.contact)]);
-      if (hasVal(q.phone)) rows.push(['โทรศัพท์', txt(q.phone)]);
-      if (hasVal(q.email)) rows.push(['E-Mail', txt(q.email)]);
-      rows.push([ct + ' · ' + this.promoDateText() + (hasCombo ? ' · ' + this.comboLabel() + ' ' + cr + '%' : '') + ' · ' + this.cart.length + ' รายการ']);
-      rows.push([]);
-      // Table header
-      rows.push(['ลำดับ', 'รหัสสินค้า', 'รายการสินค้า', 'จำนวน', 'รอบบิล', 'ราคาปกติ', 'ราคาโปรโมชั่น', 'ยอดสุทธิ']);
-
-      let totalDiscountAll = 0;
-      this.quoteGroupedItems().forEach(({ item: it, qty }, i) => {
-        const months = it.totalContractMonths || 60;
-        const ranges = this.billRangeTotals(it);
-        const advance = it.advancePayment || 0;
-        const totalOne = ranges.reduce((s, r) => s + r.total, 0) + advance;
-        const totalItem = totalOne * qty;
-        const listPrice = Number(it.regular || it.postPromoPrice || 0);
-        const type = this.productTypeLabel(it);
-        const pname = (it.name || '').trim();
-        const headTitle = ((it.code || '') + ' ' + ((type && pname) ? (type + ' · ' + pname) : (pname || type || ''))).trim();
-        const care = this.careService(it);
-        const careDetail = this.formatServiceDetail(it);
-        const careLines = ['Care Service:', careDetail];
-        if (care.items && care.items.length) {
-          care.items.forEach(svc => careLines.push('- ' + svc.label + ' (' + svc.freq + ')'));
-        }
-        const descCell = headTitle + '\n' + careLines.join('\n');
-
-        const periods = [];
-        if (it.outright) {
-          periods.push({ bill: '—', regular: '', promo: '', total: advance * qty });
-        } else {
-          if (advance > 0) periods.push({ bill: 'ล่วงหน้า', regular: '', promo: '', total: advance * qty });
-          ranges.forEach(r => {
-            const promo = Number(r.pricePerMonth) || 0;
-            const discPer = Math.max(0, Math.round((listPrice - promo) * 100) / 100);
-            totalDiscountAll += discPer * (r.months || 0) * qty;
-            const bill = r.start === r.end ? String(r.start) : (r.start + '-' + r.end);
-            periods.push({ bill, regular: listPrice, promo, total: r.total * qty });
-          });
-        }
-        if (!periods.length) periods.push({ bill: '—', regular: listPrice || '', promo: '', total: totalItem });
-
-        periods.forEach((pr, pi) => {
-          rows.push([
-            pi === 0 ? (i + 1) : '',
-            pi === 0 ? (it.code || '') : '',
-            pi === 0 ? descCell : '',
-            pi === 0 ? qty : '',
-            pr.bill,
-            pr.regular === '' ? '—' : money(pr.regular),
-            pr.promo === '' ? '—' : money(pr.promo),
-            money(pr.total),
-          ]);
-        });
-        rows.push(['', '', '', 'Total.', months, '—', '—', money(totalItem)]);
-      });
-      totalDiscountAll = Math.round(totalDiscountAll * 100) / 100;
-
-      rows.push([]);
-      rows.push(['สรุปยอด']);
-      rows.push(['ยอดชำระครั้งแรกรวม', money(firstPay)]);
-      if (hasCombo) rows.push(['ส่วนลด Combo ' + this.comboLabel() + ' ' + cr + '%', money(-this.grandTotalSaving())]);
-      if (this.hasTvAdvance()) rows.push(['จ่ายล่วงหน้ารวม', money(this.totalTvAdvance())]);
-      if (this.hasOutright()) rows.push(['ซื้อขาดรวม', money(this.totalOutright())]);
-      rows.push(['ส่วนลดทั้งหมด', money(totalDiscountAll)]);
-      rows.push(['ยอดรวมทั้งสิ้น', money(grand)]);
-      rows.push(['฿ BAHT', this.bahtText(grand)]);
-      rows.push([]);
-      rows.push(['หมายเหตุ']);
-      rows.push(['ขอสงวนสิทธิ์ใบสรุปราคาไว้จนถึงวันที่ ' + this.quoteDateText(validTo)]);
-      rows.push(['*ราคารวมค่าจัดส่งและค่าติดตั้งเบื้องต้นเรียบร้อยแล้ว (เงื่อนไขพื้นที่มาตรฐานตามบริษัท)']);
-      rows.push(['ชำระล่วงหน้า 12 เดือน 50% (TV/จอ/ลำโพง) · โปรโมชันใช้ได้เฉพาะแบบ Subscribe']);
-      rows.push(['ยอดชำระครั้งแรก: สินค้าทั่วไป = งวดที่ 1 · TV/จอ/ลำโพง = ล่วงหน้าอย่างเดียว · ซื้อขาด = ราคาซื้อขาด']);
-      rows.push(['*เงื่อนไขเป็นไปตามที่บริษัทฯ กำหนด ราคาอาจมีการเปลี่ยนแปลงโดยไม่ต้องแจ้งให้ทราบล่วงหน้า']);
-      rows.push([]);
-      rows.push(['ผู้เสนอราคา / Issued by']);
-      if (hasVal(q.sellerTitle)) rows.push(['ตำแหน่ง', txt(q.sellerTitle)]);
-      if (hasVal(q.sellerName)) rows.push(['ชื่อ', txt(q.sellerName)]);
-      if (hasVal(q.sellerPhone)) rows.push(['โทร', txt(q.sellerPhone)]);
-      if (hasVal(q.sellerEmail)) rows.push(['E-Mail', txt(q.sellerEmail)]);
-      if (hasVal(q.sellerLine)) rows.push(['LINE', txt(q.sellerLine)]);
-      if (!hasVal(q.sellerTitle) && !hasVal(q.sellerName) && !hasVal(q.sellerPhone) && !hasVal(q.sellerEmail) && !hasVal(q.sellerLine)) {
-        rows.push(['ชื่อ', 'POND — LG Subscribe']);
-      }
-      rows.push([]);
-      rows.push(['ติดต่อ: Line @Lgthailand (8.00-18.00) · ฝ่ายบริการลูกค้า 02-057-5757']);
-
-      return { rows, docNo };
-    },
-    async exportQuotationExcel() {
-      if (this.cart.length === 0) {
-        this.showToast('เลือกสินค้าในตะกร้าก่อนเซฟ Excel');
-        return;
-      }
-      try {
-        this.showToast('กำลังสร้างไฟล์ Excel...');
-        const XLSX = await this.loadSheetJs();
-        const { rows, docNo } = this.buildQuotationExcelAoA();
-        const ws = XLSX.utils.aoa_to_sheet(rows);
-        ws['!cols'] = [
-          { wch: 8 },
-          { wch: 16 },
-          { wch: 40 },
-          { wch: 8 },
-          { wch: 10 },
-          { wch: 12 },
-          { wch: 14 },
-          { wch: 12 },
-        ];
-        const wb = XLSX.utils.book_new();
-        XLSX.utils.book_append_sheet(wb, ws, 'ใบสรุปราคา');
-        const fname = 'ใบสรุปราคา_' + docNo + '.xlsx';
-        XLSX.writeFile(wb, fname);
-        this.showToast('บันทึกไฟล์ Excel แล้ว: ' + fname);
-      } catch (e) {
-        console.error(e);
-        try {
-          this.exportQuotationExcelFallback();
-        } catch (e2) {
-          console.error(e2);
-          this.showToast('เซฟ Excel ไม่สำเร็จ — ตรวจสอบอินเทอร์เน็ตแล้วลองใหม่');
-        }
-      }
-    },
-    exportQuotationExcelFallback() {
-      const { rows, docNo } = this.buildQuotationExcelAoA();
-      const escXml = (v) => String(v == null ? '' : v)
-        .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
-      let xml = '<?xml version="1.0" encoding="UTF-8"?>\n';
-      xml += '<?mso-application progid="Excel.Sheet"?>\n';
-      xml += '<Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet" ';
-      xml += 'xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet">\n';
-      xml += '<Worksheet ss:Name="ใบสรุปราคา"><Table>\n';
-      rows.forEach(row => {
-        xml += '<Row>';
-        row.forEach(cell => {
-          const isNum = typeof cell === 'number' && Number.isFinite(cell);
-          if (isNum) {
-            xml += '<Cell><Data ss:Type="Number">' + cell + '</Data></Cell>';
-          } else {
-            xml += '<Cell><Data ss:Type="String">' + escXml(cell) + '</Data></Cell>';
-          }
-        });
-        xml += '</Row>\n';
-      });
-      xml += '</Table></Worksheet></Workbook>';
-      const blob = new Blob([xml], { type: 'application/vnd.ms-excel' });
-      const a = document.createElement('a');
-      a.href = URL.createObjectURL(blob);
-      a.download = 'ใบสรุปราคา_' + docNo + '.xls';
-      document.body.appendChild(a);
-      a.click();
-      setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 1000);
-      this.showToast('บันทึกไฟล์ Excel แล้ว: ใบสรุปราคา_' + docNo + '.xls');
     }
  }
 }
