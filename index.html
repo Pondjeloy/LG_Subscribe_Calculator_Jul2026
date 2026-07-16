@@ -1455,7 +1455,7 @@ function lgCalculator() {
  compareB: { term: '5Y', serviceType: 'Visit', modelIndices: [] },
  cart: [],
  toast: { show: false, msg: '' },
- buildVersion: '2026.07.16-v103',
+ buildVersion: '2026.07.16-v104',
  quoteCustomer: {
    name: '',
    address: '',
@@ -3868,43 +3868,78 @@ ${'</'+'html>'}`;
       }
       let host = null;
       try {
-        this.showToast('กำลังสร้างรูปภาพ...');
+        this.showToast('กำลังสร้างรูปภาพ A4...');
         const html2canvas = await this.loadHtml2Canvas();
         const fullHtml = this.quotationHtml();
-        // แยกเฉพาะเนื้อหาใบ (ตัดปุ่มพิมพ์) วางนอกจอเพื่อถ่ายภาพ
+        // A4 portrait @ 96 CSS px (210mm × 297mm) — เซฟ PNG สัดส่วน A4 จริง
+        const A4_W = 794;
+        const A4_H = 1123;
+        const CAPTURE_SCALE = 2; // ผลลัพธ์ ~1588×2246 px (~192 dpi)
+        const PAD_X = 34; // ~9mm
+        const PAD_Y = 30; // ~8mm
+
         host = document.createElement('div');
         host.setAttribute('data-lg-quote-capture', '1');
-        host.style.cssText = 'position:fixed;left:-12000px;top:0;width:900px;background:#fff;z-index:-1;pointer-events:none;';
+        host.style.cssText = 'position:fixed;left:-12000px;top:0;width:' + A4_W + 'px;background:#fff;z-index:-1;pointer-events:none;';
         document.body.appendChild(host);
         const iframe = document.createElement('iframe');
-        iframe.style.cssText = 'width:900px;border:0;background:#fff;';
+        iframe.style.cssText = 'width:' + A4_W + 'px;height:' + A4_H + 'px;border:0;background:#fff;';
         host.appendChild(iframe);
         const idoc = iframe.contentDocument || iframe.contentWindow.document;
         idoc.open();
         idoc.write(fullHtml);
         idoc.close();
-        // รอฟอนต์/โลโก้โหลด
         await new Promise(r => setTimeout(r, 700));
         const sheet = idoc.querySelector('.sheet');
         if (!sheet) throw new Error('sheet not found');
-        // ซ่อนปุ่ม no-print ใน iframe
         idoc.querySelectorAll('.no-print').forEach(el => { el.style.display = 'none'; });
-        // ปรับความสูง iframe ให้ครบหน้า
-        const h = Math.max(sheet.scrollHeight, sheet.offsetHeight) + 40;
-        iframe.style.height = h + 'px';
-        await new Promise(r => setTimeout(r, 100));
+        // จัด layout เป็นหน้า A4 (ขอบเหมือนพิมพ์)
+        if (idoc.body) {
+          idoc.body.style.cssText = 'margin:0;padding:0;background:#fff;overflow:hidden;';
+        }
+        sheet.style.cssText = 'width:' + A4_W + 'px;max-width:' + A4_W + 'px;min-height:' + A4_H + 'px;margin:0;padding:' + PAD_Y + 'px ' + PAD_X + 'px;box-sizing:border-box;background:#fff;';
+        const contentH = Math.max(sheet.scrollHeight, sheet.offsetHeight, A4_H);
+        iframe.style.height = contentH + 'px';
+        await new Promise(r => setTimeout(r, 120));
+
+        const captureH = Math.max(sheet.scrollHeight, sheet.offsetHeight, A4_H);
         const canvas = await html2canvas(sheet, {
-          scale: 2,
+          scale: CAPTURE_SCALE,
           useCORS: true,
           allowTaint: true,
           backgroundColor: '#ffffff',
           logging: false,
-          windowWidth: 900,
+          width: A4_W,
+          height: captureH,
+          windowWidth: A4_W,
+          windowHeight: captureH,
         });
+
+        // คอมโพสิตเป็น canvas A4 เป๊ะ — ถ้าเนื้อหายาวเกินจะย่อให้พอดี 1 หน้า
+        const outW = A4_W * CAPTURE_SCALE;
+        const outH = A4_H * CAPTURE_SCALE;
+        const out = document.createElement('canvas');
+        out.width = outW;
+        out.height = outH;
+        const ctx = out.getContext('2d');
+        ctx.fillStyle = '#ffffff';
+        ctx.fillRect(0, 0, outW, outH);
+
+        let drawW = canvas.width;
+        let drawH = canvas.height;
+        if (drawW > outW || drawH > outH) {
+          const fit = Math.min(outW / drawW, outH / drawH);
+          drawW = Math.floor(drawW * fit);
+          drawH = Math.floor(drawH * fit);
+        }
+        const dx = Math.floor((outW - drawW) / 2);
+        const dy = 0; // ชิดบนเหมือนพิมพ์
+        ctx.drawImage(canvas, 0, 0, canvas.width, canvas.height, dx, dy, drawW, drawH);
+
         const docNo = this.quoteDocNo();
-        const fname = 'ใบสรุปราคา_' + docNo + '.png';
+        const fname = 'ใบสรุปราคา_' + docNo + '_A4.png';
         await new Promise((resolve, reject) => {
-          canvas.toBlob((blob) => {
+          out.toBlob((blob) => {
             if (!blob) { reject(new Error('toBlob failed')); return; }
             const a = document.createElement('a');
             a.href = URL.createObjectURL(blob);
@@ -3915,7 +3950,7 @@ ${'</'+'html>'}`;
             resolve();
           }, 'image/png');
         });
-        this.showToast('บันทึกรูปภาพแล้ว: ' + fname);
+        this.showToast('บันทึกรูป A4 แล้ว: ' + fname);
       } catch (e) {
         console.error(e);
         this.showToast('เซฟรูปภาพไม่สำเร็จ — ตรวจสอบอินเทอร์เน็ตแล้วลองใหม่');
