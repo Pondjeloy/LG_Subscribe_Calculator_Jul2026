@@ -1455,7 +1455,7 @@ function lgCalculator() {
  compareB: { term: '5Y', serviceType: 'Visit', modelIndices: [] },
  cart: [],
  toast: { show: false, msg: '' },
- buildVersion: '2026.07.16-v104',
+ buildVersion: '2026.07.16-v105',
  quoteCustomer: {
    name: '',
    address: '',
@@ -3571,11 +3571,17 @@ function lgCalculator() {
             periods.push({ bill: 'ล่วงหน้า', regular: '', promo: '', total: advance * qty });
           }
           ranges.forEach(r => {
-            const promo = Number(r.pricePerMonth) || 0;
-            const discPer = Math.max(0, Math.round((listPrice - promo) * 100) / 100);
+            const promoOne = Number(r.pricePerMonth) || 0;
+            const discPer = Math.max(0, Math.round((listPrice - promoOne) * 100) / 100);
             totalDiscountAll += discPer * (r.months || 0) * qty;
             const bill = r.start === r.end ? String(r.start) : (r.start + '-' + r.end);
-            periods.push({ bill, regular: listPrice, promo, total: r.total * qty });
+            // คูณจำนวน: ลูกค้าเห็นยอดต่อเดือนรวม (เช่น 2 ชิ้น × ราคาโปร)
+            periods.push({
+              bill,
+              regular: listPrice * qty,
+              promo: promoOne * qty,
+              total: r.total * qty,
+            });
           });
         }
         if (!periods.length) {
