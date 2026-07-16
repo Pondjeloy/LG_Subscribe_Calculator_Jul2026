@@ -1455,7 +1455,7 @@ function lgCalculator() {
  compareB: { term: '5Y', serviceType: 'Visit', modelIndices: [] },
  cart: [],
  toast: { show: false, msg: '' },
- buildVersion: '2026.07.16-v105',
+ buildVersion: '2026.07.16-v106',
  quoteCustomer: {
    name: '',
    address: '',
@@ -3679,7 +3679,7 @@ function lgCalculator() {
   @import url('https://fonts.googleapis.com/css2?family=Sarabun:wght@400;600;700&display=swap');
   @page { size: A4 portrait; margin: 8mm 9mm 8mm 9mm; }
   * { box-sizing: border-box; }
-  body { margin: 0; padding: 0; color: #1a1a1a; font-family: "Sarabun","TH Sarabun New","Tahoma",sans-serif; font-size: 11px; background: #fff; }
+  body { margin: 0; padding: 0; color: #1a1a1a; font-family: "Sarabun","TH Sarabun New","Tahoma","Microsoft Sans Serif",sans-serif; font-size: 11px; line-height: 1.45; background: #fff; }
   .sheet { width: 100%; max-width: 192mm; margin: 0 auto; }
   .name { font-weight: 700; color: #1a1a1a; }
   .top { display: grid; grid-template-columns: 128px 1fr 188px; gap: 10px; align-items: center; padding-bottom: 6px; border-bottom: 2px solid #a50034; margin-bottom: 8px; }
@@ -3688,7 +3688,7 @@ function lgCalculator() {
   .co .en { font-size: 9.5px; color: #1a1a1a; margin: 1px 0 2px; font-weight: 600; }
   .co .addr { font-size: 9px; color: #333; line-height: 1.35; margin: 0; }
   .title-block { text-align: center; }
-  .title-block .th-title { font-size: 18px; font-weight: 700; color: #a50034; margin: 0; letter-spacing: .5px; }
+  .title-block .th-title { font-size: 18px; font-weight: 700; color: #a50034; margin: 0; letter-spacing: 0; line-height: 1.35; }
   .title-block .en-title { font-size: 11px; font-weight: 700; color: #1a1a1a; margin: 1px 0 4px; }
   .meta { font-size: 10px; text-align: left; line-height: 1.45; padding: 4px 6px; background: #f7f7f7; border: 1px solid #e5e5e5; }
   .meta b { display: inline-block; min-width: 48px; font-weight: 600; color: #1a1a1a; }
@@ -3701,7 +3701,7 @@ function lgCalculator() {
   .meta-line { font-size: 9.5px; color: #444; margin: 2px 0 4px; }
   table.items { width: 100%; border-collapse: collapse; }
   table.items th { background: #e8e8e8; color: #1a1a1a; font-size: 9.5px; font-weight: 700; padding: 5px 3px; border: 1px solid #bdbdbd; text-align: center; vertical-align: middle; }
-  table.items td { border: 1px solid #cfcfcf; padding: 3px 4px; vertical-align: top; font-size: 10px; color: #1a1a1a; line-height: 1.3; }
+  table.items td { border: 1px solid #cfcfcf; padding: 4px 5px; vertical-align: middle; font-size: 10px; color: #1a1a1a; line-height: 1.45; }
   table.items td.desc { text-align: left; vertical-align: top; padding: 4px 6px; }
   table.items td.desc .name { font-weight: 700; margin-bottom: 4px; display: block; }
   table.items td.desc .care-title { font-weight: 700; margin-top: 4px; }
@@ -3895,18 +3895,73 @@ ${'</'+'html>'}`;
         idoc.open();
         idoc.write(fullHtml);
         idoc.close();
-        await new Promise(r => setTimeout(r, 700));
+        // รอฟอนต์ + รูปโหลด (html2canvas + ฟอนต์เว็บไทยมักทำตัวอักษรทับกัน)
+        try {
+          if (idoc.fonts && idoc.fonts.ready) await idoc.fonts.ready;
+        } catch (e) { /* ignore */ }
+        await new Promise(r => setTimeout(r, 900));
         const sheet = idoc.querySelector('.sheet');
         if (!sheet) throw new Error('sheet not found');
         idoc.querySelectorAll('.no-print').forEach(el => { el.style.display = 'none'; });
+
+        // CSS เฉพาะโหมดเซฟรูป — ฟอนต์ระบบ + line-height กว้าง กันตัวอักษรขี่กัน
+        const capCss = idoc.createElement('style');
+        capCss.textContent = [
+          'html,body{margin:0!important;padding:0!important;background:#fff!important;overflow:visible!important;}',
+          'body,.sheet,table,td,th,p,div,span,li,h3,h4,b,strong,small{',
+          '  font-family:Tahoma,"Microsoft Sans Serif","Segoe UI",sans-serif!important;',
+          '  letter-spacing:0!important;',
+          '  word-spacing:normal!important;',
+          '  text-rendering:geometricPrecision!important;',
+          '  -webkit-font-smoothing:antialiased!important;',
+          '}',
+          'body{font-size:12px!important;line-height:1.55!important;color:#1a1a1a!important;}',
+          '.sheet{line-height:1.55!important;}',
+          '.co .th,.co .en,.co .addr{line-height:1.5!important;margin:2px 0!important;}',
+          '.title-block .th-title{line-height:1.35!important;letter-spacing:0!important;margin-bottom:2px!important;}',
+          '.title-block .en-title{line-height:1.4!important;margin:2px 0 6px!important;}',
+          '.meta{line-height:1.55!important;padding:6px 8px!important;}',
+          '.meta div{margin:2px 0!important;}',
+          '.cust td{line-height:1.55!important;padding:4px 4px!important;}',
+          '.meta-line{line-height:1.5!important;margin:4px 0 6px!important;}',
+          'table.items{border-collapse:collapse!important;}',
+          'table.items th{line-height:1.45!important;padding:7px 4px!important;font-size:10px!important;vertical-align:middle!important;}',
+          'table.items td{line-height:1.5!important;padding:6px 5px!important;font-size:11px!important;vertical-align:middle!important;}',
+          'table.items td.desc{line-height:1.55!important;padding:7px 8px!important;vertical-align:top!important;}',
+          'table.items td.desc .name{display:block!important;line-height:1.45!important;margin:0 0 6px!important;}',
+          'table.items td.desc .care-title{line-height:1.45!important;margin:6px 0 3px!important;}',
+          'table.items td.desc .care-main{line-height:1.5!important;margin:2px 0 4px!important;}',
+          'table.items td.desc .care-item{line-height:1.55!important;margin:3px 0!important;padding-left:2px!important;}',
+          'table.items .code{font-family:Consolas,"Courier New",monospace!important;line-height:1.45!important;}',
+          'table.items .num{font-variant-numeric:normal!important;line-height:1.45!important;}',
+          '.sum-box .row{line-height:1.5!important;padding:7px 10px!important;align-items:flex-start!important;}',
+          '.sum-box .row .en{display:block!important;line-height:1.4!important;margin-top:2px!important;}',
+          '.remark-box{padding:8px 10px!important;}',
+          '.remark-box h3{line-height:1.4!important;margin:0 0 6px!important;}',
+          '.remark-box ul{line-height:1.6!important;}',
+          '.remark-box li{margin:3px 0!important;}',
+          '.baht{line-height:1.5!important;margin-top:8px!important;}',
+          '.sign .box{padding:8px 10px!important;}',
+          '.sign h4{line-height:1.4!important;margin:0 0 6px!important;}',
+          '.sign .info{line-height:1.55!important;}',
+          '.sign .info div{margin:2px 0!important;}',
+          '.sign .sig{line-height:1.5!important;margin-top:16px!important;}',
+          '.foot{line-height:1.55!important;margin-top:8px!important;padding-top:6px!important;}',
+          '.top{align-items:start!important;gap:12px!important;margin-bottom:10px!important;padding-bottom:8px!important;}',
+          '.bottom{gap:10px!important;margin-top:10px!important;}',
+        ].join('\n');
+        idoc.head.appendChild(capCss);
+
         // จัด layout เป็นหน้า A4 (ขอบเหมือนพิมพ์)
         if (idoc.body) {
-          idoc.body.style.cssText = 'margin:0;padding:0;background:#fff;overflow:hidden;';
+          idoc.body.style.cssText = 'margin:0;padding:0;background:#fff;overflow:visible;';
         }
         sheet.style.cssText = 'width:' + A4_W + 'px;max-width:' + A4_W + 'px;min-height:' + A4_H + 'px;margin:0;padding:' + PAD_Y + 'px ' + PAD_X + 'px;box-sizing:border-box;background:#fff;';
+        // force reflow หลัง inject CSS
+        void sheet.offsetHeight;
         const contentH = Math.max(sheet.scrollHeight, sheet.offsetHeight, A4_H);
         iframe.style.height = contentH + 'px';
-        await new Promise(r => setTimeout(r, 120));
+        await new Promise(r => setTimeout(r, 200));
 
         const captureH = Math.max(sheet.scrollHeight, sheet.offsetHeight, A4_H);
         const canvas = await html2canvas(sheet, {
@@ -3919,6 +3974,11 @@ ${'</'+'html>'}`;
           height: captureH,
           windowWidth: A4_W,
           windowHeight: captureH,
+          scrollX: 0,
+          scrollY: -window.scrollY,
+          x: 0,
+          y: 0,
+          foreignObjectRendering: false,
         });
 
         // คอมโพสิตเป็น canvas A4 เป๊ะ — ถ้าเนื้อหายาวเกินจะย่อให้พอดี 1 หน้า
