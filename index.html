@@ -1279,8 +1279,15 @@
                 </div>
                 <input class="w-full text-xs" style="border:1px solid #e5e7eb;border-radius:6px;padding:5px 8px" placeholder="E-Mail ลูกค้า" x-model="quoteCustomer.email" />
                 <div class="grid grid-cols-2 gap-1.5">
-                  <input class="w-full text-xs" style="border:1px solid #e5e7eb;border-radius:6px;padding:5px 8px" placeholder="เลขที่เอกสาร" x-model="quoteCustomer.docNo" />
-                  <input type="number" min="1" max="90" class="w-full text-xs" style="border:1px solid #e5e7eb;border-radius:6px;padding:5px 8px" placeholder="มีผล (วัน)" x-model.number="quoteCustomer.validDays" />
+                  <div>
+                    <label class="text-xs text-gray-500">เลขที่เอกสาร <span class="text-gray-400">(ว่าง = สร้างอัตโนมัติ)</span></label>
+                    <input class="w-full text-xs" style="border:1px solid #e5e7eb;border-radius:6px;padding:5px 8px" placeholder="เช่น QT-001" x-model="quoteCustomer.docNo" />
+                  </div>
+                  <div>
+                    <label class="text-xs text-gray-500">ใบใช้ได้กี่วัน <span class="text-gray-400">(นับจากวันนี้)</span></label>
+                    <input type="number" min="1" max="90" class="w-full text-xs" style="border:1px solid #e5e7eb;border-radius:6px;padding:5px 8px" placeholder="เช่น 15" x-model.number="quoteCustomer.validDays" />
+                    <div class="text-xs text-gray-400 mt-0.5" x-text="validDaysHint()"></div>
+                  </div>
                 </div>
                 <div class="text-xs font-semibold text-gray-600" style="margin-top:6px">ข้อมูลผู้เสนอราคา</div>
                 <input class="w-full text-xs" style="border:1px solid #e5e7eb;border-radius:6px;padding:5px 8px" placeholder="ตำแหน่ง / ฝ่าย" x-model="quoteCustomer.sellerTitle" />
@@ -1448,7 +1455,7 @@ function lgCalculator() {
  compareB: { term: '5Y', serviceType: 'Visit', modelIndices: [] },
  cart: [],
  toast: { show: false, msg: '' },
- buildVersion: '2026.07.16-v99',
+ buildVersion: '2026.07.16-v100',
  quoteCustomer: {
    name: '',
    address: '',
@@ -3489,6 +3496,16 @@ function lgCalculator() {
       const r = String(Math.floor(Math.random() * 900) + 100);
       return 'QT-' + y + m + day + '-' + r;
     },
+    // คำอธิบายช่อง "ใบใช้ได้กี่วัน" → แสดงวันหมดอายุบนใบ
+    validDaysHint() {
+      const days = Math.max(1, Number(this.quoteCustomer.validDays) || 15);
+      const d = new Date();
+      d.setDate(d.getDate() + days);
+      const dd = String(d.getDate()).padStart(2, '0');
+      const mm = String(d.getMonth() + 1).padStart(2, '0');
+      const yyyy = d.getFullYear();
+      return '→ บนใบจะขึ้น "มีผลถึง ' + dd + '/' + mm + '/' + yyyy + '"';
+    },
     quotationHtml() {
       if (this.cart.length === 0) return '';
       const q = this.quoteCustomer;
@@ -4028,5 +4045,4 @@ ${r?'Expression: "'+r+`"
 
 </script>
 </body>
-<!-- rebuild-v99 -->
 </html>
