@@ -1448,7 +1448,7 @@ function lgCalculator() {
  compareB: { term: '5Y', serviceType: 'Visit', modelIndices: [] },
  cart: [],
  toast: { show: false, msg: '' },
- buildVersion: '2026.07.15-v97',
+ buildVersion: '2026.07.16-v98',
  quoteCustomer: {
    name: '',
    address: '',
@@ -3581,15 +3581,48 @@ function lgCalculator() {
       });
       totalDiscountAll = Math.round(totalDiscountAll * 100) / 100;
 
-      const sellerName = val(q.sellerName, 'POND');
-      const sellerPhone = val(q.sellerPhone, '—');
-      const sellerLine = val(q.sellerLine, 'https://line.me/ti/p/jRpW3PMC_e');
-      const sellerTitle = val(q.sellerTitle, 'ฝ่ายเสนอราคา LG Subscribe');
-      const sellerEmail = val(q.sellerEmail, '—');
+      const hasVal = (v) => v != null && String(v).trim() !== '';
+      const sellerName = hasVal(q.sellerName) ? esc(String(q.sellerName).trim()) : '';
+      const sellerPhone = hasVal(q.sellerPhone) ? esc(String(q.sellerPhone).trim()) : '';
+      const sellerLine = hasVal(q.sellerLine) ? esc(String(q.sellerLine).trim()) : '';
+      const sellerTitle = hasVal(q.sellerTitle) ? esc(String(q.sellerTitle).trim()) : '';
+      const sellerEmail = hasVal(q.sellerEmail) ? esc(String(q.sellerEmail).trim()) : '';
       const remarkValid = 'ขอสงวนสิทธิ์ใบสรุปราคาไว้จนถึงวันที่ ' + this.quoteDateText(validTo);
-      const addr2row = (q.address2 && String(q.address2).trim())
-        ? ('<tr><td class="lbl"></td><td class="val" colspan="3">' + esc(q.address2) + '</td></tr>')
-        : '';
+
+      // ข้อมูลลูกค้า — แสดงเฉพาะช่องที่มีค่า
+      let custRows = '';
+      if (hasVal(q.name)) custRows += '<tr><td class="lbl">นามผู้รับ :</td><td class="val" colspan="3">' + esc(String(q.name).trim()) + '</td></tr>';
+      if (hasVal(q.address)) custRows += '<tr><td class="lbl">ที่อยู่ :</td><td class="val" colspan="3">' + esc(String(q.address).trim()) + '</td></tr>';
+      if (hasVal(q.address2)) custRows += '<tr><td class="lbl"></td><td class="val" colspan="3">' + esc(String(q.address2).trim()) + '</td></tr>';
+      if (hasVal(q.taxId) || hasVal(q.branch)) {
+        custRows += '<tr>';
+        if (hasVal(q.taxId)) custRows += '<td class="lbl">เลขผู้เสียภาษี :</td><td class="val">' + esc(String(q.taxId).trim()) + '</td>';
+        else custRows += '<td class="lbl"></td><td class="val"></td>';
+        if (hasVal(q.branch)) custRows += '<td class="lbl2">สาขาที่ :</td><td class="val">' + esc(String(q.branch).trim()) + '</td>';
+        else custRows += '<td class="lbl2"></td><td class="val"></td>';
+        custRows += '</tr>';
+      }
+      if (hasVal(q.contact) || hasVal(q.phone)) {
+        custRows += '<tr>';
+        if (hasVal(q.contact)) custRows += '<td class="lbl">ผู้ติดต่อ :</td><td class="val">' + esc(String(q.contact).trim()) + '</td>';
+        else custRows += '<td class="lbl"></td><td class="val"></td>';
+        if (hasVal(q.phone)) custRows += '<td class="lbl2">โทรศัพท์ :</td><td class="val">' + esc(String(q.phone).trim()) + '</td>';
+        else custRows += '<td class="lbl2"></td><td class="val"></td>';
+        custRows += '</tr>';
+      }
+      if (hasVal(q.email)) custRows += '<tr><td class="lbl">E-Mail :</td><td class="val" colspan="3">' + esc(String(q.email).trim()) + '</td></tr>';
+      const custBlock = custRows
+        ? ('<div class="cust"><table>' + custRows + '</table><div class="meta-line">' + ct + ' · ' + esc(this.promoDateText()) + (hasCombo ? ' · ' + esc(this.comboLabel()) + ' ' + cr + '%' : '') + ' · ' + this.cart.length + ' รายการ</div></div>')
+        : ('<div class="cust"><div class="meta-line">' + ct + ' · ' + esc(this.promoDateText()) + (hasCombo ? ' · ' + esc(this.comboLabel()) + ' ' + cr + '%' : '') + ' · ' + this.cart.length + ' รายการ</div></div>');
+
+      // ผู้เสนอราคา — แสดงเฉพาะช่องที่มีค่า
+      let sellerInfo = '';
+      if (sellerTitle) sellerInfo += '<div>' + sellerTitle + '</div>';
+      if (sellerName) sellerInfo += '<div>ชื่อ: <span class="name">' + sellerName + '</span></div>';
+      if (sellerPhone) sellerInfo += '<div>โทร: ' + sellerPhone + '</div>';
+      if (sellerEmail) sellerInfo += '<div>E-Mail: ' + sellerEmail + '</div>';
+      if (sellerLine) sellerInfo += '<div>LINE: ' + sellerLine + '</div>';
+      if (!sellerInfo) sellerInfo = '<div class="name">POND — LG Subscribe</div>';
 
       return `<!DOCTYPE html>
 <html lang="th">
@@ -3689,23 +3722,7 @@ ${'</'+'style>'}
       </div>
     </div>
 
-    <div class="cust">
-      <table>
-        <tr><td class="lbl">นามผู้รับ :</td><td class="val" colspan="3">${val(q.name, '—')}</td></tr>
-        <tr><td class="lbl">ที่อยู่ :</td><td class="val" colspan="3">${val(q.address, '—')}</td></tr>
-        ${addr2row}
-        <tr>
-          <td class="lbl">เลขผู้เสียภาษี :</td><td class="val">${val(q.taxId, '—')}</td>
-          <td class="lbl2">สาขาที่ :</td><td class="val">${val(q.branch, 'สำนักงานใหญ่')}</td>
-        </tr>
-        <tr>
-          <td class="lbl">ผู้ติดต่อ :</td><td class="val">${val(q.contact, '—')}</td>
-          <td class="lbl2">โทรศัพท์ :</td><td class="val">${val(q.phone, '—')}</td>
-        </tr>
-        <tr><td class="lbl">E-Mail :</td><td class="val" colspan="3">${val(q.email, '—')}</td></tr>
-      </table>
-      <div class="meta-line">${ct} · ${esc(this.promoDateText())}${hasCombo ? ' · ' + esc(this.comboLabel()) + ' ' + cr + '%' : ''} · ${this.cart.length} รายการ</div>
-    </div>
+    ${custBlock}
 
     <table class="items">
       <thead>
@@ -3731,6 +3748,7 @@ ${'</'+'style>'}
           <li>*ราคารวมค่าจัดส่งและค่าติดตั้งเบื้องต้นเรียบร้อยแล้ว (เงื่อนไขพื้นที่มาตรฐานตามบริษัท)</li>
           <li>ชำระล่วงหน้า 12 เดือน 50% (TV/จอ/ลำโพง) · โปรโมชันใช้ได้เฉพาะแบบ Subscribe</li>
           <li>ยอดชำระครั้งแรก: สินค้าทั่วไป = งวดที่ 1 · TV/จอ/ลำโพง = ล่วงหน้าอย่างเดียว · ซื้อขาด = ราคาซื้อขาด</li>
+          <li>โปรโมชันและราคาอาจมีการเปลี่ยนแปลงโดยไม่ต้องแจ้งให้ทราบล่วงหน้า</li>
         </ul>
         <div class="baht">฿ BAHT : ${esc(this.bahtText(grand))}</div>
       </div>
@@ -3747,13 +3765,7 @@ ${'</'+'style>'}
     <div class="sign">
       <div class="box">
         <h4>ผู้เสนอราคา / Issued by</h4>
-        <div class="info">
-          <div>${sellerTitle}</div>
-          <div>ชื่อ: <span class="name">${sellerName}</span></div>
-          <div>โทร: ${sellerPhone}</div>
-          <div>E-Mail: ${sellerEmail}</div>
-          <div>LINE: ${sellerLine}</div>
-        </div>
+        <div class="info">${sellerInfo}</div>
         <div class="sig">ลงชื่อ ........................................<small>วันที่ ......../......../........</small></div>
       </div>
       <div class="box">
@@ -3764,7 +3776,7 @@ ${'</'+'style>'}
     </div>
 
     <div class="foot">
-      ติดต่อ: Line @Lgthailand (8.00-18.00) · ฝ่ายบริการลูกค้า 02-057-5757 · ผู้เสนอราคา <span class="name">${sellerName}</span> · LINE ${sellerLine}
+      ติดต่อ: Line @Lgthailand (8.00-18.00) · ฝ่ายบริการลูกค้า 02-057-5757${sellerName ? ' · ผู้เสนอราคา <span class="name">' + sellerName + '</span>' : ''}${sellerLine ? ' · LINE ' + sellerLine : ''}
     </div>
   </div>
   ${'<'+'script>'}window.addEventListener('load',function(){setTimeout(function(){window.print()},280)});${'</'+'script>'}
@@ -3823,10 +3835,8 @@ ${'</'+'html>'}`;
       const firstPay = this.firstPaymentTotal();
       const excl = Math.round(grand * 100 / 107 * 100) / 100;
       const vat = Math.round((grand - excl) * 100) / 100;
-      const txt = (v, fb) => {
-        const s = (v == null ? '' : String(v)).trim();
-        return s || (fb != null ? fb : '—');
-      };
+      const hasVal = (v) => v != null && String(v).trim() !== '';
+      const txt = (v) => (v == null ? '' : String(v)).trim();
       const money = (n) => Math.round((Number(n) || 0) * 100) / 100;
 
       const rows = [];
@@ -3841,14 +3851,17 @@ ${'</'+'html>'}`;
       rows.push(['เลขที่', docNo, '', 'วันที่', this.quoteDateText(today)]);
       rows.push(['มีผลถึง', this.quoteDateText(validTo), '', 'โปรแกรม', 'LG SUBSCRIBE']);
       rows.push([]);
-      // Customer
-      rows.push(['ข้อมูลลูกค้า']);
-      rows.push(['นามผู้รับ', txt(q.name)]);
-      rows.push(['ที่อยู่', txt(q.address)]);
-      if (q.address2 && String(q.address2).trim()) rows.push(['', txt(q.address2)]);
-      rows.push(['เลขผู้เสียภาษี', txt(q.taxId), '', 'สาขาที่', txt(q.branch, 'สำนักงานใหญ่')]);
-      rows.push(['ผู้ติดต่อ', txt(q.contact), '', 'โทรศัพท์', txt(q.phone)]);
-      rows.push(['E-Mail', txt(q.email)]);
+      // Customer — เฉพาะช่องที่มีค่า
+      const custAny = hasVal(q.name) || hasVal(q.address) || hasVal(q.address2) || hasVal(q.taxId) || hasVal(q.branch) || hasVal(q.contact) || hasVal(q.phone) || hasVal(q.email);
+      if (custAny) rows.push(['ข้อมูลลูกค้า']);
+      if (hasVal(q.name)) rows.push(['นามผู้รับ', txt(q.name)]);
+      if (hasVal(q.address)) rows.push(['ที่อยู่', txt(q.address)]);
+      if (hasVal(q.address2)) rows.push(['', txt(q.address2)]);
+      if (hasVal(q.taxId)) rows.push(['เลขผู้เสียภาษี', txt(q.taxId)]);
+      if (hasVal(q.branch)) rows.push(['สาขาที่', txt(q.branch)]);
+      if (hasVal(q.contact)) rows.push(['ผู้ติดต่อ', txt(q.contact)]);
+      if (hasVal(q.phone)) rows.push(['โทรศัพท์', txt(q.phone)]);
+      if (hasVal(q.email)) rows.push(['E-Mail', txt(q.email)]);
       rows.push([ct + ' · ' + this.promoDateText() + (hasCombo ? ' · ' + this.comboLabel() + ' ' + cr + '%' : '') + ' · ' + this.cart.length + ' รายการ']);
       rows.push([]);
       // Table header
@@ -3918,13 +3931,17 @@ ${'</'+'html>'}`;
       rows.push(['*ราคารวมค่าจัดส่งและค่าติดตั้งเบื้องต้นเรียบร้อยแล้ว (เงื่อนไขพื้นที่มาตรฐานตามบริษัท)']);
       rows.push(['ชำระล่วงหน้า 12 เดือน 50% (TV/จอ/ลำโพง) · โปรโมชันใช้ได้เฉพาะแบบ Subscribe']);
       rows.push(['ยอดชำระครั้งแรก: สินค้าทั่วไป = งวดที่ 1 · TV/จอ/ลำโพง = ล่วงหน้าอย่างเดียว · ซื้อขาด = ราคาซื้อขาด']);
+      rows.push(['โปรโมชันและราคาอาจมีการเปลี่ยนแปลงโดยไม่ต้องแจ้งให้ทราบล่วงหน้า']);
       rows.push([]);
       rows.push(['ผู้เสนอราคา / Issued by']);
-      rows.push(['ตำแหน่ง', txt(q.sellerTitle, 'ฝ่ายเสนอราคา LG Subscribe')]);
-      rows.push(['ชื่อ', txt(q.sellerName, 'POND')]);
-      rows.push(['โทร', txt(q.sellerPhone)]);
-      rows.push(['E-Mail', txt(q.sellerEmail)]);
-      rows.push(['LINE', txt(q.sellerLine, 'https://line.me/ti/p/jRpW3PMC_e')]);
+      if (hasVal(q.sellerTitle)) rows.push(['ตำแหน่ง', txt(q.sellerTitle)]);
+      if (hasVal(q.sellerName)) rows.push(['ชื่อ', txt(q.sellerName)]);
+      if (hasVal(q.sellerPhone)) rows.push(['โทร', txt(q.sellerPhone)]);
+      if (hasVal(q.sellerEmail)) rows.push(['E-Mail', txt(q.sellerEmail)]);
+      if (hasVal(q.sellerLine)) rows.push(['LINE', txt(q.sellerLine)]);
+      if (!hasVal(q.sellerTitle) && !hasVal(q.sellerName) && !hasVal(q.sellerPhone) && !hasVal(q.sellerEmail) && !hasVal(q.sellerLine)) {
+        rows.push(['ชื่อ', 'POND — LG Subscribe']);
+      }
       rows.push([]);
       rows.push(['ติดต่อ: Line @Lgthailand (8.00-18.00) · ฝ่ายบริการลูกค้า 02-057-5757']);
 
