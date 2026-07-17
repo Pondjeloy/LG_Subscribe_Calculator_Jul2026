@@ -1294,11 +1294,17 @@
 
 
  <div class="mt-4 quote-print-box" x-show="cart.length > 0" style="border:1px solid var(--line);border-radius:10px;padding:12px;background:#fafafa">
-              <div class="text-xs font-semibold mb-1" style="color:var(--blood)">ใบสรุปราคา (ฟอร์มบริษัท · 1 หน้า)</div>
-              <div class="text-xs text-gray-500 mb-2">กรอกข้อมูล แล้วกดพิมพ์ หรือเซฟเป็นรูปภาพ — ออกแบบให้จบในหน้าเดียว</div>
+              <button type="button" class="btn-compare-toggle" style="width:100%;margin-bottom:0"
+                :class="showQuoteForm ? 'active' : ''"
+                @click="showQuoteForm = !showQuoteForm">
+                <span>ใบสรุปราคา (ฟอร์มบริษัท · 1 หน้า)</span>
+                <span x-text="showQuoteForm ? '▲ ซ่อน' : '▼ แสดง'"></span>
+              </button>
+              <div x-show="showQuoteForm" x-transition class="mt-2">
+              <div class="text-xs text-gray-500 mb-2">กรอกเฉพาะช่องที่ต้องการ — ช่องว่างจะไม่โชว์ในใบพิมพ์ · เริ่มต้นว่างทั้งหมด</div>
               <div class="space-y-1.5 mb-2" style="font-size:11px">
                 <div class="text-xs font-semibold text-gray-600">ข้อมูลลูกค้า</div>
-                <input class="w-full text-xs" style="border:1px solid #e5e7eb;border-radius:6px;padding:5px 8px" placeholder="นามผู้รับ / บริษัท *" x-model="quoteCustomer.name" />
+                <input class="w-full text-xs" style="border:1px solid #e5e7eb;border-radius:6px;padding:5px 8px" placeholder="นามผู้รับ / บริษัท" x-model="quoteCustomer.name" />
                 <input class="w-full text-xs" style="border:1px solid #e5e7eb;border-radius:6px;padding:5px 8px" placeholder="ที่อยู่ บรรทัด 1" x-model="quoteCustomer.address" />
                 <input class="w-full text-xs" style="border:1px solid #e5e7eb;border-radius:6px;padding:5px 8px" placeholder="ที่อยู่ บรรทัด 2" x-model="quoteCustomer.address2" />
                 <div class="grid grid-cols-2 gap-1.5">
@@ -1314,14 +1320,14 @@
                     <input class="w-full text-xs" style="border:1px solid #e5e7eb;border-radius:6px;padding:5px 8px" placeholder="เช่น QT-001" x-model="quoteCustomer.docNo" />
                   </div>
                   <div>
-                    <label class="text-xs text-gray-500">ใบใช้ได้กี่วัน <span class="text-gray-400">(นับจากวันนี้)</span></label>
-                    <input type="number" min="1" max="90" class="w-full text-xs" style="border:1px solid #e5e7eb;border-radius:6px;padding:5px 8px" placeholder="เช่น 15" x-model.number="quoteCustomer.validDays" />
+                    <label class="text-xs text-gray-500">ใบใช้ได้กี่วัน <span class="text-gray-400">(ว่าง = 15 วัน)</span></label>
+                    <input type="number" min="1" max="90" class="w-full text-xs" style="border:1px solid #e5e7eb;border-radius:6px;padding:5px 8px" placeholder="เช่น 15" x-model="quoteCustomer.validDays" />
                     <div class="text-xs text-gray-400 mt-0.5" x-text="validDaysHint()"></div>
                   </div>
                 </div>
                 <div class="text-xs font-semibold text-gray-600" style="margin-top:6px">ข้อมูลผู้เสนอราคา</div>
                 <input class="w-full text-xs" style="border:1px solid #e5e7eb;border-radius:6px;padding:5px 8px" placeholder="ตำแหน่ง / ฝ่าย" x-model="quoteCustomer.sellerTitle" />
-                <input class="w-full text-xs" style="border:1px solid #e5e7eb;border-radius:6px;padding:5px 8px" placeholder="ชื่อผู้เสนอราคา *" x-model="quoteCustomer.sellerName" />
+                <input class="w-full text-xs" style="border:1px solid #e5e7eb;border-radius:6px;padding:5px 8px" placeholder="ชื่อผู้เสนอราคา" x-model="quoteCustomer.sellerName" />
                 <div class="grid grid-cols-2 gap-1.5">
                   <input class="w-full text-xs" style="border:1px solid #e5e7eb;border-radius:6px;padding:5px 8px" placeholder="โทรผู้เสนอราคา" x-model="quoteCustomer.sellerPhone" />
                   <input class="w-full text-xs" style="border:1px solid #e5e7eb;border-radius:6px;padding:5px 8px" placeholder="อีเมลผู้เสนอราคา" x-model="quoteCustomer.sellerEmail" />
@@ -1332,6 +1338,7 @@
                 <button class="btn-primary" style="width:100%" @click="printQuotation()">พิมพ์ใบสรุปราคา</button>
                 <button class="btn-ghost" style="width:100%" @click="exportQuotationImage()">เซฟเป็นรูปภาพ</button>
                 <button class="btn-ghost" style="width:100%" @click="copySummary()">คัดลอกข้อความ</button>
+              </div>
               </div>
             </div>
             <div class="mt-4" x-show="cart.length === 0">
@@ -1481,6 +1488,7 @@ function lgCalculator() {
  categoryList: [],
  modelList: [],
  showComparePlans: false,
+ showQuoteForm: false,
  showCompareModels: false,
  compareB: { term: '5Y', serviceType: 'Visit', modelIndices: [] },
  cart: [],
@@ -1491,16 +1499,16 @@ function lgCalculator() {
    address: '',
    address2: '',
    taxId: '',
-   branch: 'สำนักงานใหญ่',
+   branch: '',
    contact: '',
    phone: '',
    email: '',
-   validDays: 15,
+   validDays: '',
    docNo: '',
-   sellerName: 'POND',
+   sellerName: '',
    sellerPhone: '',
-   sellerLine: 'https://line.me/ti/p/jRpW3PMC_e',
-   sellerTitle: 'ฝ่ายเสนอราคา LG Subscribe',
+   sellerLine: '',
+   sellerTitle: '',
    sellerEmail: '',
  },
 
