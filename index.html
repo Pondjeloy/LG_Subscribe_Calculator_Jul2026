@@ -1297,11 +1297,13 @@
               <button type="button" class="btn-compare-toggle" style="width:100%;margin-bottom:0"
                 :class="showQuoteForm ? 'active' : ''"
                 @click="showQuoteForm = !showQuoteForm">
-                <span>ใบสรุปราคา (ฟอร์มบริษัท · 1 หน้า)</span>
+                <span>เอกสารราคา (กรอกข้อมูล · พิมพ์ 2 แบบ)</span>
                 <span x-text="showQuoteForm ? '▲ ซ่อน' : '▼ แสดง'"></span>
               </button>
               <div x-show="showQuoteForm" x-transition class="mt-2">
-              <div class="text-xs text-gray-500 mb-2">กรอกเฉพาะช่องที่ต้องการ — ช่องว่างจะไม่โชว์ในใบพิมพ์ · เริ่มต้นว่างทั้งหมด</div>
+              <div class="text-xs text-gray-500 mb-2">กรอกเฉพาะช่องที่ต้องการ — ช่องว่างไม่โชว์ในใบพิมพ์ · เริ่มต้นว่างทั้งหมด<br/>
+                <strong style="color:var(--ink)">ใบสรุปราคา</strong> = ไม่มีช่องเซ็น ·
+                <strong style="color:var(--ink)">ใบเสนอราคา</strong> = มีเซ็นรับทราบ + วันที่อัตโนมัติ</div>
               <div class="space-y-1.5 mb-2" style="font-size:11px">
                 <div class="text-xs font-semibold text-gray-600">ข้อมูลลูกค้า</div>
                 <input class="w-full text-xs" style="border:1px solid #e5e7eb;border-radius:6px;padding:5px 8px" placeholder="นามผู้รับ / บริษัท" x-model="quoteCustomer.name" />
@@ -1335,8 +1337,10 @@
                 <input class="w-full text-xs" style="border:1px solid #e5e7eb;border-radius:6px;padding:5px 8px" placeholder="LINE ผู้เสนอราคา" x-model="quoteCustomer.sellerLine" />
               </div>
               <div class="space-y-2">
-                <button class="btn-primary" style="width:100%" @click="printQuotation()">พิมพ์ใบสรุปราคา</button>
-                <button class="btn-ghost" style="width:100%" @click="exportQuotationImage()">เซฟเป็นรูปภาพ</button>
+                <button class="btn-primary" style="width:100%" @click="printQuotation('summary')">พิมพ์ใบสรุปราคา</button>
+                <button class="btn-primary" style="width:100%;background:var(--ink)" @click="printQuotation('proposal')">พิมพ์ใบเสนอราคา</button>
+                <button class="btn-ghost" style="width:100%" @click="exportQuotationImage('summary')">เซฟใบสรุปราคา (รูป)</button>
+                <button class="btn-ghost" style="width:100%" @click="exportQuotationImage('proposal')">เซฟใบเสนอราคา (รูป)</button>
                 <button class="btn-ghost" style="width:100%" @click="copySummary()">คัดลอกข้อความ</button>
               </div>
               </div>
@@ -3566,13 +3570,18 @@ function lgCalculator() {
       });
       return Array.from(map.values());
     },
-    quotationHtml() {
+    // mode: 'summary' = ใบสรุปราคา (ไม่มีเซ็น) · 'proposal' = ใบเสนอราคา (มีเซ็นรับทราบ + วันที่อัตโนมัติ)
+    quotationHtml(mode = 'summary') {
       if (this.cart.length === 0) return '';
+      const isProposal = mode === 'proposal';
       const q = this.quoteCustomer;
       const today = new Date();
       const validDays = Math.max(1, Number(q.validDays) || 15);
       const validTo = new Date(today.getTime() + validDays * 86400000);
       const docNo = this.quoteDocNo();
+      const todayText = this.quoteDateText(today);
+      const titleTh = isProposal ? 'ใบเสนอราคา' : 'ใบสรุปราคา';
+      const titleEn = isProposal ? 'Quotation' : 'Price Summary';
       const ct = this.customerType === 'new' ? 'ลูกค้าใหม่' : 'ลูกค้าเก่า';
       const hasCombo = this.comboRate() > 0;
       const cr = Math.round(this.comboRate() * 100);
@@ -3671,7 +3680,7 @@ function lgCalculator() {
       const sellerLine = hasVal(q.sellerLine) ? esc(String(q.sellerLine).trim()) : '';
       const sellerTitle = hasVal(q.sellerTitle) ? esc(String(q.sellerTitle).trim()) : '';
       const sellerEmail = hasVal(q.sellerEmail) ? esc(String(q.sellerEmail).trim()) : '';
-      const remarkValid = 'ขอสงวนสิทธิ์ใบสรุปราคาไว้จนถึงวันที่ ' + this.quoteDateText(validTo);
+      const remarkValid = 'ขอสงวนสิทธิ์' + titleTh + 'ไว้จนถึงวันที่ ' + this.quoteDateText(validTo);
 
       // ข้อมูลลูกค้า — แสดงเฉพาะช่องที่มีค่า
       let custRows = '';
@@ -3712,7 +3721,7 @@ function lgCalculator() {
 <html lang="th">
 <head>
 <meta charset="utf-8"/>
-<title>ใบสรุปราคา — ${esc(docNo)}</title>
+<title>${titleTh} — ${esc(docNo)}</title>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Sarabun:wght@400;600;700&display=swap');
   @page { size: A4 portrait; margin: 8mm 9mm 8mm 9mm; }
@@ -3795,11 +3804,11 @@ ${'</'+'style>'}
         <p class="addr">เลขประจำตัวผู้เสียภาษี 0105540033379 | ฝ่ายบริการลูกค้า 02-057-5757</p>
       </div>
       <div class="title-block">
-        <p class="th-title">ใบสรุปราคา</p>
-        <p class="en-title">Price Summary</p>
+        <p class="th-title">${titleTh}</p>
+        <p class="en-title">${titleEn}</p>
         <div class="meta">
           <div><b>เลขที่</b> ${esc(docNo)}</div>
-          <div><b>วันที่</b> ${this.quoteDateText(today)}</div>
+          <div><b>วันที่</b> ${todayText}</div>
           <div><b>มีผลถึง</b> ${this.quoteDateText(validTo)}</div>
           <div><b>โปรแกรม</b> LG SUBSCRIBE</div>
         </div>
@@ -3846,18 +3855,20 @@ ${'</'+'style>'}
       </div>
     </div>
 
+    ${isProposal ? `
     <div class="sign">
       <div class="box">
         <h4>ผู้เสนอราคา / Issued by</h4>
-        <div class="info">${sellerInfo}</div>
-        <div class="sig">ลงชื่อ ........................................<small>วันที่ ......../......../........</small></div>
+        <div class="info">${sellerInfo || '<div class="muted">—</div>'}</div>
+        <div class="sig">ลงชื่อ ........................................<small>วันที่ <b>${todayText}</b></small></div>
       </div>
       <div class="box">
         <h4>สำหรับลูกค้า / Customer Acknowledgement</h4>
-        <div class="info">ข้าพเจ้ายืนยันรายการและราคาตามใบสรุปราคานี้</div>
-        <div class="sig">ลงชื่อ ........................................<small>(........................................)</small><small>วันที่ ......../......../........</small></div>
+        <div class="info">ข้าพเจ้ายืนยันรายการและราคาตามใบเสนอราคานี้</div>
+        <div class="sig">ลงชื่อ ........................................<small>(........................................)</small><small>วันที่ <b>${todayText}</b></small></div>
       </div>
     </div>
+    ` : ''}
 
     <div class="foot">
       ติดต่อ: Line @Lgthailand (8.00-18.00) · ฝ่ายบริการลูกค้า 02-057-5757${sellerName ? ' · ผู้เสนอราคา <span class="name">' + sellerName + '</span>' : ''}${sellerLine ? ' · LINE ' + sellerLine : ''}
@@ -3867,12 +3878,14 @@ ${'</'+'style>'}
 ${'</'+'body>'}
 ${'</'+'html>'}`;
     },
-    printQuotation() {
+    printQuotation(mode = 'summary') {
       if (this.cart.length === 0) {
-        this.showToast('เลือกสินค้าในตะกร้าก่อนพิมพ์ใบสรุปราคา');
+        this.showToast('เลือกสินค้าในตะกร้าก่อนพิมพ์เอกสาร');
         return;
       }
-      const html = this.quotationHtml();
+      const isProposal = mode === 'proposal';
+      const label = isProposal ? 'ใบเสนอราคา' : 'ใบสรุปราคา';
+      const html = this.quotationHtml(mode);
       const w = window.open('', '_blank');
       if (!w) {
         this.showToast('เบราว์เซอร์บล็อกป๊อปอัป — อนุญาตแล้วกดใหม่');
@@ -3881,7 +3894,7 @@ ${'</'+'html>'}`;
       w.document.open();
       w.document.write(html);
       w.document.close();
-      this.showToast('เปิดใบสรุปราคาแล้ว — กดพิมพ์หรือบันทึกเป็น PDF');
+      this.showToast('เปิด' + label + 'แล้ว — กดพิมพ์หรือบันทึกเป็น PDF');
     },
 
     async loadHtml2Canvas() {
@@ -3905,16 +3918,18 @@ ${'</'+'html>'}`;
       if (!window.html2canvas) throw new Error('html2canvas not available');
       return window.html2canvas;
     },
-    async exportQuotationImage() {
+    async exportQuotationImage(mode = 'summary') {
       if (this.cart.length === 0) {
         this.showToast('เลือกสินค้าในตะกร้าก่อนเซฟรูปภาพ');
         return;
       }
       let host = null;
+      const isProposal = mode === 'proposal';
+      const label = isProposal ? 'ใบเสนอราคา' : 'ใบสรุปราคา';
       try {
-        this.showToast('กำลังสร้างรูปภาพ A4...');
+        this.showToast('กำลังสร้างรูป' + label + ' A4...');
         const html2canvas = await this.loadHtml2Canvas();
-        const fullHtml = this.quotationHtml();
+        const fullHtml = this.quotationHtml(mode);
         // A4 portrait @ 96 CSS px (210mm × 297mm) — เซฟ PNG สัดส่วน A4 จริง
         const A4_W = 794;
         const A4_H = 1123;
@@ -4041,7 +4056,7 @@ ${'</'+'html>'}`;
         ctx.drawImage(canvas, 0, 0, canvas.width, canvas.height, dx, dy, drawW, drawH);
 
         const docNo = this.quoteDocNo();
-        const fname = 'ใบสรุปราคา_' + docNo + '_A4.png';
+        const fname = label + '_' + docNo + '_A4.png';
         await new Promise((resolve, reject) => {
           out.toBlob((blob) => {
             if (!blob) { reject(new Error('toBlob failed')); return; }
