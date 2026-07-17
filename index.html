@@ -3570,10 +3570,12 @@ function lgCalculator() {
       });
       return Array.from(map.values());
     },
-    // mode: 'summary' = ใบสรุปราคา (ไม่มีเซ็น) · 'proposal' = ใบเสนอราคา (มีเซ็นรับทราบ + วันที่อัตโนมัติ)
-    quotationHtml(mode = 'summary') {
+    // mode: 'summary' | 'proposal' · opts.autoPrint = true เฉพาะตอนพิมพ์ (เซฟรูปต้องปิด ไม่งั้น iframe จะเด้งหน้า print)
+    quotationHtml(mode = 'summary', opts = {}) {
       if (this.cart.length === 0) return '';
       const isProposal = mode === 'proposal';
+      const autoPrint = opts.autoPrint !== false && opts.autoPrint !== 0;
+
       const q = this.quoteCustomer;
       const today = new Date();
       const validDays = Math.max(1, Number(q.validDays) || 15);
@@ -3874,7 +3876,7 @@ ${'</'+'style>'}
       ติดต่อ: Line @Lgthailand (8.00-18.00) · ฝ่ายบริการลูกค้า 02-057-5757${sellerName ? ' · ผู้เสนอราคา <span class="name">' + sellerName + '</span>' : ''}${sellerLine ? ' · LINE ' + sellerLine : ''}
     </div>
   </div>
-  ${'<'+'script>'}window.addEventListener('load',function(){setTimeout(function(){window.print()},280)});${'</'+'script>'}
+  ${autoPrint ? `${'<'+'script>'}window.addEventListener('load',function(){setTimeout(function(){window.print()},280)});${'</'+'script>'}` : ''}
 ${'</'+'body>'}
 ${'</'+'html>'}`;
     },
@@ -3885,7 +3887,7 @@ ${'</'+'html>'}`;
       }
       const isProposal = mode === 'proposal';
       const label = isProposal ? 'ใบเสนอราคา' : 'ใบสรุปราคา';
-      const html = this.quotationHtml(mode);
+      const html = this.quotationHtml(mode, { autoPrint: true });
       const w = window.open('', '_blank');
       if (!w) {
         this.showToast('เบราว์เซอร์บล็อกป๊อปอัป — อนุญาตแล้วกดใหม่');
@@ -3929,7 +3931,8 @@ ${'</'+'html>'}`;
       try {
         this.showToast('กำลังสร้างรูป' + label + ' A4...');
         const html2canvas = await this.loadHtml2Canvas();
-        const fullHtml = this.quotationHtml(mode);
+        // ห้าม autoPrint — iframe โหลด HTML นี้ ถ้ามี window.print() จะเด้งหน้าปริ้น
+        const fullHtml = this.quotationHtml(mode, { autoPrint: false });
         // A4 portrait @ 96 CSS px (210mm × 297mm) — เซฟ PNG สัดส่วน A4 จริง
         const A4_W = 794;
         const A4_H = 1123;
