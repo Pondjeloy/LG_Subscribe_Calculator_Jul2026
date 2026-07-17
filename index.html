@@ -971,7 +971,7 @@
  <th class="cp-num">หลังโปร</th>
  <th class="cp-num">ครั้งแรก</th>
  <th class="cp-num">รวมสัญญา</th>
- <th class="cp-num">ห่างถูกสุด</th>
+ <th class="cp-num">ส่วนต่างราคา</th>
  <th class="cp-num">ประหยัด</th>
  <th class="cp-act"></th>
  </tr>
@@ -2572,7 +2572,7 @@ function lgCalculator() {
  r.diffFromMin = diff;
  if (Math.abs(diff) < 0.01) {
  r.isBest = priced.length > 1;
- r.diffLabel = priced.length > 1 ? 'ถูกสุด' : '—';
+ r.diffLabel = priced.length > 1 ? 'ราคาต่ำสุด' : '—';
  } else {
  r.diffLabel = '+฿' + this.fmtMoney(diff);
  }
