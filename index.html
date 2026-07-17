@@ -238,12 +238,17 @@
   .plan-periods-head{font-size:11px;font-weight:500;color:var(--muted);margin-bottom:4px;letter-spacing:.02em}
   .plan-period-row{display:grid;grid-template-columns:1fr auto auto;gap:2px 8px;align-items:baseline;font-size:12px;padding:2px 0;line-height:1.4;color:var(--ink-2)}
   .plan-period-row .pp-label{font-weight:400}
-  .plan-period-row .pp-price{font-family:inherit;font-weight:700;color:var(--blood);white-space:nowrap;font-variant-numeric:tabular-nums}
+  /* แพ็กเกจที่ยังไม่เลือก: ราคาเป็นสีดำ — แดงเฉพาะตอน active */
+  .plan-period-row .pp-price{font-family:inherit;font-weight:700;color:var(--ink);white-space:nowrap;font-variant-numeric:tabular-nums}
   .plan-period-row .pp-note{font-size:10px;color:var(--muted);white-space:nowrap}
   .plan-period-row.pp-adv .pp-price{color:var(--ink)}
   .plan-period-foot{margin-top:4px;font-size:11px;color:var(--muted);line-height:1.35}
 
-  .price-highlight{font-family:inherit;font-weight:700;color:var(--blood);letter-spacing:-0.03em;font-variant-numeric:tabular-nums}
+  .price-highlight{font-family:inherit;font-weight:700;color:var(--ink);letter-spacing:-0.03em;font-variant-numeric:tabular-nums}
+  .plan-card:not(.active) .price-highlight,
+  .plan-card:not(.active) .font-display.font-bold,
+  .plan-card:not(.active) .pp-price { color: var(--ink) !important; }
+  .plan-card:not(.active) { color: var(--ink); }
 
   .cart-item{
     background:#fff;border:1px solid var(--line);border-left:none;
@@ -548,6 +553,7 @@
   }
 
   /* === theme force: B/W + blood accents === */
+  /* ราคา/ยอดสำคัญ = แดง (ยกเว้นแพ็กเกจที่ยังไม่เลือก — ดำ) */
   .price-highlight,
   .price-label,
   .bill-step-price,
@@ -559,6 +565,26 @@
   .compare-table td.cp-total,
   aside .price-highlight {
     color: var(--blood) !important;
+  }
+  /* แพ็กเกจยังไม่คลิกเลือก: ตัวหนังสือ/ราคาเป็นสีดำ */
+  .plan-card:not(.active),
+  .plan-card:not(.active) .price-highlight,
+  .plan-card:not(.active) .font-display,
+  .plan-card:not(.active) .font-display.font-bold,
+  .plan-card:not(.active) .pp-price,
+  .plan-card:not(.active) .pp-label,
+  .plan-card:not(.active) .plan-periods-head,
+  .plan-card:not(.active) .plan-period-foot {
+    color: var(--ink) !important;
+  }
+  .plan-card:not(.active) .text-gray-500,
+  .plan-card:not(.active) .text-gray-400,
+  .plan-card:not(.active) .text-gray-600,
+  .plan-card:not(.active) .pp-note {
+    color: var(--muted) !important;
+  }
+  .plan-card:not(.active) .plan-period-row {
+    color: var(--ink-2) !important;
   }
   .summary-grand-box { color: #fff !important; }
   .summary-grand-box .font-display,
@@ -590,6 +616,10 @@
   .plan-card.active .price-highlight,
   .plan-card.active .font-display.font-bold,
   .plan-card.active .pp-price { color: var(--blood) !important; }
+  /* แพ็กเกจยังไม่เลือก = ตัวหนังสือดำ */
+  .plan-card:not(.active) .price-highlight,
+  .plan-card:not(.active) .font-display.font-bold,
+  .plan-card:not(.active) .pp-price { color: var(--ink) !important; }
   .radio-card.active {
     border-color: var(--blood) !important;
     background: linear-gradient(165deg, var(--blood-soft) 0%, #fff 70%) !important;
