@@ -511,6 +511,13 @@
     margin-top:12px;padding:12px 14px;background:linear-gradient(135deg,#111 0%,#A50034 100%);color:#fff;border-radius:12px;
     display:flex;justify-content:space-between;align-items:center;font-size:14px;font-weight:500;
   }
+  .bill-range-box .br-cart-all{
+    margin-top:6px;padding:12px 14px;background:linear-gradient(135deg,#fdf2f4 0%,#fff 100%);
+    border:1.5px solid #fca5a5;border-radius:12px;
+  }
+  .bill-range-box .br-cart-all .br-title{color:#7a0026;font-size:13px;margin-bottom:8px}
+  .bill-range-box .br-cart-all .br-row{font-size:13px}
+  .bill-range-box .br-cart-all .br-total{color:var(--blood);font-size:13px}
   @media (max-width:767px){
     .bill-range-box .br-row{grid-template-columns:1fr;gap:2px}
     .bill-range-box .br-calc{text-align:left}
@@ -1498,7 +1505,7 @@ function lgCalculator() {
  compareB: { term: '5Y', serviceType: 'Visit', modelIndices: [] },
  cart: [],
  toast: { show: false, msg: '' },
- buildVersion: '2026.07.21-v108',
+ buildVersion: '2026.07.22-v109',
  quoteCustomer: {
    name: '',
    address: '',
@@ -2907,10 +2914,90 @@ function lgCalculator() {
  });
  return result;
  },
+ // รวมยอดผ่อนทุกชิ้นในตะกร้า ต่อเดือน → จัดกลุ่มช่วงที่ราคาเท่ากันติดกัน
+ cartBillRangeTotals() {
+ if (!this.cart.length) return { advance: 0, maxMonths: 0, segments: [] };
+ const advance = Math.round(this.cart.reduce((s, it) => s + (it.advancePayment || 0), 0) * 100) / 100;
+ const schedules = this.cart.map(it => {
+ if (it.outright) return { months: 0, byBill: {} };
+ const months = it.totalContractMonths || 60;
+ const byBill = {};
+ this.itemComboSchedule(it).bills.forEach(b => { byBill[b.bill] = b.price; });
+ return { months, byBill };
+ });
+ const maxMonths = Math.max(0, ...schedules.map(s => s.months));
+ const monthPrices = [];
+ for (let k = 1; k <= maxMonths; k++) {
+ let sum = 0;
+ schedules.forEach(s => {
+ if (k <= s.months) sum += (s.byBill[k] || 0);
+ });
+ monthPrices.push({ bill: k, price: Math.round(sum * 100) / 100 });
+ }
+ const segs = [];
+ let cur = null;
+ monthPrices.forEach(m => {
+ if (cur && Math.abs(cur.price - m.price) < 0.01) {
+ cur.end = m.bill;
+ } else {
+ if (cur) segs.push(cur);
+ cur = { start: m.bill, end: m.bill, price: m.price };
+ }
+ });
+ if (cur) segs.push(cur);
+ return {
+ advance,
+ maxMonths,
+ segments: segs.map(s => {
+ const months = s.end - s.start + 1;
+ return {
+ start: s.start,
+ end: s.end,
+ months,
+ pricePerMonth: s.price,
+ total: Math.round(s.price * months * 100) / 100,
+ rangeLabel: s.start === s.end ? ('งวดที่ ' + s.start) : ('งวดที่ ' + s.start + '-' + s.end),
+ };
+ }),
+ };
+ },
     billRangeHtml() {
       if (this.cart.length === 0) return '';
       let h = '<div class="av-head" style="color:#7a0026">สรุปจ่ายต่อเดือน · แยกช่วงงวด</div>';
       h += '<div style="font-size:11px;color:#6b7280;margin-bottom:8px">ราคาต่อเดือนหลังหักส่วนลดคอมโบแล้ว</div>';
+
+      // ── รวมทุกชิ้น · ยอดผ่อนต่อช่วง (แสดงเมื่อมี ≥1 รายการ subscribe) ──
+      const cartRanges = this.cartBillRangeTotals();
+      if (cartRanges.segments.length) {
+        const years = Math.round(cartRanges.maxMonths / 12);
+        h += '<div class="br-cart-all">';
+        h += '<div class="br-title"><strong>รวมทุกชิ้น · ยอดผ่อนต่อช่วง</strong>';
+        if (this.cart.length > 1) {
+          h += ' <span style="font-weight:500;color:#6b7280;font-size:11px">(' + this.cart.length + ' รายการ)</span>';
+        }
+        h += '</div>';
+        h += '<div class="br-rows">';
+        if (cartRanges.advance > 0) {
+          h += '<div class="br-row"><span class="br-range">จ่ายล่วงหน้ารวม</span><span class="br-calc">ตอนเริ่มสัญญา</span><span class="br-total">฿' + this.fmtMoney(cartRanges.advance) + '</span></div>';
+        }
+        cartRanges.segments.forEach(r => {
+          h += '<div class="br-row">';
+          h += '<span class="br-range">' + r.rangeLabel + '</span>';
+          h += '<span class="br-calc"><strong style="color:#a50034">฿' + this.fmtBillPrice(r.pricePerMonth) + '/เดือน</strong> × ' + r.months + ' งวด</span>';
+          h += '<span class="br-total">฿' + this.fmtMoney(r.total) + '</span>';
+          h += '</div>';
+        });
+        h += '<div class="br-row br-sum">';
+        h += '<span class="br-range"><strong>รวมตลอดสัญญา</strong></span>';
+        h += '<span class="br-calc">' + cartRanges.maxMonths + ' งวด · ' + years + ' ปี' + (cartRanges.advance > 0 ? ' + ล่วงหน้า' : '') + '</span>';
+        h += '<span class="br-total"><strong>฿' + this.fmtMoney(this.grandTotal()) + '</strong></span>';
+        h += '</div>';
+        h += '</div></div>';
+      }
+
+      if (this.cart.length > 1) {
+        h += '<div style="font-size:11px;font-weight:600;color:#6b7280;margin:12px 0 4px">แยกรายชิ้น</div>';
+      }
       this.cart.forEach((it, i) => {
         const ranges = this.billRangeTotals(it);
         const totalItem = ranges.reduce((s, r) => s + r.total, 0);
@@ -3322,6 +3409,24 @@ function lgCalculator() {
         txt += '</div>';
       });
 
+      // ─── รวมยอดผ่อนทุกชิ้นต่อช่วง ───
+      const cartRanges = this.cartBillRangeTotals();
+      if (cartRanges.segments.length && this.cart.length > 1) {
+        txt += '<div style="background:linear-gradient(135deg,#fdf2f4,#fff);border:1.5px solid #fca5a5;border-radius:8px;padding:11px 14px;margin-top:8px;margin-bottom:8px">';
+        txt += '<div style="font-weight:700;font-size:0.9em;color:#7a0026;margin-bottom:6px">รวมทุกชิ้น · ยอดผ่อนต่อช่วง (' + n + ' รายการ)</div>';
+        if (cartRanges.advance > 0) {
+          txt += '<div style="display:flex;justify-content:space-between;gap:6px;font-size:0.85em;padding:2px 0">';
+          txt += '<span>จ่ายล่วงหน้ารวม</span><strong style="color:#7c3aed">฿' + this.fmtMoney(cartRanges.advance) + '</strong></div>';
+        }
+        cartRanges.segments.forEach(r => {
+          txt += '<div style="display:flex;justify-content:space-between;gap:6px;font-size:0.85em;padding:2px 0">';
+          txt += '<span>' + r.rangeLabel + ' <span style="color:#9ca3af;font-size:0.9em">× ' + r.months + ' งวด</span></span>';
+          txt += '<strong style="color:#a50034;white-space:nowrap">฿' + this.fmtBillPrice(r.pricePerMonth) + '/เดือน</strong>';
+          txt += '</div>';
+        });
+        txt += '</div>';
+      }
+
       // ─── Totals ───
       txt += '<div style="background:#f0fdf4;border:1px solid #86efac;border-radius:8px;padding:11px 14px;margin-top:4px">';
       if (hasCombo) {
@@ -3462,6 +3567,23 @@ function lgCalculator() {
         lines.push('สรุปรวม ' + this.cart.length + ' รายการ');
         if (hasCombo) {
           lines.push(this.comboLabel() + ' ' + cr + '% · ค่าเช่าสุทธิ ' + this.netMonthly().toLocaleString() + ' บาท/เดือน');
+        }
+        // ยอดผ่อนรวมทุกชิ้นต่อช่วง
+        const cartRanges = this.cartBillRangeTotals();
+        if (cartRanges.segments.length) {
+          lines.push('');
+          lines.push('ยอดผ่อนรวมทุกชิ้นต่อช่วง');
+          if (cartRanges.advance > 0) {
+            lines.push('  จ่ายล่วงหน้ารวม ' + this.fmtMoney(cartRanges.advance) + ' บาท');
+          }
+          cartRanges.segments.forEach(r => {
+            lines.push(
+              '  ' + r.rangeLabel + '  '
+              + this.fmtBillPrice(r.pricePerMonth) + ' บาท/เดือน'
+              + ' × ' + r.months + ' งวด'
+              + ' = ' + this.fmtMoney(r.total) + ' บาท'
+            );
+          });
         }
         if (this.hasOutright()) {
           lines.push('ซื้อขาดรวม: ' + this.totalOutright().toLocaleString() + ' บาท');
