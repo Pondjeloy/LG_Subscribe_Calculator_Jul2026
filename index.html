@@ -1552,7 +1552,7 @@ function lgCalculator() {
  compareB: { term: '5Y', serviceType: 'Visit', modelIndices: [] },
  cart: [],
  toast: { show: false, msg: '' },
- buildVersion: '2026.07.23-v114',
+ buildVersion: '2026.07.23-v115',
  quoteCustomer: {
    name: '',
    address: '',
@@ -3898,25 +3898,25 @@ function lgCalculator() {
         }
         const span = periods.length + 1;
 
-        let careHtml = '<div class="care-title">Care Service:</div>';
-        careHtml += '<div class="care-main">' + esc(careDetail) + '</div>';
+        // รายละเอียดสินค้า: ชื่อประเภท → รายละเอียดรุ่น → Care Service (ต่อจากรายละเอียด) → สัญญา
+        const careLine = careDetail
+          ? ('<div class="care-main"><span class="care-title">Care Service:</span> ' + esc(careDetail) + '</div>')
+          : '';
+        let detailLines = '';
+        detailLines += '<div class="name">' + esc(imgSrc ? titleLine : headTitle.trim()) + '</div>';
+        if (pname) detailLines += '<div class="spec">' + esc(pname) + '</div>';
+        detailLines += careLine;
+        detailLines += '<div class="pkg">' + esc(pkgLine) + '</div>';
 
-        // รูปสินค้า + สเป็คพื้นฐาน เติมพื้นที่ว่างในช่องรายการ
         let descHtml = '';
         if (imgSrc) {
           descHtml += '<div class="prod-row">';
           descHtml += '<div class="prod-img"><img src="' + esc(imgSrc) + '" alt="' + esc(it.code || '') + '"/></div>';
-          descHtml += '<div class="prod-meta">';
-          descHtml += '<div class="name">' + esc(titleLine) + '</div>';
-          if (pname) descHtml += '<div class="spec">สเป็ค: ' + esc(pname) + '</div>';
-          descHtml += '<div class="pkg">' + esc(pkgLine) + '</div>';
-          descHtml += '</div></div>';
+          descHtml += '<div class="prod-meta">' + detailLines + '</div>';
+          descHtml += '</div>';
         } else {
-          descHtml += '<div class="name">' + esc(headTitle.trim()) + '</div>';
-          if (pname) descHtml += '<div class="spec">สเป็ค: ' + esc(pname) + '</div>';
-          descHtml += '<div class="pkg">' + esc(pkgLine) + '</div>';
+          descHtml += detailLines;
         }
-        descHtml += careHtml;
 
         const p0 = periods[0];
         itemsHtml += '<tr>';
@@ -4034,8 +4034,8 @@ function lgCalculator() {
   table.items td.desc .prod-meta { flex: 1; min-width: 0; }
   table.items td.desc .spec { font-size: 9.5px; color: #1a1a1a; margin: 1px 0 2px; line-height: 1.35; }
   table.items td.desc .pkg { font-size: 9px; color: #444; margin: 0 0 2px; line-height: 1.35; }
-  table.items td.desc .care-title { font-weight: 700; margin-top: 4px; }
-  table.items td.desc .care-main { font-size: 9.5px; margin: 1px 0 2px; }
+  table.items td.desc .care-title { font-weight: 700; }
+  table.items td.desc .care-main { font-size: 9.5px; margin: 1px 0 2px; line-height: 1.35; }
   table.items td.desc .care-item { font-size: 9px; color: #333; padding-left: 2px; line-height: 1.35; }
   table.items tr.tot td { background: #f7f7f7; font-weight: 600; }
   table.items .c { text-align: center; vertical-align: middle; }
@@ -4104,8 +4104,8 @@ ${'</'+'style>'}
       <thead>
         <tr>
           <th style="width:34px">ลำดับ</th>
-          <th style="width:90px">รหัสสินค้า</th>
-          <th style="min-width:160px">รายการสินค้า</th>
+          <th style="width:90px">รุ่นสินค้า</th>
+          <th style="min-width:160px">รายละเอียดสินค้า</th>
           <th style="width:44px">จำนวน</th>
           <th style="width:52px">รอบบิล</th>
           <th style="width:82px">ราคาปกติ</th>
@@ -4284,8 +4284,8 @@ ${'</'+'html>'}`;
           'table.items td.desc .prod-meta{flex:1!important;min-width:0!important;}',
           'table.items td.desc .spec{font-size:10.5px!important;line-height:1.45!important;margin:2px 0 3px!important;color:#1a1a1a!important;}',
           'table.items td.desc .pkg{font-size:10px!important;line-height:1.4!important;margin:0 0 2px!important;color:#444!important;}',
-          'table.items td.desc .care-title{line-height:1.45!important;margin:6px 0 3px!important;}',
-          'table.items td.desc .care-main{line-height:1.5!important;margin:2px 0 4px!important;}',
+          'table.items td.desc .care-title{font-weight:700!important;line-height:1.45!important;margin:0!important;}',
+          'table.items td.desc .care-main{line-height:1.5!important;margin:2px 0 3px!important;}',
           'table.items td.desc .care-item{line-height:1.55!important;margin:3px 0!important;padding-left:2px!important;}',
           'table.items .code{font-family:Consolas,"Courier New",monospace!important;line-height:1.45!important;}',
           'table.items .num{font-variant-numeric:normal!important;line-height:1.45!important;}',
