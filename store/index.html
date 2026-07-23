@@ -31,7 +31,7 @@
   .font-display{font-family:"Plus Jakarta Sans","IBM Plex Sans Thai",sans-serif}
   a{color:inherit;text-decoration:none}
   button,input,select,textarea{font:inherit}
-  .wrap{width:min(1120px, calc(100% - 28px)); margin:0 auto}
+  .wrap{width:min(1200px, calc(100% - 28px)); margin:0 auto}
   .topbar{
     position:sticky; top:0; z-index:40;
     backdrop-filter:blur(14px);
@@ -78,26 +78,94 @@
     padding:6px 10px; border-radius:999px; font-size:12px; font-weight:600;
     background:rgba(255,255,255,.14); border:1px solid rgba(255,255,255,.18);
   }
-  .toolbar{display:flex; flex-wrap:wrap; gap:10px; margin:16px 0 12px; align-items:center}
+  .toolbar{display:flex; flex-wrap:wrap; gap:10px; margin:16px 0 0; align-items:center}
   .search{
     flex:1 1 220px; height:44px; border:1px solid var(--line); border-radius:12px;
     padding:0 14px 0 40px; background:#fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='18' height='18' fill='none' stroke='%239ca3af' stroke-width='2' viewBox='0 0 24 24'%3E%3Ccircle cx='11' cy='11' r='7'/%3E%3Cpath d='M20 20l-3.5-3.5'/%3E%3C/svg%3E") 12px center no-repeat;
     outline:none;
   }
   .search:focus{border-color:rgba(165,0,52,.45); box-shadow:0 0 0 4px rgba(165,0,52,.1)}
-  .chips{display:flex; gap:8px; overflow:auto; padding-bottom:4px; scrollbar-width:thin}
-  .chip{
-    flex:0 0 auto; height:36px; padding:0 12px; border-radius:999px;
-    border:1px solid var(--line); background:#fff; color:#374151;
-    font-size:13px; font-weight:600; cursor:pointer; white-space:nowrap;
-  }
-  .chip.active{background:var(--lg); border-color:var(--lg); color:#fff}
-  .grid{
-    display:grid; grid-template-columns:repeat(2, minmax(0,1fr)); gap:12px;
+  /* หมวดหมู่ — แถบซ้าย */
+  .shop-layout{
+    display:grid;
+    grid-template-columns: minmax(200px, 240px) minmax(0, 1fr);
+    gap:16px;
+    align-items:start;
+    margin-top:14px;
     padding-bottom:110px;
   }
-  @media (min-width:720px){ .grid{grid-template-columns:repeat(3, minmax(0,1fr)); gap:16px} }
-  @media (min-width:980px){ .grid{grid-template-columns:repeat(4, minmax(0,1fr))} }
+  .side-nav{
+    position:sticky; top:76px;
+    background:#fff;
+    border:1px solid rgba(229,231,235,.95);
+    border-radius:16px;
+    padding:12px 8px;
+    box-shadow:0 8px 24px rgba(15,23,42,.04);
+    max-height:calc(100vh - 96px);
+    overflow:auto;
+    scrollbar-width:thin;
+  }
+  .side-nav-title{
+    font-size:11px; font-weight:800; letter-spacing:.06em; text-transform:uppercase;
+    color:var(--muted); padding:4px 10px 10px;
+  }
+  .side-nav button{
+    display:flex; align-items:center; justify-content:space-between; gap:8px;
+    width:100%; text-align:left;
+    border:0; background:transparent; color:#374151;
+    border-radius:10px; padding:10px 12px;
+    font-size:13px; font-weight:600; line-height:1.3;
+    cursor:pointer; transition:background .12s, color .12s;
+  }
+  .side-nav button:hover{background:#f9fafb}
+  .side-nav button.active{
+    background:var(--soft); color:var(--lg);
+    font-weight:800;
+    box-shadow:inset 3px 0 0 var(--lg);
+  }
+  .side-nav .nav-count{
+    flex:0 0 auto; min-width:22px; height:20px; padding:0 6px;
+    border-radius:999px; font-size:11px; font-weight:700;
+    display:inline-flex; align-items:center; justify-content:center;
+    background:#f3f4f6; color:#6b7280;
+  }
+  .side-nav button.active .nav-count{background:#fff; color:var(--lg)}
+  .shop-main{min-width:0}
+  .shop-main-head{
+    display:flex; align-items:baseline; justify-content:space-between; gap:10px;
+    margin-bottom:12px; flex-wrap:wrap;
+  }
+  .shop-main-head h3{margin:0; font-size:16px; font-weight:800}
+  .shop-main-head .count{font-size:13px; color:var(--muted); font-weight:600}
+  .grid{
+    display:grid; grid-template-columns:repeat(2, minmax(0,1fr)); gap:12px;
+  }
+  @media (min-width:900px){ .grid{grid-template-columns:repeat(3, minmax(0,1fr)); gap:16px} }
+  @media (min-width:1100px){ .grid{grid-template-columns:repeat(3, minmax(0,1fr))} }
+  @media (max-width:800px){
+    .shop-layout{grid-template-columns:1fr; gap:12px}
+    .side-nav{
+      position:sticky; top:64px; z-index:25;
+      max-height:none; overflow:visible;
+      padding:10px;
+    }
+    .side-nav-title{padding:0 4px 8px}
+    .side-nav-list{
+      display:flex; flex-direction:row; gap:6px;
+      overflow-x:auto; padding-bottom:2px; scrollbar-width:thin;
+      -webkit-overflow-scrolling:touch;
+    }
+    .side-nav button{
+      flex:0 0 auto; width:auto; white-space:nowrap;
+      border:1px solid var(--line); background:#fff;
+      box-shadow:none;
+    }
+    .side-nav button.active{
+      background:var(--lg); color:#fff; border-color:var(--lg);
+      box-shadow:none;
+    }
+    .side-nav button.active .nav-count{background:rgba(255,255,255,.2); color:#fff}
+  }
   .card{
     background:#fff; border:1px solid rgba(229,231,235,.95); border-radius:18px;
     overflow:hidden; box-shadow:0 8px 24px rgba(15,23,42,.04);
@@ -260,36 +328,56 @@
       <div class="toolbar">
         <input class="search" type="search" placeholder="ค้นหารุ่น / ชื่อสินค้า / หมวด" x-model="q" />
       </div>
-      <div class="chips">
-        <button type="button" class="chip" :class="cat==='' && 'active'" @click="cat=''">ทั้งหมด</button>
-        <template x-for="c in categories" :key="c">
-          <button type="button" class="chip" :class="cat===c && 'active'" @click="cat=c" x-text="shortCat(c)"></button>
-        </template>
-      </div>
 
-      <div class="grid" style="margin-top:14px">
-        <template x-for="p in filtered()" :key="p.code">
-          <article class="card" @click="openProduct(p)">
-            <div class="card-img">
-              <img :src="imgUrl(p)" :alt="p.code" loading="lazy" decoding="async"
-                   @error="$el.style.display='none'"/>
-            </div>
-            <div class="card-body">
-              <div class="card-cat" x-text="shortCat(p.category)"></div>
-              <div class="card-name" x-text="productTitle(p)"></div>
-              <div class="card-code" x-text="p.code"></div>
-              <div class="price-row">
-                <span class="price-now" x-text="'฿' + money(bestPrice(p))"></span>
-                <span class="price-unit">/เดือน*</span>
-                <span class="price-was" x-show="bestRegular(p) > bestPrice(p)"
-                      x-text="'฿' + money(bestRegular(p))"></span>
-              </div>
-              <button type="button" class="btn btn-primary btn-sm" style="margin-top:8px;width:100%"
-                      @click.stop="openProduct(p)">ดูแพ็คเกจ</button>
-            </div>
-          </article>
-        </template>
-        <div class="empty" x-show="filtered().length === 0">ไม่พบสินค้าที่ตรงกับคำค้น</div>
+      <div class="shop-layout">
+        <!-- หมวดหมู่ซ้ายมือ -->
+        <aside class="side-nav" aria-label="หมวดหมู่สินค้า">
+          <div class="side-nav-title">หมวดหมู่สินค้า</div>
+          <div class="side-nav-list">
+            <button type="button" :class="cat==='' && 'active'" @click="cat=''">
+              <span>ทั้งหมด</span>
+              <span class="nav-count" x-text="products.length"></span>
+            </button>
+            <template x-for="c in categories" :key="c">
+              <button type="button" :class="cat===c && 'active'" @click="cat=c">
+                <span x-text="shortCat(c)"></span>
+                <span class="nav-count" x-text="countInCat(c)"></span>
+              </button>
+            </template>
+          </div>
+        </aside>
+
+        <!-- รายการสินค้า -->
+        <div class="shop-main">
+          <div class="shop-main-head">
+            <h3 class="font-display" x-text="cat ? shortCat(cat) : 'สินค้าทั้งหมด'"></h3>
+            <span class="count" x-text="filtered().length + ' รุ่น'"></span>
+          </div>
+          <div class="grid">
+            <template x-for="p in filtered()" :key="p.code">
+              <article class="card" @click="openProduct(p)">
+                <div class="card-img">
+                  <img :src="imgUrl(p)" :alt="p.code" loading="lazy" decoding="async"
+                       @error="$el.style.display='none'"/>
+                </div>
+                <div class="card-body">
+                  <div class="card-cat" x-text="shortCat(p.category)"></div>
+                  <div class="card-name" x-text="productTitle(p)"></div>
+                  <div class="card-code" x-text="p.code"></div>
+                  <div class="price-row">
+                    <span class="price-now" x-text="'฿' + money(bestPrice(p))"></span>
+                    <span class="price-unit">/เดือน*</span>
+                    <span class="price-was" x-show="bestRegular(p) > bestPrice(p)"
+                          x-text="'฿' + money(bestRegular(p))"></span>
+                  </div>
+                  <button type="button" class="btn btn-primary btn-sm" style="margin-top:8px;width:100%"
+                          @click.stop="openProduct(p)">ดูแพ็คเกจ</button>
+                </div>
+              </article>
+            </template>
+            <div class="empty" x-show="filtered().length === 0">ไม่พบสินค้าที่ตรงกับคำค้น</div>
+          </div>
+        </div>
       </div>
 
       <div class="sticky-cart" x-show="cartCount() > 0">
@@ -596,6 +684,10 @@ function lgStore() {
         const blob = [p.code, p.name, p.category].join(' ').toLowerCase();
         return blob.includes(q);
       });
+    },
+
+    countInCat(c) {
+      return this.products.filter(p => p.category === c).length;
     },
 
     promoLabel() {
