@@ -1,0 +1,799 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
+<meta name="theme-color" content="#A50034"/>
+<meta name="description" content="LG Subscribe — เช่าเครื่องใช้ไฟฟ้า LG รายเดือน จัดส่งติดตั้ง ประกันตลอดสัญญา"/>
+<title>LG Subscribe · สั่งซื้อออนไลน์</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet"/>
+<script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.14.8/dist/cdn.min.js"></script>
+<style>
+  :root{
+    --lg:#A50034; --lg-dark:#7a0026; --ink:#1a1a1a; --muted:#6b7280;
+    --line:#e5e7eb; --fill:#f8fafc; --soft:#fff1f4; --ok:#15803d;
+    --radius:16px; --shadow:0 10px 40px rgba(15,23,42,.08);
+  }
+  *{box-sizing:border-box}
+  html{-webkit-font-smoothing:antialiased}
+  body{
+    margin:0; color:var(--ink);
+    font-family:"IBM Plex Sans Thai",system-ui,sans-serif;
+    background:
+      radial-gradient(circle at 10% 0%, rgba(165,0,52,.1), transparent 32%),
+      radial-gradient(circle at 90% 8%, rgba(15,23,42,.04), transparent 28%),
+      #f4f6f8;
+    min-height:100vh;
+  }
+  [x-cloak]{display:none!important}
+  .font-display{font-family:"Plus Jakarta Sans","IBM Plex Sans Thai",sans-serif}
+  a{color:inherit;text-decoration:none}
+  button,input,select,textarea{font:inherit}
+  .wrap{width:min(1120px, calc(100% - 28px)); margin:0 auto}
+  .topbar{
+    position:sticky; top:0; z-index:40;
+    backdrop-filter:blur(14px);
+    background:rgba(255,255,255,.92);
+    border-bottom:1px solid rgba(229,231,235,.9);
+  }
+  .topbar-inner{display:flex; align-items:center; gap:12px; min-height:64px; padding:10px 0}
+  .brand{display:flex; align-items:center; gap:10px; min-width:0}
+  .brand-mark{
+    width:38px; height:38px; border-radius:12px;
+    background:linear-gradient(135deg,var(--lg),#d12a52);
+    color:#fff; display:grid; place-items:center;
+    font-weight:800; font-size:13px; letter-spacing:.02em;
+    box-shadow:0 8px 18px rgba(165,0,52,.28);
+  }
+  .brand h1{margin:0; font-size:16px; line-height:1.15}
+  .brand p{margin:2px 0 0; font-size:11px; color:var(--muted)}
+  .top-actions{margin-left:auto; display:flex; align-items:center; gap:8px}
+  .icon-btn{
+    position:relative; height:42px; min-width:42px; padding:0 12px;
+    border:1px solid var(--line); border-radius:12px; background:#fff;
+    display:inline-flex; align-items:center; justify-content:center; gap:6px;
+    cursor:pointer; color:var(--ink);
+  }
+  .icon-btn:hover{border-color:#d1d5db; background:#fafafa}
+  .badge{
+    position:absolute; top:-6px; right:-6px; min-width:18px; height:18px; padding:0 5px;
+    border-radius:99px; background:var(--lg); color:#fff; font-size:11px; font-weight:700;
+    display:grid; place-items:center;
+  }
+  .hero{
+    margin:18px auto 8px; padding:22px 20px;
+    border-radius:22px; color:#fff;
+    background:
+      radial-gradient(circle at 88% 20%, rgba(255,255,255,.18), transparent 28%),
+      linear-gradient(135deg, #8f002c 0%, var(--lg) 48%, #c81e4a 100%);
+    box-shadow:0 16px 40px rgba(165,0,52,.22);
+  }
+  .hero h2{margin:0 0 6px; font-size:clamp(22px, 4vw, 30px); letter-spacing:-.02em}
+  .hero p{margin:0; opacity:.92; font-size:14px; line-height:1.55; max-width:52ch}
+  .hero-pills{display:flex; flex-wrap:wrap; gap:8px; margin-top:14px}
+  .pill{
+    display:inline-flex; align-items:center; gap:6px;
+    padding:6px 10px; border-radius:999px; font-size:12px; font-weight:600;
+    background:rgba(255,255,255,.14); border:1px solid rgba(255,255,255,.18);
+  }
+  .toolbar{display:flex; flex-wrap:wrap; gap:10px; margin:16px 0 12px; align-items:center}
+  .search{
+    flex:1 1 220px; height:44px; border:1px solid var(--line); border-radius:12px;
+    padding:0 14px 0 40px; background:#fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='18' height='18' fill='none' stroke='%239ca3af' stroke-width='2' viewBox='0 0 24 24'%3E%3Ccircle cx='11' cy='11' r='7'/%3E%3Cpath d='M20 20l-3.5-3.5'/%3E%3C/svg%3E") 12px center no-repeat;
+    outline:none;
+  }
+  .search:focus{border-color:rgba(165,0,52,.45); box-shadow:0 0 0 4px rgba(165,0,52,.1)}
+  .chips{display:flex; gap:8px; overflow:auto; padding-bottom:4px; scrollbar-width:thin}
+  .chip{
+    flex:0 0 auto; height:36px; padding:0 12px; border-radius:999px;
+    border:1px solid var(--line); background:#fff; color:#374151;
+    font-size:13px; font-weight:600; cursor:pointer; white-space:nowrap;
+  }
+  .chip.active{background:var(--lg); border-color:var(--lg); color:#fff}
+  .grid{
+    display:grid; grid-template-columns:repeat(2, minmax(0,1fr)); gap:12px;
+    padding-bottom:110px;
+  }
+  @media (min-width:720px){ .grid{grid-template-columns:repeat(3, minmax(0,1fr)); gap:16px} }
+  @media (min-width:980px){ .grid{grid-template-columns:repeat(4, minmax(0,1fr))} }
+  .card{
+    background:#fff; border:1px solid rgba(229,231,235,.95); border-radius:18px;
+    overflow:hidden; box-shadow:0 8px 24px rgba(15,23,42,.04);
+    display:flex; flex-direction:column; cursor:pointer;
+    transition:transform .15s ease, box-shadow .15s ease;
+  }
+  .card:hover{transform:translateY(-2px); box-shadow:var(--shadow)}
+  .card-img{
+    aspect-ratio:1/1; background:linear-gradient(180deg,#fafafa,#f3f4f6);
+    display:grid; place-items:center; padding:14px;
+  }
+  .card-img img{max-width:100%; max-height:100%; object-fit:contain}
+  .card-body{padding:12px 12px 14px; display:flex; flex-direction:column; gap:6px; flex:1}
+  .card-cat{font-size:11px; color:var(--muted); font-weight:600}
+  .card-name{font-size:13.5px; font-weight:700; line-height:1.35; min-height:2.6em}
+  .card-code{font-size:11px; color:#9ca3af; font-family:ui-monospace,Consolas,monospace}
+  .price-row{display:flex; align-items:baseline; gap:6px; flex-wrap:wrap; margin-top:auto}
+  .price-now{font-size:18px; font-weight:800; color:var(--lg); letter-spacing:-.02em}
+  .price-unit{font-size:12px; color:var(--muted)}
+  .price-was{font-size:12px; color:#9ca3af; text-decoration:line-through}
+  .btn{
+    display:inline-flex; align-items:center; justify-content:center; gap:8px;
+    height:44px; padding:0 16px; border-radius:12px; border:0; cursor:pointer;
+    font-weight:700; font-size:14px;
+  }
+  .btn-primary{background:var(--lg); color:#fff}
+  .btn-primary:hover{background:var(--lg-dark)}
+  .btn-primary:disabled{opacity:.5; cursor:not-allowed}
+  .btn-ghost{background:#fff; color:var(--ink); border:1px solid var(--line)}
+  .btn-line{background:#06C755; color:#fff}
+  .btn-line:hover{filter:brightness(.96)}
+  .btn-sm{height:36px; font-size:13px; padding:0 12px; border-radius:10px}
+  .empty{
+    grid-column:1/-1; text-align:center; padding:48px 16px; color:var(--muted);
+    background:#fff; border:1px dashed var(--line); border-radius:18px;
+  }
+  .overlay{
+    position:fixed; inset:0; background:rgba(15,23,42,.45); z-index:50;
+    display:flex; justify-content:flex-end;
+  }
+  .drawer{
+    width:min(440px, 100%); height:100%; background:#fff;
+    display:flex; flex-direction:column; box-shadow:-12px 0 40px rgba(0,0,0,.12);
+  }
+  .drawer-h{
+    display:flex; align-items:center; gap:10px; padding:16px 16px 12px;
+    border-bottom:1px solid var(--line);
+  }
+  .drawer-h h3{margin:0; font-size:17px}
+  .drawer-b{flex:1; overflow:auto; padding:14px 16px}
+  .drawer-f{padding:12px 16px 18px; border-top:1px solid var(--line); background:#fff}
+  .close-x{
+    margin-left:auto; width:36px; height:36px; border-radius:10px; border:1px solid var(--line);
+    background:#fff; cursor:pointer; font-size:18px; line-height:1;
+  }
+  .modal-sheet{
+    margin:auto; width:min(560px, calc(100% - 20px)); max-height:min(92vh, 820px);
+    background:#fff; border-radius:20px; overflow:hidden; display:flex; flex-direction:column;
+    box-shadow:0 24px 80px rgba(0,0,0,.25);
+  }
+  .pdp-img{
+    height:220px; background:linear-gradient(180deg,#fafafa,#f3f4f6);
+    display:grid; place-items:center; padding:18px;
+  }
+  .pdp-img img{max-width:100%; max-height:100%; object-fit:contain}
+  .pdp-body{padding:16px; overflow:auto}
+  .plan{
+    border:1px solid var(--line); border-radius:14px; padding:12px;
+    cursor:pointer; transition:border-color .15s, background .15s;
+  }
+  .plan.active{border-color:var(--lg); background:var(--soft)}
+  .plan-top{display:flex; justify-content:space-between; gap:8px; align-items:flex-start}
+  .plan-term{font-weight:800; font-size:14px}
+  .plan-svc{font-size:12px; color:var(--muted); margin-top:2px}
+  .plan-price{font-weight:800; color:var(--lg); font-size:16px; white-space:nowrap}
+  .plan-note{font-size:12px; color:#4b5563; margin-top:6px; line-height:1.4}
+  .qty{
+    display:inline-flex; align-items:center; border:1px solid var(--line); border-radius:10px; overflow:hidden;
+  }
+  .qty button{width:36px; height:36px; border:0; background:#f9fafb; cursor:pointer; font-size:16px}
+  .qty span{min-width:34px; text-align:center; font-weight:700}
+  .field{display:flex; flex-direction:column; gap:6px; margin-bottom:12px}
+  .field label{font-size:12px; font-weight:700; color:#374151}
+  .field input,.field textarea,.field select{
+    width:100%; border:1px solid var(--line); border-radius:12px; padding:11px 12px;
+    background:#fff; outline:none;
+  }
+  .field input:focus,.field textarea:focus,.field select:focus{
+    border-color:rgba(165,0,52,.45); box-shadow:0 0 0 4px rgba(165,0,52,.1);
+  }
+  .cart-item{
+    display:grid; grid-template-columns:64px 1fr auto; gap:10px;
+    padding:12px 0; border-bottom:1px solid #f1f5f9;
+  }
+  .cart-item img{
+    width:64px; height:64px; object-fit:contain; background:#fafafa; border-radius:12px;
+  }
+  .sum-line{display:flex; justify-content:space-between; gap:10px; font-size:14px; margin:6px 0}
+  .sum-line.total{font-weight:800; font-size:16px; color:var(--lg); margin-top:10px}
+  .toast{
+    position:fixed; left:50%; bottom:24px; transform:translateX(-50%);
+    background:#111827; color:#fff; padding:12px 16px; border-radius:12px;
+    font-size:13.5px; z-index:80; box-shadow:0 12px 30px rgba(0,0,0,.2);
+    max-width:min(92vw, 420px); text-align:center;
+  }
+  .foot{
+    margin:8px auto 28px; text-align:center; color:var(--muted); font-size:12px; line-height:1.5;
+  }
+  .sticky-cart{
+    position:fixed; left:50%; bottom:16px; transform:translateX(-50%);
+    width:min(420px, calc(100% - 28px)); z-index:30;
+  }
+  .sticky-cart .btn{width:100%; box-shadow:0 14px 40px rgba(165,0,52,.28)}
+  .ok-box{
+    background:#f0fdf4; border:1px solid #bbf7d0; color:#14532d;
+    border-radius:14px; padding:12px; font-size:13px; line-height:1.5; margin-bottom:12px;
+  }
+  .muted{color:var(--muted)}
+  .loading{padding:80px 20px; text-align:center; color:var(--muted)}
+</style>
+</head>
+<body>
+<div class="wrap" x-data="lgStore()" x-cloak>
+  <!-- Top bar -->
+  <header class="topbar" style="width:100vw; margin-left:calc(50% - 50vw)">
+    <div class="wrap topbar-inner">
+      <div class="brand">
+        <div class="brand-mark font-display">LG</div>
+        <div>
+          <h1 class="font-display">LG Subscribe</h1>
+          <p>เช่ารายเดือน · จัดส่งติดตั้ง</p>
+        </div>
+      </div>
+      <div class="top-actions">
+        <a class="icon-btn btn-sm" :href="lineUrl" target="_blank" rel="noopener" title="ติดต่อ LINE">LINE</a>
+        <button type="button" class="icon-btn" @click="openCart()" aria-label="ตะกร้า">
+          🛒
+          <span class="badge" x-show="cartCount() > 0" x-text="cartCount()"></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <template x-if="!ready">
+    <div class="loading">กำลังโหลดสินค้า…</div>
+  </template>
+
+  <template x-if="ready">
+    <div>
+      <section class="hero">
+        <h2 class="font-display">เครื่องใช้ไฟฟ้า LG แบบ Subscribe</h2>
+        <p>เลือกสินค้า ใส่ตะกร้า กรอกข้อมูล แล้วส่งออเดอร์ทาง LINE — ไม่ต้องชำระเงินบนเว็บ ทีมงานจะติดต่อยืนยันรายละเอียดให้</p>
+        <div class="hero-pills">
+          <span class="pill">ทั้งแคตตาล็อก · <span x-text="products.length"></span> รุ่น</span>
+          <span class="pill" x-text="promoLabel()"></span>
+          <span class="pill">ส่งออเดอร์เข้า LINE</span>
+        </div>
+      </section>
+
+      <div class="toolbar">
+        <input class="search" type="search" placeholder="ค้นหารุ่น / ชื่อสินค้า / หมวด" x-model="q" />
+      </div>
+      <div class="chips">
+        <button type="button" class="chip" :class="cat==='' && 'active'" @click="cat=''">ทั้งหมด</button>
+        <template x-for="c in categories" :key="c">
+          <button type="button" class="chip" :class="cat===c && 'active'" @click="cat=c" x-text="shortCat(c)"></button>
+        </template>
+      </div>
+
+      <div class="grid" style="margin-top:14px">
+        <template x-for="p in filtered()" :key="p.code">
+          <article class="card" @click="openProduct(p)">
+            <div class="card-img">
+              <img :src="imgUrl(p)" :alt="p.code" loading="lazy" decoding="async"
+                   @error="$el.style.display='none'"/>
+            </div>
+            <div class="card-body">
+              <div class="card-cat" x-text="shortCat(p.category)"></div>
+              <div class="card-name" x-text="productTitle(p)"></div>
+              <div class="card-code" x-text="p.code"></div>
+              <div class="price-row">
+                <span class="price-now" x-text="'฿' + money(bestPrice(p))"></span>
+                <span class="price-unit">/เดือน*</span>
+                <span class="price-was" x-show="bestRegular(p) > bestPrice(p)"
+                      x-text="'฿' + money(bestRegular(p))"></span>
+              </div>
+              <button type="button" class="btn btn-primary btn-sm" style="margin-top:8px;width:100%"
+                      @click.stop="openProduct(p)">ดูแพ็คเกจ</button>
+            </div>
+          </article>
+        </template>
+        <div class="empty" x-show="filtered().length === 0">ไม่พบสินค้าที่ตรงกับคำค้น</div>
+      </div>
+
+      <div class="sticky-cart" x-show="cartCount() > 0">
+        <button type="button" class="btn btn-primary" @click="openCart()">
+          ดูตะกร้า · <span x-text="cartCount()"></span> ชิ้น · เริ่ม ฿<span x-text="money(cartFirstTotal())"></span>
+        </button>
+      </div>
+
+      <p class="foot">
+        *ราคาเริ่มต้นต่อเดือนตามโปรโมชันของแพ็คที่ถูกสุดในรุ่น · ยอดชำระจริงขึ้นกับแพ็คที่เลือก<br/>
+        ติดต่อ: <a :href="lineUrl" target="_blank" rel="noopener" style="color:var(--lg);font-weight:700" x-text="lineLabel"></a>
+        · v<span x-text="buildVersion"></span>
+      </p>
+    </div>
+  </template>
+
+  <!-- Product modal -->
+  <div class="overlay" x-show="pdp" @click.self="pdp=null" x-transition.opacity style="justify-content:center; align-items:center; padding:10px">
+    <div class="modal-sheet" x-show="pdp" @click.stop>
+      <template x-if="pdp">
+        <div style="display:flex;flex-direction:column;max-height:min(92vh,820px)">
+          <div class="drawer-h">
+            <div>
+              <div class="card-cat" x-text="shortCat(pdp.category)"></div>
+              <h3 class="font-display" x-text="productTitle(pdp)"></h3>
+            </div>
+            <button type="button" class="close-x" @click="pdp=null">×</button>
+          </div>
+          <div class="pdp-img">
+            <img :src="imgUrl(pdp)" :alt="pdp.code" @error="$el.style.opacity=.2"/>
+          </div>
+          <div class="pdp-body">
+            <div class="card-code" style="margin-bottom:8px" x-text="pdp.code"></div>
+            <div style="font-weight:700; margin-bottom:8px">เลือกแพ็คเกจ</div>
+            <div style="display:flex; flex-direction:column; gap:8px">
+              <template x-for="(plan, idx) in pdp.plans" :key="idx">
+                <div class="plan" :class="planIdx===idx && 'active'" @click="planIdx=idx">
+                  <div class="plan-top">
+                    <div>
+                      <div class="plan-term" x-text="planLabel(plan)"></div>
+                      <div class="plan-svc" x-text="serviceLabel(plan)"></div>
+                    </div>
+                    <div class="plan-price" x-text="plan.outright ? ('฿' + money(plan.advancePayment)) : ('฿' + money(plan.effectiveMonthly) + '/ด.')"></div>
+                  </div>
+                  <div class="plan-note" x-show="plan.promo" x-text="plan.promo"></div>
+                  <div class="plan-note" x-show="!plan.outright && plan.regular > plan.effectiveMonthly">
+                    ราคาปกติ ฿<span x-text="money(plan.regular)"></span>/เดือน
+                    <span x-show="plan.totalSaving"> · ประหยัด ฿<span x-text="money(plan.totalSaving)"></span></span>
+                  </div>
+                </div>
+              </template>
+            </div>
+            <div style="display:flex; align-items:center; justify-content:space-between; margin-top:16px; gap:10px">
+              <div class="qty">
+                <button type="button" @click="qty=Math.max(1,qty-1)">−</button>
+                <span x-text="qty"></span>
+                <button type="button" @click="qty=Math.min(99,qty+1)">+</button>
+              </div>
+              <div style="text-align:right">
+                <div class="muted" style="font-size:12px">ยอดครั้งแรกโดยประมาณ</div>
+                <div style="font-weight:800; color:var(--lg); font-size:18px"
+                     x-text="'฿' + money(firstPay(selectedPlan()) * qty)"></div>
+              </div>
+            </div>
+          </div>
+          <div class="drawer-f" style="display:flex; gap:8px">
+            <button type="button" class="btn btn-ghost" style="flex:1" @click="pdp=null">ปิด</button>
+            <button type="button" class="btn btn-primary" style="flex:1.4" @click="addToCart()">ใส่ตะกร้า</button>
+          </div>
+        </div>
+      </template>
+    </div>
+  </div>
+
+  <!-- Cart / Checkout drawer -->
+  <div class="overlay" x-show="cartOpen" @click.self="cartOpen=false" x-transition.opacity>
+    <div class="drawer" @click.stop>
+      <div class="drawer-h">
+        <h3 class="font-display" x-text="step==='cart' ? 'ตะกร้าสินค้า' : (step==='checkout' ? 'ข้อมูลสั่งซื้อ' : 'ส่งออเดอร์แล้ว')"></h3>
+        <button type="button" class="close-x" @click="cartOpen=false">×</button>
+      </div>
+      <div class="drawer-b">
+        <!-- Cart -->
+        <template x-if="step==='cart'">
+          <div>
+            <div x-show="cart.length===0" class="empty" style="border:0;background:transparent">ตะกร้าว่าง — เลือกสินค้าจากหน้าร้าน</div>
+            <template x-for="(item, i) in cart" :key="item.key">
+              <div class="cart-item">
+                <img :src="imgUrl(item)" :alt="item.code"/>
+                <div>
+                  <div style="font-weight:700;font-size:13.5px" x-text="item.title"></div>
+                  <div class="card-code" x-text="item.code"></div>
+                  <div class="muted" style="font-size:12px;margin-top:2px" x-text="planLabel(item) + ' · ' + serviceLabel(item)"></div>
+                  <div style="margin-top:6px;display:flex;align-items:center;gap:8px">
+                    <div class="qty">
+                      <button type="button" @click="setQty(i, item.qty-1)">−</button>
+                      <span x-text="item.qty"></span>
+                      <button type="button" @click="setQty(i, item.qty+1)">+</button>
+                    </div>
+                    <button type="button" class="btn btn-ghost btn-sm" @click="removeItem(i)">ลบ</button>
+                  </div>
+                </div>
+                <div style="text-align:right">
+                  <div style="font-weight:800;color:var(--lg)" x-text="item.outright ? ('฿'+money(item.advancePayment*item.qty)) : ('฿'+money(item.effectiveMonthly*item.qty))"></div>
+                  <div class="muted" style="font-size:11px" x-text="item.outright ? 'ซื้อขาด' : '/เดือน'"></div>
+                </div>
+              </div>
+            </template>
+            <div x-show="cart.length>0" style="margin-top:14px">
+              <div class="sum-line"><span>จำนวน</span><strong x-text="cartCount() + ' ชิ้น'"></strong></div>
+              <div class="sum-line"><span>ยอดชำระครั้งแรก (ประมาณ)</span><strong x-text="'฿' + money(cartFirstTotal())"></strong></div>
+              <div class="sum-line total"><span>รวมค่าเช่า/เดือน (โปร)</span><span x-text="'฿' + money(cartMonthly())"></span></div>
+              <p class="muted" style="font-size:12px;margin:10px 0 0;line-height:1.45">
+                ยอดจริงยืนยันอีกครั้งตอนติดต่อ LINE · TV/จอ/ลำโพงอาจมีเงินล่วงหน้า
+              </p>
+            </div>
+          </div>
+        </template>
+
+        <!-- Checkout form -->
+        <template x-if="step==='checkout'">
+          <div>
+            <div class="ok-box">กรอกข้อมูลแล้วกด <strong>ส่งออเดอร์ทาง LINE</strong> — ระบบจะคัดลอกข้อความออเดอร์และเปิด LINE ให้คุณส่งหาทีมงาน</div>
+            <div class="field">
+              <label>ชื่อ-นามสกุล *</label>
+              <input type="text" x-model="form.name" placeholder="ชื่อลูกค้า" autocomplete="name"/>
+            </div>
+            <div class="field">
+              <label>เบอร์โทร *</label>
+              <input type="tel" x-model="form.phone" placeholder="08x-xxx-xxxx" autocomplete="tel"/>
+            </div>
+            <div class="field">
+              <label>LINE ID</label>
+              <input type="text" x-model="form.lineId" placeholder="ถ้ามี"/>
+            </div>
+            <div class="field">
+              <label>ที่อยู่จัดส่ง / ติดตั้ง</label>
+              <textarea rows="3" x-model="form.address" placeholder="บ้านเลขที่ ถนน เขต จังหวัด"></textarea>
+            </div>
+            <div class="field">
+              <label>ช่วงเวลาที่สะดวกติดต่อ</label>
+              <select x-model="form.time">
+                <option value="">— เลือก —</option>
+                <option>เช้า (09:00–12:00)</option>
+                <option>บ่าย (12:00–17:00)</option>
+                <option>เย็น (17:00–20:00)</option>
+                <option>ได้ทั้งวัน</option>
+              </select>
+            </div>
+            <div class="field">
+              <label>หมายเหตุ</label>
+              <textarea rows="2" x-model="form.note" placeholder="เช่น ต้องการเยี่ยมบ้าน, รุ่นสี, ชั้นตึก"></textarea>
+            </div>
+            <div class="sum-line total"><span>ยอดครั้งแรก (ประมาณ)</span><span x-text="'฿' + money(cartFirstTotal())"></span></div>
+          </div>
+        </template>
+
+        <!-- Done -->
+        <template x-if="step==='done'">
+          <div>
+            <div class="ok-box">
+              <strong>พร้อมส่งออเดอร์แล้ว</strong><br/>
+              ข้อความถูกคัดลอกแล้ว — วางในแชท LINE แล้วส่งได้เลย<br/>
+              ถ้า LINE ยังไม่เปิด ให้กดปุ่มด้านล่าง
+            </div>
+            <textarea rows="12" readonly x-model="lastOrderText"
+              style="width:100%;border:1px solid var(--line);border-radius:12px;padding:12px;font-size:12.5px;line-height:1.45;background:#fafafa"></textarea>
+          </div>
+        </template>
+      </div>
+      <div class="drawer-f">
+        <template x-if="step==='cart'">
+          <div style="display:flex;flex-direction:column;gap:8px">
+            <button type="button" class="btn btn-primary" :disabled="cart.length===0" @click="step='checkout'">ดำเนินการสั่งซื้อ</button>
+            <button type="button" class="btn btn-ghost" @click="cartOpen=false">เลือกสินค้าต่อ</button>
+          </div>
+        </template>
+        <template x-if="step==='checkout'">
+          <div style="display:flex;flex-direction:column;gap:8px">
+            <button type="button" class="btn btn-line" @click="submitOrder()">ส่งออเดอร์ทาง LINE</button>
+            <button type="button" class="btn btn-ghost" @click="step='cart'">กลับตะกร้า</button>
+          </div>
+        </template>
+        <template x-if="step==='done'">
+          <div style="display:flex;flex-direction:column;gap:8px">
+            <a class="btn btn-line" :href="lineUrl" target="_blank" rel="noopener">เปิด LINE คุยกับทีมงาน</a>
+            <button type="button" class="btn btn-ghost" @click="copyLastOrder()">คัดลอกข้อความอีกครั้ง</button>
+            <button type="button" class="btn btn-ghost" @click="newOrder()">สั่งซื้อเพิ่ม</button>
+          </div>
+        </template>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast" x-show="toast.show" x-text="toast.msg" x-transition></div>
+</div>
+
+<script>
+function lgStore() {
+  return {
+    ready: false,
+    buildVersion: '2026.07.23-v115-store',
+    products: [],
+    categories: [],
+    lineUrl: 'https://line.me/ti/p/jRpW3PMC_e',
+    lineLabel: 'LINE POND · LG Subscribe',
+    promo: { name: '', dateStart: '', dateEnd: '' },
+    q: '',
+    cat: '',
+    pdp: null,
+    planIdx: 0,
+    qty: 1,
+    cart: [],
+    cartOpen: false,
+    step: 'cart',
+    form: { name: '', phone: '', lineId: '', address: '', time: '', note: '' },
+    lastOrderText: '',
+    toast: { show: false, msg: '' },
+
+    async init() {
+      try {
+        const res = await fetch('catalog.json?v=' + Date.now());
+        if (!res.ok) throw new Error('catalog ' + res.status);
+        const data = await res.json();
+        this.products = data.products || [];
+        this.categories = data.categories || [];
+        this.promo = data.promo || this.promo;
+        if (data.lineUrl) this.lineUrl = data.lineUrl;
+        if (data.lineLabel) this.lineLabel = data.lineLabel;
+        this.ready = true;
+      } catch (e) {
+        console.error(e);
+        this.showToast('โหลดสินค้าไม่สำเร็จ — เปิดผ่านเว็บเซิร์ฟเวอร์ (ไม่ใช่ double-click ไฟล์)');
+      }
+      try {
+        const saved = localStorage.getItem('lgStoreCart');
+        if (saved) this.cart = JSON.parse(saved) || [];
+      } catch (_) {}
+    },
+
+    saveCart() {
+      try { localStorage.setItem('lgStoreCart', JSON.stringify(this.cart)); } catch (_) {}
+    },
+
+    showToast(msg) {
+      this.toast = { show: true, msg };
+      clearTimeout(this._tt);
+      this._tt = setTimeout(() => { this.toast.show = false; }, 2600);
+    },
+
+    money(n) {
+      const x = Number(n) || 0;
+      return x.toLocaleString('th-TH', { maximumFractionDigits: 2 });
+    },
+
+    imgUrl(p) {
+      if (!p || !p.image) return '';
+      if (/^https?:\/\//i.test(p.image)) return p.image;
+      if (p.image.startsWith('assets/')) {
+        // /store on calculator Pages uses ../assets ; self-contained store uses assets/
+        return (location.pathname.indexOf('/store') >= 0 ? '../' : '') + p.image;
+      }
+      return p.image;
+    },
+
+    shortCat(c) {
+      if (!c) return '';
+      return String(c)
+        .replace('เครื่องปรับอากาศ ', 'แอร์ ')
+        .replace('โทรทัศน์ Life Style / OLED / QNED / NANO', 'ทีวี')
+        .replace('เครื่องซักผ้า Front Load', 'ซักผ้าฝาหน้า')
+        .replace('เครื่องซักผ้า Top Load', 'ซักผ้าฝาบน')
+        .replace('เครื่องอบผ้า / Styler / ล้างจาน', 'อบผ้า/Styler/ล้างจาน')
+        .replace('ตู้เย็น Top/Bottom Freezer', 'ตู้เย็น Top/Bottom')
+        .replace('ลำโพง / ซาวด์บาร์', 'ลำโพง/ซาวด์บาร์');
+    },
+
+    productTitle(p) {
+      const name = (p.name || '').trim();
+      if (name && !/^\(.*\)$/.test(name)) return name;
+      return this.shortCat(p.category) + (name ? ' ' + name : '');
+    },
+
+    bestPrice(p) {
+      const plans = (p.plans || []).filter(x => !x.outright);
+      if (!plans.length) {
+        const o = (p.plans || [])[0];
+        return o ? (o.advancePayment || o.effectiveMonthly || 0) : 0;
+      }
+      return Math.min(...plans.map(x => Number(x.effectiveMonthly) || 0));
+    },
+
+    bestRegular(p) {
+      const plans = (p.plans || []).filter(x => !x.outright);
+      if (!plans.length) return 0;
+      return Math.min(...plans.map(x => Number(x.regular) || 0));
+    },
+
+    filtered() {
+      const q = this.q.trim().toLowerCase();
+      return this.products.filter(p => {
+        if (this.cat && p.category !== this.cat) return false;
+        if (!q) return true;
+        const blob = [p.code, p.name, p.category].join(' ').toLowerCase();
+        return blob.includes(q);
+      });
+    },
+
+    promoLabel() {
+      const p = this.promo || {};
+      if (!p.dateStart) return 'โปรโมชันประจำเดือน';
+      return (p.name || 'โปร') + ' · ' + p.dateStart + ' – ' + p.dateEnd;
+    },
+
+    openProduct(p) {
+      this.pdp = p;
+      this.planIdx = 0;
+      this.qty = 1;
+      // prefer non-outright 5Y Visit if exists
+      const plans = p.plans || [];
+      let idx = plans.findIndex(x => !x.outright && x.term === '5Y' && x.serviceType === 'Visit');
+      if (idx < 0) idx = plans.findIndex(x => !x.outright);
+      if (idx < 0) idx = 0;
+      this.planIdx = idx;
+    },
+
+    selectedPlan() {
+      if (!this.pdp) return null;
+      return (this.pdp.plans || [])[this.planIdx] || null;
+    },
+
+    planLabel(plan) {
+      if (!plan) return '';
+      if (plan.outright) return 'ซื้อขาด';
+      const m = plan.totalContractMonths || 60;
+      const y = Math.round(m / 12);
+      return (plan.term || '') + ' · ' + y + ' ปี';
+    },
+
+    serviceLabel(plan) {
+      if (!plan) return '';
+      if (plan.outright) return 'รวมบริการ 2 ปี';
+      const st = plan.serviceType;
+      let s = 'รับประกันตลอดสัญญา';
+      if (st === 'Visit') s = 'ช่างผู้เชี่ยวชาญบริการถึงบ้าน';
+      else if (st === 'Self') s = 'รับอะไหล่เปลี่ยนเอง';
+      if (plan.serviceCycle && plan.serviceCycle !== 'ไม่มีบริการ') s += ' ' + plan.serviceCycle;
+      return s;
+    },
+
+    firstPay(plan) {
+      if (!plan) return 0;
+      const adv = Number(plan.advancePayment) || 0;
+      if (plan.outright || adv > 0) return adv;
+      return Number(plan.effectiveMonthly) || 0;
+    },
+
+    addToCart() {
+      const p = this.pdp;
+      const plan = this.selectedPlan();
+      if (!p || !plan) return;
+      const key = [p.code, plan.term, plan.serviceType, plan.outright ? 'O' : 'S', plan.effectiveMonthly, plan.advancePayment || 0].join('|');
+      const existing = this.cart.find(x => x.key === key);
+      if (existing) {
+        existing.qty = Math.min(99, existing.qty + this.qty);
+      } else {
+        this.cart.push({
+          key,
+          code: p.code,
+          name: p.name,
+          title: this.productTitle(p),
+          category: p.category,
+          image: p.image,
+          term: plan.term,
+          serviceType: plan.serviceType,
+          serviceCycle: plan.serviceCycle,
+          regular: plan.regular,
+          effectiveMonthly: plan.effectiveMonthly,
+          advancePayment: plan.advancePayment || 0,
+          outright: !!plan.outright,
+          totalContractMonths: plan.totalContractMonths || 60,
+          promo: plan.promo || '',
+          qty: this.qty,
+        });
+      }
+      this.saveCart();
+      this.pdp = null;
+      this.showToast('ใส่ตะกร้าแล้ว');
+      this.cartOpen = true;
+      this.step = 'cart';
+    },
+
+    openCart() {
+      this.cartOpen = true;
+      if (this.step === 'done') this.step = 'cart';
+      if (!this.step) this.step = 'cart';
+    },
+
+    setQty(i, q) {
+      q = Math.max(0, Math.min(99, Number(q) || 0));
+      if (q <= 0) this.cart.splice(i, 1);
+      else this.cart[i].qty = q;
+      this.saveCart();
+    },
+
+    removeItem(i) {
+      this.cart.splice(i, 1);
+      this.saveCart();
+    },
+
+    cartCount() {
+      return this.cart.reduce((s, x) => s + (x.qty || 0), 0);
+    },
+
+    cartMonthly() {
+      return this.cart.reduce((s, x) => {
+        if (x.outright) return s;
+        return s + (Number(x.effectiveMonthly) || 0) * (x.qty || 0);
+      }, 0);
+    },
+
+    cartFirstTotal() {
+      return this.cart.reduce((s, x) => s + this.firstPay(x) * (x.qty || 0), 0);
+    },
+
+    orderText() {
+      const lines = [];
+      lines.push('🛒 สั่งซื้อ LG Subscribe');
+      lines.push('จากเว็บร้าน · ' + this.buildVersion);
+      lines.push('');
+      lines.push('👤 ลูกค้า: ' + (this.form.name || '-'));
+      lines.push('📞 โทร: ' + (this.form.phone || '-'));
+      if (this.form.lineId) lines.push('💬 LINE ID: ' + this.form.lineId);
+      if (this.form.address) lines.push('📍 ที่อยู่: ' + this.form.address);
+      if (this.form.time) lines.push('🕒 เวลาสะดวก: ' + this.form.time);
+      if (this.form.note) lines.push('📝 หมายเหตุ: ' + this.form.note);
+      lines.push('');
+      lines.push('รายการสินค้า (' + this.cartCount() + ' ชิ้น)');
+      this.cart.forEach((it, i) => {
+        lines.push((i + 1) + ') ' + it.title);
+        lines.push('   รุ่น: ' + it.code + ' × ' + it.qty);
+        lines.push('   แพ็ค: ' + this.planLabel(it) + ' · ' + this.serviceLabel(it));
+        if (it.outright) {
+          lines.push('   ซื้อขาด ฿' + this.money(it.advancePayment * it.qty));
+        } else {
+          lines.push('   โปร ฿' + this.money(it.effectiveMonthly) + '/เดือน/ชิ้น');
+          if (it.advancePayment > 0) lines.push('   ล่วงหน้า ฿' + this.money(it.advancePayment) + '/ชิ้น');
+        }
+      });
+      lines.push('');
+      lines.push('ยอดชำระครั้งแรก (ประมาณ) ฿' + this.money(this.cartFirstTotal()));
+      lines.push('รวมค่าเช่า/เดือน (โปร) ฿' + this.money(this.cartMonthly()));
+      lines.push('');
+      lines.push('โปรดยืนยันออเดอร์และนัดติดตั้งครับ');
+      return lines.join('\n');
+    },
+
+    async submitOrder() {
+      const name = (this.form.name || '').trim();
+      const phone = (this.form.phone || '').trim();
+      if (!name || !phone) {
+        this.showToast('กรุณากรอกชื่อและเบอร์โทร');
+        return;
+      }
+      if (this.cart.length === 0) {
+        this.showToast('ตะกร้าว่าง');
+        return;
+      }
+      const text = this.orderText();
+      this.lastOrderText = text;
+      try {
+        await navigator.clipboard.writeText(text);
+      } catch (_) {
+        // ignore — user can copy from textarea
+      }
+      // open LINE text share (mobile-friendly) + personal chat
+      const share = 'https://line.me/R/msg/text/?' + encodeURIComponent(text);
+      try { window.open(share, '_blank'); } catch (_) {}
+      setTimeout(() => {
+        try { window.open(this.lineUrl, '_blank'); } catch (_) {}
+      }, 400);
+      this.step = 'done';
+      this.showToast('คัดลอกออเดอร์แล้ว — ส่งใน LINE ได้เลย');
+    },
+
+    async copyLastOrder() {
+      try {
+        await navigator.clipboard.writeText(this.lastOrderText || this.orderText());
+        this.showToast('คัดลอกแล้ว');
+      } catch (_) {
+        this.showToast('คัดลอกไม่สำเร็จ — เลือกข้อความในกล่องแล้ว copy');
+      }
+    },
+
+    newOrder() {
+      this.cart = [];
+      this.saveCart();
+      this.form = { name: '', phone: '', lineId: '', address: '', time: '', note: '' };
+      this.step = 'cart';
+      this.cartOpen = false;
+      this.lastOrderText = '';
+    },
+  };
+}
+</script>
+</body>
+</html>
