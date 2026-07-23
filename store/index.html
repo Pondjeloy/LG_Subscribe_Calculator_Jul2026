@@ -326,6 +326,23 @@
   }
   .muted{color:var(--muted)}
   .loading{padding:80px 20px; text-align:center; color:var(--muted); font-size:15px}
+  .admin-banner{
+    margin-top:12px; border-radius:14px;
+    background:#fff; box-shadow:0 0 0 0.5px rgba(0,0,0,.05);
+    overflow:hidden;
+  }
+  .admin-banner-in{
+    display:flex; align-items:center; justify-content:space-between; gap:12px;
+    padding:12px 14px;
+    border-left:4px solid var(--lg);
+  }
+  .admin-label{font-size:11px; font-weight:800; color:var(--lg); letter-spacing:.02em}
+  .admin-name{font-size:16px; font-weight:800; margin-top:2px}
+  .admin-hint{font-size:11.5px; color:var(--muted); margin-top:3px; line-height:1.35}
+  .admin-copy{
+    flex-shrink:0; height:34px; padding:0 12px; border:0; border-radius:999px;
+    background:var(--soft); color:var(--lg); font-weight:700; font-size:12px; cursor:pointer;
+  }
 
   /* —— Breakpoints —— */
   /* มือถือแคบ */
@@ -378,11 +395,11 @@
         <div class="brand-mark font-display">LG</div>
         <div>
           <h1 class="font-display">LG Subscribe</h1>
-          <p>เช่ารายเดือน · สั่งทาง LINE</p>
+          <p x-text="adminSubtitle()"></p>
         </div>
       </div>
       <div class="top-actions">
-        <a class="icon-btn" :href="lineUrl" target="_blank" rel="noopener" title="ติดต่อ LINE">LINE</a>
+        <a class="icon-btn" :href="activeLineUrl()" target="_blank" rel="noopener" title="ติดต่อ LINE">LINE</a>
         <button type="button" class="icon-btn" @click="openCart()" aria-label="ตะกร้า">
           🛒
           <span class="badge" x-show="cartCount() > 0" x-text="cartCount()"></span>
@@ -404,8 +421,21 @@
           <span class="pill"><span x-text="products.length"></span> รุ่น</span>
           <span class="pill" x-text="promoLabel()"></span>
           <span class="pill">ส่งออเดอร์ LINE</span>
+          <span class="pill" x-show="epId" x-text="'แอดมิน Epromoter · ' + epName"></span>
         </div>
       </section>
+
+      <!-- แบนเนอร์แอดมินจากลิงก์ส่วนตัว ?ep= -->
+      <div class="admin-banner" x-show="epId" x-cloak>
+        <div class="admin-banner-in">
+          <div>
+            <div class="admin-label">แอดมิน Epromoter</div>
+            <div class="admin-name" x-text="epName"></div>
+            <div class="admin-hint">ออเดอร์จากลิงก์นี้จะระบุชื่อแอดมินในข้อความ LINE อัตโนมัติ</div>
+          </div>
+          <button type="button" class="admin-copy" @click="copyMyLink()" title="คัดลอกลิงก์ส่วนตัว">คัดลอกลิงก์</button>
+        </div>
+      </div>
 
       <div class="toolbar">
         <input class="search" type="search" placeholder="ค้นหารุ่น / ชื่อสินค้า / หมวด" x-model="q" enterkeyhint="search" />
@@ -469,7 +499,8 @@
 
       <p class="foot">
         *ราคาเริ่มต้น/เดือนตามโปร · ยืนยันจริงทาง LINE<br/>
-        <a :href="lineUrl" target="_blank" rel="noopener" style="color:var(--lg);font-weight:700" x-text="lineLabel"></a>
+        <span x-show="epId">แอดมิน Epromoter: <strong x-text="epName"></strong> · </span>
+        <a :href="activeLineUrl()" target="_blank" rel="noopener" style="color:var(--lg);font-weight:700" x-text="activeLineLabel()"></a>
         · <span x-text="buildVersion"></span>
       </p>
     </div>
@@ -644,7 +675,7 @@
         </template>
         <template x-if="step==='done'">
           <div style="display:flex;flex-direction:column;gap:8px">
-            <a class="btn btn-line" :href="lineUrl" target="_blank" rel="noopener">เปิด LINE คุยกับทีมงาน</a>
+            <a class="btn btn-line" :href="activeLineUrl()" target="_blank" rel="noopener">เปิด LINE คุยกับแอดมิน</a>
             <button type="button" class="btn btn-ghost" @click="copyLastOrder()">คัดลอกข้อความอีกครั้ง</button>
             <button type="button" class="btn btn-ghost" @click="newOrder()">สั่งซื้อเพิ่ม</button>
           </div>
@@ -663,8 +694,17 @@ function lgStore() {
     buildVersion: '2026.07.23-v115-store',
     products: [],
     categories: [],
+    promoters: [],
+    storeBaseUrl: 'https://pondjeloy.github.io/LG_Subscribe_Calculator_Jul2026/store/',
+    defaultLineUrl: 'https://line.me/ti/p/jRpW3PMC_e',
+    defaultLineLabel: 'LINE · LG Subscribe',
     lineUrl: 'https://line.me/ti/p/jRpW3PMC_e',
-    lineLabel: 'LINE POND · LG Subscribe',
+    lineLabel: 'LINE · LG Subscribe',
+    // แอดมินจากลิงก์ส่วนตัว ?ep=POND (เหมือน CRM)
+    epId: '',
+    epName: '',
+    epTitle: 'แอดมิน Epromoter',
+    epLineUrl: '',
     promo: { name: '', dateStart: '', dateEnd: '' },
     q: '',
     cat: '',
@@ -686,17 +726,93 @@ function lgStore() {
         this.products = data.products || [];
         this.categories = data.categories || [];
         this.promo = data.promo || this.promo;
-        if (data.lineUrl) this.lineUrl = data.lineUrl;
-        if (data.lineLabel) this.lineLabel = data.lineLabel;
+        this.promoters = data.promoters || [];
+        if (data.storeBaseUrl) this.storeBaseUrl = data.storeBaseUrl;
+        if (data.lineUrl) {
+          this.lineUrl = data.lineUrl;
+          this.defaultLineUrl = data.lineUrl;
+        }
+        if (data.lineLabel) {
+          this.lineLabel = data.lineLabel;
+          this.defaultLineLabel = data.lineLabel;
+        }
         this.ready = true;
       } catch (e) {
         console.error(e);
         this.showToast('โหลดสินค้าไม่สำเร็จ — เปิดผ่านเว็บเซิร์ฟเวอร์ (ไม่ใช่ double-click ไฟล์)');
       }
+      this.resolveEpromoter();
       try {
         const saved = localStorage.getItem('lgStoreCart');
         if (saved) this.cart = JSON.parse(saved) || [];
       } catch (_) {}
+    },
+
+    resolveEpromoter() {
+      // ลำดับ: ?ep= / ?epromoter= / ?admin= → localStorage → default ว่าง
+      let id = '';
+      try {
+        const sp = new URLSearchParams(window.location.search || '');
+        id = (sp.get('ep') || sp.get('epromoter') || sp.get('admin') || '').trim();
+      } catch (_) {}
+      if (!id) {
+        try { id = (localStorage.getItem('lgStoreEp') || '').trim(); } catch (_) {}
+      }
+      id = String(id || '').toUpperCase().replace(/[^A-Z0-9_-]/g, '');
+      if (!id) {
+        this.epId = '';
+        this.epName = '';
+        this.epLineUrl = '';
+        return;
+      }
+      const list = this.promoters || [];
+      const found = list.find(p => String(p.id || p.name || '').toUpperCase() === id);
+      this.epId = id;
+      this.epName = found ? (found.name || found.id || id) : id;
+      this.epTitle = (found && found.title) ? found.title : 'แอดมิน Epromoter';
+      this.epLineUrl = (found && found.lineUrl) ? found.lineUrl : '';
+      try { localStorage.setItem('lgStoreEp', this.epId); } catch (_) {}
+      // คง query บน URL ให้แชร์ต่อได้
+      try {
+        const u = new URL(window.location.href);
+        if (u.searchParams.get('ep') !== this.epId) {
+          u.searchParams.set('ep', this.epId);
+          history.replaceState(null, '', u.pathname + u.search + u.hash);
+        }
+      } catch (_) {}
+    },
+
+    adminSubtitle() {
+      if (this.epId) return this.epTitle + ' · ' + this.epName;
+      return 'เช่ารายเดือน · สั่งทาง LINE';
+    },
+
+    activeLineUrl() {
+      return this.epLineUrl || this.lineUrl || this.defaultLineUrl;
+    },
+
+    activeLineLabel() {
+      if (this.epId) return 'LINE · ' + this.epName;
+      return this.lineLabel || this.defaultLineLabel;
+    },
+
+    myStoreLink() {
+      const base = (this.storeBaseUrl || (location.origin + location.pathname)).replace(/\?.*$/, '');
+      const join = base.indexOf('?') >= 0 ? '&' : (base.endsWith('/') || base.endsWith('.html') ? (base.includes('?') ? '&' : '?') : '?');
+      // clean: always use ?ep=
+      const clean = base.split('?')[0];
+      const sep = clean.includes('?') ? '&' : '?';
+      return clean + (this.epId ? (sep + 'ep=' + encodeURIComponent(this.epId)) : '');
+    },
+
+    async copyMyLink() {
+      const link = this.myStoreLink();
+      try {
+        await navigator.clipboard.writeText(link);
+        this.showToast('คัดลอกลิงก์ส่วนตัวแล้ว');
+      } catch (_) {
+        this.showToast(link);
+      }
     },
 
     saveCart() {
@@ -902,6 +1018,13 @@ function lgStore() {
       const lines = [];
       lines.push('🛒 สั่งซื้อ LG Subscribe');
       lines.push('จากเว็บร้าน · ' + this.buildVersion);
+      // ระบุแอดมิน Epromoter จากลิงก์ส่วนตัว (เหมือน CRM)
+      if (this.epId) {
+        lines.push('จากแอดมิน Epromoter: ' + this.epName);
+        lines.push('ลิงก์: ' + this.myStoreLink());
+      } else {
+        lines.push('จากแอดมิน Epromoter: (ไม่ระบุลิงก์ส่วนตัว)');
+      }
       lines.push('');
       lines.push('👤 ลูกค้า: ' + (this.form.name || '-'));
       lines.push('📞 โทร: ' + (this.form.phone || '-'));
@@ -952,7 +1075,7 @@ function lgStore() {
       const share = 'https://line.me/R/msg/text/?' + encodeURIComponent(text);
       try { window.open(share, '_blank'); } catch (_) {}
       setTimeout(() => {
-        try { window.open(this.lineUrl, '_blank'); } catch (_) {}
+        try { window.open(this.activeLineUrl(), '_blank'); } catch (_) {}
       }, 400);
       this.step = 'done';
       this.showToast('คัดลอกออเดอร์แล้ว — ส่งใน LINE ได้เลย');

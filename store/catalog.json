@@ -6,8 +6,59 @@
     "dateEnd": "2569-07-31"
   },
   "lineUrl": "https://line.me/ti/p/jRpW3PMC_e",
-  "lineLabel": "LINE POND · LG Subscribe",
+  "lineLabel": "LINE · LG Subscribe",
   "sellerName": "POND",
+  "storeBaseUrl": "https://pondjeloy.github.io/LG_Subscribe_Calculator_Jul2026/store/",
+  "promoters": [
+    {
+      "id": "POND",
+      "name": "POND",
+      "title": "แอดมิน Epromoter",
+      "lineUrl": "https://line.me/ti/p/jRpW3PMC_e"
+    },
+    {
+      "id": "CHANWIT",
+      "name": "CHANWIT",
+      "title": "แอดมิน Epromoter",
+      "lineUrl": ""
+    },
+    {
+      "id": "WICHIT",
+      "name": "WICHIT",
+      "title": "แอดมิน Epromoter",
+      "lineUrl": ""
+    },
+    {
+      "id": "SHANCHANOK",
+      "name": "SHANCHANOK",
+      "title": "แอดมิน Epromoter",
+      "lineUrl": ""
+    },
+    {
+      "id": "WUTTICHAI",
+      "name": "WUTTICHAI",
+      "title": "แอดมิน Epromoter",
+      "lineUrl": ""
+    },
+    {
+      "id": "TAKDANAI",
+      "name": "TAKDANAI",
+      "title": "แอดมิน Epromoter",
+      "lineUrl": ""
+    },
+    {
+      "id": "NOPPARAT",
+      "name": "NOPPARAT",
+      "title": "แอดมิน Epromoter",
+      "lineUrl": ""
+    },
+    {
+      "id": "NARASAK",
+      "name": "NARASAK",
+      "title": "แอดมิน Epromoter",
+      "lineUrl": ""
+    }
+  ],
   "categories": [
     "ตู้เย็น Side-by-Side",
     "ตู้เย็น Multi-Door",
