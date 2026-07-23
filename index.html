@@ -1552,7 +1552,7 @@ function lgCalculator() {
  compareB: { term: '5Y', serviceType: 'Visit', modelIndices: [] },
  cart: [],
  toast: { show: false, msg: '' },
- buildVersion: '2026.07.23-v112',
+ buildVersion: '2026.07.23-v113',
  quoteCustomer: {
    name: '',
    address: '',
@@ -3865,11 +3865,11 @@ function lgCalculator() {
         if (it.outright) {
           pkgLine = 'ซื้อขาด (รวมเครื่อง + บริการ 2 ปี)';
         } else {
+          // รายละเอียดบริการอยู่ที่ Care Service บรรทัดเดียว — ไม่ซ้ำที่นี่
           pkgLine = 'สัญญา ' + (it.term || '') + ' · ' + years + ' ปี (' + months + ' งวด)';
-          if (it.serviceType) pkgLine += ' · ' + this.serviceTypeTag(it.serviceType);
         }
         const imgSrc = this.productImageUrl(it.code);
-        const care = this.careService(it);
+        // ใบสรุปราคา: Care Service แค่สาระสำคัญ 1 บรรทัด (ไม่ลิสต์อะไหล่/รายการย่อย)
         const careDetail = this.formatServiceDetail(it);
 
         const periods = [];
@@ -3900,11 +3900,6 @@ function lgCalculator() {
 
         let careHtml = '<div class="care-title">Care Service:</div>';
         careHtml += '<div class="care-main">' + esc(careDetail) + '</div>';
-        if (care.items && care.items.length) {
-          care.items.forEach(svc => {
-            careHtml += '<div class="care-item">- ' + esc(svc.label) + ' (' + esc(svc.freq) + ')</div>';
-          });
-        }
 
         // รูปสินค้า + สเป็คพื้นฐาน เติมพื้นที่ว่างในช่องรายการ
         let descHtml = '';
