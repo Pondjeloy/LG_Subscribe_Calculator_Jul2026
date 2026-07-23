@@ -1552,7 +1552,7 @@ function lgCalculator() {
  compareB: { term: '5Y', serviceType: 'Visit', modelIndices: [] },
  cart: [],
  toast: { show: false, msg: '' },
- buildVersion: '2026.07.23-v111',
+ buildVersion: '2026.07.23-v112',
  quoteCustomer: {
    name: '',
    address: '',
@@ -1578,6 +1578,23 @@ function lgCalculator() {
  modelImage() {
  if (!this.hasModelSelected() || !this.currentModel()) return '';
  return this.modelImages[this.currentModel().code] || '';
+ },
+ // absolute URL สำหรับใบสรุปราคา / print / export (iframe ใช้ relative ไม่ได้)
+ productImageUrl(code) {
+   const rel = this.modelImages[code];
+   if (!rel) return '';
+   try {
+     if (typeof window !== 'undefined' && window.location && window.location.href
+         && !String(window.location.href).startsWith('about:')) {
+       return new URL(rel, window.location.href).href;
+     }
+   } catch (e) { /* ignore */ }
+   return rel;
+ },
+ // สเป็คพื้นฐานจากชื่อรุ่นใน catalog (เช่น ซัก xx กก. / BTU / คิว)
+ productBasicSpec(item) {
+   if (!item) return '';
+   return String(item.name || '').trim();
  },
  visitServiceLabel(withEnglish = false) {
  const label = 'ช่างผู้เชี่ยวชาญบริการถึงบ้าน';
@@ -3840,8 +3857,18 @@ function lgCalculator() {
         const totalItem = totalOne * qty;
         const listPrice = Number(it.regular || it.postPromoPrice || 0);
         const type = this.productTypeLabel(it);
-        const pname = (it.name || '').trim();
+        const pname = this.productBasicSpec(it);
         const headTitle = (it.code || '') + ' ' + ((type && pname) ? (type + ' · ' + pname) : (pname || type || ''));
+        const titleLine = type || pname || String(it.code || 'สินค้า');
+        const years = Math.round(months / 12);
+        let pkgLine = '';
+        if (it.outright) {
+          pkgLine = 'ซื้อขาด (รวมเครื่อง + บริการ 2 ปี)';
+        } else {
+          pkgLine = 'สัญญา ' + (it.term || '') + ' · ' + years + ' ปี (' + months + ' งวด)';
+          if (it.serviceType) pkgLine += ' · ' + this.serviceTypeTag(it.serviceType);
+        }
+        const imgSrc = this.productImageUrl(it.code);
         const care = this.careService(it);
         const careDetail = this.formatServiceDetail(it);
 
@@ -3879,11 +3906,28 @@ function lgCalculator() {
           });
         }
 
+        // รูปสินค้า + สเป็คพื้นฐาน เติมพื้นที่ว่างในช่องรายการ
+        let descHtml = '';
+        if (imgSrc) {
+          descHtml += '<div class="prod-row">';
+          descHtml += '<div class="prod-img"><img src="' + esc(imgSrc) + '" alt="' + esc(it.code || '') + '"/></div>';
+          descHtml += '<div class="prod-meta">';
+          descHtml += '<div class="name">' + esc(titleLine) + '</div>';
+          if (pname) descHtml += '<div class="spec">สเป็ค: ' + esc(pname) + '</div>';
+          descHtml += '<div class="pkg">' + esc(pkgLine) + '</div>';
+          descHtml += '</div></div>';
+        } else {
+          descHtml += '<div class="name">' + esc(headTitle.trim()) + '</div>';
+          if (pname) descHtml += '<div class="spec">สเป็ค: ' + esc(pname) + '</div>';
+          descHtml += '<div class="pkg">' + esc(pkgLine) + '</div>';
+        }
+        descHtml += careHtml;
+
         const p0 = periods[0];
         itemsHtml += '<tr>';
         itemsHtml += '<td class="c" rowspan="' + span + '">' + (i + 1) + '</td>';
         itemsHtml += '<td class="code" rowspan="' + span + '">' + esc(it.code) + '</td>';
-        itemsHtml += '<td class="desc" rowspan="' + span + '"><div class="name">' + esc(headTitle.trim()) + '</div>' + careHtml + '</td>';
+        itemsHtml += '<td class="desc" rowspan="' + span + '">' + descHtml + '</td>';
         itemsHtml += '<td class="c" rowspan="' + span + '">' + qty + '</td>';
         itemsHtml += '<td class="c">' + esc(p0.bill) + '</td>';
         itemsHtml += '<td class="num">' + (p0.regular === '' ? '—' : this.fmtBillPrice(p0.regular)) + '</td>';
@@ -3985,7 +4029,16 @@ function lgCalculator() {
   table.items th { background: #e8e8e8; color: #1a1a1a; font-size: 9.5px; font-weight: 700; padding: 5px 3px; border: 1px solid #bdbdbd; text-align: center; vertical-align: middle; }
   table.items td { border: 1px solid #cfcfcf; padding: 4px 5px; vertical-align: middle; font-size: 10px; color: #1a1a1a; line-height: 1.45; }
   table.items td.desc { text-align: left; vertical-align: top; padding: 4px 6px; }
-  table.items td.desc .name { font-weight: 700; margin-bottom: 4px; display: block; }
+  table.items td.desc .name { font-weight: 700; margin-bottom: 2px; display: block; line-height: 1.35; }
+  table.items td.desc .prod-row { display: flex; gap: 8px; align-items: flex-start; margin: 0 0 4px; }
+  table.items td.desc .prod-img {
+    flex: 0 0 88px; width: 88px; height: 88px; border: 1px solid #e5e5e5; border-radius: 6px;
+    background: #fafafa; display: flex; align-items: center; justify-content: center; overflow: hidden;
+  }
+  table.items td.desc .prod-img img { max-width: 82px; max-height: 82px; width: auto; height: auto; object-fit: contain; display: block; }
+  table.items td.desc .prod-meta { flex: 1; min-width: 0; }
+  table.items td.desc .spec { font-size: 9.5px; color: #1a1a1a; margin: 1px 0 2px; line-height: 1.35; }
+  table.items td.desc .pkg { font-size: 9px; color: #444; margin: 0 0 2px; line-height: 1.35; }
   table.items td.desc .care-title { font-weight: 700; margin-top: 4px; }
   table.items td.desc .care-main { font-size: 9.5px; margin: 1px 0 2px; }
   table.items td.desc .care-item { font-size: 9px; color: #333; padding-left: 2px; line-height: 1.35; }
@@ -4184,11 +4237,23 @@ ${'</'+'html>'}`;
         idoc.open();
         idoc.write(fullHtml);
         idoc.close();
-        // รอฟอนต์ + รูปโหลด (html2canvas + ฟอนต์เว็บไทยมักทำตัวอักษรทับกัน)
+        // รอฟอนต์ + รูปสินค้าโหลด (html2canvas + ฟอนต์เว็บไทยมักทำตัวอักษรทับกัน)
         try {
           if (idoc.fonts && idoc.fonts.ready) await idoc.fonts.ready;
         } catch (e) { /* ignore */ }
-        await new Promise(r => setTimeout(r, 900));
+        try {
+          const imgs = Array.from(idoc.images || []);
+          await Promise.all(imgs.map(img => {
+            if (img.complete && img.naturalWidth > 0) return Promise.resolve();
+            return new Promise(resolve => {
+              const done = () => resolve();
+              img.addEventListener('load', done, { once: true });
+              img.addEventListener('error', done, { once: true });
+              setTimeout(done, 2500);
+            });
+          }));
+        } catch (e) { /* ignore */ }
+        await new Promise(r => setTimeout(r, 500));
         const sheet = idoc.querySelector('.sheet');
         if (!sheet) throw new Error('sheet not found');
         idoc.querySelectorAll('.no-print').forEach(el => { el.style.display = 'none'; });
@@ -4217,7 +4282,13 @@ ${'</'+'html>'}`;
           'table.items th{line-height:1.45!important;padding:7px 4px!important;font-size:10px!important;vertical-align:middle!important;}',
           'table.items td{line-height:1.5!important;padding:6px 5px!important;font-size:11px!important;vertical-align:middle!important;}',
           'table.items td.desc{line-height:1.55!important;padding:7px 8px!important;vertical-align:top!important;}',
-          'table.items td.desc .name{display:block!important;line-height:1.45!important;margin:0 0 6px!important;}',
+          'table.items td.desc .name{display:block!important;line-height:1.45!important;margin:0 0 4px!important;}',
+          'table.items td.desc .prod-row{display:flex!important;gap:10px!important;align-items:flex-start!important;margin:0 0 6px!important;}',
+          'table.items td.desc .prod-img{flex:0 0 96px!important;width:96px!important;height:96px!important;border:1px solid #e5e5e5!important;border-radius:8px!important;background:#fafafa!important;display:flex!important;align-items:center!important;justify-content:center!important;overflow:hidden!important;}',
+          'table.items td.desc .prod-img img{max-width:90px!important;max-height:90px!important;object-fit:contain!important;display:block!important;}',
+          'table.items td.desc .prod-meta{flex:1!important;min-width:0!important;}',
+          'table.items td.desc .spec{font-size:10.5px!important;line-height:1.45!important;margin:2px 0 3px!important;color:#1a1a1a!important;}',
+          'table.items td.desc .pkg{font-size:10px!important;line-height:1.4!important;margin:0 0 2px!important;color:#444!important;}',
           'table.items td.desc .care-title{line-height:1.45!important;margin:6px 0 3px!important;}',
           'table.items td.desc .care-main{line-height:1.5!important;margin:2px 0 4px!important;}',
           'table.items td.desc .care-item{line-height:1.55!important;margin:3px 0!important;padding-left:2px!important;}',
