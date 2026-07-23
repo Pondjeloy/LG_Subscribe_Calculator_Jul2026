@@ -1021,9 +1021,8 @@ function lgStore() {
       // ระบุแอดมิน Epromoter จากลิงก์ส่วนตัว (เหมือน CRM)
       if (this.epId) {
         lines.push('จากแอดมิน Epromoter: ' + this.epName);
-        lines.push('ลิงก์: ' + this.myStoreLink());
       } else {
-        lines.push('จากแอดมิน Epromoter: (ไม่ระบุลิงก์ส่วนตัว)');
+        lines.push('จากแอดมิน Epromoter: (ไม่ระบุ)');
       }
       lines.push('');
       lines.push('👤 ลูกค้า: ' + (this.form.name || '-'));
